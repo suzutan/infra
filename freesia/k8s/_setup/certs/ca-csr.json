@@ -1,0 +1,19 @@
+{
+  "CA": {
+    "expiry": "87600h",
+    "pathlen": 0
+  },
+  "CN": "Harvestasya freesia k8s root CA v23.02.17",
+  "key": {
+    "algo": "ecdsa",
+    "size": 521
+  },
+  "names": [
+    {
+      "C": "JP",
+      "L": "Shibuya-ku",
+      "O": "Harvestasya",
+      "ST": "Tokyo"
+    }
+  ]
+}

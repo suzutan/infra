@@ -1,0 +1,9 @@
+{
+  "CN": "kubelet",
+  "hosts": ["freesia.k8s.suzutan.jp", "192.168.100.220", "freesia.ssa.nw.suzutan.jp"],
+  "key": {
+    "algo": "rsa",
+    "size": 2048
+  },
+  "names": []
+}
