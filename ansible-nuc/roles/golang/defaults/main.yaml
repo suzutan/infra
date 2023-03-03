@@ -1,0 +1,3 @@
+go_version: "1.19.4"
+go_file: "go{{ go_version }}.linux-amd64.tar.gz"
+go_download_location: "https://golang.org/dl/go{{ go_version }}.linux-amd64.tar.gz"

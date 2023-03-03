@@ -1,0 +1,4 @@
+ansible_python_interpreter: /usr/bin/python3
+ansible_user: suzutan
+bin_dir: /usr/local/bin
+go_version: "1.19.4"

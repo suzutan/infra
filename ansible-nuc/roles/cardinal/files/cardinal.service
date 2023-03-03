@@ -1,0 +1,8 @@
+[Unit]
+Description=cardinal
+[Service]
+ExecStart=/usr/local/sbin/cardinal
+Type=oneshot
+User=root
+[Install]
+WantedBy=multi-user.target
