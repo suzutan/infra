@@ -1,0 +1,46 @@
+- name: create cardinal config dir
+  file:
+    path: /etc/cardinal
+    state: directory
+
+- name: copy cardinal userlist
+  copy:
+    src: "cardinal_user"
+    dest: "/etc/cardinal/userlist"
+
+- name: create cardinal userlist.d dir
+  file:
+    path: /etc/cardinal/userlist.d
+    state: directory
+
+- name: copy cardinal service
+  copy:
+    src: "{{ item }}"
+    dest: "/etc/systemd/system/{{ item }}"
+  with_items:
+  - cardinal.timer
+  - cardinal.service
+
+- name: copy cardinal script
+  copy:
+    src: cardinal
+    dest: /usr/local/sbin/cardinal
+    mode: "0755"
+
+- name: Ensure /usr/local/sbin/cardinal is immutable.
+  file:
+    path: /usr/local/sbin/cardinal
+    attr: +i
+
+- name: start cardinal
+  systemd:
+    name: "{{ item }}"
+    state: restarted
+    enabled: true
+    daemon_reload: true
+  with_items:
+  - cardinal.timer
+  - cardinal.service
+
+- name: execute cardinal sync
+  command: "/usr/local/sbin/cardinal"

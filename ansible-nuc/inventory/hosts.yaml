@@ -1,0 +1,5 @@
+all:
+  hosts:
+    freesia.ssa.nw.suzutan.jp:
+  vars:
+    ansible_ssh_user: root

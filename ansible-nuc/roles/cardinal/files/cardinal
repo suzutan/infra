@@ -1,0 +1,25 @@
+#!/bin/bash
+
+set -x
+for target_user in $(cat /etc/cardinal/userlist /etc/cardinal/userlist.d/* | grep ',' | sort | uniq); do
+  linux_user=$(echo ${target_user} | cut -d"," -f1)
+  github_user=$(echo ${target_user} | cut -d"," -f2)
+  if id ${linux_user} &>/dev/null; then
+    homedir=/home/${linux_user}
+    if [ "root" = "${linux_user}" ]; then
+      homedir="/root"
+    fi
+    mkdir -p ${homedir}/.ssh
+    chattr -i ${homedir}/.ssh
+    chmod 700 ${homedir}/.ssh
+    touch ${homedir}/.ssh/authorized_keys
+    chattr -i ${homedir}/.ssh/authorized_keys
+    curl -so ${homedir}/.ssh/authorized_keys https://github.com/${github_user}.keys
+    chmod 600 ${homedir}/.ssh/authorized_keys
+    chown -R ${linux_user}:${linux_user} ${homedir}/.ssh
+    cat ${homedir}/.ssh/authorized_keys
+  else
+    echo "${linux_user} is not user."
+  fi
+done
+set +x
