@@ -9,7 +9,7 @@ install:
 	apt -y install kubeadm=1.26.0-00 kubectl=1.26.0-00 kubelet=1.26.0-00
 	apt-mark hold kubeadm kubelet kubectl
 init-kubeadm: copy-certs
-	kubeadm init --config kubeadm-init.yaml
+	kubeadm init --config kubeadm.yaml
 init-kubeconfig:
 	rm -rf ${HOME}/.kube
 	mkdir -p ${HOME}/.kube
@@ -20,10 +20,7 @@ init-configuration:
 	kubectl taint nodes --all node-role.kubernetes.io/master- || :
 	kubectl apply -f rbac.yaml
 
-init-cni:
-	kubectl apply -f https://raw.githubusercontent.com/flannel-io/flannel/master/Documentation/kube-flannel.yml
-
-init:	init-kubeadm init-kubeconfig init-configuration init-cni
+init:	init-kubeadm init-kubeconfig init-configuration
 
 ####################################
 # 証明書操作
@@ -42,7 +39,7 @@ copy-certs: generate-certs
 	ls -lsa /var/lib/kubelet/pki
 
 renew-certs: copy-certs
-	kubeadm certs renew all --config kubeadm-init.yaml
+	kubeadm certs renew all --config kubeadm.yaml
 
 ####################################
 # 動作確認、運用系
