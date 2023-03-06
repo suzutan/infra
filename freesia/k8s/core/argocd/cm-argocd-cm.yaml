@@ -1,0 +1,31 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: argocd-cm
+  labels:
+    app.kubernetes.io/name: argocd-cm
+
+data:
+  exec.enabled: "true"
+  helm.enabled: "true"
+  kustomize.buildOptions: --enable-helm --load-restrictor LoadRestrictionsNone
+  kustomize.enabled: "true"
+
+  statusbadge.enabled: "true"
+
+  url: https://argocd.harvestasya.org
+
+  users.anonymous.enabled: "true"
+  dex.config: |
+    connectors:
+      # GitHub example
+      - type: github
+        id: github
+        name: GitHub
+        config:
+          clientID: $argocd-custom-secret:dex.github.client-id
+          clientSecret: $argocd-custom-secret:dex.github.client-secret
+          orgs:
+          - name: harvestasya
+            # teams:
+            # - red-team
