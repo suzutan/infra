@@ -54,7 +54,8 @@ helmCharts:
 
         prometheusRule:
           enabled: false
-
+      service:
+        enabled: false
     # -- TCP service key-value pairs
     ## Ref: https://github.com/kubernetes/ingress-nginx/blob/main/docs/user-guide/exposing-tcp-udp-services.md
     ##
