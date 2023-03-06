@@ -17,4 +17,3 @@ helmCharts:
     operator:
       autoRestart: true
       create: true
-
