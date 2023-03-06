@@ -1,7 +1,7 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: k8s-core-applications
+  name: k8s-core
   namespace: argocd
 spec:
   destination:
