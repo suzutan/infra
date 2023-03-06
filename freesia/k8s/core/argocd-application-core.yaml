@@ -1,0 +1,17 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: k8s-core-applications
+  namespace: argocd
+spec:
+  destination:
+    server: "https://kubernetes.default.svc"
+  source:
+    path: freesia/k8s/core
+    repoURL: "git@github.com:suzutan/infra"
+    targetRevision: HEAD
+  project: core
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
