@@ -3,11 +3,8 @@ locals {
   org_owners = [
     "suzutan",
   ]
-  role_admin = [
-    "suzutan",
-  ]
   all_users = setunion(
-    local.role_admin,
+    local.role_argocd_admin,
   )
 
 
@@ -39,20 +36,4 @@ resource "github_team_membership" "members" {
   team_id  = github_team.role_members.id
   username = each.value
   role     = contains(local.org_owners, each.value) ? "maintainer" : "member"
-}
-
-
-
-resource "github_team" "role_admin" {
-  name                      = "admin"
-  description               = "admin"
-  privacy                   = "secret"
-  create_default_maintainer = false
-}
-
-resource "github_team_membership" "role_admin" {
-  for_each = toset(local.role_admin)
-  team_id  = github_team.role_admin.id
-  username = each.value
-  role     = "maintainer"
 }
