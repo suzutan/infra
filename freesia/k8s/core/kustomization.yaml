@@ -2,9 +2,9 @@ apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 
 resources:
-- argocd
-- cert-manager
-- ingress-nginx
-- kube-flannel
-- onepassword-operator
-- argocd-application-core.yaml
+- argocd-app-core.yaml
+- argocd-app-argocd.yaml
+- argocd-app-cert-manager.yaml
+- argocd-app-ingress-nginx.yaml
+- argocd-app-kube-flannel.yaml
+- argocd-app-onepassword-operator.yaml
