@@ -8,4 +8,3 @@ resources:
 - ingress-nginx/argocd-app-ingress-nginx.yaml
 - kube-flannel/argocd-app-kube-flannel.yaml
 - onepassword-operator/argocd-app-onepassword-operator.yaml
-- metrics-server/argocd-app-metrics-server.yaml
