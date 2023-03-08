@@ -4,3 +4,5 @@ kind: Kustomization
 resources:
 - ./onepassword-operator
 - ../core/kube-flannel
+- ../core/argocd
+- ../core
