@@ -9,3 +9,4 @@ resources:
 - kube-flannel/argocd-app-kube-flannel.yaml
 - onepassword-operator/argocd-app-onepassword-operator.yaml
 - metrics-server/argocd-app-metrics-server.yaml
+- nfs-subdir-external-provisioner/argocd-app-nfs-subdir-external-provisioner.yaml

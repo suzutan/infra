@@ -1,0 +1,33 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: nfs-subdir-external-provisioner
+  namespace: argocd
+spec:
+  project: default
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: kube-system
+
+  source:
+    repoURL: https://kubernetes-sigs.github.io/nfs-subdir-external-provisioner
+    chart: nfs-subdir-external-provisioner
+    targetRevision: 4.0.17
+    helm:
+      releaseName: nfs-subdir-external-provisioner
+      parameters:
+      - name: nfs.server
+        value: 192.168.100.221
+      - name: nfs.path
+        value: /freesia
+      - name: storageClass.create
+        value: "true"
+      - name: storageClass.defaultClass
+        value: "true"
+      - name: storageClass.name
+        value: nfs-client
+
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
