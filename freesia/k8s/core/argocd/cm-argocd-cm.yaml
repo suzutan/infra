@@ -15,7 +15,7 @@ data:
 
   url: https://argocd.harvestasya.org
 
-  users.anonymous.enabled: "true"
+  users.anonymous.enabled: "false"
   dex.config: |
     connectors:
       # GitHub example
