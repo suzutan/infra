@@ -7,7 +7,7 @@ spec:
   destination:
     server: "https://kubernetes.default.svc"
   source:
-    path: freesia/k8s/apps
+    path: freesia/k8s/apps/apps
     repoURL: "https://github.com/suzutan/infra.git"
     targetRevision: HEAD
   project: apps
