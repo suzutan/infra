@@ -10,7 +10,9 @@ commonLabels:
 resources:
 - namespace.yaml
 - role.yaml
-- projects.yaml
+- project-core.yaml
+- project-apps.yaml
+- project-maro.yaml
 - secret-argocd-custom-secret.yaml
 
 patches:
