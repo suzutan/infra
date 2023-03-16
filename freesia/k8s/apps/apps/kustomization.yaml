@@ -4,3 +4,4 @@ kind: Kustomization
 resources:
 - k8s-apps.yaml
 - ddns.yaml
+- prom-stack.yaml
