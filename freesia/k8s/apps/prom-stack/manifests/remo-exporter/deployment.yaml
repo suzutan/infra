@@ -1,0 +1,26 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: remo-exporter
+spec:
+  replicas: 1
+  template:
+    metadata:
+      annotations:
+        prometheus.io/scrape: "true"
+        prometheus.io/port: "9352"
+        prometheus.io/path: /metrics
+    spec:
+      containers:
+      - name: remo-exporter
+        image: kenfdev/remo-exporter:latest
+        ports:
+        - name: http
+          containerPort: 9352
+        resources:
+          limits:
+            cpu: 500m
+            memory: 100Mi
+        envFrom:
+        - secretRef:
+            name: nature-remo-token

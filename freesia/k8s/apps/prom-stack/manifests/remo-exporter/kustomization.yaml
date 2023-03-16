@@ -1,0 +1,9 @@
+resources:
+- deployment.yaml
+- service.yaml
+- ingress.yaml
+- secret-nature-remo-token.yaml
+
+commonLabels:
+  app.kubernetes.io/name: remo-exporter
+  app.kubernetes.io/component: exporter
