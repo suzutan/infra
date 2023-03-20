@@ -5,6 +5,8 @@ namespace: ingress-nginx
 
 resources:
 - namespace.yaml
+- cert-harvestasya-org-wildcard.yaml
+- cert-suzutan-jp-wildcard.yaml
 
 helmCharts:
 # https://github.com/kubernetes/ingress-nginx/tree/main/charts/ingress-nginx
@@ -39,8 +41,8 @@ helmCharts:
       # -- Additional command line arguments to pass to nginx-ingress-controller
       # E.g. to specify the default SSL certificate you can use
 
-      # extraArgs:
-      #   default-ssl-certificate: "ingress-nginx/ingress-default-certificate"
+      extraArgs:
+        default-ssl-certificate: "ingress-nginx/harvestasya-org-wildcard-tls"
 
       kind: DaemonSet
 
