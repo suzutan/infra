@@ -17,7 +17,7 @@ spec:
       releaseName: nfs-subdir-external-provisioner
       parameters:
       - name: nfs.server
-        value: 192.168.100.221
+        value: 172.20.1.3
       - name: nfs.path
         value: /freesia
       - name: storageClass.create
