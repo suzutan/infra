@@ -81,7 +81,6 @@ helmCharts:
         annotations:
           nginx.ingress.kubernetes.io/ssl-passthrough: "true"
           nginx.ingress.kubernetes.io/backend-protocol: "HTTPS"
-          cert-manager.io/cluster-issuer: letsencrypt-prod
         ## Argo Ingress.
         ## Hostnames must be provided if Ingress is enabled.
         ## Secrets must be manually created in the namespace
@@ -107,6 +106,5 @@ helmCharts:
         tls:
         - hosts:
           - argocd.harvestasya.org
-          secretName: argocd-server-tls
         # -- Uses `server.service.servicePortHttps` instead `server.service.servicePortHttp`
         https: true
