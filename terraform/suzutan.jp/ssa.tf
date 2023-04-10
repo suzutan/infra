@@ -9,7 +9,7 @@ resource "cloudflare_record" "ssa_sv_nas" {
 }
 resource "cloudflare_record" "ssa_cl_nas" {
   zone_id = data.cloudflare_zone.domain.id
-  name    = "nas.sv.ssa"
+  name    = "nas.cl.ssa"
   type    = "A"
   value   = "172.20.0.221"
   proxied = false
