@@ -11,6 +11,7 @@ resource "cloudflare_record" "osk_nw" {
   proxied = false
   ttl     = 1
 }
+
 resource "cloudflare_record" "rt_osk_nw" {
   zone_id = data.cloudflare_zone.domain.id
   name    = "rt.osk.nw"
@@ -19,6 +20,7 @@ resource "cloudflare_record" "rt_osk_nw" {
   proxied = false
   ttl     = 1
 }
+
 resource "cloudflare_record" "silverstone_osk_nw" {
   zone_id = data.cloudflare_zone.domain.id
   name    = "silverstone.osk.nw"
@@ -28,7 +30,7 @@ resource "cloudflare_record" "silverstone_osk_nw" {
   ttl     = 1
 }
 
-// mirakc
+
 resource "cloudflare_record" "spica" {
   zone_id = data.cloudflare_zone.domain.id
   name    = "spica"
@@ -37,7 +39,7 @@ resource "cloudflare_record" "spica" {
   proxied = true
   ttl     = 1
 }
-// epgstation
+
 resource "cloudflare_record" "atria" {
   zone_id = data.cloudflare_zone.domain.id
   name    = "atria"
