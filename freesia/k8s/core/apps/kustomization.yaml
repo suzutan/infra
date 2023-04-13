@@ -10,3 +10,4 @@ resources:
 - onepassword-operator.yaml
 - metrics-server.yaml
 - nfs-subdir-external-provisioner.yaml
+- datadog.yaml
