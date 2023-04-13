@@ -1,6 +1,6 @@
 {
   "CN": "kubelet",
-  "hosts": ["172.20.1.4", "freesia.sv.ssa.suzutan.jp"],
+  "hosts": ["172.20.0.4", "freesia.sv.ssa.suzutan.jp"],
   "key": {
     "algo": "rsa",
     "size": 2048

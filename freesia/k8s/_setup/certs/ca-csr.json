@@ -3,7 +3,7 @@
     "expiry": "87600h",
     "pathlen": 0
   },
-  "CN": "Harvestasya freesia k8s root CA v23.03.23",
+  "CN": "Harvestasya freesia k8s root CA v23.04.13",
   "key": {
     "algo": "ecdsa",
     "size": 521
