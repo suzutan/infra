@@ -41,7 +41,7 @@ helmCharts:
         ##
         annotations:
           # nginx.ingress.kubernetes.io/backend-protocol: "HTTPS"
-          cert-manager.io/cluster-issuer: letsencrypt-prod
+          # cert-manager.io/cluster-issuer: letsencrypt-prod
         ingressClassName: nginx
 
         hosts:
@@ -50,7 +50,7 @@ helmCharts:
         tls:
         - hosts:
           - prom.harvestasya.org
-          secretName: prometheus-tls
+          # secretName: prometheus-tls
 
       persistentVolume:
         size: 200Gi
