@@ -1,0 +1,77 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: jellyfin
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: jellyfin
+  # serviceName: jellyfin
+  template:
+    metadata:
+      labels:
+        app: jellyfin
+    spec:
+      containers:
+        - image: jellyfin/jellyfin:latest
+          name: jellyfin
+          ports:
+            - containerPort: 8096
+              name: http
+          readinessProbe:
+            httpGet:
+              path: /web/index.html
+              port: 8096
+            failureThreshold: 5
+            initialDelaySeconds: 15
+            periodSeconds: 10
+            timeoutSeconds: 3
+          resources:
+            requests:
+              cpu: 1000m
+              memory: 1Gi
+            limits:
+              cpu: 4000m
+              memory: 8Gi
+          securityContext:
+            allowPrivilegeEscalation: false
+          # volumeMounts:
+            # - name: dbfh
+            #   mountPath: /desertbus
+            #   readOnly: True
+            # - name: movies
+            #   mountPath: /movies
+            #   readOnly: True
+            # - name: shows
+            #   mountPath: /tv
+            #   readOnly: True
+            # - mountPath: /transcode
+            #   name: transcode
+            # - mountPath: /cache
+            #   name: cache
+            # - mountPath: /config
+            #   name: config
+  #     volumes:
+  #       - name: dbfh
+  #         persistentVolumeClaim:
+  #           claimName: nfs-videos-dbfh
+  #       - name: movies
+  #         persistentVolumeClaim:
+  #           claimName: nfs-videos-movies
+  #       - name: shows
+  #         persistentVolumeClaim:
+  #           claimName: nfs-videos-shows
+  #       - name: transcode
+  #         emptyDir: {}
+  #       - name: cache
+  #         emptyDir: {}
+  # volumeClaimTemplates:
+  #   - metadata:
+  #       name: config
+  #     spec:
+  #       accessModes: [ "ReadWriteOnce" ]
+  #       resources:
+  #         requests:
+  #           storage: 5Gi
+  #       storageClassName: nfs-client
