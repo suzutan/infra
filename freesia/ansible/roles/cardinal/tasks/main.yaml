@@ -13,6 +13,11 @@
     path: /etc/cardinal/userlist.d
     state: directory
 
+- name: Create empty file
+  file:
+    path: /etc/cardinal/userlist.d/empty
+    state: touch
+
 - name: copy cardinal service
   copy:
     src: "{{ item }}"

@@ -1,4 +1,3 @@
-root,suzutan
-ubuntu,suzutan
-suzutan,suzutan
-pi,suzutan
+root:suzutan
+ubuntu:suzutan
+suzutan:suzutan
