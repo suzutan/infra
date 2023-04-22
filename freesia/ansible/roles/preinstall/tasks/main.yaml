@@ -25,6 +25,7 @@
     - vim
     - zip
     - xfsprogs
+    - nfs-common
 
 - name: Remove useless packages from the cache
   apt:
