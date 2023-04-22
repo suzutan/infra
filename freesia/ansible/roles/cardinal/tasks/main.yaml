@@ -26,6 +26,11 @@
   - cardinal.timer
   - cardinal.service
 
+- name: Ensure /usr/local/sbin/cardinal is mutable.
+  file:
+    path: /usr/local/sbin/cardinal
+    attr: -i
+
 - name: copy cardinal script
   copy:
     src: cardinal

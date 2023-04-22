@@ -5,8 +5,12 @@ for target_user in $(cat /etc/cardinal/userlist /etc/cardinal/userlist.d/* | gre
   github_users=$(echo ${target_user} | cut -d":" -f2)
   if id ${linux_user} &>/dev/null; then
     echo "execute: ${linux_user}"
-    if ls /home/${linux_user}/.ssh/authorized_keys &>/dev/null; then
-      rm -f /home/${linux_user}/.ssh/authorized_keys
+    homedir=/home/${linux_user}
+    if [ "root" = "${linux_user}" ]; then
+      homedir="/root"
+    fi
+    if ls ${homedir}/.ssh/authorized_keys &>/dev/null; then
+      rm -f ${homedir}/.ssh/authorized_keys
     fi
     for i in $(echo ${github_users} | tr ',' ' '); do
       su - ${linux_user} -c "ssh-import-id gh:${i}"
