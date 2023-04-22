@@ -15,7 +15,7 @@ apiServer:
 certificatesDir: /etc/kubernetes/pki
 clusterName: kubernetes
 controllerManager: {}
-dns {}
+dns: {}
 etcd:
   local:
     dataDir: /var/lib/etcd
