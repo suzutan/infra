@@ -1,0 +1,17 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: asf
+  namespace: argocd
+spec:
+  destination:
+    server: "https://kubernetes.default.svc"
+  source:
+    path: freesia/k8s/apps/asf
+    repoURL: "https://github.com/suzutan/infra.git"
+    targetRevision: HEAD
+  project: apps
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
