@@ -14,17 +14,17 @@ spec:
         app: cloudflare-ddns
     spec:
       containers:
-        - name: cloudflare-ddns
-          image: oznu/cloudflare-ddns
-          env:
-            - name: ZONE
-              value: suzutan.jp
-            - name: SUBDOMAIN
-              value: edge.ssa.nw
-            - name: PROXIED
-              value: "false"
-            - name: API_KEY
-              valueFrom:
-                secretKeyRef:
-                  name: cloudflare-ddns-secret
-                  key: cloudflare-api-token
+      - name: cloudflare-ddns
+        image: oznu/cloudflare-ddns
+        env:
+        - name: ZONE
+          value: suzutan.jp
+        - name: SUBDOMAIN
+          value: edge.ssa.nw
+        - name: PROXIED
+          value: "false"
+        - name: API_KEY
+          valueFrom:
+            secretKeyRef:
+              name: cloudflare-ddns-secret
+              key: cloudflare-api-token
