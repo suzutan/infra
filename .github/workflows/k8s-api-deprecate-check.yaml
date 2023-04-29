@@ -1,0 +1,26 @@
+name: k8s api deprecate check
+
+on:
+  pull_request:
+    branches:
+      - master
+    paths:
+      - freesia/k8s/**/*.yaml
+
+env:
+  PLUTO_TARGET_DIRECTORY: freesia/k8s/
+
+jobs:
+  api-deprecate-check:
+    name: k8s api deprecate check
+    runs-on: ubuntu-20.04
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      - name: Download Pluto
+        uses: FairwindsOps/pluto/github-action@master
+
+      - name: Deprecated check
+        run: |
+          pluto detect-files -d ${PLUTO_TARGET_DIRECTORY}
