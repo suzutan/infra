@@ -1,0 +1,13 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: asf
+
+spec:
+  selector:
+    app: asf
+  ports:
+  - name: http
+    port: 1242
+    protocol: TCP
+    targetPort: http
