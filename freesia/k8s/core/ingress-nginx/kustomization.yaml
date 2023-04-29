@@ -67,5 +67,5 @@ helmCharts:
     # -- UDP service key-value pairs
     ## Ref: https://github.com/kubernetes/ingress-nginx/blob/main/docs/user-guide/exposing-tcp-udp-services.md
     ##
-    udp:
-      53: "kube-system/kube-dns:53"
+    # udp:
+    # 53: "kube-system/kube-dns:53"
