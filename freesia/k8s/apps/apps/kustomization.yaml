@@ -6,3 +6,4 @@ resources:
 - app-ddns.yaml
 - app-prom-stack.yaml
 - app-asf.yaml
+- app-freshrss.yaml
