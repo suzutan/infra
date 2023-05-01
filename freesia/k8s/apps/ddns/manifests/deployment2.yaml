@@ -20,7 +20,7 @@ spec:
         - name: ZONE
           value: harvestasya.org
         - name: SUBDOMAIN
-          value: ssa
+          value: ddns
         - name: PROXIED
           value: "false"
         - name: API_KEY
