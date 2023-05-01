@@ -1,0 +1,18 @@
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    app.kubernetes.io/name: freshrss
+    app: freshrss
+  name: freshrss
+  namespace: freshrss
+spec:
+  type: ClusterIP
+  selector:
+    app.kubernetes.io/name: freshrss
+    app: freshrss
+  ports:
+  - name: http
+    port: 80
+    protocol: TCP
+    targetPort: http

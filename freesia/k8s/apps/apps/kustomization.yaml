@@ -3,6 +3,7 @@ kind: Kustomization
 
 resources:
 - k8s-apps.yaml
-- ddns.yaml
-- prom-stack.yaml
-- asf.yaml
+- app-ddns.yaml
+- app-prom-stack.yaml
+- app-asf.yaml
+- app-freshrss.yaml

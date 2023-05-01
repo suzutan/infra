@@ -1,0 +1,16 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+
+namespace: freshrss
+resources:
+- deployment.yaml
+- ingress.yaml
+- persistentvolumeclaim.yaml
+- service.yaml
+
+configMapGenerator:
+- name: freshrss-env-config
+  literals:
+  - PGID="1001"
+  - PUID="1001"
+  - TZ=JST
