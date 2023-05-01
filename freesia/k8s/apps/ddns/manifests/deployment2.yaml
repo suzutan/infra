@@ -1,7 +1,7 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: ddns-suzutan-jp
+  name: ddns-harvestasya-org
 
 spec:
   replicas: 1
@@ -18,9 +18,9 @@ spec:
         image: oznu/cloudflare-ddns
         env:
         - name: ZONE
-          value: suzutan.jp
+          value: harvestasya.org
         - name: SUBDOMAIN
-          value: ssa
+          value: ddns
         - name: PROXIED
           value: "false"
         - name: API_KEY

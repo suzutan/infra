@@ -5,4 +5,8 @@ namespace: ddns
 resources:
 - namespace.yaml
 - deployment.yaml
+- deployment2.yaml
 - secret-cloudflare-ddns-secret.yaml
+
+commonLabels:
+  app: ddns
