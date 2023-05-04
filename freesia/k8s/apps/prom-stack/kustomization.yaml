@@ -11,7 +11,7 @@ helmCharts:
 - name: prometheus
   releaseName: prometheus
   namespace: prom-stack
-  version: 21.1.2
+  version: 22.0.1
   repo: https://prometheus-community.github.io/helm-charts
   includeCRDs: true
   valuesInline:
