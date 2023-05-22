@@ -4,7 +4,7 @@ kubernetesVersion: v1.27.0
 apiServer:
   certSANs:
   - freesia.sv.ssa.suzutan.jp
-  - 172.20.0.4
+  - 172.20.0.201
   extraArgs:
     authorization-mode: Node,RBAC
     oidc-client-id: 706074680767-ls9ioe0hvlcrr58tngj7jb2o00pmtke4.apps.googleusercontent.com
