@@ -8,7 +8,7 @@ terraform {
 }
 
 locals {
-  domain = "suzutan.jp"
+  domain     = "suzutan.jp"
   account_id = "3b433b4bc6b6f9770dbf88886748ec8b"
 }
 
