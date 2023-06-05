@@ -6,7 +6,7 @@
 install:
 	apt update
 	apt-mark unhold kubeadm kubelet kubectl
-	apt -y install kubeadm=1.27.0-00 kubectl=1.27.0-00 kubelet=1.27.0-00
+	apt -y install kubeadm=1.27.2-00 kubectl=1.27.2-00 kubelet=1.27.2-00
 	apt-mark hold kubeadm kubelet kubectl
 init-kubeadm: copy-certs
 	kubeadm init --config kubeadm.yaml
