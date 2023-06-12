@@ -6,6 +6,7 @@ metadata:
     app.kubernetes.io/name: argocd-cm
 
 data:
+  admin.enabled: "false"
   exec.enabled: "true"
   helm.enabled: "true"
   kustomize.buildOptions: --enable-helm --load-restrictor LoadRestrictionsNone
@@ -18,7 +19,6 @@ data:
   users.anonymous.enabled: "false"
   dex.config: |
     connectors:
-      # GitHub example
       - type: github
         id: github
         name: GitHub
