@@ -10,6 +10,7 @@ resource "cloudflare_ruleset" "ingress" {
     action      = "route"
     action_parameters {
       origin {
+        host = local.freesia_ddns_domain
         port = 17201
       }
     }
