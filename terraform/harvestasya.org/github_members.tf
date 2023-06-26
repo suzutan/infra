@@ -5,7 +5,6 @@ locals {
   ]
   all_users = setunion(
     local.role_argocd_admin,
-    local.role_mt_dynmap_users,
     local.role_asf_users,
   )
 
