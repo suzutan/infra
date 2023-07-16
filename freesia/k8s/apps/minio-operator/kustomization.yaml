@@ -19,7 +19,7 @@ helmCharts:
         ingressClassName: "nginx"
         tls:
         - hosts:
-          - minio-console.harvestasya.org
-        host: minio-console.harvestasya.org
+          - minio-op-console.harvestasya.org
+        host: minio-op-console.harvestasya.org
         path: /
         pathType: Prefix
