@@ -2,8 +2,10 @@ apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 
 resources:
-- k8s-apps.yaml
-- app-ddns.yaml
-- app-prom-stack.yaml
 - app-asf.yaml
+- app-ddns.yaml
 - app-freshrss.yaml
+- app-minio-operator.yaml
+- app-minio.yaml
+- app-prom-stack.yaml
+- k8s-apps.yaml
