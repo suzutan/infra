@@ -1,0 +1,25 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+
+namespace: minio-operator
+
+resources:
+  - namespace.yaml
+
+helmCharts:
+- name: operator
+  releaseName: minio-operator
+  namespace: minio-operator
+  version: v5.0.6
+  repo: https://operator.min.io/
+  valuesInline:
+    console:
+      ingress:
+        enabled: true
+        ingressClassName: "nginx"
+        tls:
+        - hosts:
+          - minio-console.harvestasya.org
+        host: minio-console.harvestasya.org
+        path: /
+        pathType: Prefix
