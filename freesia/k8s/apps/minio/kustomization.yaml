@@ -1,0 +1,72 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+
+namespace: minio
+
+resources:
+- namespace.yaml
+- secret-minio-access-key.yaml
+
+helmCharts:
+- name: tenant
+  releaseName: minio
+  namespace: minio
+  version: v5.0.6
+  repo: https://operator.min.io/
+  valuesInline:
+    secrets:
+      existingSecret: minio-access-key
+    tenant:
+      name: minio
+      configuration:
+        name: minio-access-key
+      pools:
+        ## Servers specifies the number of MinIO Tenant Pods / Servers in this pool.
+        ## For standalone mode, supply 1. For distributed mode, supply 4 or more.
+        ## Note that the operator does not support upgrading from standalone to distributed mode.
+        - servers: 1
+          ## custom name for the pool
+          name: pool-0
+          ## volumesPerServer specifies the number of volumes attached per MinIO Tenant Pod / Server.
+          volumesPerServer: 1
+          ## size specifies the capacity per volume
+          size: 100Gi
+          ## storageClass specifies the storage class name to be used for this pool
+          storageClassName: nfs-client
+
+      subPath: /data
+      # pool metrics to be read by Prometheus
+      metrics:
+        enabled: true
+        port: 9000
+        protocol: http
+      certificate:
+        requestAutoCert: false
+      buckets:
+        - name: thanos
+          objectLock: false
+          region: ap-northeast-1
+
+    ingress:
+      api:
+        enabled: true
+        ingressClassName: "nginx"
+        # annotations:
+        #   nginx.ingress.kubernetes.io/backend-protocol: https
+        tls:
+        - hosts:
+          - minio.harvestasya.org
+        host: minio.harvestasya.org
+        path: /
+        pathType: Prefix
+      console:
+        enabled: true
+        ingressClassName: "nginx"
+        # annotations:
+        #   nginx.ingress.kubernetes.io/backend-protocol: https
+        tls:
+        - hosts:
+          - minio-console.harvestasya.org
+        host: minio-console.harvestasya.org
+        path: /
+        pathType: Prefix
