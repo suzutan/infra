@@ -7,4 +7,4 @@ packages:
 - name: kubernetes/kubectl
   version: "v1.23.0"
 - name: helm/helm@v3.12.2
-- name: hashicorp/terraform@v1.5.3
+- name: hashicorp/terraform@v1.5.4
