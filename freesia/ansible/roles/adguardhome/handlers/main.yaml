@@ -1,0 +1,15 @@
+
+- name: restart systemd-resolved
+  systemd_service:
+    name: systemd-resolved
+    state: restarted
+    daemon_reload: true
+
+- name: apply netplan
+  command: netplan apply
+
+- name: restart adguardhome
+  systemd_service:
+    name: adguardhome
+    state: restarted
+    daemon_reload: true
