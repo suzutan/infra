@@ -10,7 +10,7 @@ helmCharts:
 - name: operator
   releaseName: minio-operator
   namespace: minio-operator
-  version: v5.0.6
+  version: 5.0.7
   repo: https://operator.min.io/
   valuesInline:
     console:
