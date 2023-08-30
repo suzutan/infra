@@ -4,5 +4,8 @@
 # 	pip3 install -u ansible
 # 	ansible-galaxy collection install community.general
 
+poetry:
+	pip install -U pip
+	pip install -U poetry
 deploy:
-	ansible-playbook -i inventory/hosts.yaml site.yaml
+	poetry run ansible-playbook -i inventory/hosts.yaml site.yaml
