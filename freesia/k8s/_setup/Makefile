@@ -1,12 +1,13 @@
 .PHONY: all
 
+kube_version=1.28.0
 ####################################
 # 初期設定まわり
 ####################################
 install:
 	apt update
 	apt-mark unhold kubeadm kubelet kubectl
-	apt -y install kubeadm=1.27.2-00 kubectl=1.27.2-00 kubelet=1.27.2-00
+	apt -y install kubeadm=${kube_version}-00 kubectl=${kube_version}-00 kubelet=${kube_version}-00
 	apt-mark hold kubeadm kubelet kubectl
 init-kubeadm: copy-certs
 	kubeadm init --config kubeadm.yaml
@@ -55,3 +56,8 @@ check-ca:
 
 reset:
 	kubeadm reset -f
+
+upgrade-plan: install
+	kubeadm upgrade plan
+upgrade:
+	kubeadm upgrade apply v${kube_version}
