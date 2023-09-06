@@ -11,7 +11,7 @@ helmCharts:
 - name: tenant
   releaseName: minio
   namespace: minio
-  version: 5.0.7
+  version: 5.0.8
   repo: https://operator.min.io/
   valuesInline:
     secrets:
