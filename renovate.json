@@ -22,7 +22,7 @@
     {
       "fileMatch": ["kustomization\\.ya?ml$"],
       "matchStrings": [
-        "https://download.elastic.co/downloads/eck/(?<currentValue>.*?)/.*"
+        "https://download.elastic.co/downloads/eck/(?<currentValue>\\d+\\.\\d+\\.\\d+)/.*"
       ],
       "datasourceTemplate": "github-releases",
       "depNameTemplate": "elastic/cloud-on-k8s"
