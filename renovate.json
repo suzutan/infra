@@ -28,10 +28,11 @@
     {
       "fileMatch": ["kustomization\\.ya?ml$"],
       "matchStrings": [
-        "https://download.elastic.co/downloads/eck/(?<currentValue>\\d+\\.\\d+\\.\\d+)/.*"
+        "https://download.elastic.co/downloads/eck/(?<currentValue>.*?)/.*"
       ],
       "datasourceTemplate": "github-releases",
-      "depNameTemplate": "elastic/cloud-on-k8s"
+      "depNameTemplate": "elastic/cloud-on-k8s",
+      "versioning": "semver"
     }
   ]
 }
