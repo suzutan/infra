@@ -18,6 +18,14 @@
       "fileMatch": ["kustomization\\.ya?ml$"],
       "matchStrings": ["https://raw.githubusercontent.com/(?<depName>[^\/]*\/[^\/]*)/(?<currentValue>.*?)/"],
       "datasourceTemplate": "github-tags"
+    },
+    {
+      "fileMatch": ["kustomization\\.ya?ml$"],
+      "matchStrings": [
+        "https://download.elastic.co/downloads/eck/(?<currentValue>.*?)/.*"
+      ],
+      "datasourceTemplate": "github-releases",
+      "packageNameTemplate": "elastic/cloud-on-k8s"
     }
   ]
 }
