@@ -1,8 +1,14 @@
 {
   "$schema": "https://docs.renovatebot.com/renovate-schema.json",
-  "extends": ["config:base", "github>aquaproj/aqua-renovate-config#1.11.0"],
-  "ignorePresets": [":prHourlyLimit2"],
-  "timezone": "Asia/Tokyo",
+  "extends": [
+    ":pinAllExceptPeerDependencies",
+    ":prNotPending",
+    ":disableRateLimiting",
+    ":timezone(Asia/Tokyo)",
+    ":semanticCommits",
+    "config:recommended",
+    "github>aquaproj/aqua-renovate-config#1.11.0"
+  ],
   "automerge": true,
   "branchConcurrentLimit": 0,
   "argocd": {
