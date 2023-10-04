@@ -3,7 +3,7 @@
 
 provider "registry.terraform.io/cloudflare/cloudflare" {
   version     = "4.16.0"
-  constraints = "~> 4.0"
+  constraints = "4.16.0"
   hashes = [
     "h1:24Gub3Wi3qBknIoJkXO8h91JAnX230cGufrKflefABY=",
     "h1:5/Mz4BadyjMXarbuNclVvJsZ9WpUXCBpPpeTeMJA3fM=",
@@ -24,7 +24,7 @@ provider "registry.terraform.io/cloudflare/cloudflare" {
 
 provider "registry.terraform.io/integrations/github" {
   version     = "5.39.0"
-  constraints = "~> 5.0"
+  constraints = "5.39.0"
   hashes = [
     "h1:06Scx58eTkq75+Gab2yLEGSJVExgBrs3x41VzZsqLpM=",
     "h1:1husYTourHfAVSU5PBw+2Zy+lHEOo5Ps5it7ImFpgzI=",
