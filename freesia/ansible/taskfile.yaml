@@ -1,0 +1,18 @@
+version: '3'
+
+env: {}
+tasks:
+  poetry:
+    cmds:
+    - pip install -U pip poetry
+
+  update:
+    cmds:
+    - poetry update
+
+  deploy:
+    cmds:
+    - poetry run ansible-playbook -i inventory/hosts.yaml site.yaml
+  dev:
+    cmds:
+    - poetry run ansible-playbook -i inventory/hosts.yaml dev.yaml
