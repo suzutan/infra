@@ -4,6 +4,9 @@ resources:
 - ingress.yaml
 - secret-nature-remo-token.yaml
 
-commonLabels:
-  app.kubernetes.io/name: remo-exporter
-  app.kubernetes.io/component: exporter
+labels:
+- pairs:
+    app.kubernetes.io/name: remo-exporter
+    app.kubernetes.io/instance: remo-exporter
+    app.kubernetes.io/component: promethus-exporter
+  includeSelectors: true

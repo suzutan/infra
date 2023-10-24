@@ -2,7 +2,6 @@ apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
   name: remo-exporter
-  namespace: infra
 spec:
   ingressClassName: nginx
   rules:
@@ -19,5 +18,3 @@ spec:
   tls:
   - hosts:
     - remo-exporter.harvestasya.org
-status:
-  loadBalancer: {}
