@@ -1171,23 +1171,7 @@ objstoreFile: ""
 # https://kubernetes.io/docs/concepts/configuration/pod-priority-preemption/
 priorityClassName: ""
 objstore: {}
-  # type: GCS
-  # config:
-  #   bucket: "suzutan-infra"
-  #   service_account: |-
-  #     {
-  #       "type": "service_account",
-  #       "project_id": "suzutan0s2-286610",
-  #       "private_key_id": "f50e9efb50b0d0753f8b8bb4eafd25923d9a1a59",
-  #       "private_key": "-----BEGIN PRIVATE KEY-----\nMIIEvQIBADANBgkqhkiG9w0BAQEFAASCBKcwggSjAgEAAoIBAQDY5GQgqtl6hxGZ\ng6a/UQKwVCrdIlD/hwSyBsPO2J9eRG0TEY2lOws5gM6R9XI4EJ7Dyhmm9AnINOOi\n/nwDpZ9T1/jmnboKuiMWAUay+xN+n26RPrk2NZWETeUOitrv1+fcv3rh/PKbhv1u\n3bbXTooKXNI9n4HAZ1GXjmOQaSLPLIB+DguVehqIDk089Mk0I326oRkH2B+u03Qk\nwyVUr/2CfzWYfphhN/VdrSecSUKB3OfX1P8gU46KEgfC+jNgd6yLPBQwcUBINBD0\n8zUmXV2w7wb2lY02fuAGiKNP1B2lbE0sK45yDR9I1zac+GydFJgoWDbhaE9eoaTG\nrwZhUMZ/AgMBAAECggEAD+EkDFkJFFwNOtF7uA6E6600RWQJmbVXiUObh52U7w1Q\np91YiU9gWM5u0U4VSOuJypXiX1A6SYRg+88CYpX4ROacD4f4VgHr9BfioDoBSS6Z\n2FwT3VctyJww+ANmJVQH/FtJWOa9fT7BEVV92UrW9z+o5azm9NPbrAS9xckcxlDx\neVAeoiFwBDRLnY0IxXxJbivdLZTZW8sPa6rV88ham/FIdxXD534rK7XF2IxPEpwt\nIBOUXuaSexh2GbZmE8nGSTZDSiOfaHOk3qGBddYgYX+CaEYP4pQz9WRVqMyNFajH\nnf+VPhVHLgcD2iliuwhVDPJqYqgMbwwC3ADNpKy6uQKBgQDvQ6lokNj8q6F9AEIY\nXt6KQPePKYblj0O2u6/PPf5sfa+Y+I5QXgHIFirMfZH246q3YxLojFYPe8M3ZLDh\nBR745lGLHvcDTIMWD6GXY3at4WUXscCT6luNS858ouo3nUmrWNq/h66dh6/HBX+l\npgsw4exb62yCDVtf5jyks8cSQwKBgQDoECB/LDFCRGInAi1rEpG4aPUnUoe0ObmW\n6h+jde8wpZd5F9fgyAn0SHj6kLlM5F/aPrSkALo1Q70uTbhh78tHh5tHaVrpdbqe\nr8DdIHkQ6Zd9zv32ST3VGpkfZBM7delj/Xb8WQHDxK+yMwFji59X3Mc15HiiI4xb\n5z2c1PetFQKBgAkN1mtOj+d/1yyTxeyGKoWwz61rNN+a/ET99Tkyb15Lo0l2nmwM\nIqUfsZ7rYYqmMt+dsCl8pgUP+eMuvELHntRsYsmQ8mf9jThYfxTrfqI11U2APHlc\ndPpz0+yDfbl9CjyhsCVvTPxJFi3B14K9Nc8zvW39Cq4hM0P9wm25H99hAoGADeXx\nXEx0Qsi/rCBoQfJhwc6faBR8RiHy6IPrEyocAijYsoroBfFVD0lL3Y3PWziOOQ7q\nWKwmeswsx1omQc9PuF/5v8QiirrfS2OxRE0OkyG6TfGYqihmyJ2IMCYZNMVyDef/\nOUvHXEcqUpzVZ3XUPDnfwG2HgAZrAJIP0ZW7o6UCgYEA3MW8PgSGFYTcxkKMvl1I\nkWhpgd5QV12UwLyC4MIsES5Qh78rH2FoBdtIMMucoTg+R6qmnvvWQW0rJbp2ZH8q\nRCTxs3piPChj2RZe7aSv7KnAMqL13ZC/BRsoHEsVixyDEjTQWmkDo4Dv3KPVvvYK\nbzvToLQkfljFgaFI8txKz2Y=\n-----END PRIVATE KEY-----\n",
-  #       "client_email": "suzutan-infra@suzutan0s2-286610.iam.gserviceaccount.com",
-  #       "client_id": "107195105066783280062",
-  #       "auth_uri": "https://accounts.google.com/o/oauth2/auth",
-  #       "token_uri": "https://oauth2.googleapis.com/token",
-  #       "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
-  #       "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/suzutan-infra%40suzutan0s2-286610.iam.gserviceaccount.com",
-  #       "universe_domain": "googleapis.com"
-  #     }
+
 
   #
   # type: S3
