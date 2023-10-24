@@ -1,0 +1,28 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: prometheus
+  namespace: thanos
+  labels:
+    app: prometheus
+    
+    app.kubernetes.io/managed-by: Helm
+    app.kubernetes.io/instance: prometheus-v3
+    app.kubernetes.io/version: "51.9.2"
+    app.kubernetes.io/part-of: kube-prometheus-stack
+    chart: kube-prometheus-stack-51.9.2
+    release: "prometheus-v3"
+    heritage: "Helm"
+spec:
+  ingressClassName: nginx
+  rules:
+    - host: prometheus-v3.harvestasya.org
+      http:
+        paths:
+          - path: /
+            pathType: ImplementationSpecific
+            backend:
+              service:
+                name: prometheus
+                port:
+                  number: 9090
