@@ -6,3 +6,8 @@ resources:
   - prometheus
   - thanos
   - remo-exporter
+
+labels:
+- pairs:
+    app.kubernetes.io/managed-by: kustomize
+  includeSelectors: false

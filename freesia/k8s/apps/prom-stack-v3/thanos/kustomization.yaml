@@ -16,6 +16,3 @@ labels:
     app.kubernetes.io/name: thanos
     app.kubernetes.io/instance: thanos
   includeSelectors: true
-- pairs:
-    app.kubernetes.io/managed-by: kustomize
-  includeSelectors: false
