@@ -2431,7 +2431,7 @@ prometheusOperator:
   thanosImage:
     registry: quay.io
     repository: thanos/thanos
-    tag: v0.32.4
+    tag: v0.32.5
     sha: ""
 
   ## Set a Label Selector to filter watched prometheus and prometheusAgent
@@ -3431,7 +3431,7 @@ prometheus:
     ## ref: https://github.com/prometheus-operator/prometheus-operator/blob/main/Documentation/api.md#thanosspec
     ##
     thanos:
-      image: quay.io/thanos/thanos:v0.32.3
+      image: quay.io/thanos/thanos:v0.32.5
       objectStorageConfig:
         name: thanos-bucket-config
         key: object-store.yaml
@@ -3896,7 +3896,7 @@ thanosRuler:
     image:
       registry: quay.io
       repository: thanos/thanos
-      tag: v0.32.3
+      tag: v0.32.5
       sha: ""
 
     ## Namespaces to be selected for PrometheusRules discovery.
