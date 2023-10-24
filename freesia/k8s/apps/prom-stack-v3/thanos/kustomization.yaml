@@ -4,4 +4,18 @@ kind: Kustomization
 namespace: thanos
 
 resources:
-  - secret-thanos-bucket-config.yaml
+- secret-thanos-bucket-config.yaml
+- thanos-bucket
+- thanos-compact
+- thanos-query
+- thanos-rule
+- thanos-store
+
+labels:
+- pairs:
+    app.kubernetes.io/name: thanos
+    app.kubernetes.io/instance: thanos
+  includeSelectors: true
+- pairs:
+    app.kubernetes.io/managed-by: kustomize
+  includeSelectors: false

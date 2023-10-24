@@ -11,4 +11,13 @@ tasks:
       - helm upgrade --install -n thanos thanos banzaicloud-stable/thanos -f values.yaml
   manifests:
     cmds:
-      - helm template -n thanos prometheus-v3 prometheus-community/kube-prometheus-stack -f values.yaml > manifests.yaml
+      - helm template -n thanos thanos banzaicloud-stable/thanos -f values.yaml > manifests.yaml
+  context:
+    cmds:
+      - kubectl config set-context kubernetes-admin@kubernetes
+  diff:
+    cmds:
+      - kustomize build . | kubectl diff -f-
+  apply:
+    cmds:
+      - kustomize build . | kubectl apply -f-

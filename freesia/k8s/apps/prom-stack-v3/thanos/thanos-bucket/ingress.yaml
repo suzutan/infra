@@ -1,0 +1,22 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: thanos-bucket
+  annotations:
+    kubernetes.io/ingress.class: nginx
+  labels:
+    app.kubernetes.io/name: thanos
+    app.kubernetes.io/instance: thanos
+    app.kubernetes.io/component: bucket
+spec:
+  rules:
+  - host: thanos-bucket.harvestasya.org
+    http:
+      paths:
+        - path: /
+          pathType: ImplementationSpecific
+          backend:
+            service:
+              name: thanos-bucket
+              port:
+                number: 8080
