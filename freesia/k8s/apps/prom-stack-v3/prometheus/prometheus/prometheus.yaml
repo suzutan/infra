@@ -1,0 +1,90 @@
+apiVersion: monitoring.coreos.com/v1
+kind: Prometheus
+metadata:
+  name: prometheus-v3-kube-prometh-prometheus
+  namespace: thanos
+  labels:
+    app: kube-prometheus-stack-prometheus
+
+    app.kubernetes.io/managed-by: Helm
+    app.kubernetes.io/instance: prometheus-v3
+    app.kubernetes.io/version: "51.10.0"
+    app.kubernetes.io/part-of: kube-prometheus-stack
+    chart: kube-prometheus-stack-51.10.0
+    release: "prometheus-v3"
+    heritage: "Helm"
+spec:
+  alerting:
+    alertmanagers:
+      - namespace: thanos
+        name: prometheus-v3-kube-prometh-alertmanager
+        port: http-web
+        pathPrefix: "/"
+        apiVersion: v2
+  image: "quay.io/prometheus/prometheus:v2.47.1"
+  version: v2.47.1
+  externalUrl: "http://prometheus-v3.harvestasya.org/"
+  paused: false
+  replicas: 1
+  shards: 1
+  logLevel: info
+  logFormat: logfmt
+  listenLocal: false
+  enableAdminAPI: true
+  retention: "10d"
+  tsdb:
+    outOfOrderTimeWindow: 0s
+  walCompression: true
+  routePrefix: "/"
+  serviceAccountName: prometheus-v3-kube-prometh-prometheus
+  serviceMonitorSelector:
+    matchLabels:
+      release: "prometheus-v3"
+
+  serviceMonitorNamespaceSelector: {}
+  podMonitorSelector:
+    matchLabels:
+      release: "prometheus-v3"
+
+  podMonitorNamespaceSelector: {}
+  probeSelector:
+    matchLabels:
+      release: "prometheus-v3"
+
+  probeNamespaceSelector: {}
+  securityContext:
+    fsGroup: 2000
+    runAsGroup: 2000
+    runAsNonRoot: true
+    runAsUser: 1000
+    seccompProfile:
+      type: RuntimeDefault
+  ruleNamespaceSelector: {}
+  ruleSelector:
+    matchLabels:
+      release: "prometheus-v3"
+
+  scrapeConfigSelector:
+    matchLabels:
+      release: "prometheus-v3"
+
+  scrapeConfigNamespaceSelector: {}
+  storage:
+    volumeClaimTemplate:
+      spec:
+        accessModes:
+          - ReadWriteOnce
+        resources:
+          requests:
+            storage: 50Gi
+        storageClassName: nfs-client
+  additionalScrapeConfigs:
+    name: prometheus-v3-kube-prometh-prometheus-scrape-confg
+    key: additional-scrape-configs.yaml
+  thanos:
+    image: quay.io/thanos/thanos:v0.32.3
+    objectStorageConfig:
+      key: object-store.yaml
+      name: thanos-bucket-config
+  portName: http-web
+  hostNetwork: false

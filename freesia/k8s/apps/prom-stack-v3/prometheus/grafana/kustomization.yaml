@@ -1,0 +1,18 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+
+namespace: thanos
+resources:
+  - configmap-grafana-config-dashboards.yaml
+  - configmap-grafana-datasource.yaml
+  - configmap-grafana.yaml
+  - cr.yaml
+  - deployment.yaml
+  - grafana-dashboards.yaml
+  - ingress.yaml
+  - role.yaml
+  - rolebinding.yaml
+  - secret.yaml
+  - service.yaml
+  - serviceaccount.yaml
+  - servicemonitor.yaml

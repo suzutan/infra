@@ -1,0 +1,26 @@
+apiVersion: monitoring.coreos.com/v1
+kind: ServiceMonitor
+metadata:
+  name: prometheus-v3-kube-prometh-thanos-sidecar
+  namespace: thanos
+  labels:
+    app: kube-prometheus-stack-thanos-sidecar
+
+    app.kubernetes.io/managed-by: Helm
+    app.kubernetes.io/instance: prometheus-v3
+    app.kubernetes.io/version: "51.10.0"
+    app.kubernetes.io/part-of: kube-prometheus-stack
+    chart: kube-prometheus-stack-51.10.0
+    release: "prometheus-v3"
+    heritage: "Helm"
+spec:
+  selector:
+    matchLabels:
+      app: kube-prometheus-stack-thanos-discovery
+      release: "prometheus-v3"
+  namespaceSelector:
+    matchNames:
+      - "thanos"
+  endpoints:
+    - port: http
+      path: "/metrics"

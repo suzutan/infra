@@ -1,0 +1,16 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+
+namespace: thanos
+resources:
+  - service-coredns.yaml
+  - service-kube-controller-manager.yaml
+  - service-kube-etcd.yaml
+  - service-kube-scheduler.yaml
+  - servicemonitor-coredns.yaml
+  - servicemonitor-kube-apiserver.yaml
+  - servicemonitor-kube-controller-manager.yaml
+  - servicemonitor-kube-etcd.yaml
+  - servicemonitor-kube-proxy.yaml
+  - servicemonitor-kube-scheduler.yaml
+  - servicemonitor-kubelet.yaml
