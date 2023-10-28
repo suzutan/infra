@@ -9,5 +9,3 @@ spec:
   selector:
     matchLabels:
       app.kubernetes.io/name: alertmanager
-      app.kubernetes.io/component: alertmanager
-      app.kubernetes.io/part-of: temporis
