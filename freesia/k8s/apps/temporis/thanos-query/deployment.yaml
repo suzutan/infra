@@ -5,7 +5,7 @@ metadata:
   labels:
     app.kubernetes.io/name: thanos-query
 spec:
-  replicas: 1
+  replicas: 2
   selector:
     matchLabels:
       app.kubernetes.io/name: thanos-query
@@ -19,16 +19,15 @@ spec:
           image: "quay.io/thanos/thanos:v0.32.5"
           imagePullPolicy: IfNotPresent
           args:
-            - "query"
-            - "--log.level=info"
-            - "--log.format=logfmt"
-            - "--grpc-address=0.0.0.0:10901"
-            - "--http-address=0.0.0.0:10902"
-            - "--query.auto-downsampling"
-            - "--store.sd-dns-resolver=miekgdns"
-            - "--store=dnssrv+_grpc._tcp.thanos-store-grpc.temporis.svc.cluster.local"
-            - "--store=dnssrv+_grpc._tcp.prometheus-thanos-sidecar.temporis.svc.cluster.local"
-            - "--store.sd-interval=5m"
+            - query
+            - --grpc-address=0.0.0.0:10901
+            - --http-address=0.0.0.0:10902
+            - --query.replica-label=receive_replica
+            - --query.replica-label=rule_replica
+            - --query.replica-label=sidecar_replica
+            - --query.replica-label=tenant_id
+            - --store=dnssrv+_grpc._tcp.thanos-store-grpc.temporis.svc.cluster.local
+            - --store=dnssrv+_grpc._tcp.prometheus-thanos-sidecar.temporis.svc.cluster.local
           ports:
             - name: http
               containerPort: 10902

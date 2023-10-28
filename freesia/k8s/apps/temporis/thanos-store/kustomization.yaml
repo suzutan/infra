@@ -7,7 +7,6 @@ resources:
   - deployment.yaml
   - ingress-grpc.yaml
   - ingress-http.yaml
-  - pvc-store-data-volume.yaml
   - service-grpc.yaml
   - service-http.yaml
 

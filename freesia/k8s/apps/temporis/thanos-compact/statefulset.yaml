@@ -1,5 +1,5 @@
 apiVersion: apps/v1
-kind: Deployment
+kind: StatefulSet
 metadata:
   name: thanos-compact
   labels:
@@ -9,6 +9,7 @@ spec:
   selector:
     matchLabels:
       app.kubernetes.io/name: thanos-compact
+  serviceName: thanos
   template:
     metadata:
       labels:
@@ -19,33 +20,25 @@ spec:
           image: "quay.io/thanos/thanos:v0.32.5"
           imagePullPolicy: IfNotPresent
           args:
-            - "compact"
-            - "--log.level=info"
-            - "--log.format=logfmt"
-            - "--http-address=0.0.0.0:10902"
-            - "--objstore.config-file=/etc/config/object-store.yaml"
-            - "--data-dir=/var/thanos/compact"
-            - "--consistency-delay=30m"
-            - "--retention.resolution-raw=30d"
-            - "--retention.resolution-5m=120d"
-            - "--retention.resolution-1h=1y"
-            - "--block-sync-concurrency=20"
-            - "--compact.concurrency=1"
-            - "--wait"
+            - compact"
+            - --objstore.config-file=/etc/config/object-store.yaml
+            - --data-dir=/var/thanos/compact
+            - --compact.concurrency=1
+            - --downsample.concurrency=1
+            - --wait
           ports:
             - name: http
               containerPort: 10902
           volumeMounts:
-            - name: config-volume
+            - name: data-dir
               mountPath: /etc/config
               readOnly: true
             - name: data-volume
               mountPath: /var/thanos/compact
           resources: {}
       volumes:
-        - name: data-volume
-          persistentVolumeClaim:
-            claimName: compact-data-volume
+        - name: data-dir
+          emptyDir: {}
         - name: config-volume
           secret:
             secretName: "thanos-bucket-config"

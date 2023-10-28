@@ -4,9 +4,9 @@ kind: Kustomization
 namespace: temporis
 
 resources:
-  - deployment.yaml
   - service.yaml
   - pvc-compact-data-volume.yaml
+  - statefulset.yaml
 
 labels:
   - pairs:
