@@ -1,0 +1,28 @@
+apiVersion: monitoring.coreos.com/v1
+kind: ServiceMonitor
+metadata:
+  name: prometheus-operator
+  labels:
+    app.kubernetes.io/name: prometheus-operator
+    app.kubernetes.io/component: prometheus-operator
+    app.kubernetes.io/part-of: temporis
+spec:
+  endpoints:
+    - port: https
+      scheme: https
+      tlsConfig:
+        serverName: prometheus-operator
+        ca:
+          secret:
+            name: prometheus-admission-webhook
+            key: ca
+            optional: false
+      honorLabels: true
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: prometheus-operator
+      app.kubernetes.io/component: prometheus-operator
+      app.kubernetes.io/part-of: temporis
+  namespaceSelector:
+    matchNames:
+      - "temporis"
