@@ -3,16 +3,12 @@ kind: Service
 metadata:
   name: thanos-compact
   labels:
-    app.kubernetes.io/instance: thanos
-    app.kubernetes.io/component: compact
-
+    app.kubernetes.io/name: thanos-compact
 spec:
   ports:
-  - port: 10902
-    protocol: TCP
-    targetPort: http
-    name: http
+    - port: 10902
+      protocol: TCP
+      targetPort: http
+      name: http
   selector:
-    app.kubernetes.io/name: thanos
-    app.kubernetes.io/instance: thanos
-    app.kubernetes.io/component: compact
+    app.kubernetes.io/name: thanos-compact

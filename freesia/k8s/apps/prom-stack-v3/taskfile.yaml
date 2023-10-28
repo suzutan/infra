@@ -19,3 +19,8 @@ tasks:
       - context
     cmds:
       - kustomize build . | kubectl apply -f-
+  delete:
+    deps:
+      - context
+    cmds:
+      - kustomize build . | kubectl delete -f-

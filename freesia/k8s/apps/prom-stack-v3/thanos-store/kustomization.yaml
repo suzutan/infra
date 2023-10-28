@@ -13,7 +13,9 @@ resources:
 
 labels:
   - pairs:
-      app.kubernetes.io/name: thanos
+      app.kubernetes.io/name: thanos-store
+    includeSelectors: true
+  - pairs:
       app.kubernetes.io/instance: thanos
       app.kubernetes.io/component: store
-    includeSelectors: true
+    includeSelectors: false

@@ -3,10 +3,7 @@ kind: Service
 metadata:
   name: thanos-query-http
   labels:
-    app.kubernetes.io/name: thanos
-    app.kubernetes.io/instance: thanos
-    app.kubernetes.io/component: query
-
+    app.kubernetes.io/name: thanos-query
 spec:
   type: ClusterIP
   ports:

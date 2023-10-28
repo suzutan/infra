@@ -17,7 +17,9 @@ configMapGenerator:
 
 labels:
   - pairs:
-      app.kubernetes.io/name: thanos
+      app.kubernetes.io/name: thanos-rule
+    includeSelectors: true
+  - pairs:
       app.kubernetes.io/instance: thanos
       app.kubernetes.io/component: rule
-    includeSelectors: true
+    includeSelectors: false

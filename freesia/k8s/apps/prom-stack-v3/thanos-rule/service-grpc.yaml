@@ -3,10 +3,7 @@ kind: Service
 metadata:
   name: thanos-rule-grpc
   labels:
-    app.kubernetes.io/name: thanos
-    app.kubernetes.io/instance: thanos
-    app.kubernetes.io/component: rule
-
+    app.kubernetes.io/name: thanos-rule
 spec:
   type: ClusterIP
   clusterIP: None
@@ -16,6 +13,4 @@ spec:
       targetPort: grpc
       name: grpc
   selector:
-    app.kubernetes.io/name: thanos
-    app.kubernetes.io/instance: thanos
-    app.kubernetes.io/component: rule
+    app.kubernetes.io/name: thanos-rule

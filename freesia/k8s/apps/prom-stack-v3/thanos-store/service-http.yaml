@@ -3,9 +3,7 @@ kind: Service
 metadata:
   name: thanos-store-http
   labels:
-    app.kubernetes.io/name: thanos
-    app.kubernetes.io/instance: thanos
-    app.kubernetes.io/component: store
+    app.kubernetes.io/name: thanos-store
 
 spec:
   type: ClusterIP
@@ -15,6 +13,4 @@ spec:
       protocol: TCP
       name: http
   selector:
-    app.kubernetes.io/name: thanos
-    app.kubernetes.io/instance: thanos
-    app.kubernetes.io/component: store
+    app.kubernetes.io/name: thanos-store

@@ -3,10 +3,7 @@ kind: Service
 metadata:
   name: thanos-rule-http
   labels:
-    app.kubernetes.io/name: thanos
-    app.kubernetes.io/instance: thanos
-    app.kubernetes.io/component: rule
-
+    app.kubernetes.io/name: thanos-rule
 spec:
   type: ClusterIP
   ports:
@@ -15,6 +12,4 @@ spec:
       protocol: TCP
       name: http
   selector:
-    app.kubernetes.io/name: thanos
-    app.kubernetes.io/instance: thanos
-    app.kubernetes.io/component: rule
+    app.kubernetes.io/name: thanos-rule

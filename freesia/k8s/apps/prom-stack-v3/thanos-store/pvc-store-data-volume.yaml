@@ -3,9 +3,7 @@ kind: PersistentVolumeClaim
 metadata:
   name: store-data-volume-0
   labels:
-    app.kubernetes.io/name: thanos
-    app.kubernetes.io/instance: thanos
-    app.kubernetes.io/component: store
+    app.kubernetes.io/name: thanos-store
 
 spec:
   accessModes:
