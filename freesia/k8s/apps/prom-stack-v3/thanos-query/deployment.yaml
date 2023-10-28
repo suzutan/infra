@@ -27,8 +27,7 @@ spec:
             - "--query.auto-downsampling"
             - "--store.sd-dns-resolver=miekgdns"
             - "--store=dnssrv+_grpc._tcp.thanos-store-grpc.temporis.svc.cluster.local"
-            - "--store=dnssrv+_grpc._tcp.thanos-sidecar-grpc.temporis.svc.cluster.local"
-            - "--store=dnssrv+_grpc._tcp.prometheus-v3-kube-prometh-thanos-discovery.temporis.svc.cluster.local"
+            - "--store=dnssrv+_grpc._tcp.prometheus-thanos-sidecar.temporis.svc.cluster.local"
             - "--store.sd-interval=5m"
           ports:
             - name: http
