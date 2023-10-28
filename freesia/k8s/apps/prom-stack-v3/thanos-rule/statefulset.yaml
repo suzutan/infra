@@ -39,7 +39,7 @@ spec:
         - "--grpc-address=0.0.0.0:10901"
         - "--objstore.config-file=/etc/config/object-store.yaml"
         - "--rule-file=/etc/rules/*.yaml"
-        - "--query=dnssrv+_http._tcp.thanos-query-http.thanos.svc.cluster.local"
+        - "--query=dnssrv+_http._tcp.thanos-query-http.temporis.svc.cluster.local"
         ports:
         - name: http
           containerPort: 10902

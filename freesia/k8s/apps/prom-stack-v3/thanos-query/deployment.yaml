@@ -18,34 +18,34 @@ spec:
 
     spec:
       containers:
-      - name: thanos-query
-        image: "quay.io/thanos/thanos:v0.17.1"
-        imagePullPolicy: IfNotPresent
-        args:
-        - "query"
-        - "--log.level=info"
-        - "--log.format=logfmt"
-        - "--grpc-address=0.0.0.0:10901"
-        - "--http-address=0.0.0.0:10902"
-        - "--query.auto-downsampling"
-        - "--store.sd-dns-resolver=miekgdns"
-        - "--store=dnssrv+_grpc._tcp.thanos-store-grpc.thanos.svc.cluster.local"
-        - "--store=dnssrv+_grpc._tcp.thanos-sidecar-grpc.thanos.svc.cluster.local"
-        - "--store=dnssrv+_grpc._tcp.prometheus-v3-kube-prometh-thanos-discovery.thanos.svc.cluster.local"
-        - "--store.sd-interval=5m"
-        ports:
-        - name: http
-          containerPort: 10902
-        - name: grpc
-          containerPort: 10901
-        resources: {}
-        volumeMounts: []
-        livenessProbe:
-          httpGet:
-            path: /-/healthy
-            port: http
-        readinessProbe:
-          httpGet:
-            path: /-/ready
-            port: http
+        - name: thanos-query
+          image: "quay.io/thanos/thanos:v0.17.1"
+          imagePullPolicy: IfNotPresent
+          args:
+            - "query"
+            - "--log.level=info"
+            - "--log.format=logfmt"
+            - "--grpc-address=0.0.0.0:10901"
+            - "--http-address=0.0.0.0:10902"
+            - "--query.auto-downsampling"
+            - "--store.sd-dns-resolver=miekgdns"
+            - "--store=dnssrv+_grpc._tcp.thanos-store-grpc.temporis.svc.cluster.local"
+            - "--store=dnssrv+_grpc._tcp.thanos-sidecar-grpc.temporis.svc.cluster.local"
+            - "--store=dnssrv+_grpc._tcp.prometheus-v3-kube-prometh-thanos-discovery.temporis.svc.cluster.local"
+            - "--store.sd-interval=5m"
+          ports:
+            - name: http
+              containerPort: 10902
+            - name: grpc
+              containerPort: 10901
+          resources: {}
+          volumeMounts: []
+          livenessProbe:
+            httpGet:
+              path: /-/healthy
+              port: http
+          readinessProbe:
+            httpGet:
+              path: /-/ready
+              port: http
       volumes: []
