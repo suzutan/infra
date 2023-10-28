@@ -5,7 +5,10 @@ resources:
   - alertmanager
   - kube-state-metrics
   - node-exporter
+  - prometheus
   - prometheus-admission-webhook
+  - prometheus-exporter
+  - prometheus-exporter-kube-system
   - prometheus-operator
   - remo-exporter
   - thanos-bucket
