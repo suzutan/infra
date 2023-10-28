@@ -1,0 +1,16 @@
+apiVersion: monitoring.coreos.com/v1
+kind: ServiceMonitor
+metadata:
+  name: thanos-sidecar
+  labels:
+    app.kubernetes.io/name: prometheus
+spec:
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: prometheus
+  namespaceSelector:
+    matchNames:
+      - "temporis"
+  endpoints:
+    - port: http
+      path: "/metrics"

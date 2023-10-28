@@ -2,18 +2,9 @@
 apiVersion: monitoring.coreos.com/v1
 kind: PrometheusRule
 metadata:
-  name: prometheus-v3-kube-prometh-alertmanager.rules
-  namespace: thanos
+  name: alertmanager.rules
   labels:
-    app: kube-prometheus-stack
-
-    app.kubernetes.io/managed-by: Helm
-    app.kubernetes.io/instance: prometheus-v3
-    app.kubernetes.io/version: "51.10.0"
-    app.kubernetes.io/part-of: kube-prometheus-stack
-    chart: kube-prometheus-stack-51.10.0
-    release: "prometheus-v3"
-    heritage: "Helm"
+    app.kubernetes.io/name: prometheus
 spec:
   groups:
     - name: alertmanager.rules
@@ -26,7 +17,7 @@ spec:
           expr: |-
             # Without max_over_time, failed scrapes could create false negatives, see
             # https://www.robustperception.io/alerting-on-gauges-in-prometheus-2-0 for details.
-            max_over_time(alertmanager_config_last_reload_successful{job="prometheus-v3-kube-prometh-alertmanager",namespace="thanos"}[5m]) == 0
+            max_over_time(alertmanager_config_last_reload_successful{job="alertmanager",namespace="temporis"}[5m]) == 0
           for: 10m
           labels:
             severity: critical
@@ -38,9 +29,9 @@ spec:
           expr: |-
             # Without max_over_time, failed scrapes could create false negatives, see
             # https://www.robustperception.io/alerting-on-gauges-in-prometheus-2-0 for details.
-              max_over_time(alertmanager_cluster_members{job="prometheus-v3-kube-prometh-alertmanager",namespace="thanos"}[5m])
+              max_over_time(alertmanager_cluster_members{job="alertmanager",namespace="temporis"}[5m])
             < on (namespace,service,cluster) group_left
-              count by (namespace,service,cluster) (max_over_time(alertmanager_cluster_members{job="prometheus-v3-kube-prometh-alertmanager",namespace="thanos"}[5m]))
+              count by (namespace,service,cluster) (max_over_time(alertmanager_cluster_members{job="alertmanager",namespace="temporis"}[5m]))
           for: 15m
           labels:
             severity: critical
@@ -51,9 +42,9 @@ spec:
             summary: An Alertmanager instance failed to send notifications.
           expr: |-
             (
-              rate(alertmanager_notifications_failed_total{job="prometheus-v3-kube-prometh-alertmanager",namespace="thanos"}[5m])
+              rate(alertmanager_notifications_failed_total{job="alertmanager",namespace="temporis"}[5m])
             /
-              rate(alertmanager_notifications_total{job="prometheus-v3-kube-prometh-alertmanager",namespace="thanos"}[5m])
+              rate(alertmanager_notifications_total{job="alertmanager",namespace="temporis"}[5m])
             )
             > 0.01
           for: 5m
@@ -66,9 +57,9 @@ spec:
             summary: All Alertmanager instances in a cluster failed to send notifications to a critical integration.
           expr: |-
             min by (namespace,service, integration) (
-              rate(alertmanager_notifications_failed_total{job="prometheus-v3-kube-prometh-alertmanager",namespace="thanos", integration=~`.*`}[5m])
+              rate(alertmanager_notifications_failed_total{job="alertmanager",namespace="temporis", integration=~`.*`}[5m])
             /
-              rate(alertmanager_notifications_total{job="prometheus-v3-kube-prometh-alertmanager",namespace="thanos", integration=~`.*`}[5m])
+              rate(alertmanager_notifications_total{job="alertmanager",namespace="temporis", integration=~`.*`}[5m])
             )
             > 0.01
           for: 5m
@@ -81,9 +72,9 @@ spec:
             summary: All Alertmanager instances in a cluster failed to send notifications to a non-critical integration.
           expr: |-
             min by (namespace,service, integration) (
-              rate(alertmanager_notifications_failed_total{job="prometheus-v3-kube-prometh-alertmanager",namespace="thanos", integration!~`.*`}[5m])
+              rate(alertmanager_notifications_failed_total{job="alertmanager",namespace="temporis", integration!~`.*`}[5m])
             /
-              rate(alertmanager_notifications_total{job="prometheus-v3-kube-prometh-alertmanager",namespace="thanos", integration!~`.*`}[5m])
+              rate(alertmanager_notifications_total{job="alertmanager",namespace="temporis", integration!~`.*`}[5m])
             )
             > 0.01
           for: 5m
@@ -96,7 +87,7 @@ spec:
             summary: Alertmanager instances within the same cluster have different configurations.
           expr: |-
             count by (namespace,service,cluster) (
-              count_values by (namespace,service,cluster) ("config_hash", alertmanager_config_hash{job="prometheus-v3-kube-prometh-alertmanager",namespace="thanos"})
+              count_values by (namespace,service,cluster) ("config_hash", alertmanager_config_hash{job="alertmanager",namespace="temporis"})
             )
             != 1
           for: 20m
@@ -110,11 +101,11 @@ spec:
           expr: |-
             (
               count by (namespace,service,cluster) (
-                avg_over_time(up{job="prometheus-v3-kube-prometh-alertmanager",namespace="thanos"}[5m]) < 0.5
+                avg_over_time(up{job="alertmanager",namespace="temporis"}[5m]) < 0.5
               )
             /
               count by (namespace,service,cluster) (
-                up{job="prometheus-v3-kube-prometh-alertmanager",namespace="thanos"}
+                up{job="alertmanager",namespace="temporis"}
               )
             )
             >= 0.5
@@ -129,11 +120,11 @@ spec:
           expr: |-
             (
               count by (namespace,service,cluster) (
-                changes(process_start_time_seconds{job="prometheus-v3-kube-prometh-alertmanager",namespace="thanos"}[10m]) > 4
+                changes(process_start_time_seconds{job="alertmanager",namespace="temporis"}[10m]) > 4
               )
             /
               count by (namespace,service,cluster) (
-                up{job="prometheus-v3-kube-prometh-alertmanager",namespace="thanos"}
+                up{job="alertmanager",namespace="temporis"}
               )
             )
             >= 0.5
@@ -145,18 +136,9 @@ spec:
 apiVersion: monitoring.coreos.com/v1
 kind: PrometheusRule
 metadata:
-  name: prometheus-v3-kube-prometh-config-reloaders
-  namespace: thanos
+  name: config-reloaders
   labels:
-    app: kube-prometheus-stack
-
-    app.kubernetes.io/managed-by: Helm
-    app.kubernetes.io/instance: prometheus-v3
-    app.kubernetes.io/version: "51.10.0"
-    app.kubernetes.io/part-of: kube-prometheus-stack
-    chart: kube-prometheus-stack-51.10.0
-    release: "prometheus-v3"
-    heritage: "Helm"
+    app.kubernetes.io/name: prometheus
 spec:
   groups:
     - name: config-reloaders
@@ -178,18 +160,9 @@ spec:
 apiVersion: monitoring.coreos.com/v1
 kind: PrometheusRule
 metadata:
-  name: prometheus-v3-kube-prometh-etcd
-  namespace: thanos
+  name: etcd
   labels:
-    app: kube-prometheus-stack
-
-    app.kubernetes.io/managed-by: Helm
-    app.kubernetes.io/instance: prometheus-v3
-    app.kubernetes.io/version: "51.10.0"
-    app.kubernetes.io/part-of: kube-prometheus-stack
-    chart: kube-prometheus-stack-51.10.0
-    release: "prometheus-v3"
-    heritage: "Helm"
+    app.kubernetes.io/name: prometheus
 spec:
   groups:
     - name: etcd
@@ -346,18 +319,9 @@ spec:
 apiVersion: monitoring.coreos.com/v1
 kind: PrometheusRule
 metadata:
-  name: prometheus-v3-kube-prometh-general.rules
-  namespace: thanos
+  name: general.rules
   labels:
-    app: kube-prometheus-stack
-
-    app.kubernetes.io/managed-by: Helm
-    app.kubernetes.io/instance: prometheus-v3
-    app.kubernetes.io/version: "51.10.0"
-    app.kubernetes.io/part-of: kube-prometheus-stack
-    chart: kube-prometheus-stack-51.10.0
-    release: "prometheus-v3"
-    heritage: "Helm"
+    app.kubernetes.io/name: prometheus
 spec:
   groups:
     - name: general.rules
@@ -415,18 +379,9 @@ spec:
 apiVersion: monitoring.coreos.com/v1
 kind: PrometheusRule
 metadata:
-  name: prometheus-v3-kube-prometh-k8s.rules
-  namespace: thanos
+  name: k8s.rules
   labels:
-    app: kube-prometheus-stack
-
-    app.kubernetes.io/managed-by: Helm
-    app.kubernetes.io/instance: prometheus-v3
-    app.kubernetes.io/version: "51.10.0"
-    app.kubernetes.io/part-of: kube-prometheus-stack
-    chart: kube-prometheus-stack-51.10.0
-    release: "prometheus-v3"
-    heritage: "Helm"
+    app.kubernetes.io/name: prometheus
 spec:
   groups:
     - name: k8s.rules
@@ -582,18 +537,9 @@ spec:
 apiVersion: monitoring.coreos.com/v1
 kind: PrometheusRule
 metadata:
-  name: prometheus-v3-kube-prometh-kube-apiserver-availability.rules
-  namespace: thanos
+  name: kube-apiserver-availability.rules
   labels:
-    app: kube-prometheus-stack
-
-    app.kubernetes.io/managed-by: Helm
-    app.kubernetes.io/instance: prometheus-v3
-    app.kubernetes.io/version: "51.10.0"
-    app.kubernetes.io/part-of: kube-prometheus-stack
-    chart: kube-prometheus-stack-51.10.0
-    release: "prometheus-v3"
-    heritage: "Helm"
+    app.kubernetes.io/name: prometheus
 spec:
   groups:
     - interval: 3m
@@ -712,18 +658,9 @@ spec:
 apiVersion: monitoring.coreos.com/v1
 kind: PrometheusRule
 metadata:
-  name: prometheus-v3-kube-prometh-kube-apiserver-burnrate.rules
-  namespace: thanos
+  name: kube-apiserver-burnrate.rules
   labels:
-    app: kube-prometheus-stack
-
-    app.kubernetes.io/managed-by: Helm
-    app.kubernetes.io/instance: prometheus-v3
-    app.kubernetes.io/version: "51.10.0"
-    app.kubernetes.io/part-of: kube-prometheus-stack
-    chart: kube-prometheus-stack-51.10.0
-    release: "prometheus-v3"
-    heritage: "Helm"
+    app.kubernetes.io/name: prometheus
 spec:
   groups:
     - name: kube-apiserver-burnrate.rules
@@ -1034,18 +971,9 @@ spec:
 apiVersion: monitoring.coreos.com/v1
 kind: PrometheusRule
 metadata:
-  name: prometheus-v3-kube-prometh-kube-apiserver-histogram.rules
-  namespace: thanos
+  name: kube-apiserver-histogram.rules
   labels:
-    app: kube-prometheus-stack
-
-    app.kubernetes.io/managed-by: Helm
-    app.kubernetes.io/instance: prometheus-v3
-    app.kubernetes.io/version: "51.10.0"
-    app.kubernetes.io/part-of: kube-prometheus-stack
-    chart: kube-prometheus-stack-51.10.0
-    release: "prometheus-v3"
-    heritage: "Helm"
+    app.kubernetes.io/name: prometheus
 spec:
   groups:
     - name: kube-apiserver-histogram.rules
@@ -1065,18 +993,9 @@ spec:
 apiVersion: monitoring.coreos.com/v1
 kind: PrometheusRule
 metadata:
-  name: prometheus-v3-kube-prometh-kube-apiserver-slos
-  namespace: thanos
+  name: kube-apiserver-slos
   labels:
-    app: kube-prometheus-stack
-
-    app.kubernetes.io/managed-by: Helm
-    app.kubernetes.io/instance: prometheus-v3
-    app.kubernetes.io/version: "51.10.0"
-    app.kubernetes.io/part-of: kube-prometheus-stack
-    chart: kube-prometheus-stack-51.10.0
-    release: "prometheus-v3"
-    heritage: "Helm"
+    app.kubernetes.io/name: prometheus
 spec:
   groups:
     - name: kube-apiserver-slos
@@ -1142,18 +1061,9 @@ spec:
 apiVersion: monitoring.coreos.com/v1
 kind: PrometheusRule
 metadata:
-  name: prometheus-v3-kube-prometh-kube-prometheus-general.rules
-  namespace: thanos
+  name: kube-prometheus-general.rules
   labels:
-    app: kube-prometheus-stack
-
-    app.kubernetes.io/managed-by: Helm
-    app.kubernetes.io/instance: prometheus-v3
-    app.kubernetes.io/version: "51.10.0"
-    app.kubernetes.io/part-of: kube-prometheus-stack
-    chart: kube-prometheus-stack-51.10.0
-    release: "prometheus-v3"
-    heritage: "Helm"
+    app.kubernetes.io/name: prometheus
 spec:
   groups:
     - name: kube-prometheus-general.rules
@@ -1167,18 +1077,9 @@ spec:
 apiVersion: monitoring.coreos.com/v1
 kind: PrometheusRule
 metadata:
-  name: prometheus-v3-kube-prometh-kube-prometheus-node-recording.rules
-  namespace: thanos
+  name: kube-prometheus-node-recording.rules
   labels:
-    app: kube-prometheus-stack
-
-    app.kubernetes.io/managed-by: Helm
-    app.kubernetes.io/instance: prometheus-v3
-    app.kubernetes.io/version: "51.10.0"
-    app.kubernetes.io/part-of: kube-prometheus-stack
-    chart: kube-prometheus-stack-51.10.0
-    release: "prometheus-v3"
-    heritage: "Helm"
+    app.kubernetes.io/name: prometheus
 spec:
   groups:
     - name: kube-prometheus-node-recording.rules
@@ -1200,18 +1101,9 @@ spec:
 apiVersion: monitoring.coreos.com/v1
 kind: PrometheusRule
 metadata:
-  name: prometheus-v3-kube-prometh-kube-scheduler.rules
-  namespace: thanos
+  name: kube-scheduler.rules
   labels:
-    app: kube-prometheus-stack
-
-    app.kubernetes.io/managed-by: Helm
-    app.kubernetes.io/instance: prometheus-v3
-    app.kubernetes.io/version: "51.10.0"
-    app.kubernetes.io/part-of: kube-prometheus-stack
-    chart: kube-prometheus-stack-51.10.0
-    release: "prometheus-v3"
-    heritage: "Helm"
+    app.kubernetes.io/name: prometheus
 spec:
   groups:
     - name: kube-scheduler.rules
@@ -1257,18 +1149,9 @@ spec:
 apiVersion: monitoring.coreos.com/v1
 kind: PrometheusRule
 metadata:
-  name: prometheus-v3-kube-prometh-kube-state-metrics
-  namespace: thanos
+  name: kube-state-metrics
   labels:
-    app: kube-prometheus-stack
-
-    app.kubernetes.io/managed-by: Helm
-    app.kubernetes.io/instance: prometheus-v3
-    app.kubernetes.io/version: "51.10.0"
-    app.kubernetes.io/part-of: kube-prometheus-stack
-    chart: kube-prometheus-stack-51.10.0
-    release: "prometheus-v3"
-    heritage: "Helm"
+    app.kubernetes.io/name: prometheus
 spec:
   groups:
     - name: kube-state-metrics
@@ -1326,18 +1209,9 @@ spec:
 apiVersion: monitoring.coreos.com/v1
 kind: PrometheusRule
 metadata:
-  name: prometheus-v3-kube-prometh-kubelet.rules
-  namespace: thanos
+  name: kubelet.rules
   labels:
-    app: kube-prometheus-stack
-
-    app.kubernetes.io/managed-by: Helm
-    app.kubernetes.io/instance: prometheus-v3
-    app.kubernetes.io/version: "51.10.0"
-    app.kubernetes.io/part-of: kube-prometheus-stack
-    chart: kube-prometheus-stack-51.10.0
-    release: "prometheus-v3"
-    heritage: "Helm"
+    app.kubernetes.io/name: prometheus
 spec:
   groups:
     - name: kubelet.rules
@@ -1359,18 +1233,9 @@ spec:
 apiVersion: monitoring.coreos.com/v1
 kind: PrometheusRule
 metadata:
-  name: prometheus-v3-kube-prometh-kubernetes-apps
-  namespace: thanos
+  name: kubernetes-apps
   labels:
-    app: kube-prometheus-stack
-
-    app.kubernetes.io/managed-by: Helm
-    app.kubernetes.io/instance: prometheus-v3
-    app.kubernetes.io/version: "51.10.0"
-    app.kubernetes.io/part-of: kube-prometheus-stack
-    chart: kube-prometheus-stack-51.10.0
-    release: "prometheus-v3"
-    heritage: "Helm"
+    app.kubernetes.io/name: prometheus
 spec:
   groups:
     - name: kubernetes-apps
@@ -1618,18 +1483,9 @@ spec:
 apiVersion: monitoring.coreos.com/v1
 kind: PrometheusRule
 metadata:
-  name: prometheus-v3-kube-prometh-kubernetes-resources
-  namespace: thanos
+  name: kubernetes-resources
   labels:
-    app: kube-prometheus-stack
-
-    app.kubernetes.io/managed-by: Helm
-    app.kubernetes.io/instance: prometheus-v3
-    app.kubernetes.io/version: "51.10.0"
-    app.kubernetes.io/part-of: kube-prometheus-stack
-    chart: kube-prometheus-stack-51.10.0
-    release: "prometheus-v3"
-    heritage: "Helm"
+    app.kubernetes.io/name: prometheus
 spec:
   groups:
     - name: kubernetes-resources
@@ -1741,18 +1597,9 @@ spec:
 apiVersion: monitoring.coreos.com/v1
 kind: PrometheusRule
 metadata:
-  name: prometheus-v3-kube-prometh-kubernetes-storage
-  namespace: thanos
+  name: kubernetes-storage
   labels:
-    app: kube-prometheus-stack
-
-    app.kubernetes.io/managed-by: Helm
-    app.kubernetes.io/instance: prometheus-v3
-    app.kubernetes.io/version: "51.10.0"
-    app.kubernetes.io/part-of: kube-prometheus-stack
-    chart: kube-prometheus-stack-51.10.0
-    release: "prometheus-v3"
-    heritage: "Helm"
+    app.kubernetes.io/name: prometheus
 spec:
   groups:
     - name: kubernetes-storage
@@ -1855,18 +1702,9 @@ spec:
 apiVersion: monitoring.coreos.com/v1
 kind: PrometheusRule
 metadata:
-  name: prometheus-v3-kube-prometh-kubernetes-system-apiserver
-  namespace: thanos
+  name: kubernetes-system-apiserver
   labels:
-    app: kube-prometheus-stack
-
-    app.kubernetes.io/managed-by: Helm
-    app.kubernetes.io/instance: prometheus-v3
-    app.kubernetes.io/version: "51.10.0"
-    app.kubernetes.io/part-of: kube-prometheus-stack
-    chart: kube-prometheus-stack-51.10.0
-    release: "prometheus-v3"
-    heritage: "Helm"
+    app.kubernetes.io/name: prometheus
 spec:
   groups:
     - name: kubernetes-system-apiserver
@@ -1929,18 +1767,9 @@ spec:
 apiVersion: monitoring.coreos.com/v1
 kind: PrometheusRule
 metadata:
-  name: prometheus-v3-kube-prometh-kubernetes-system-controller-manager
-  namespace: thanos
+  name: kubernetes-system-controller-manager
   labels:
-    app: kube-prometheus-stack
-
-    app.kubernetes.io/managed-by: Helm
-    app.kubernetes.io/instance: prometheus-v3
-    app.kubernetes.io/version: "51.10.0"
-    app.kubernetes.io/part-of: kube-prometheus-stack
-    chart: kube-prometheus-stack-51.10.0
-    release: "prometheus-v3"
-    heritage: "Helm"
+    app.kubernetes.io/name: prometheus
 spec:
   groups:
     - name: kubernetes-system-controller-manager
@@ -1959,18 +1788,9 @@ spec:
 apiVersion: monitoring.coreos.com/v1
 kind: PrometheusRule
 metadata:
-  name: prometheus-v3-kube-prometh-kubernetes-system-kube-proxy
-  namespace: thanos
+  name: kubernetes-system-kube-proxy
   labels:
-    app: kube-prometheus-stack
-
-    app.kubernetes.io/managed-by: Helm
-    app.kubernetes.io/instance: prometheus-v3
-    app.kubernetes.io/version: "51.10.0"
-    app.kubernetes.io/part-of: kube-prometheus-stack
-    chart: kube-prometheus-stack-51.10.0
-    release: "prometheus-v3"
-    heritage: "Helm"
+    app.kubernetes.io/name: prometheus
 spec:
   groups:
     - name: kubernetes-system-kube-proxy
@@ -1989,18 +1809,9 @@ spec:
 apiVersion: monitoring.coreos.com/v1
 kind: PrometheusRule
 metadata:
-  name: prometheus-v3-kube-prometh-kubernetes-system-kubelet
-  namespace: thanos
+  name: kubernetes-system-kubelet
   labels:
-    app: kube-prometheus-stack
-
-    app.kubernetes.io/managed-by: Helm
-    app.kubernetes.io/instance: prometheus-v3
-    app.kubernetes.io/version: "51.10.0"
-    app.kubernetes.io/part-of: kube-prometheus-stack
-    chart: kube-prometheus-stack-51.10.0
-    release: "prometheus-v3"
-    heritage: "Helm"
+    app.kubernetes.io/name: prometheus
 spec:
   groups:
     - name: kubernetes-system-kubelet
@@ -2130,18 +1941,9 @@ spec:
 apiVersion: monitoring.coreos.com/v1
 kind: PrometheusRule
 metadata:
-  name: prometheus-v3-kube-prometh-kubernetes-system-scheduler
-  namespace: thanos
+  name: kubernetes-system-scheduler
   labels:
-    app: kube-prometheus-stack
-
-    app.kubernetes.io/managed-by: Helm
-    app.kubernetes.io/instance: prometheus-v3
-    app.kubernetes.io/version: "51.10.0"
-    app.kubernetes.io/part-of: kube-prometheus-stack
-    chart: kube-prometheus-stack-51.10.0
-    release: "prometheus-v3"
-    heritage: "Helm"
+    app.kubernetes.io/name: prometheus
 spec:
   groups:
     - name: kubernetes-system-scheduler
@@ -2160,18 +1962,9 @@ spec:
 apiVersion: monitoring.coreos.com/v1
 kind: PrometheusRule
 metadata:
-  name: prometheus-v3-kube-prometh-kubernetes-system
-  namespace: thanos
+  name: kubernetes-system
   labels:
-    app: kube-prometheus-stack
-
-    app.kubernetes.io/managed-by: Helm
-    app.kubernetes.io/instance: prometheus-v3
-    app.kubernetes.io/version: "51.10.0"
-    app.kubernetes.io/part-of: kube-prometheus-stack
-    chart: kube-prometheus-stack-51.10.0
-    release: "prometheus-v3"
-    heritage: "Helm"
+    app.kubernetes.io/name: prometheus
 spec:
   groups:
     - name: kubernetes-system
@@ -2203,18 +1996,9 @@ spec:
 apiVersion: monitoring.coreos.com/v1
 kind: PrometheusRule
 metadata:
-  name: prometheus-v3-kube-prometh-node-exporter.rules
-  namespace: thanos
+  name: node-exporter.rules
   labels:
-    app: kube-prometheus-stack
-
-    app.kubernetes.io/managed-by: Helm
-    app.kubernetes.io/instance: prometheus-v3
-    app.kubernetes.io/version: "51.10.0"
-    app.kubernetes.io/part-of: kube-prometheus-stack
-    chart: kube-prometheus-stack-51.10.0
-    release: "prometheus-v3"
-    heritage: "Helm"
+    app.kubernetes.io/name: prometheus
 spec:
   groups:
     - name: node-exporter.rules
@@ -2286,18 +2070,9 @@ spec:
 apiVersion: monitoring.coreos.com/v1
 kind: PrometheusRule
 metadata:
-  name: prometheus-v3-kube-prometh-node-exporter
-  namespace: thanos
+  name: node-exporter
   labels:
-    app: kube-prometheus-stack
-
-    app.kubernetes.io/managed-by: Helm
-    app.kubernetes.io/instance: prometheus-v3
-    app.kubernetes.io/version: "51.10.0"
-    app.kubernetes.io/part-of: kube-prometheus-stack
-    chart: kube-prometheus-stack-51.10.0
-    release: "prometheus-v3"
-    heritage: "Helm"
+    app.kubernetes.io/name: prometheus
 spec:
   groups:
     - name: node-exporter
@@ -2611,18 +2386,9 @@ spec:
 apiVersion: monitoring.coreos.com/v1
 kind: PrometheusRule
 metadata:
-  name: prometheus-v3-kube-prometh-node-network
-  namespace: thanos
+  name: node-network
   labels:
-    app: kube-prometheus-stack
-
-    app.kubernetes.io/managed-by: Helm
-    app.kubernetes.io/instance: prometheus-v3
-    app.kubernetes.io/version: "51.10.0"
-    app.kubernetes.io/part-of: kube-prometheus-stack
-    chart: kube-prometheus-stack-51.10.0
-    release: "prometheus-v3"
-    heritage: "Helm"
+    app.kubernetes.io/name: prometheus
 spec:
   groups:
     - name: node-network
@@ -2641,18 +2407,9 @@ spec:
 apiVersion: monitoring.coreos.com/v1
 kind: PrometheusRule
 metadata:
-  name: prometheus-v3-kube-prometh-node.rules
-  namespace: thanos
+  name: node.rules
   labels:
-    app: kube-prometheus-stack
-
-    app.kubernetes.io/managed-by: Helm
-    app.kubernetes.io/instance: prometheus-v3
-    app.kubernetes.io/version: "51.10.0"
-    app.kubernetes.io/part-of: kube-prometheus-stack
-    chart: kube-prometheus-stack-51.10.0
-    release: "prometheus-v3"
-    heritage: "Helm"
+    app.kubernetes.io/name: prometheus
 spec:
   groups:
     - name: node.rules
@@ -2698,18 +2455,9 @@ spec:
 apiVersion: monitoring.coreos.com/v1
 kind: PrometheusRule
 metadata:
-  name: prometheus-v3-kube-prometh-prometheus-operator
-  namespace: thanos
+  name: prometheus-operator
   labels:
-    app: kube-prometheus-stack
-
-    app.kubernetes.io/managed-by: Helm
-    app.kubernetes.io/instance: prometheus-v3
-    app.kubernetes.io/version: "51.10.0"
-    app.kubernetes.io/part-of: kube-prometheus-stack
-    chart: kube-prometheus-stack-51.10.0
-    release: "prometheus-v3"
-    heritage: "Helm"
+    app.kubernetes.io/name: prometheus
 spec:
   groups:
     - name: prometheus-operator
@@ -2719,7 +2467,7 @@ spec:
             description: Errors while performing List operations in controller {{$labels.controller}} in {{$labels.namespace}} namespace.
             runbook_url: https://runbooks.prometheus-operator.dev/runbooks/prometheus-operator/prometheusoperatorlisterrors
             summary: Errors while performing list operations in controller.
-          expr: (sum by (cluster,controller,namespace) (rate(prometheus_operator_list_operations_failed_total{job="prometheus-v3-kube-prometh-operator",namespace="thanos"}[10m])) / sum by (cluster,controller,namespace) (rate(prometheus_operator_list_operations_total{job="prometheus-v3-kube-prometh-operator",namespace="thanos"}[10m]))) > 0.4
+          expr: (sum by (cluster,controller,namespace) (rate(prometheus_operator_list_operations_failed_total{job="prometheus-operator",namespace="temporis"}[10m])) / sum by (cluster,controller,namespace) (rate(prometheus_operator_list_operations_total{job="prometheus-operator",namespace="temporis"}[10m]))) > 0.4
           for: 15m
           labels:
             severity: warning
@@ -2728,7 +2476,7 @@ spec:
             description: Errors while performing watch operations in controller {{$labels.controller}} in {{$labels.namespace}} namespace.
             runbook_url: https://runbooks.prometheus-operator.dev/runbooks/prometheus-operator/prometheusoperatorwatcherrors
             summary: Errors while performing watch operations in controller.
-          expr: (sum by (cluster,controller,namespace) (rate(prometheus_operator_watch_operations_failed_total{job="prometheus-v3-kube-prometh-operator",namespace="thanos"}[5m])) / sum by (cluster,controller,namespace) (rate(prometheus_operator_watch_operations_total{job="prometheus-v3-kube-prometh-operator",namespace="thanos"}[5m]))) > 0.4
+          expr: (sum by (cluster,controller,namespace) (rate(prometheus_operator_watch_operations_failed_total{job="prometheus-operator",namespace="temporis"}[5m])) / sum by (cluster,controller,namespace) (rate(prometheus_operator_watch_operations_total{job="prometheus-operator",namespace="temporis"}[5m]))) > 0.4
           for: 15m
           labels:
             severity: warning
@@ -2737,7 +2485,7 @@ spec:
             description: Controller {{ $labels.controller }} in {{ $labels.namespace }} namespace fails to reconcile {{ $value }} objects.
             runbook_url: https://runbooks.prometheus-operator.dev/runbooks/prometheus-operator/prometheusoperatorsyncfailed
             summary: Last controller reconciliation failed
-          expr: min_over_time(prometheus_operator_syncs{status="failed",job="prometheus-v3-kube-prometh-operator",namespace="thanos"}[5m]) > 0
+          expr: min_over_time(prometheus_operator_syncs{status="failed",job="prometheus-operator",namespace="temporis"}[5m]) > 0
           for: 10m
           labels:
             severity: warning
@@ -2746,7 +2494,7 @@ spec:
             description: "{{ $value | humanizePercentage }} of reconciling operations failed for {{ $labels.controller }} controller in {{ $labels.namespace }} namespace."
             runbook_url: https://runbooks.prometheus-operator.dev/runbooks/prometheus-operator/prometheusoperatorreconcileerrors
             summary: Errors while reconciling controller.
-          expr: (sum by (cluster,controller,namespace) (rate(prometheus_operator_reconcile_errors_total{job="prometheus-v3-kube-prometh-operator",namespace="thanos"}[5m]))) / (sum by (cluster,controller,namespace) (rate(prometheus_operator_reconcile_operations_total{job="prometheus-v3-kube-prometh-operator",namespace="thanos"}[5m]))) > 0.1
+          expr: (sum by (cluster,controller,namespace) (rate(prometheus_operator_reconcile_errors_total{job="prometheus-operator",namespace="temporis"}[5m]))) / (sum by (cluster,controller,namespace) (rate(prometheus_operator_reconcile_operations_total{job="prometheus-operator",namespace="temporis"}[5m]))) > 0.1
           for: 10m
           labels:
             severity: warning
@@ -2755,7 +2503,7 @@ spec:
             description: Errors while reconciling Prometheus in {{ $labels.namespace }} Namespace.
             runbook_url: https://runbooks.prometheus-operator.dev/runbooks/prometheus-operator/prometheusoperatornodelookuperrors
             summary: Errors while reconciling Prometheus.
-          expr: rate(prometheus_operator_node_address_lookup_errors_total{job="prometheus-v3-kube-prometh-operator",namespace="thanos"}[5m]) > 0.1
+          expr: rate(prometheus_operator_node_address_lookup_errors_total{job="prometheus-operator",namespace="temporis"}[5m]) > 0.1
           for: 10m
           labels:
             severity: warning
@@ -2764,7 +2512,7 @@ spec:
             description: Prometheus operator in {{ $labels.namespace }} namespace isn't ready to reconcile {{ $labels.controller }} resources.
             runbook_url: https://runbooks.prometheus-operator.dev/runbooks/prometheus-operator/prometheusoperatornotready
             summary: Prometheus operator not ready
-          expr: min by (cluster,controller,namespace) (max_over_time(prometheus_operator_ready{job="prometheus-v3-kube-prometh-operator",namespace="thanos"}[5m]) == 0)
+          expr: min by (cluster,controller,namespace) (max_over_time(prometheus_operator_ready{job="prometheus-operator",namespace="temporis"}[5m]) == 0)
           for: 5m
           labels:
             severity: warning
@@ -2773,7 +2521,7 @@ spec:
             description: Prometheus operator in {{ $labels.namespace }} namespace rejected {{ printf "%0.0f" $value }} {{ $labels.controller }}/{{ $labels.resource }} resources.
             runbook_url: https://runbooks.prometheus-operator.dev/runbooks/prometheus-operator/prometheusoperatorrejectedresources
             summary: Resources rejected by Prometheus operator
-          expr: min_over_time(prometheus_operator_managed_resources{state="rejected",job="prometheus-v3-kube-prometh-operator",namespace="thanos"}[5m]) > 0
+          expr: min_over_time(prometheus_operator_managed_resources{state="rejected",job="prometheus-operator",namespace="temporis"}[5m]) > 0
           for: 5m
           labels:
             severity: warning
@@ -2782,18 +2530,9 @@ spec:
 apiVersion: monitoring.coreos.com/v1
 kind: PrometheusRule
 metadata:
-  name: prometheus-v3-kube-prometh-prometheus
-  namespace: thanos
+  name: prometheus
   labels:
-    app: kube-prometheus-stack
-
-    app.kubernetes.io/managed-by: Helm
-    app.kubernetes.io/instance: prometheus-v3
-    app.kubernetes.io/version: "51.10.0"
-    app.kubernetes.io/part-of: kube-prometheus-stack
-    chart: kube-prometheus-stack-51.10.0
-    release: "prometheus-v3"
-    heritage: "Helm"
+    app.kubernetes.io/name: prometheus
 spec:
   groups:
     - name: prometheus
@@ -2806,7 +2545,7 @@ spec:
           expr: |-
             # Without max_over_time, failed scrapes could create false negatives, see
             # https://www.robustperception.io/alerting-on-gauges-in-prometheus-2-0 for details.
-            max_over_time(prometheus_config_last_reload_successful{job="prometheus-v3-kube-prometh-prometheus",namespace="thanos"}[5m]) == 0
+            max_over_time(prometheus_config_last_reload_successful{job="prometheus",namespace="temporis"}[5m]) == 0
           for: 10m
           labels:
             severity: critical
@@ -2815,7 +2554,7 @@ spec:
             description: Prometheus {{$labels.namespace}}/{{$labels.pod}} has failed to refresh SD with mechanism {{$labels.mechanism}}.
             runbook_url: https://runbooks.prometheus-operator.dev/runbooks/prometheus/prometheussdrefreshfailure
             summary: Failed Prometheus SD refresh.
-          expr: increase(prometheus_sd_refresh_failures_total{job="prometheus-v3-kube-prometh-prometheus",namespace="thanos"}[10m]) > 0
+          expr: increase(prometheus_sd_refresh_failures_total{job="prometheus",namespace="temporis"}[10m]) > 0
           for: 20m
           labels:
             severity: warning
@@ -2828,9 +2567,9 @@ spec:
             # Without min_over_time, failed scrapes could create false negatives, see
             # https://www.robustperception.io/alerting-on-gauges-in-prometheus-2-0 for details.
             (
-              predict_linear(prometheus_notifications_queue_length{job="prometheus-v3-kube-prometh-prometheus",namespace="thanos"}[5m], 60 * 30)
+              predict_linear(prometheus_notifications_queue_length{job="prometheus",namespace="temporis"}[5m], 60 * 30)
             >
-              min_over_time(prometheus_notifications_queue_capacity{job="prometheus-v3-kube-prometh-prometheus",namespace="thanos"}[5m])
+              min_over_time(prometheus_notifications_queue_capacity{job="prometheus",namespace="temporis"}[5m])
             )
           for: 15m
           labels:
@@ -2842,9 +2581,9 @@ spec:
             summary: Prometheus has encountered more than 1% errors sending alerts to a specific Alertmanager.
           expr: |-
             (
-              rate(prometheus_notifications_errors_total{job="prometheus-v3-kube-prometh-prometheus",namespace="thanos"}[5m])
+              rate(prometheus_notifications_errors_total{job="prometheus",namespace="temporis"}[5m])
             /
-              rate(prometheus_notifications_sent_total{job="prometheus-v3-kube-prometh-prometheus",namespace="thanos"}[5m])
+              rate(prometheus_notifications_sent_total{job="prometheus",namespace="temporis"}[5m])
             )
             * 100
             > 1
@@ -2859,7 +2598,7 @@ spec:
           expr: |-
             # Without max_over_time, failed scrapes could create false negatives, see
             # https://www.robustperception.io/alerting-on-gauges-in-prometheus-2-0 for details.
-            max_over_time(prometheus_notifications_alertmanagers_discovered{job="prometheus-v3-kube-prometh-prometheus",namespace="thanos"}[5m]) < 1
+            max_over_time(prometheus_notifications_alertmanagers_discovered{job="prometheus",namespace="temporis"}[5m]) < 1
           for: 10m
           labels:
             severity: warning
@@ -2868,7 +2607,7 @@ spec:
             description: Prometheus {{$labels.namespace}}/{{$labels.pod}} has detected {{$value | humanize}} reload failures over the last 3h.
             runbook_url: https://runbooks.prometheus-operator.dev/runbooks/prometheus/prometheustsdbreloadsfailing
             summary: Prometheus has issues reloading blocks from disk.
-          expr: increase(prometheus_tsdb_reloads_failures_total{job="prometheus-v3-kube-prometh-prometheus",namespace="thanos"}[3h]) > 0
+          expr: increase(prometheus_tsdb_reloads_failures_total{job="prometheus",namespace="temporis"}[3h]) > 0
           for: 4h
           labels:
             severity: warning
@@ -2877,7 +2616,7 @@ spec:
             description: Prometheus {{$labels.namespace}}/{{$labels.pod}} has detected {{$value | humanize}} compaction failures over the last 3h.
             runbook_url: https://runbooks.prometheus-operator.dev/runbooks/prometheus/prometheustsdbcompactionsfailing
             summary: Prometheus has issues compacting blocks.
-          expr: increase(prometheus_tsdb_compactions_failed_total{job="prometheus-v3-kube-prometh-prometheus",namespace="thanos"}[3h]) > 0
+          expr: increase(prometheus_tsdb_compactions_failed_total{job="prometheus",namespace="temporis"}[3h]) > 0
           for: 4h
           labels:
             severity: warning
@@ -2888,12 +2627,12 @@ spec:
             summary: Prometheus is not ingesting samples.
           expr: |-
             (
-              rate(prometheus_tsdb_head_samples_appended_total{job="prometheus-v3-kube-prometh-prometheus",namespace="thanos"}[5m]) <= 0
+              rate(prometheus_tsdb_head_samples_appended_total{job="prometheus",namespace="temporis"}[5m]) <= 0
             and
               (
-                sum without(scrape_job) (prometheus_target_metadata_cache_entries{job="prometheus-v3-kube-prometh-prometheus",namespace="thanos"}) > 0
+                sum without(scrape_job) (prometheus_target_metadata_cache_entries{job="prometheus",namespace="temporis"}) > 0
               or
-                sum without(rule_group) (prometheus_rule_group_rules{job="prometheus-v3-kube-prometh-prometheus",namespace="thanos"}) > 0
+                sum without(rule_group) (prometheus_rule_group_rules{job="prometheus",namespace="temporis"}) > 0
               )
             )
           for: 10m
@@ -2904,7 +2643,7 @@ spec:
             description: Prometheus {{$labels.namespace}}/{{$labels.pod}} is dropping {{ printf "%.4g" $value  }} samples/s with different values but duplicated timestamp.
             runbook_url: https://runbooks.prometheus-operator.dev/runbooks/prometheus/prometheusduplicatetimestamps
             summary: Prometheus is dropping samples with duplicate timestamps.
-          expr: rate(prometheus_target_scrapes_sample_duplicate_timestamp_total{job="prometheus-v3-kube-prometh-prometheus",namespace="thanos"}[5m]) > 0
+          expr: rate(prometheus_target_scrapes_sample_duplicate_timestamp_total{job="prometheus",namespace="temporis"}[5m]) > 0
           for: 10m
           labels:
             severity: warning
@@ -2913,7 +2652,7 @@ spec:
             description: Prometheus {{$labels.namespace}}/{{$labels.pod}} is dropping {{ printf "%.4g" $value  }} samples/s with timestamps arriving out of order.
             runbook_url: https://runbooks.prometheus-operator.dev/runbooks/prometheus/prometheusoutofordertimestamps
             summary: Prometheus drops samples with out-of-order timestamps.
-          expr: rate(prometheus_target_scrapes_sample_out_of_order_total{job="prometheus-v3-kube-prometh-prometheus",namespace="thanos"}[5m]) > 0
+          expr: rate(prometheus_target_scrapes_sample_out_of_order_total{job="prometheus",namespace="temporis"}[5m]) > 0
           for: 10m
           labels:
             severity: warning
@@ -2924,12 +2663,12 @@ spec:
             summary: Prometheus fails to send samples to remote storage.
           expr: |-
             (
-              (rate(prometheus_remote_storage_failed_samples_total{job="prometheus-v3-kube-prometh-prometheus",namespace="thanos"}[5m]) or rate(prometheus_remote_storage_samples_failed_total{job="prometheus-v3-kube-prometh-prometheus",namespace="thanos"}[5m]))
+              (rate(prometheus_remote_storage_failed_samples_total{job="prometheus",namespace="temporis"}[5m]) or rate(prometheus_remote_storage_samples_failed_total{job="prometheus",namespace="temporis"}[5m]))
             /
               (
-                (rate(prometheus_remote_storage_failed_samples_total{job="prometheus-v3-kube-prometh-prometheus",namespace="thanos"}[5m]) or rate(prometheus_remote_storage_samples_failed_total{job="prometheus-v3-kube-prometh-prometheus",namespace="thanos"}[5m]))
+                (rate(prometheus_remote_storage_failed_samples_total{job="prometheus",namespace="temporis"}[5m]) or rate(prometheus_remote_storage_samples_failed_total{job="prometheus",namespace="temporis"}[5m]))
               +
-                (rate(prometheus_remote_storage_succeeded_samples_total{job="prometheus-v3-kube-prometh-prometheus",namespace="thanos"}[5m]) or rate(prometheus_remote_storage_samples_total{job="prometheus-v3-kube-prometh-prometheus",namespace="thanos"}[5m]))
+                (rate(prometheus_remote_storage_succeeded_samples_total{job="prometheus",namespace="temporis"}[5m]) or rate(prometheus_remote_storage_samples_total{job="prometheus",namespace="temporis"}[5m]))
               )
             )
             * 100
@@ -2946,9 +2685,9 @@ spec:
             # Without max_over_time, failed scrapes could create false negatives, see
             # https://www.robustperception.io/alerting-on-gauges-in-prometheus-2-0 for details.
             (
-              max_over_time(prometheus_remote_storage_highest_timestamp_in_seconds{job="prometheus-v3-kube-prometh-prometheus",namespace="thanos"}[5m])
+              max_over_time(prometheus_remote_storage_highest_timestamp_in_seconds{job="prometheus",namespace="temporis"}[5m])
             - ignoring(remote_name, url) group_right
-              max_over_time(prometheus_remote_storage_queue_highest_sent_timestamp_seconds{job="prometheus-v3-kube-prometh-prometheus",namespace="thanos"}[5m])
+              max_over_time(prometheus_remote_storage_queue_highest_sent_timestamp_seconds{job="prometheus",namespace="temporis"}[5m])
             )
             > 120
           for: 15m
@@ -2956,16 +2695,16 @@ spec:
             severity: critical
         - alert: PrometheusRemoteWriteDesiredShards
           annotations:
-            description: Prometheus {{$labels.namespace}}/{{$labels.pod}} remote write desired shards calculation wants to run {{ $value }} shards for queue {{ $labels.remote_name}}:{{ $labels.url }}, which is more than the max of {{ printf `prometheus_remote_storage_shards_max{instance="%s",job="prometheus-v3-kube-prometh-prometheus",namespace="thanos"}` $labels.instance | query | first | value }}.
+            description: Prometheus {{$labels.namespace}}/{{$labels.pod}} remote write desired shards calculation wants to run {{ $value }} shards for queue {{ $labels.remote_name}}:{{ $labels.url }}, which is more than the max of {{ printf `prometheus_remote_storage_shards_max{instance="%s",job="prometheus",namespace="temporis"}` $labels.instance | query | first | value }}.
             runbook_url: https://runbooks.prometheus-operator.dev/runbooks/prometheus/prometheusremotewritedesiredshards
             summary: Prometheus remote write desired shards calculation wants to run more than configured max shards.
           expr: |-
             # Without max_over_time, failed scrapes could create false negatives, see
             # https://www.robustperception.io/alerting-on-gauges-in-prometheus-2-0 for details.
             (
-              max_over_time(prometheus_remote_storage_shards_desired{job="prometheus-v3-kube-prometh-prometheus",namespace="thanos"}[5m])
+              max_over_time(prometheus_remote_storage_shards_desired{job="prometheus",namespace="temporis"}[5m])
             >
-              max_over_time(prometheus_remote_storage_shards_max{job="prometheus-v3-kube-prometh-prometheus",namespace="thanos"}[5m])
+              max_over_time(prometheus_remote_storage_shards_max{job="prometheus",namespace="temporis"}[5m])
             )
           for: 15m
           labels:
@@ -2975,7 +2714,7 @@ spec:
             description: Prometheus {{$labels.namespace}}/{{$labels.pod}} has failed to evaluate {{ printf "%.0f" $value }} rules in the last 5m.
             runbook_url: https://runbooks.prometheus-operator.dev/runbooks/prometheus/prometheusrulefailures
             summary: Prometheus is failing rule evaluations.
-          expr: increase(prometheus_rule_evaluation_failures_total{job="prometheus-v3-kube-prometh-prometheus",namespace="thanos"}[5m]) > 0
+          expr: increase(prometheus_rule_evaluation_failures_total{job="prometheus",namespace="temporis"}[5m]) > 0
           for: 15m
           labels:
             severity: critical
@@ -2984,7 +2723,7 @@ spec:
             description: Prometheus {{$labels.namespace}}/{{$labels.pod}} has missed {{ printf "%.0f" $value }} rule group evaluations in the last 5m.
             runbook_url: https://runbooks.prometheus-operator.dev/runbooks/prometheus/prometheusmissingruleevaluations
             summary: Prometheus is missing rule evaluations due to slow rule group evaluation.
-          expr: increase(prometheus_rule_group_iterations_missed_total{job="prometheus-v3-kube-prometh-prometheus",namespace="thanos"}[5m]) > 0
+          expr: increase(prometheus_rule_group_iterations_missed_total{job="prometheus",namespace="temporis"}[5m]) > 0
           for: 15m
           labels:
             severity: warning
@@ -2993,7 +2732,7 @@ spec:
             description: Prometheus {{$labels.namespace}}/{{$labels.pod}} has dropped {{ printf "%.0f" $value }} targets because the number of targets exceeded the configured target_limit.
             runbook_url: https://runbooks.prometheus-operator.dev/runbooks/prometheus/prometheustargetlimithit
             summary: Prometheus has dropped targets because some scrape configs have exceeded the targets limit.
-          expr: increase(prometheus_target_scrape_pool_exceeded_target_limit_total{job="prometheus-v3-kube-prometh-prometheus",namespace="thanos"}[5m]) > 0
+          expr: increase(prometheus_target_scrape_pool_exceeded_target_limit_total{job="prometheus",namespace="temporis"}[5m]) > 0
           for: 15m
           labels:
             severity: warning
@@ -3002,7 +2741,7 @@ spec:
             description: Prometheus {{$labels.namespace}}/{{$labels.pod}} has dropped {{ printf "%.0f" $value }} targets because some samples exceeded the configured label_limit, label_name_length_limit or label_value_length_limit.
             runbook_url: https://runbooks.prometheus-operator.dev/runbooks/prometheus/prometheuslabellimithit
             summary: Prometheus has dropped targets because some scrape configs have exceeded the labels limit.
-          expr: increase(prometheus_target_scrape_pool_exceeded_label_limits_total{job="prometheus-v3-kube-prometh-prometheus",namespace="thanos"}[5m]) > 0
+          expr: increase(prometheus_target_scrape_pool_exceeded_label_limits_total{job="prometheus",namespace="temporis"}[5m]) > 0
           for: 15m
           labels:
             severity: warning
@@ -3011,7 +2750,7 @@ spec:
             description: Prometheus {{$labels.namespace}}/{{$labels.pod}} has failed {{ printf "%.0f" $value }} scrapes in the last 5m because some targets exceeded the configured body_size_limit.
             runbook_url: https://runbooks.prometheus-operator.dev/runbooks/prometheus/prometheusscrapebodysizelimithit
             summary: Prometheus has dropped some targets that exceeded body size limit.
-          expr: increase(prometheus_target_scrapes_exceeded_body_size_limit_total{job="prometheus-v3-kube-prometh-prometheus",namespace="thanos"}[5m]) > 0
+          expr: increase(prometheus_target_scrapes_exceeded_body_size_limit_total{job="prometheus",namespace="temporis"}[5m]) > 0
           for: 15m
           labels:
             severity: warning
@@ -3020,7 +2759,7 @@ spec:
             description: Prometheus {{$labels.namespace}}/{{$labels.pod}} has failed {{ printf "%.0f" $value }} scrapes in the last 5m because some targets exceeded the configured sample_limit.
             runbook_url: https://runbooks.prometheus-operator.dev/runbooks/prometheus/prometheusscrapesamplelimithit
             summary: Prometheus has failed scrapes that have exceeded the configured sample limit.
-          expr: increase(prometheus_target_scrapes_exceeded_sample_limit_total{job="prometheus-v3-kube-prometh-prometheus",namespace="thanos"}[5m]) > 0
+          expr: increase(prometheus_target_scrapes_exceeded_sample_limit_total{job="prometheus",namespace="temporis"}[5m]) > 0
           for: 15m
           labels:
             severity: warning
@@ -3029,7 +2768,7 @@ spec:
             description: '{{ printf "%.0f" $value }} targets in Prometheus {{$labels.namespace}}/{{$labels.pod}} have failed to sync because invalid configuration was supplied.'
             runbook_url: https://runbooks.prometheus-operator.dev/runbooks/prometheus/prometheustargetsyncfailure
             summary: Prometheus has failed to sync targets.
-          expr: increase(prometheus_target_sync_failed_total{job="prometheus-v3-kube-prometh-prometheus",namespace="thanos"}[30m]) > 0
+          expr: increase(prometheus_target_sync_failed_total{job="prometheus",namespace="temporis"}[30m]) > 0
           for: 5m
           labels:
             severity: critical
@@ -3038,7 +2777,7 @@ spec:
             description: Prometheus {{$labels.namespace}}/{{$labels.pod}} query API has less than 20% available capacity in its query engine for the last 15 minutes.
             runbook_url: https://runbooks.prometheus-operator.dev/runbooks/prometheus/prometheushighqueryload
             summary: Prometheus is reaching its maximum capacity serving concurrent requests.
-          expr: avg_over_time(prometheus_engine_queries{job="prometheus-v3-kube-prometh-prometheus",namespace="thanos"}[5m]) / max_over_time(prometheus_engine_queries_concurrent_max{job="prometheus-v3-kube-prometh-prometheus",namespace="thanos"}[5m]) > 0.8
+          expr: avg_over_time(prometheus_engine_queries{job="prometheus",namespace="temporis"}[5m]) / max_over_time(prometheus_engine_queries_concurrent_max{job="prometheus",namespace="temporis"}[5m]) > 0.8
           for: 15m
           labels:
             severity: warning
@@ -3049,9 +2788,9 @@ spec:
             summary: Prometheus encounters more than 3% errors sending alerts to any Alertmanager.
           expr: |-
             min without (alertmanager) (
-              rate(prometheus_notifications_errors_total{job="prometheus-v3-kube-prometh-prometheus",namespace="thanos",alertmanager!~``}[5m])
+              rate(prometheus_notifications_errors_total{job="prometheus",namespace="temporis",alertmanager!~``}[5m])
             /
-              rate(prometheus_notifications_sent_total{job="prometheus-v3-kube-prometh-prometheus",namespace="thanos",alertmanager!~``}[5m])
+              rate(prometheus_notifications_sent_total{job="prometheus",namespace="temporis",alertmanager!~``}[5m])
             )
             * 100
             > 3

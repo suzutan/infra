@@ -1,12 +1,27 @@
 apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 
-namespace: thanos
+namespace: temporis
+
 resources:
-  - alertmanager
-  - exporters
-  - grafana
-  - kube-state-metrics
-  - node-exporter
-  - prometheus
-  - prometheus-operator
+  - cr.yaml
+  - crb.yaml
+  - ingress.yaml
+  - pdb.yaml
+  - prometheus-rules.yaml
+  - prometheus.yaml
+  - secret-prometheus-scrape-confg.yaml
+  - service-thanos-sidecar.yaml
+  - service.yaml
+  - serviceaccount.yaml
+  - servicemonitor-thanos-sidecar.yaml
+  - servicemonitor.yaml
+
+labels:
+  - pairs:
+      app.kubernetes.io/name: prometheus
+    includeSelectors: true
+  - pairs:
+      app.kubernetes.io/component: prometheus
+      app.kubernetes.io/part-of: temporis
+    includeSelectors: false

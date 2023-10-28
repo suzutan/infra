@@ -1,0 +1,19 @@
+apiVersion: monitoring.coreos.com/v1
+kind: ServiceMonitor
+metadata:
+  name: prometheus
+  labels:
+    app.kubernetes.io/name: prometheus
+spec:
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: prometheus
+  namespaceSelector:
+    matchNames:
+      - "temporis"
+  endpoints:
+    - port: http-web
+      path: "/metrics"
+    - port: reloader-web
+      scheme: http
+      path: "/metrics"
