@@ -7,7 +7,6 @@ resources:
   - daemonset.yaml
   - service.yaml
   - serviceaccount.yaml
-  - servicemonitor.yaml
 
 labels:
   - pairs:

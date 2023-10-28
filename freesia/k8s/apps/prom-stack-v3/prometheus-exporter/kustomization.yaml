@@ -5,12 +5,14 @@ namespace: temporis
 
 resources:
   - servicemonitor-coredns.yaml
+  - servicemonitor-grafana.yaml
   - servicemonitor-kube-apiserver.yaml
   - servicemonitor-kube-controller-manager.yaml
   - servicemonitor-kube-etcd.yaml
   - servicemonitor-kube-proxy.yaml
   - servicemonitor-kube-scheduler.yaml
   - servicemonitor-kubelet.yaml
+  - servicemonitor-node-exporter.yaml
 
 labels:
   - pairs:
