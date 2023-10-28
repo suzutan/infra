@@ -16,7 +16,7 @@ spec:
     spec:
       containers:
         - name: thanos-compact
-          image: "quay.io/thanos/thanos:v0.17.1"
+          image: "quay.io/thanos/thanos:v0.32.5"
           imagePullPolicy: IfNotPresent
           args:
             - "compact"
