@@ -1,7 +1,10 @@
-# prom-stack-v3
+# temporis
 
-banzaicloud の thanos chart つかって thanos 永続化を実施
+<!--
+VIATOR TEMPORIS
 
-kube-prometheus-stack を使って prometheus, grafana, alertmanager をデプロイ
+http://tuwabuki20.blog5.fc2.com/blog-entry-1148.html
+
+-->
 
 運用コマンドは taskfile.ymal を参照
