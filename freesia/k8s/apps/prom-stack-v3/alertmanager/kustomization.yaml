@@ -19,5 +19,4 @@ labels:
   - pairs:
       app.kubernetes.io/component: alertmanager
       app.kubernetes.io/part-of: temporis
-      app.kubernetes.io/managed-by: kustomize
     includeSelectors: false
