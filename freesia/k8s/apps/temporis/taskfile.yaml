@@ -1,0 +1,26 @@
+# https://taskfile.dev
+
+version: "3"
+
+vars:
+  GREETING: Hello, World!
+
+tasks:
+  context:
+    cmds:
+      - kubectl config set-context kubernetes-admin@kubernetes
+  diff:
+    deps:
+      - context
+    cmds:
+      - kustomize build . | kubectl diff -f-
+  apply:
+    deps:
+      - context
+    cmds:
+      - kustomize build . | kubectl apply -f-
+  delete:
+    deps:
+      - context
+    cmds:
+      - kustomize build . | kubectl delete -f-

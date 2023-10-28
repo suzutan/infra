@@ -1,0 +1,21 @@
+apiVersion: monitoring.coreos.com/v1
+kind: ServiceMonitor
+metadata:
+  name: grafana
+  labels:
+    app.kubernetes.io/name: prometheus
+spec:
+  jobLabel: "app.kubernetes.io/name"
+
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: grafana
+  namespaceSelector:
+    matchNames:
+      - temporis
+  endpoints:
+    - port: http-web
+      scrapeTimeout: 30s
+      honorLabels: true
+      path: /metrics
+      scheme: http

@@ -1,0 +1,20 @@
+apiVersion: monitoring.coreos.com/v1
+kind: ServiceMonitor
+metadata:
+  name: alertmanager
+  labels:
+    app.kubernetes.io/name: alertmanager
+spec:
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: alertmanager
+  namespaceSelector:
+    matchNames:
+      - "temporis"
+  endpoints:
+    - port: http-web
+      enableHttp2: true
+      path: "/metrics"
+    - port: reloader-web
+      scheme: http
+      path: "/metrics"

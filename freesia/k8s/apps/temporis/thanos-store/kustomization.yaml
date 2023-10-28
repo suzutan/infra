@@ -1,0 +1,21 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+
+namespace: temporis
+
+resources:
+  - deployment.yaml
+  - ingress-grpc.yaml
+  - ingress-http.yaml
+  - pvc-store-data-volume.yaml
+  - service-grpc.yaml
+  - service-http.yaml
+
+labels:
+  - pairs:
+      app.kubernetes.io/name: thanos-store
+    includeSelectors: true
+  - pairs:
+      app.kubernetes.io/instance: thanos
+      app.kubernetes.io/component: store
+    includeSelectors: false

@@ -1,0 +1,20 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: thanos-rule-http
+  labels:
+    app.kubernetes.io/name: thanos-rule
+  annotations:
+    kubernetes.io/ingress.class: nginx
+spec:
+  rules:
+    - host: thanos-ruler.harvestasya.org
+      http:
+        paths:
+          - path: /
+            pathType: ImplementationSpecific
+            backend:
+              service:
+                name: thanos-rule-http
+                port:
+                  number: 10902

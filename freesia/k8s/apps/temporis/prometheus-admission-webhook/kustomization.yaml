@@ -1,0 +1,25 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+
+namespace: temporis
+
+resources:
+  - clusterrole.yaml
+  - clusterrolebinidng.yaml
+  - job-admission-create.yaml
+  - job-admission-patch.yaml
+  - mutatingwebhookconfiguration.yaml
+  - role.yaml
+  - rolebinding.yaml
+  - serviceaccount.yaml
+  - validatingwebhookconfiguration.yaml
+
+labels:
+  - pairs:
+      app.kubernetes.io/name: prometheus-admission-webhook
+    includeSelectors: true
+  - pairs:
+      app.kubernetes.io/component: prometheus-admission-webhook
+      app.kubernetes.io/part-of: temporis
+      app.kubernetes.io/managed-by: kustomize
+    includeSelectors: false

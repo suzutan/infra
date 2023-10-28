@@ -1,0 +1,17 @@
+apiVersion: monitoring.coreos.com/v1
+kind: ServiceMonitor
+metadata:
+  name: node-exporter
+  labels:
+    app.kubernetes.io/name: prometheus
+spec:
+  jobLabel: jobLabel
+
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: node-exporter
+  attachMetadata:
+    node: false
+  endpoints:
+    - port: http-metrics
+      scheme: http
