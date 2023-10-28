@@ -13,9 +13,11 @@ resources:
   - servicemonitor-kube-scheduler.yaml
   - servicemonitor-kubelet.yaml
   - servicemonitor-node-exporter.yaml
+  - servicemonitor-remo-exporter.yaml
 
 labels:
   - pairs:
+      app.kubernetes.io/name: prometheus
       app.kubernetes.io/instance: prometheus-exporter
       app.kubernetes.io/component: prometheus-exporter
     includeSelectors: false
