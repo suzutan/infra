@@ -3,6 +3,7 @@ kind: Kustomization
 
 resources:
   - alertmanager
+  - grafana
   - kube-state-metrics
   - node-exporter
   - prometheus
