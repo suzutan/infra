@@ -1,0 +1,16 @@
+apiVersion: rbac.authorization.k8s.io/v1
+kind: Role
+metadata:
+  name: prometheus-admission-webhook
+  labels:
+    app.kubernetes.io/name: prometheus-admission-webhook
+    app.kubernetes.io/component: prometheus-admission-webhook
+    app.kubernetes.io/part-of: temporis
+rules:
+  - apiGroups:
+      - ""
+    resources:
+      - secrets
+    verbs:
+      - get
+      - create
