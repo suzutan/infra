@@ -3,6 +3,7 @@ kind: Kustomization
 
 resources:
   - alertmanager
+  - kube-state-metrics
   - node-exporter
   - prometheus-admission-webhook
   - prometheus-operator
