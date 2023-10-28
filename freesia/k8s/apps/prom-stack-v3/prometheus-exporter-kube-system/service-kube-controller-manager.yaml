@@ -1,0 +1,18 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: temporis-kube-controller-manager
+  labels:
+    jobLabel: kube-controller-manager
+    app.kubernetes.io/name: kube-controller-manager
+  namespace: kube-system
+spec:
+  clusterIP: None
+  ports:
+    - name: http-metrics
+      port: 10257
+      protocol: TCP
+      targetPort: 10257
+  selector:
+    component: kube-controller-manager
+  type: ClusterIP
