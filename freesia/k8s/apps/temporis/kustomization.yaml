@@ -15,7 +15,6 @@ resources:
   - thanos-bucket
   - thanos-compact
   - thanos-query
-  - thanos-rule
   - thanos-store
 
 labels:
