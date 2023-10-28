@@ -4,8 +4,6 @@ metadata:
   name: prometheus-operator
   labels:
     app.kubernetes.io/name: prometheus-operator
-    app.kubernetes.io/component: prometheus-operator
-    app.kubernetes.io/part-of: temporis
 spec:
   endpoints:
     - port: https
@@ -21,8 +19,6 @@ spec:
   selector:
     matchLabels:
       app.kubernetes.io/name: prometheus-operator
-      app.kubernetes.io/component: prometheus-operator
-      app.kubernetes.io/part-of: temporis
   namespaceSelector:
     matchNames:
       - "temporis"

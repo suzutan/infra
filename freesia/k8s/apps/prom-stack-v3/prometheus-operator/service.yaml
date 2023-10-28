@@ -4,8 +4,6 @@ metadata:
   name: prometheus-operator
   labels:
     app.kubernetes.io/name: prometheus-operator
-    app.kubernetes.io/component: prometheus-operator
-    app.kubernetes.io/part-of: temporis
 spec:
   ports:
     - name: https
@@ -13,6 +11,4 @@ spec:
       targetPort: https
   selector:
     app.kubernetes.io/name: prometheus-operator
-    app.kubernetes.io/component: prometheus-operator
-    app.kubernetes.io/part-of: temporis
   type: "ClusterIP"
