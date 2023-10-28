@@ -10,6 +10,9 @@ resources:
 labels:
   - pairs:
       app.kubernetes.io/name: remo-exporter
+    includeSelectors: true
+  - pairs:
       app.kubernetes.io/instance: remo-exporter
       app.kubernetes.io/component: promethus-exporter
-    includeSelectors: true
+      app.kubernetes.io/managed-by: kustomize
+    includeSelectors: false
