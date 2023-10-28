@@ -12,15 +12,15 @@ spec:
         prometheus.io/path: /metrics
     spec:
       containers:
-      - name: remo-exporter
-        image: kenfdev/remo-exporter:latest
-        ports:
-        - name: http
-          containerPort: 9352
-        resources:
-          limits:
-            cpu: 500m
-            memory: 100Mi
-        envFrom:
-        - secretRef:
-            name: nature-remo-token
+        - name: remo-exporter
+          image: kenfdev/remo-exporter:latest
+          ports:
+            - name: http
+              containerPort: 9352
+          resources:
+            limits:
+              cpu: 100m
+              memory: 50Mi
+          envFrom:
+            - secretRef:
+                name: nature-remo-token
