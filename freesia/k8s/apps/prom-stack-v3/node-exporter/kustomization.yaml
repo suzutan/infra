@@ -1,0 +1,19 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+
+namespace: temporis
+
+resources:
+  - daemonset.yaml
+  - service.yaml
+  - serviceaccount.yaml
+  - servicemonitor.yaml
+
+labels:
+  - pairs:
+      app.kubernetes.io/name: node-exporter
+    includeSelectors: true
+  - pairs:
+      app.kubernetes.io/component: node-exporter
+      app.kubernetes.io/part-of: temporis
+    includeSelectors: false

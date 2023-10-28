@@ -3,6 +3,7 @@ kind: Kustomization
 
 resources:
   - alertmanager
+  - node-exporter
   - prometheus-admission-webhook
   - prometheus-operator
   - remo-exporter
