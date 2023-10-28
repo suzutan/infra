@@ -4,16 +4,12 @@ metadata:
   name: prometheus-admission-webhook-patch
   labels:
     app.kubernetes.io/name: prometheus-admission-webhook
-    app.kubernetes.io/component: prometheus-admission-webhook
-    app.kubernetes.io/part-of: temporis
 spec:
   template:
     metadata:
       name: prometheus-admission-webhook-patch
       labels:
         app.kubernetes.io/name: prometheus-admission-webhook
-        app.kubernetes.io/component: prometheus-admission-webhook
-        app.kubernetes.io/part-of: temporis
     spec:
       containers:
         - name: patch

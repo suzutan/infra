@@ -17,9 +17,9 @@ resources:
 labels:
   - pairs:
       app.kubernetes.io/name: prometheus-admission-webhook
-      app.kubernetes.io/component: prometheus-admission-webhook
-      app.kubernetes.io/part-of: temporis
     includeSelectors: true
   - pairs:
+      app.kubernetes.io/component: prometheus-admission-webhook
+      app.kubernetes.io/part-of: temporis
       app.kubernetes.io/managed-by: kustomize
     includeSelectors: false
