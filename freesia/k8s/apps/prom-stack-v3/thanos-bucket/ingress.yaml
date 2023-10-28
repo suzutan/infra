@@ -10,13 +10,13 @@ metadata:
     app.kubernetes.io/component: bucket
 spec:
   rules:
-  - host: thanos-bucket.harvestasya.org
-    http:
-      paths:
-        - path: /
-          pathType: ImplementationSpecific
-          backend:
-            service:
-              name: thanos-bucket
-              port:
-                number: 8080
+    - host: thanos-bucket.harvestasya.org
+      http:
+        paths:
+          - path: /
+            pathType: ImplementationSpecific
+            backend:
+              service:
+                name: thanos-bucket
+                port:
+                  number: 8080

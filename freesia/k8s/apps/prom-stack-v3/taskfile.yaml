@@ -1,23 +1,21 @@
 # https://taskfile.dev
 
-version: '3'
+version: "3"
 
 vars:
   GREETING: Hello, World!
 
 tasks:
-  deploy:
-    cmds:
-      - helm upgrade --install -n thanos thanos banzaicloud-stable/thanos -f values.yaml
-  manifests:
-    cmds:
-      - helm template -n thanos thanos banzaicloud-stable/thanos -f values.yaml > manifests.yaml
   context:
     cmds:
       - kubectl config set-context kubernetes-admin@kubernetes
   diff:
+    deps:
+      - context
     cmds:
       - kustomize build . | kubectl diff -f-
   apply:
+    deps:
+      - context
     cmds:
       - kustomize build . | kubectl apply -f-
