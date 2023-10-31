@@ -12,7 +12,7 @@ spec:
         port: http-web
         pathPrefix: "/"
         apiVersion: v2
-  image: "quay.io/prometheus/prometheus:v2.47.1"
+  image: "quay.io/prometheus/prometheus:REPLACE_HERE"
   version: v2.47.1
   externalUrl: "http://prometheus-v3.harvestasya.org/"
   paused: false
@@ -73,7 +73,7 @@ spec:
     name: prometheus-scrape-confg
     key: additional-scrape-configs.yaml
   thanos:
-    image: quay.io/thanos/thanos:v0.32.5
+    image: quay.io/thanos/thanos:REPLACE_HERE
     objectStorageConfig:
       key: object-store.yaml
       name: thanos-bucket-config

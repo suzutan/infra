@@ -32,7 +32,7 @@ spec:
             - --port=8080
             - --resources=certificatesigningrequests,configmaps,cronjobs,daemonsets,deployments,endpoints,horizontalpodautoscalers,ingresses,jobs,leases,limitranges,mutatingwebhookconfigurations,namespaces,networkpolicies,nodes,persistentvolumeclaims,persistentvolumes,poddisruptionbudgets,pods,replicasets,replicationcontrollers,resourcequotas,secrets,services,statefulsets,storageclasses,validatingwebhookconfigurations,volumeattachments
           imagePullPolicy: IfNotPresent
-          image: registry.k8s.io/kube-state-metrics/kube-state-metrics:v2.10.0
+          image: registry.k8s.io/kube-state-metrics/kube-state-metrics:REPLACE_HERE
           ports:
             - containerPort: 8080
               name: "http"
@@ -53,3 +53,10 @@ spec:
             capabilities:
               drop:
                 - ALL
+          resources:
+            requests:
+              cpu: 100m
+              memory: 64Mi
+            limits:
+              cpu: 100m
+              memory: 128Mi

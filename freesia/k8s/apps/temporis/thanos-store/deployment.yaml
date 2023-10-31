@@ -18,7 +18,7 @@ spec:
     spec:
       containers:
         - name: thanos-store
-          image: "quay.io/thanos/thanos:v0.32.5"
+          image: "quay.io/thanos/thanos:REPLACE_HERE"
           imagePullPolicy: IfNotPresent
           args:
             - store
@@ -40,12 +40,12 @@ spec:
             - name: data-dir
               mountPath: /var/thanos/store
           resources:
-            limits:
-              cpu: 2000m
-              memory: 16Gi
             requests:
               cpu: 1000m
-              memory: 4Gi
+              memory: 128Mi
+            limits:
+              cpu: 3000m
+              memory: 1Gi
       volumes:
         - name: data-dir
           emptyDir: {}

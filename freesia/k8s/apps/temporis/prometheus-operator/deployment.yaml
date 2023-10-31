@@ -17,7 +17,7 @@ spec:
     spec:
       containers:
         - name: kube-prometheus-stack
-          image: "quay.io/prometheus-operator/prometheus-operator:v0.68.0"
+          image: "quay.io/prometheus-operator/prometheus-operator:REPLACE_HERE"
           imagePullPolicy: "IfNotPresent"
           args:
             - --kubelet-service=kube-system/prometheus-v3-kube-prometh-kubelet
@@ -37,7 +37,13 @@ spec:
           ports:
             - containerPort: 10250
               name: https
-          resources: {}
+          resources:
+            requests:
+              cpu: 100m
+              memory: 64Mi
+            limits:
+              cpu: 1000m
+              memory: 128Mi
           securityContext:
             allowPrivilegeEscalation: false
             capabilities:

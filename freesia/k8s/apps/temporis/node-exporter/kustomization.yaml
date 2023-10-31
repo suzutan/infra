@@ -8,6 +8,10 @@ resources:
   - service.yaml
   - serviceaccount.yaml
 
+images:
+  - name: quay.io/prometheus/node-exporter
+    newTag: v1.6.1
+
 labels:
   - pairs:
       app.kubernetes.io/name: node-exporter

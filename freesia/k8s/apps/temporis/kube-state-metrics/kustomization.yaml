@@ -10,6 +10,10 @@ resources:
   - serviceaccount.yaml
   - servicemonitor.yaml
 
+images:
+  - name: registry.k8s.io/kube-state-metrics/kube-state-metrics
+    newTag: v2.10.0
+
 labels:
   - pairs:
       app.kubernetes.io/name: kube-state-metrics

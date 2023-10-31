@@ -16,7 +16,7 @@ spec:
     spec:
       containers:
         - name: thanos-bucket
-          image: "quay.io/thanos/thanos:v0.32.5"
+          image: "quay.io/thanos/thanos:REPLACE_HERE"
           imagePullPolicy: IfNotPresent
           args:
             - tools
@@ -33,7 +33,13 @@ spec:
             - name: config-volume
               mountPath: /etc/config
               readOnly: true
-          resources: {}
+          resources:
+            requests:
+              cpu: 100m
+              memory: 64Mi
+            limits:
+              cpu: 1000m
+              memory: 128Mi
       volumes:
         - name: config-volume
           secret:

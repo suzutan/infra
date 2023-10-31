@@ -29,7 +29,7 @@ spec:
       serviceAccountName: node-exporter
       containers:
         - name: node-exporter
-          image: quay.io/prometheus/node-exporter:v1.6.1
+          image: quay.io/prometheus/node-exporter:REPLACE_HERE
           imagePullPolicy: IfNotPresent
           args:
             - --path.procfs=/host/proc
@@ -51,7 +51,6 @@ spec:
           livenessProbe:
             failureThreshold: 3
             httpGet:
-              httpHeaders:
               path: /
               port: 9100
               scheme: HTTP
@@ -62,7 +61,6 @@ spec:
           readinessProbe:
             failureThreshold: 3
             httpGet:
-              httpHeaders:
               path: /
               port: 9100
               scheme: HTTP
@@ -81,6 +79,13 @@ spec:
               mountPath: /host/root
               mountPropagation: HostToContainer
               readOnly: true
+          resources:
+            requests:
+              cpu: 100m
+              memory: 64Mi
+            limits:
+              cpu: 1000m
+              memory: 128Mi
       hostNetwork: true
       hostPID: true
       nodeSelector:

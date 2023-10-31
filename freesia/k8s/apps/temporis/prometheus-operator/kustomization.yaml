@@ -11,6 +11,10 @@ resources:
   - serviceaccount.yaml
   - servicemonitor.yaml
 
+images:
+  - name: quay.io/prometheus-operator/prometheus-operator
+    newTag: v0.68.0
+
 labels:
   - pairs:
       app.kubernetes.io/name: prometheus-operator

@@ -10,6 +10,10 @@ resources:
   - service-grpc.yaml
   - service-http.yaml
 
+images:
+  - name: quay.io/thanos/thanos
+    newTag: v0.32.5
+
 labels:
   - pairs:
       app.kubernetes.io/name: thanos

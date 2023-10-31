@@ -16,7 +16,7 @@ spec:
     spec:
       containers:
         - name: thanos-query
-          image: "quay.io/thanos/thanos:v0.32.5"
+          image: "quay.io/thanos/thanos:REPLACE_HERE"
           imagePullPolicy: IfNotPresent
           args:
             - query
@@ -33,7 +33,13 @@ spec:
               containerPort: 10902
             - name: grpc
               containerPort: 10901
-          resources: {}
+          resources:
+            requests:
+              cpu: 1000m
+              memory: 128Mi
+            limits:
+              cpu: 3000m
+              memory: 1Gi
           volumeMounts: []
           livenessProbe:
             httpGet:

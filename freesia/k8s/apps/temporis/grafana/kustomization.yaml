@@ -18,6 +18,12 @@ resources:
   - service.yaml
   - serviceaccount.yaml
 
+images:
+  - name: quay.io/kiwigrid/k8s-sidecar
+    newTag: 1.25.1
+  - name: docker.io/grafana/grafana
+    newTag: 10.1.5
+
 labels:
   - pairs:
       app.kubernetes.io/name: grafana
