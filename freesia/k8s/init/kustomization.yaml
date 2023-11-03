@@ -6,3 +6,4 @@ resources:
 - ./onepassword-operator
 - ../core/argocd
 - ../core/apps
+- temporis-crd
