@@ -6,7 +6,6 @@ resources:
 - k8s-core.yaml
 - cert-manager.yaml
 - ingress-nginx.yaml
-- kube-flannel.yaml
 - onepassword-operator.yaml
 - metrics-server.yaml
 - nfs-subdir-external-provisioner.yaml

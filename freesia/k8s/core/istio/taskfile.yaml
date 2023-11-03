@@ -1,0 +1,14 @@
+# https://taskfile.dev
+
+version: "3"
+
+vars: {}
+
+tasks:
+  generate:
+    cmds:
+      - istioctl manifest generate > manifests.yaml
+  install:
+    cmds:
+      - istioctl install
+c
