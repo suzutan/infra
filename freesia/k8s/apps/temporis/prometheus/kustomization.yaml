@@ -17,8 +17,6 @@ resources:
   - service-thanos-sidecar.yaml
   - service.yaml
   - serviceaccount.yaml
-  - servicemonitor-thanos-sidecar.yaml
-  - servicemonitor.yaml
 
 images:
   - name: quay.io/prometheus/prometheus

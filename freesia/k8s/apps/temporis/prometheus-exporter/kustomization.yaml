@@ -13,6 +13,8 @@ resources:
   - servicemonitor-kube-scheduler.yaml
   - servicemonitor-kubelet.yaml
   - servicemonitor-node-exporter.yaml
+  - servicemonitor-prometheus-thanos-sidecar.yaml
+  - servicemonitor-prometheus.yaml
   - servicemonitor-remo-exporter.yaml
 
 labels:
@@ -20,4 +22,5 @@ labels:
       app.kubernetes.io/name: prometheus
       app.kubernetes.io/instance: prometheus-exporter
       app.kubernetes.io/component: prometheus-exporter
+      cluster: freesia
     includeSelectors: false
