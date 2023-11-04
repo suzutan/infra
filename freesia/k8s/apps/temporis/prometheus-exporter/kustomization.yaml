@@ -4,6 +4,7 @@ kind: Kustomization
 namespace: temporis
 
 resources:
+  - servicemonitor-alertmanager.yaml
   - servicemonitor-coredns.yaml
   - servicemonitor-grafana.yaml
   - servicemonitor-kube-apiserver.yaml
