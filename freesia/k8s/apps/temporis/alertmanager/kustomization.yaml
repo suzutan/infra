@@ -13,7 +13,6 @@ resources:
   - secret-alertmanager-config.yaml
   - service.yaml
   - serviceaccount.yaml
-  - servicemonitor.yaml
 
 images:
   - name: quay.io/prometheus/alertmanager
