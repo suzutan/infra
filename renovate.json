@@ -7,7 +7,7 @@
     ":timezone(Asia/Tokyo)",
     ":semanticCommits",
     "config:recommended",
-    "github>aquaproj/aqua-renovate-config#1.11.0"
+    "github>aquaproj/aqua-renovate-config#1.12.0"
   ],
   "automerge": true,
   "branchConcurrentLimit": 0,
