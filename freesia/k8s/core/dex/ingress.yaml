@@ -1,0 +1,23 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: dex
+  labels:
+    app.kubernetes.io/name: dex
+spec:
+  ingressClassName: nginx
+  tls:
+    - hosts:
+        - "auth.harvestasya.org"
+      secretName: 
+  rules:
+    - host: "auth.harvestasya.org"
+      http:
+        paths:
+          - path: /
+            pathType: ImplementationSpecific
+            backend:
+              service:
+                name: dex
+                port:
+                  number: 5556

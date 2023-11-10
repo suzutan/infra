@@ -1,0 +1,21 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: dex
+  labels:
+    app.kubernetes.io/name: dex
+spec:
+  type: ClusterIP
+  ports:
+    - name: http
+      port: 5556
+      targetPort: http
+      protocol: TCP
+      appProtocol: http
+    - name: telemetry
+      port: 5558
+      targetPort: telemetry
+      protocol: TCP
+      appProtocol: http
+  selector:
+    app.kubernetes.io/name: dex
