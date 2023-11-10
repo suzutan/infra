@@ -6,6 +6,7 @@ namespace: temporis
 resources:
   - alertmanager.yaml
   - coredns.yaml
+  - dex.yaml
   - grafana.yaml
   - kube-apiserver.yaml
   - kube-controller-manager.yaml
