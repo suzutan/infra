@@ -11,9 +11,9 @@ resources:
   - namespace.yaml
   - role.yaml
   - rolebinding.yaml
+  - secret-dex-config.yaml
   - service.yaml
   - serviceaccount.yaml
-
 
 images:
   - name: ghcr.io/dexidp/dex
@@ -24,13 +24,3 @@ labels:
       app.kubernetes.io/name: dex
       app.kubernetes.io/instance: dex
     includeSelectors: true
-
-generatorOptions:
-  disableNameSuffixHash: true
-
-secretGenerator:
-- name: dex
-  files:
-  - config.yaml
-
-

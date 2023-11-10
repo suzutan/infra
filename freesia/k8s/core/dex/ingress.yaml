@@ -9,7 +9,6 @@ spec:
   tls:
     - hosts:
         - "auth.harvestasya.org"
-      secretName: 
   rules:
     - host: "auth.harvestasya.org"
       http:
