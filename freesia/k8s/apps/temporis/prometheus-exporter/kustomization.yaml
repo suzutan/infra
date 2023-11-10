@@ -4,19 +4,19 @@ kind: Kustomization
 namespace: temporis
 
 resources:
-  - servicemonitor-alertmanager.yaml
-  - servicemonitor-coredns.yaml
-  - servicemonitor-grafana.yaml
-  - servicemonitor-kube-apiserver.yaml
-  - servicemonitor-kube-controller-manager.yaml
-  - servicemonitor-kube-etcd.yaml
-  - servicemonitor-kube-proxy.yaml
-  - servicemonitor-kube-scheduler.yaml
-  - servicemonitor-kubelet.yaml
-  - servicemonitor-node-exporter.yaml
-  - servicemonitor-prometheus-thanos-sidecar.yaml
-  - servicemonitor-prometheus.yaml
-  - servicemonitor-remo-exporter.yaml
+  - alertmanager.yaml
+  - coredns.yaml
+  - grafana.yaml
+  - kube-apiserver.yaml
+  - kube-controller-manager.yaml
+  - kube-etcd.yaml
+  - kube-proxy.yaml
+  - kube-scheduler.yaml
+  - kubelet.yaml
+  - node-exporter.yaml
+  - prometheus-thanos-sidecar.yaml
+  - prometheus.yaml
+  - remo-exporter.yaml
 
 labels:
   - pairs:
