@@ -46,12 +46,12 @@ spec:
               valueFrom:
                 secretKeyRef:
                   name: grafana
-                  key: admin-user
+                  key: GF_SECURITY_ADMIN_USER
             - name: REQ_PASSWORD
               valueFrom:
                 secretKeyRef:
                   name: grafana
-                  key: admin-password
+                  key: GF_SECURITY_ADMIN_PASSWORD
             - name: REQ_URL
               value: http://localhost:3000/api/admin/provisioning/dashboards/reload
             - name: REQ_METHOD
@@ -91,12 +91,12 @@ spec:
               valueFrom:
                 secretKeyRef:
                   name: grafana
-                  key: admin-user
+                  key: GF_SECURITY_ADMIN_USER
             - name: REQ_PASSWORD
               valueFrom:
                 secretKeyRef:
                   name: grafana
-                  key: admin-password
+                  key: GF_SECURITY_ADMIN_PASSWORD
             - name: REQ_URL
               value: http://localhost:3000/api/admin/provisioning/datasources/reload
             - name: REQ_METHOD
