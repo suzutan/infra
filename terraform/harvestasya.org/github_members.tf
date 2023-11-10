@@ -6,6 +6,9 @@ locals {
   all_users = setunion(
     local.role_argocd_admin,
     local.role_asf_users,
+    local.role_grafana_admin_users,
+    local.role_grafana_editor_users,
+    local.role_grafana_viewer_users,
   )
 
 }

@@ -18,6 +18,7 @@ resource "cloudflare_ruleset" "ingress" {
       (http.host in {
         "${cloudflare_record.argocd.hostname}"
         "${cloudflare_record.asf.hostname}"
+        "${cloudflare_record.grafana.hostname}"
       })
     EOT
   }
