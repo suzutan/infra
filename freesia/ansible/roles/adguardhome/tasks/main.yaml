@@ -42,6 +42,11 @@
 #     mode: '0644'
 #   notify: restart adguardhome
 
+- name: create adguard data dir
+  file:
+    path: /opt/AdGuardHome/data
+    state: directory
+
 - name: Set up AdGuard Home DHCP static lease
   copy:
     content: "{{ dhcp_static_leases | to_nice_json }}"

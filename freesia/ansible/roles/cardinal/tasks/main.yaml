@@ -30,6 +30,7 @@
   file:
     path: /usr/local/sbin/cardinal
     attr: -i
+  ignore_errors: true
 
 - name: copy cardinal script
   copy:
