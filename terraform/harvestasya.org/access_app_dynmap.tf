@@ -34,10 +34,10 @@ resource "cloudflare_record" "dynmap_users" {
 }
 
 resource "cloudflare_access_application" "dynmap_users" {
-  for_each                  = toset(local.dynmap_domains)
+  for_each                  = cloudflare_record.dynmap_users
   zone_id                   = data.cloudflare_zone.domain.id
   name                      = "dynmap-users"
-  domain                    = cloudflare_record.dynmap_users[each.value].hostname
+  domain                    = each.value.hostname
   type                      = "self_hosted"
   session_duration          = "24h"
   auto_redirect_to_identity = true
@@ -63,8 +63,8 @@ resource "cloudflare_access_group" "dynmap_users" {
 }
 
 resource "cloudflare_access_policy" "dynmap_users" {
-  for_each       = toset(local.dynmap_domains)
-  application_id = cloudflare_access_application.dynmap_users[each.value].id
+  for_each       = cloudflare_access_application.dynmap_users
+  application_id = each.value.id
   zone_id        = data.cloudflare_zone.domain.id
   name           = "dynmap-users"
   precedence     = 1
