@@ -11,6 +11,7 @@ resources:
   - deployment.yaml
   - grafana-dashboards.yaml
   - ingress.yaml
+  - pvc.yaml
   - role.yaml
   - rolebinding.yaml
   - secret-grafana.yaml

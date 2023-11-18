@@ -190,7 +190,8 @@ spec:
           configMap:
             name: grafana
         - name: storage
-          emptyDir: {}
+          persistentVolumeClaim:
+            claimName: grafana-data
         - name: sc-dashboard-volume
           emptyDir: {}
         - name: sc-dashboard-provider
