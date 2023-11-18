@@ -9,6 +9,7 @@ locals {
     local.role_grafana_admin_users,
     local.role_grafana_editor_users,
     local.role_grafana_viewer_users,
+    local.role_dynmap_users,
   )
 
 }
