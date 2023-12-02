@@ -37,7 +37,7 @@ helmCharts:
 - name: argo-cd
   releaseName: argocd
   namespace: argocd
-  version: 5.51.5
+  version: 5.51.6
   repo: https://argoproj.github.io/argo-helm
   includeCRDs: true
   valuesInline:
