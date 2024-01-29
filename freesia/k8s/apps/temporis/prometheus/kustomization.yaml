@@ -22,7 +22,7 @@ images:
   - name: quay.io/prometheus/prometheus
     newTag: v2.49.1
   - name: quay.io/thanos/thanos
-    newTag: v0.33.0
+    newTag: v0.34.0
 
 labels:
   - pairs:
