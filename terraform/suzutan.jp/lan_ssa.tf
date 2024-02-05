@@ -17,6 +17,15 @@ resource "cloudflare_record" "ssa_sv_freesia" {
   ttl     = 1
 }
 
+resource "cloudflare_record" "ssa_sv_adguard" {
+  zone_id = data.cloudflare_zone.domain.id
+  name    = "adguard.sv.ssa"
+  type    = "A"
+  value   = "172.20.0.200"
+  proxied = false
+  ttl     = 1
+}
+
 resource "cloudflare_record" "ssa_cl_qsw" {
   zone_id = data.cloudflare_zone.domain.id
   name    = "qsw.sv.ssa"
