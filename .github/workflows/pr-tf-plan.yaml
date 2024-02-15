@@ -1,5 +1,8 @@
-name: "Terraform Plan on PR"
+name: "terraform plan"
 
+permissions:
+  id-token: write # This is required for requesting the JWT
+  contents: read  # This is required for actions/checkout
 on:
   pull_request:
     branches:
@@ -18,6 +21,11 @@ jobs:
           - terraform/suzutan.jp
     steps:
       - uses: actions/checkout@v2
+
+      - name: configure aws credentials
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          role-to-assume: arn:aws:iam::{{ secrets.AWS_ACCOUNT_ID }}:role/TerraformBackendAccessForGitHubActions
 
       - name: Setup Terraform
         uses: hashicorp/setup-terraform@v1
