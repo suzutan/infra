@@ -1,9 +1,8 @@
 terraform {
-  cloud {
-    organization = "suzutan"
-    workspaces {
-      name = "suzutan-jp"
-    }
+  backend "s3" {
+    bucket = "suzutan-infra"
+    key    = "terraform/suzutan.jp"
+    region = "ap-northeast-3"
   }
 }
 
@@ -11,7 +10,6 @@ locals {
   domain     = "suzutan.jp"
   account_id = "3b433b4bc6b6f9770dbf88886748ec8b"
 }
-
 
 data "cloudflare_zone" "domain" {
   name = local.domain
