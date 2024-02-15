@@ -3,17 +3,23 @@ name: Terraform fmt check
 on:
   pull_request:
     branches:
-    - master
+      - master
     paths:
-    - terraform/**
+      - terraform/**
 
 jobs:
-  tf-fmt:
+  check_format:
     runs-on: ubuntu-latest
+    name: Check Terraform file are formatted correctly
+    strategy:
+      matrix:
+        directory:
+          - terraform/harvestasya.org
+          - terraform/suzutan.jp
     steps:
-    - uses: actions/checkout@v4
-    - uses: hashicorp/setup-terraform@v3
-      with:
-        terraform_version: 1.4.6
-    - name: Terraform fmt
-      run: terraform fmt -check -recursive
+      - name: Checkout
+        uses: actions/checkout@v3
+      - name: terraform fmt
+        uses: dflook/terraform-fmt-check@v1
+        with:
+          path: ${{ matrix.directory }}
