@@ -11,7 +11,7 @@ resources:
 
 images:
   - name: quay.io/thanos/thanos
-    newTag: v0.34.0
+    newTag: v0.34.1
 
 labels:
   - pairs:
