@@ -16,7 +16,7 @@ resources:
 
 images:
   - name: quay.io/prometheus/alertmanager
-    newTag: v0.26.0
+    newTag: v0.27.0
 
 labels:
   - pairs:
