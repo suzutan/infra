@@ -4,4 +4,3 @@
   - role: cardinal
   - role: golang
   - role: disable-ipv6
-  - role: adguardhome
