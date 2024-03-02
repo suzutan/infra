@@ -4,7 +4,7 @@ kind: Kustomization
 resources:
 - argocd.yaml
 - k8s-core.yaml
-- cert-manager.yaml]
+- cert-manager.yaml
 - dex.yaml
 - ingress-nginx.yaml
 - onepassword-operator.yaml
