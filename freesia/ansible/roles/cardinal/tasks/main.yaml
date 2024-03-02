@@ -38,11 +38,6 @@
     dest: /usr/local/sbin/cardinal
     mode: "0755"
 
-- name: Ensure /usr/local/sbin/cardinal is immutable.
-  file:
-    path: /usr/local/sbin/cardinal
-    attr: +i
-
 - name: start cardinal
   systemd:
     name: "{{ item }}"
