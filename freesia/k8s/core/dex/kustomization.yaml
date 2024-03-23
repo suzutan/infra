@@ -17,7 +17,7 @@ resources:
 
 images:
   - name: ghcr.io/dexidp/dex
-    newTag: v2.38.0
+    newTag: v2.39.0
 
 labels:
   - pairs:
