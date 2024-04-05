@@ -13,7 +13,7 @@ resources:
 
 images:
   - name: quay.io/prometheus-operator/prometheus-operator
-    newTag: v0.72.0
+    newTag: v0.73.0
 
 labels:
   - pairs:
