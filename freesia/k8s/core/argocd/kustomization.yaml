@@ -3,9 +3,11 @@ kind: Kustomization
 
 namespace: argocd
 
-commonLabels:
-  app.kubernetes.io/part-of: argocd
-  app.kubernetes.io/managed-by: argocd
+labels:
+- includeSelectors: true
+  pairs:
+    app.kubernetes.io/managed-by: argocd
+    app.kubernetes.io/part-of: argocd
 
 resources:
 - namespace.yaml
@@ -32,7 +34,6 @@ patches:
     kind: ConfigMap
     name: argocd-rbac-cm
 
-
 helmCharts:
 - name: argo-cd
   releaseName: argocd
@@ -41,69 +42,16 @@ helmCharts:
   repo: https://argoproj.github.io/argo-helm
   includeCRDs: true
   valuesInline:
-    #   ## Argo Configs
-    #   configs:
-    #     # General Argo CD configuration
-    #     ## Ref: https://github.com/argoproj/argo-cd/blob/master/docs/operator-manual/argocd-cm.yaml
-    #     cm:
-    #       # -- Argo CD's externally facing base URL (optional). Required when configuring SSO
-    #       url: "https://argocd.suzutan.jp"
-
-    #       # -- Enable local admin user
-    #       ## Ref: https://argo-cd.readthedocs.io/en/latest/faq/#how-to-disable-admin-user
-    #       admin.enabled: true
-
-    #       # Dex configuration
-    #       dex.config: |
-    #         connectors:
-    #           # GitHub
-    #           - type: github
-    #             id: github
-    #             name: GitHub
-    #             config:
-    #               clientID: aabbccddeeff00112233
-    #               clientSecret: $dex.github.clientSecret # Alternatively $<some_K8S_secret>:dex.github.clientSecret
-    #               orgs:
-    #               - name: your-github-org
-
-    ## Server
+    global:
+      domain: argocd.harvestasya.org
     server:
-      # -- Argo CD server name
-      name: server
-
       ingress:
-        # -- Enable an ingress resource for the Argo CD server
         enabled: true
-        # -- Defines which ingress controller will implement the resource
-        ingressClassName: "nginx"
-        # -- List of ingress hosts
         annotations:
+          nginx.ingress.kubernetes.io/backend-protocol: HTTPS
           nginx.ingress.kubernetes.io/ssl-passthrough: "true"
-          nginx.ingress.kubernetes.io/backend-protocol: "HTTPS"
-        ## Argo Ingress.
-        ## Hostnames must be provided if Ingress is enabled.
-        ## Secrets must be manually created in the namespace
-        hosts:
-        - argocd.harvestasya.org
-
-        # -- List of ingress paths
-        paths:
-        - /
-        # -- Ingress path type. One of `Exact`, `Prefix` or `ImplementationSpecific`
-        pathType: Prefix
-        # -- Additional ingress paths
-        extraPaths: []
-        # - path: /*
-        #   pathType: Prefix
-        #   backend:
-        #     service:
-        #       name: ssl-redirect
-        #       port:
-        #         name: use-annotation
-
-        # -- Ingress TLS configuration
-        tls:
-        - hosts:
-          - argocd.harvestasya.org
-        # -- Uses `server.service.servicePortHttps` instead `server.service.servicePortHttp`
         https: true
+        ingressClassName: nginx
+        pathType: Prefix
+        tls: true
+      name: server
