@@ -1,9 +1,19 @@
 all:
-  hosts:
-    freesia.sv.ssa.suzutan.jp:
+  children:
+    kvm:
+    k8s:
   vars:
-    ansible_ssh_user: root
     ansible_python_interpreter: /usr/bin/python3
     ansible_user: suzutan
     bin_dir: /usr/local/bin
     go_version: "1.22.0"
+
+kvm:
+  hosts:
+    freesia.sv.ssa.suzutan.jp:
+
+k8s:
+  hosts:
+    node01.k8s.ssa.suzutan.jp:
+    node02.k8s.ssa.suzutan.jp:
+    node03.k8s.ssa.suzutan.jp:
