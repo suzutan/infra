@@ -3,6 +3,7 @@ kind: Kustomization
 
 resources:
   - asf.yaml
+  - authentik.yaml
   - ddns.yaml
   - freshrss.yaml
   - k8s-apps.yaml

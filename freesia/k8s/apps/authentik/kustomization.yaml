@@ -1,0 +1,115 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+
+namespace: authentik
+
+resources:
+  - namespace.yaml
+  - secret-authentik.yaml
+  - secret-authentik-redis.yaml
+  - secret-authentik-postgresql.yaml
+
+helmCharts:
+  # https://artifacthub.io/packages/helm/goauthentik/authentik
+  - name: authentik
+    releaseName: authentik
+    namespace: authentik
+    version: 2024.2.3
+    repo: https://charts.goauthentik.io
+    valuesInline:
+      authentik:
+        log_level: info
+        secret_key: dummy
+
+        email:
+          host: ""
+          port: 587
+          username: ""
+          password: ""
+          use_tls: false
+          use_ssl: false
+          timeout: 30
+          from: ""
+
+        error_reporting:
+          enabled: true
+
+        postgresql:
+          password: dummy
+          port: 5432
+        redis:
+          password: dummy
+
+      server:
+        replicas: 2
+        ingress:
+          enabled: true
+          ingressClassName: "nginx"
+          hosts:
+            - auth.harvestasya.org
+          tls:
+            - hosts:
+                - auth.harvestasya.org
+
+      worker:
+        replicas: 2
+
+      prometheus:
+        rules:
+          enabled: true
+          namespace: "temporis"
+          # -- PrometheusRule selector
+          selector:
+            {}
+            # prometheus: kube-prometheus
+
+      postgresql:
+        # -- enable the Bitnami PostgreSQL chart. Refer to https://github.com/bitnami/charts/blob/main/bitnami/postgresql/ for possible values.
+        enabled: true
+        auth:
+          password: dummy
+        primary:
+          extendedConfiguration: |
+            max_connections = 500
+          persistence:
+            enabled: true
+            storageClass: nfs-client
+            accessModes:
+              - ReadWriteOnce
+
+      redis:
+        # -- enable the Bitnami Redis chart. Refer to https://github.com/bitnami/charts/blob/main/bitnami/redis/ for possible values.
+        enabled: true
+        auth:
+          enabled: true
+          password: dummy
+        master:
+          persistence:
+            enabled: true
+            storageClass: nfs-client
+            accessModes:
+              - ReadWriteOnce
+
+patches:
+  # authentik / authentik-postgresql / authentik-redis Secret は 1Password で管理されるので自動で作成されるシークレットを空にする
+  - target:
+      version: v1
+      kind: Secret
+      name: authentik
+    patch: |-
+      - path: /data
+        op: remove
+  - target:
+      version: v1
+      kind: Secret
+      name: authentik-postgresql
+    patch: |-
+      - path: /data
+        op: remove
+  - target:
+      version: v1
+      kind: Secret
+      name: authentik-redis
+    patch: |-
+      - path: /data
+        op: remove
