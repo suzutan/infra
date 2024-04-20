@@ -10,7 +10,7 @@ resource "cloudflare_record" "sendgrid_mail" {
   value   = "u43989729.wl230.sendgrid.net"
 }
 
-resource "cloudflare_record" "dkim_1" {
+resource "cloudflare_record" "sendgrid_dkim_1" {
   zone_id = data.cloudflare_zone.domain.id
   name    = "s1._domainkey.mail.harvestasya.org"
   type    = "CNAME"
@@ -19,7 +19,7 @@ resource "cloudflare_record" "dkim_1" {
   value   = "s1.domainkey.u43989729.wl230.sendgrid.net"
 }
 
-resource "cloudflare_record" "dkim_2" {
+resource "cloudflare_record" "sendgrid_dkim_2" {
   zone_id = data.cloudflare_zone.domain.id
   name    = "s2._domainkey.mail.harvestasya.org"
   type    = "CNAME"
@@ -28,7 +28,7 @@ resource "cloudflare_record" "dkim_2" {
   value   = "s2.domainkey.u43989729.wl230.sendgrid.net"
 }
 
-resource "cloudflare_record" "dmarc" {
+resource "cloudflare_record" "sendgrid_dmarc" {
   zone_id = data.cloudflare_zone.domain.id
   name    = "_dmarc.mail.harvestasya.org"
   type    = "TXT"
