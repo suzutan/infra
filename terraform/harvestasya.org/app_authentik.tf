@@ -5,3 +5,4 @@ resource "cloudflare_record" "auth" {
   type    = "CNAME"
   proxied = true
 }
+
