@@ -1,9 +1,12 @@
 
+module "app_grafana" {
+  source = "../modules/application"
+  providers = {
+    cloudflare = cloudflare
+  }
 
-resource "cloudflare_record" "grafana" {
-  zone_id = data.cloudflare_zone.domain.id
-  name    = "grafana-v3"
-  value   = local.ddns_domain
-  type    = "CNAME"
-  proxied = true
+  zone_name                           = local.zone_name
+  subdomain                           = "grafana-v3"
+  ddns_domain                         = local.ddns_domain
+  create_authentik_oauth2_application = true
 }
