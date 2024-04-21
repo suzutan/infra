@@ -32,3 +32,13 @@ variable "github_client_secret" {
   type        = string
   description = "Client secret of the GitHub OAuth App"
 }
+
+variable "authentik_url" {
+  type        = string
+  description = "URL of Authentik"
+}
+
+variable "authentik_token" {
+  type        = string
+  description = "API token for Authentik"
+}
