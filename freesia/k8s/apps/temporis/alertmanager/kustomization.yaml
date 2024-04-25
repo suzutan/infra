@@ -9,7 +9,6 @@ namespace: temporis
 resources:
   - alertmanager.yaml
   - ingress.yaml
-  - pdb.yaml
   - secret-alertmanager-config.yaml
   - service.yaml
   - serviceaccount.yaml
