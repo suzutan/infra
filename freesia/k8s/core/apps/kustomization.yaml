@@ -7,5 +7,4 @@ resources:
   - cert-manager.yaml
   - ingress-nginx.yaml
   - onepassword-operator.yaml
-  - metrics-server.yaml
   - nfs-subdir-external-provisioner.yaml
