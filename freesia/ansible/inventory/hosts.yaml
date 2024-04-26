@@ -1,16 +1,11 @@
 all:
   children:
-    kvm:
     k8s:
   vars:
     ansible_python_interpreter: /usr/bin/python3
-    ansible_user: suzutan
+    ansible_user: ubuntu
     bin_dir: /usr/local/bin
     go_version: "1.22.0"
-
-kvm:
-  hosts:
-    freesia.sv.ssa.suzutan.jp:
 
 k8s:
   hosts:
