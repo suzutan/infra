@@ -3,8 +3,8 @@ kind: Kustomization
 
 resources:
   - argocd.yaml
-  - k8s-core.yaml
   - cert-manager.yaml
   - ingress-nginx.yaml
-  - onepassword-operator.yaml
+  - k8s-core.yaml
   - nfs-subdir-external-provisioner.yaml
+  - onepassword-operator.yaml
