@@ -1,6 +1,6 @@
-resource "cloudflare_record" "auth" {
+resource "cloudflare_record" "authentik" {
   zone_id = data.cloudflare_zone.domain.id
-  name    = "auth"
+  name    = "id"
   value   = local.ddns_domain
   type    = "CNAME"
   proxied = true

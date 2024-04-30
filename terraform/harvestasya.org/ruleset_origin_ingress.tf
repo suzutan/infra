@@ -16,8 +16,8 @@ resource "cloudflare_ruleset" "ingress" {
 
     expression = <<-EOT
       (http.host in {
-        "${module.app_argocd.cloudflare_record.hostname}"
-        "${cloudflare_record.auth.hostname}"
+        "${cloudflare_record.argocd.hostname}"
+        "${cloudflare_record.authentik.hostname}"
       })
     EOT
   }
