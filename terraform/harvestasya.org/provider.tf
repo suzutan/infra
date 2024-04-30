@@ -11,9 +11,3 @@ provider "github" {
 provider "cloudflare" {
   api_token = var.cloudflare_api_token
 }
-
-provider "authentik" {
-  url   = var.authentik_url
-  token = var.authentik_token
-
-}
