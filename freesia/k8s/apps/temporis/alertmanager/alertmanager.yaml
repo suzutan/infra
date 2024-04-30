@@ -10,7 +10,7 @@ spec:
   replicas: 1
   listenLocal: false
   serviceAccountName: alertmanager
-  externalUrl: "http://alertmanager-v3.harvestasya.org/"
+  externalUrl: "http://alertmanager.harvestasya.org/"
   paused: false
   logFormat: "logfmt"
   logLevel: "info"

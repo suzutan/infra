@@ -14,7 +14,7 @@ spec:
         apiVersion: v2
   image: "quay.io/prometheus/prometheus:REPLACE_HERE"
   version: v2.47.1
-  externalUrl: "http://prometheus-v3.harvestasya.org/"
+  externalUrl: "http://prometheus.harvestasya.org/"
   paused: false
   replicas: 1
   shards: 1
