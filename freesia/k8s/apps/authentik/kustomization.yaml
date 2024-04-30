@@ -46,10 +46,10 @@ helmCharts:
           enabled: true
           ingressClassName: "nginx"
           hosts:
-            - auth.harvestasya.org
+            - id.harvestasya.org
           tls:
             - hosts:
-                - auth.harvestasya.org
+                - id.harvestasya.org
 
       worker:
         replicas: 2
