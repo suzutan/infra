@@ -9,7 +9,7 @@ metadata:
 spec:
   ingressClassName: nginx
   rules:
-    - host: grafana-v3.harvestasya.org
+    - host: grafana.harvestasya.org
       http:
         paths:
           - path: /

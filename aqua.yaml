@@ -1,10 +1,10 @@
 registries:
 - type: standard
-  ref: v4.163.0 # renovate: depName=aquaproj/aqua-registry
+  ref: v4.168.0 # renovate: depName=aquaproj/aqua-registry
 
 packages:
 - name: kubernetes-sigs/kustomize@kustomize/v5.4.1
 - name: kubernetes/kubectl
   version: "v1.23.0"
 - name: helm/helm@v3.14.4
-- name: hashicorp/terraform@v1.8.1
+- name: hashicorp/terraform@v1.8.2

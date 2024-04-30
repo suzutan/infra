@@ -1,3 +1,7 @@
+- name: set hostname
+  ansible.builtin.hostname:
+    name: "{{ inventory_hostname }}"
+
 - name: update all packages to the latest version
   command: "apt -y update"
 

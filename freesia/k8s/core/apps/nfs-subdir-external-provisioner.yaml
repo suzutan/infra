@@ -4,29 +4,13 @@ metadata:
   name: nfs-subdir-external-provisioner
   namespace: argocd
 spec:
-  project: core
   destination:
-    server: https://kubernetes.default.svc
-    namespace: kube-system
-
+    server: "https://kubernetes.default.svc"
   source:
-    repoURL: https://kubernetes-sigs.github.io/nfs-subdir-external-provisioner
-    chart: nfs-subdir-external-provisioner
-    targetRevision: 4.0.18
-    helm:
-      releaseName: nfs-subdir-external-provisioner
-      parameters:
-      - name: nfs.server
-        value: nas.sv.ssa.suzutan.jp
-      - name: nfs.path
-        value: /freesia
-      - name: storageClass.create
-        value: "true"
-      - name: storageClass.defaultClass
-        value: "true"
-      - name: storageClass.name
-        value: nfs-client
-
+    path: freesia/k8s/core/nfs-subdir-external-provisioner
+    repoURL: "https://github.com/suzutan/infra.git"
+    targetRevision: HEAD
+  project: core
   syncPolicy:
     automated:
       prune: true

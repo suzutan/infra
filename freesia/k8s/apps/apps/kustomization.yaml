@@ -5,7 +5,6 @@ resources:
   - asf.yaml
   - authentik.yaml
   - ddns.yaml
-  - freshrss.yaml
   - k8s-apps.yaml
   - minio-operator.yaml
   - minio.yaml

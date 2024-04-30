@@ -14,7 +14,7 @@ helmCharts:
   - name: authentik
     releaseName: authentik
     namespace: authentik
-    version: 2024.2.3
+    version: 2024.4.1
     repo: https://charts.goauthentik.io
     valuesInline:
       authentik:
@@ -46,10 +46,10 @@ helmCharts:
           enabled: true
           ingressClassName: "nginx"
           hosts:
-            - auth.harvestasya.org
+            - id.harvestasya.org
           tls:
             - hosts:
-                - auth.harvestasya.org
+                - id.harvestasya.org
 
       worker:
         replicas: 2
