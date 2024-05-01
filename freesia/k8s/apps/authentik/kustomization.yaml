@@ -17,6 +17,10 @@ helmCharts:
     version: 2024.4.1
     repo: https://charts.goauthentik.io
     valuesInline:
+      global:
+        envFrom:
+          - secretRef:
+              name: authentik-custom
       authentik:
         log_level: info
         secret_key: dummy
@@ -50,10 +54,12 @@ helmCharts:
           tls:
             - hosts:
                 - id.harvestasya.org
-
+        deploymentAnnotations:
+          operator.1password.io/auto-restart: "true"
       worker:
         replicas: 2
-
+        deploymentAnnotations:
+          operator.1password.io/auto-restart: "true"
       prometheus:
         rules:
           enabled: true
@@ -67,7 +73,7 @@ helmCharts:
         # -- enable the Bitnami PostgreSQL chart. Refer to https://github.com/bitnami/charts/blob/main/bitnami/postgresql/ for possible values.
         enabled: true
         auth:
-          password: dummy
+          existingSecret: "authentik-postgresql-custom"
         primary:
           extendedConfiguration: |
             max_connections = 500
@@ -76,13 +82,14 @@ helmCharts:
             storageClass: nfs-client
             accessModes:
               - ReadWriteOnce
+          
 
       redis:
         # -- enable the Bitnami Redis chart. Refer to https://github.com/bitnami/charts/blob/main/bitnami/redis/ for possible values.
         enabled: true
         auth:
           enabled: true
-          password: dummy
+          existingSecret: "authentik-redis-custom"
         master:
           persistence:
             enabled: true
@@ -91,25 +98,25 @@ helmCharts:
               - ReadWriteOnce
 
 patches:
-  # authentik / authentik-postgresql / authentik-redis Secret は 1Password で管理されるので自動で作成されるシークレットを空にする
+  # デフォルトで生成されるsecret/authentikを削除し、onepassworditem/authentik-customをかならず使う
+  - target:
+      kind: Secret
+    patch: |
+      $patch: delete
+      kind: Secret
+      metadata:
+        name: authentik
   - target:
       version: v1
-      kind: Secret
-      name: authentik
+      kind: Deployment
+      name: authentik-server
     patch: |-
-      - path: /data
+      - path: /spec/template/spec/containers/0/envFrom/0
         op: remove
   - target:
       version: v1
-      kind: Secret
-      name: authentik-postgresql
+      kind: Deployment
+      name: authentik-worker
     patch: |-
-      - path: /data
-        op: remove
-  - target:
-      version: v1
-      kind: Secret
-      name: authentik-redis
-    patch: |-
-      - path: /data
+      - path: /spec/template/spec/containers/0/envFrom/0
         op: remove
