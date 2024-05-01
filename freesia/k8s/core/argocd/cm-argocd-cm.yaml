@@ -24,14 +24,14 @@ data:
     clientSecret: $argocd-custom-secret:authentik.client-secret
 
     # # Optional set of OIDC claims to request on the ID token.
-    # requestedIDTokenClaims: {"groups": {"essential": true}}
+    requestedIDTokenClaims: {"groups": {"essential": true}}
 
-    # PKCE authentication flow processes authorization flow from browser only - default false
-    # uses the clientID
-    # make sure the Identity Provider (IdP) is public and doesn't need clientSecret
-    # make sure the Identity Provider (IdP) has this redirect URI registered: https://argocd.example.com/pkce/verify
-    enablePKCEAuthentication: true
-    # requestedScopes:
-    #   - openid
-    #   - profile
-    #   - email
+    # # PKCE authentication flow processes authorization flow from browser only - default false
+    # # uses the clientID
+    # # make sure the Identity Provider (IdP) is public and doesn't need clientSecret
+    # # make sure the Identity Provider (IdP) has this redirect URI registered: https://argocd.example.com/pkce/verify
+    # enablePKCEAuthentication: false
+    requestedScopes:
+      - openid
+      - profile
+      - email
