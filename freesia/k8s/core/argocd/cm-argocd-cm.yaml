@@ -31,7 +31,7 @@ data:
   #           # - red-team
   oidc.config: |
     name: Authentik
-    issuer: https://id.harvestasya.org
+    issuer: https://id.harvestasya.org/application/o/argocd/
     clientID: $argocd-custom-secret:authentik.client-id
     clientSecret: $argocd-custom-secret:authentik.client-secret
 
