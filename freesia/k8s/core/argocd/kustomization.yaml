@@ -44,6 +44,8 @@ helmCharts:
   valuesInline:
     global:
       domain: argocd.harvestasya.org
+    dex:
+      enabled: false
     server:
       ingress:
         enabled: true
