@@ -17,21 +17,6 @@ data:
   url: https://argocd.harvestasya.org
 
   users.anonymous.enabled: "false"
-  # dex.config: |
-  #   connectors:
-  #     - name: Authentik
-  #       type: oidc
-  #       id: authentik
-  #       config:
-  #         issuer: https://id.harvestasya.org/application/o/argocd/
-  #         clientID: $argocd-custom-secret:authentik.client-id
-  #         clientSecret: $argocd-custom-secret:authentik.client-secret
-  #         scopes:
-  #           - openid
-  #           - profile
-  #           - email
-  #           - groups
-  #         getUserInfo: true
   oidc.config: |
     name: Authentik
     issuer: https://id.harvestasya.org/application/o/argocd/
@@ -41,11 +26,11 @@ data:
     # # Optional set of OIDC claims to request on the ID token.
     # requestedIDTokenClaims: {"groups": {"essential": true}}
 
-    # # PKCE authentication flow processes authorization flow from browser only - default false
-    # # uses the clientID
-    # # make sure the Identity Provider (IdP) is public and doesn't need clientSecret
-    # # make sure the Identity Provider (IdP) has this redirect URI registered: https://argocd.example.com/pkce/verify
-    # enablePKCEAuthentication: false
+    # PKCE authentication flow processes authorization flow from browser only - default false
+    # uses the clientID
+    # make sure the Identity Provider (IdP) is public and doesn't need clientSecret
+    # make sure the Identity Provider (IdP) has this redirect URI registered: https://argocd.example.com/pkce/verify
+    enablePKCEAuthentication: true
     # requestedScopes:
     #   - openid
     #   - profile
