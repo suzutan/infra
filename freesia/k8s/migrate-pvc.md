@@ -57,9 +57,9 @@ kubectl scale -n authentik sts/authentik-postgresql --replicas=0
 kubectl scale -n authentik sts/authentik-redis-master --replicas=0
 (
 # 前から使っていたPVCのディレクトリ名
-old=authentik-data-authentik-postgresql-0-pvc-6890f763-fd56-4f23-a645-2e775c269205
+old=archived-authentik-data-authentik-postgresql-0-pvc-a10e2c55-48a1-42bf-9103-409d0092d865
 # 新しくk8sを作成して発行されたディレクトリ名
-new=authentik-data-authentik-postgresql-0-pvc-a10e2c55-48a1-42bf-9103-409d0092d865
+new=authentik-data-authentik-postgresql-0-pvc-48ecefe1-1ae4-4ddc-b89d-d34a2844b88a
 mv $new ${new}.tmp2
 mv $old $new
 )
