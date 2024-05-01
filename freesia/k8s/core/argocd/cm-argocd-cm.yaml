@@ -31,7 +31,7 @@ data:
             - profile
             - email
             - groups
-          redirectURI: https://argocd.harvestasya.org/auth/callback
+          getUserInfo: true
   # oidc.config: |
   #   name: Authentik
   #   issuer: https://id.harvestasya.org/application/o/argocd/
