@@ -22,14 +22,16 @@ data:
       - name: Authentik
         type: oidc
         id: authentik
-        issuer: https://id.harvestasya.org/application/o/argocd/
-        clientID: $argocd-custom-secret:authentik.client-id
-        clientSecret: $argocd-custom-secret:authentik.client-secret
-        scopes:
-          - openid
-          - profile
-          - email
-          - groups
+        config:
+          issuer: https://id.harvestasya.org/application/o/argocd/
+          clientID: $argocd-custom-secret:authentik.client-id
+          clientSecret: $argocd-custom-secret:authentik.client-secret
+          scopes:
+            - openid
+            - profile
+            - email
+            - groups
+          redirectURI: https://argocd.harvestasya.org/auth/callback
   # oidc.config: |
   #   name: Authentik
   #   issuer: https://id.harvestasya.org/application/o/argocd/
