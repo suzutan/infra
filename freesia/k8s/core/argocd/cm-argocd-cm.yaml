@@ -17,15 +17,29 @@ data:
   url: https://argocd.harvestasya.org
 
   users.anonymous.enabled: "false"
-  dex.config: |
-    connectors:
-      - type: github
-        id: github
-        name: GitHub
-        config:
-          clientID: $argocd-custom-secret:dex.github.client-id
-          clientSecret: $argocd-custom-secret:dex.github.client-secret
-          orgs:
-          - name: harvestasya
-            # teams:
-            # - red-team
+  # dex.config: |
+  #   connectors:
+  #     - type: github
+  #       id: github
+  #       name: GitHub
+  #       config:
+  #         clientID: $argocd-custom-secret:dex.github.client-id
+  #         clientSecret: $argocd-custom-secret:dex.github.client-secret
+  #         orgs:
+  #         - name: harvestasya
+  #           # teams:
+  #           # - red-team
+  oidc.config: |
+    name: Authentik
+    issuer: https://id.harvestasya.org
+    clientID: $argocd-custom-secret:authentik.client-id
+    clientSecret: $argocd-custom-secret:authentik.client-secret
+
+    # Optional set of OIDC claims to request on the ID token.
+    requestedIDTokenClaims: {"groups": {"essential": true}}
+
+    # PKCE authentication flow processes authorization flow from browser only - default false
+    # uses the clientID
+    # make sure the Identity Provider (IdP) is public and doesn't need clientSecret
+    # make sure the Identity Provider (IdP) has this redirect URI registered: https://argocd.example.com/pkce/verify
+    enablePKCEAuthentication: true
