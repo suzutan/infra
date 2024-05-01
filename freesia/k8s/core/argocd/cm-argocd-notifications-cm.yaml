@@ -7,9 +7,9 @@ metadata:
     app.kubernetes.io/name: argocd-notifications-controller
 data:
   service.github: |
-    appID: $argocd-custom-secret:notification.service.github.appID
-    installationID: $argocd-custom-secret:notification.service.github.installationID
-    privateKey: $argocd-custom-secret:notification.service.github.privateKey
+    appID: $argocd-custom-secret:github.app-id
+    installationID: $argocd-custom-secret:github.installation-id
+    privateKey: $argocd-custom-secret:github.private-key
   service.webhook.discord: |
     url: $argocd-custom-secret:discord.webhook-url
     headers:
