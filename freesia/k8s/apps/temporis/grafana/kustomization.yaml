@@ -25,7 +25,7 @@ configMapGenerator:
 
 images:
   - name: quay.io/kiwigrid/k8s-sidecar
-    newTag: 1.26.2
+    newTag: 1.27.1
   - name: docker.io/grafana/grafana
     newTag: 10.4.2
 
