@@ -2,16 +2,15 @@ apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 
 resources:
+  - argocd-apps.yaml
+  - argocd.yaml
   - asf.yaml
   - authentik.yaml
+  - cert-manager.yaml
   - ddns.yaml
-  - k8s-apps.yaml
+  - ingress-nginx.yaml
   - minio-operator.yaml
   - minio.yaml
-  - temporis.yaml
-  - argocd.yaml
-  - cert-manager.yaml
-  - ingress-nginx.yaml
-  - k8s-core.yaml
   - nfs-subdir-external-provisioner.yaml
   - onepassword-operator.yaml
+  - temporis.yaml
