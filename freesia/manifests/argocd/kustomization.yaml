@@ -12,8 +12,8 @@ labels:
 resources:
 - namespace.yaml
 - role.yaml
-- project-core.yaml
 - project-apps.yaml
+- project-k8s-infra.yaml
 - secret-argocd-custom-secret.yaml
 
 patches:

@@ -3,5 +3,5 @@ kind: Kustomization
 
 resources:
 - ./onepassword-operator
-- ../core/argocd
-- ../core/apps
+- ../manifests/argocd
+- ../manifests/apps

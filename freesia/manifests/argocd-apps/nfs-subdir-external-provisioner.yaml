@@ -7,10 +7,10 @@ spec:
   destination:
     server: "https://kubernetes.default.svc"
   source:
-    path: freesia/k8s/core/nfs-subdir-external-provisioner
+    path: freesia/manifests/nfs-subdir-external-provisioner
     repoURL: "https://github.com/suzutan/infra.git"
     targetRevision: HEAD
-  project: core
+  project: k8s-infra
   syncPolicy:
     automated:
       prune: true
