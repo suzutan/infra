@@ -4,4 +4,4 @@ kind: Kustomization
 resources:
 - ./onepassword-operator
 - ../manifests/argocd
-- ../manifests/apps
+- ../manifests/argocd-apps
