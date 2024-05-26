@@ -12,6 +12,7 @@ labels:
 - includeSelectors: true
   pairs:
     app: cloudflared
+
 images:
 - name: cloudflare/cloudflared
   newTag: 2024.5.0
