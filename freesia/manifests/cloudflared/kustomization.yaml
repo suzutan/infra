@@ -11,7 +11,6 @@ resources:
 labels:
 - includeSelectors: true
   pairs:
-    app: cloudflared
     app.kubernetes.io/name: cloudflared
 images:
 - name: cloudflare/cloudflared
