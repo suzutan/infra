@@ -11,6 +11,9 @@ spec:
       app: cloudflared
   template:
     metadata:
+      annotations:
+        prometheus.io/scrape: 'true'
+        prometheus.io/port: '2000'
       labels:
         app: cloudflared
     spec:
