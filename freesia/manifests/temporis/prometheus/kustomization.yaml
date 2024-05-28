@@ -10,9 +10,7 @@ resources:
   - cr.yaml
   - crb.yaml
   - ingress.yaml
-  - prometheus-rules.yaml
   - prometheus.yaml
-  - secret-prometheus-scrape-confg.yaml
   - service-thanos-sidecar.yaml
   - service.yaml
   - serviceaccount.yaml
@@ -22,6 +20,12 @@ images:
     newTag: v2.52.0
   - name: quay.io/thanos/thanos
     newTag: v0.35.0
+
+configMapGenerator:
+  - name: prometheus-config
+    files:
+      - config/prometheus.yaml
+
 
 labels:
   - pairs:
