@@ -23,9 +23,9 @@ kubectl scale -n temporis deployment/prometheus-operator --replicas=0
 kubectl scale -n temporis statefulset/prometheus-prometheus --replicas=0
 (
 # 前から使っていたPVCのディレクトリ名
-old=temporis-prometheus-prometheus-db-prometheus-prometheus-0-pvc-f26698ef-1480-45c9-848b-8912e7491dc1
+old=temporis-prometheus-prometheus-db-prometheus-prometheus-0-pvc-bbfc9b90-baee-486c-8d64-a563bf5098f6
 # 新しくk8sを作成して発行されたディレクトリ名
-new=temporis-prometheus-prometheus-db-prometheus-prometheus-0-pvc-bbfc9b90-baee-486c-8d64-a563bf5098f6
+new=temporis-prometheus-data-prometheus-0-pvc-b823f5a0-df90-4b28-b4f7-59f2289afb54
 mv $new ${new}.tmp2
 mv $old $new
 )
