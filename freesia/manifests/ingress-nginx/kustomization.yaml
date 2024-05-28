@@ -4,68 +4,50 @@ kind: Kustomization
 namespace: ingress-nginx
 
 resources:
-- namespace.yaml
-- cert-harvestasya-org-wildcard.yaml
-- cert-suzutan-jp-wildcard.yaml
+  - namespace.yaml
+  - cert-harvestasya-org-wildcard.yaml
+  - cert-suzutan-jp-wildcard.yaml
 
 helmCharts:
-# https://github.com/kubernetes/ingress-nginx/tree/main/charts/ingress-nginx
-- name: ingress-nginx
-  releaseName: ingress-nginx
-  namespace: ingress-nginx
-  version: 4.10.1
-  repo: https://kubernetes.github.io/ingress-nginx
-  includeCRDs: true
-  valuesInline:
-    ## nginx configuration
-    ## Ref: https://github.com/kubernetes/ingress-nginx/blob/main/docs/user-guide/nginx-configuration/index.md
-    ##
+  # https://github.com/kubernetes/ingress-nginx/tree/main/charts/ingress-nginx
+  - name: ingress-nginx
+    releaseName: ingress-nginx
+    namespace: ingress-nginx
+    version: 4.10.1
+    repo: https://kubernetes.github.io/ingress-nginx
+    includeCRDs: true
+    valuesInline:
+      ## nginx configuration
+      ## Ref: https://github.com/kubernetes/ingress-nginx/blob/main/docs/user-guide/nginx-configuration/index.md
+      ##
 
-    controller:
-      # -- Required for use with CNI based kubernetes installations (such as ones set up by kubeadm),
-      # since CNI and hostport don't mix yet. Can be deprecated once https://github.com/kubernetes/kubernetes/issues/23920
-      # is merged
-      hostNetwork: true
+      controller:
+        extraArgs:
+          default-ssl-certificate: "ingress-nginx/harvestasya-org-wildcard-tls"
 
-      ## Use host ports 80 and 443
-      ## Disabled by default
-      hostPort:
-        # -- Enable 'hostPort' or not
-        enabled: true
-        ports:
-          # -- 'hostPort' http port
-          http: 80
-          # -- 'hostPort' https port
-          https: 443
-
-      # -- Additional command line arguments to pass to nginx-ingress-controller
-      # E.g. to specify the default SSL certificate you can use
-
-      extraArgs:
-        default-ssl-certificate: "ingress-nginx/harvestasya-org-wildcard-tls"
-
-      kind: DaemonSet
-
-      metrics:
-        enabled: true
-
+        kind: Deployment
+        replicaCount: 4
+        minAvailable: 1
+        metrics:
+          enabled: true
+          service:
+            annotations:
+              prometheus.io/scrape: "true"
+              prometheus.io/port: "10254"
+          prometheusRule:
+            enabled: false
         service:
-          annotations:
-            prometheus.io/scrape: "true"
-            prometheus.io/port: "10254"
+          enabled: true
+          externalIPs:
+            - 172.20.0.221
+      # -- TCP service key-value pairs
+      ## Ref: https://github.com/kubernetes/ingress-nginx/blob/main/docs/user-guide/exposing-tcp-udp-services.md
+      ##
+      tcp:
+        10443: "default/kubernetes:443"
 
-        prometheusRule:
-          enabled: false
-      service:
-        enabled: true
-    # -- TCP service key-value pairs
-    ## Ref: https://github.com/kubernetes/ingress-nginx/blob/main/docs/user-guide/exposing-tcp-udp-services.md
-    ##
-    tcp:
-      10443: "default/kubernetes:443"
-
-    # -- UDP service key-value pairs
-    ## Ref: https://github.com/kubernetes/ingress-nginx/blob/main/docs/user-guide/exposing-tcp-udp-services.md
-    ##
-    # udp:
-    # 53: "kube-system/kube-dns:53"
+      # -- UDP service key-value pairs
+      ## Ref: https://github.com/kubernetes/ingress-nginx/blob/main/docs/user-guide/exposing-tcp-udp-services.md
+      ##
+      # udp:
+      # 53: "kube-system/kube-dns:53"
