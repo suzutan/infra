@@ -11,10 +11,6 @@ tasks:
     cmds:
       - kustomize build --enable-helm . | kubectl apply -f-
   init-2:
-    dir: init/temporis-crd
-    cmds:
-      - kustomize build --enable-helm  . | kubectl create -f-
-  init-3:
     dir: manifests/argocd-apps
     cmds:
       - kustomize build --enable-helm  . | kubectl create -f-
