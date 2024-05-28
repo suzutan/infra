@@ -2,6 +2,7 @@ apiVersion: monitoring.coreos.com/v1
 kind: ServiceMonitor
 metadata:
   name: cloudflared
+  namespace: temporis
   labels:
     app.kubernetes.io/name: prometheus
 spec:
@@ -10,6 +11,9 @@ spec:
   selector:
     matchLabels:
       app.kubernetes.io/name: cloudflared
+  namespaceSelector:
+    matchNames:
+      - "cloudflared"
   attachMetadata:
     node: false
   endpoints:
