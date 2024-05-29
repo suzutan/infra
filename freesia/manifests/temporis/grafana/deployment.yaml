@@ -45,7 +45,7 @@ spec:
             - name: grafana-dashboards-1
               mountPath: "/etc/grafana/dashboards"
             - name: grafana-dashboard-provider
-              mountPath: "/etc/grafana/provisioning/dashboards/dashboard-provider.yaml"
+              mountPath: "/etc/grafana/provisioning/dashboards"
               subPath: provider.yaml
             - name: grafana-datasource
               mountPath: "/etc/grafana/provisioning/datasources"
