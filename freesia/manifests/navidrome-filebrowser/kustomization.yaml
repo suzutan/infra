@@ -1,0 +1,14 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+
+namespace: navidrome
+
+resources:
+  - deployment.yaml
+  - ingress.yaml
+  - service.yaml
+
+configMapGenerator:
+  - name: filebrowser-config
+    files:
+      - config/settings.json
