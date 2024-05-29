@@ -1,7 +1,7 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: echoserver
+  name: navidrome
   namespace: argocd
 spec:
   destination:
