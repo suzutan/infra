@@ -23,6 +23,7 @@ configMapGenerator:
     files:
       - dashboards/node-exporter.json
       - dashboards/remo-exporter.json
+      - dashboards/proxmox-flux.json
   - name: grafana-dashboard-provider
     files:
       - config/dashboard-provider.yaml

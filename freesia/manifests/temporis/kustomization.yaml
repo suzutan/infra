@@ -4,6 +4,7 @@ kind: Kustomization
 resources:
   - namespace.yaml
   - grafana
+  - influxdb
   - kube-state-metrics
   - node-exporter
   - prometheus

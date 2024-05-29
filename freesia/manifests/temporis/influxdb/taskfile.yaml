@@ -1,0 +1,15 @@
+# https://taskfile.dev
+
+version: "3"
+
+vars:
+  GREETING: Hello, World!
+
+tasks:
+  repo-update:
+    cmds:
+      - helm repo add influxdata https://helm.influxdata.com/
+      - helm repo update
+  default-values:
+    cmds:
+      - helm show values influxdata/influxdb2 > default-values.yaml
