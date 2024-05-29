@@ -12,7 +12,6 @@ spec:
   selector:
     matchLabels:
       app.kubernetes.io/name: navidrome
-      app.kubernetes.io/instance: release-name
   template:
     metadata:
       annotations:
@@ -20,7 +19,6 @@ spec:
         prometheus.io/port: "4533"
       labels:
         app.kubernetes.io/name: navidrome
-        app.kubernetes.io/instance: release-name
     spec:
       serviceAccountName: default
       automountServiceAccountToken: true
@@ -54,6 +52,8 @@ spec:
               value: Asia/Tokyo
             - name: ND_PROMETHEUS_ENABLED
               value: "true"
+            - name: ND_PROMETHEUS_METRICSPATH
+              value: /metrics
           ports:
             - name: http
               containerPort: 4533
