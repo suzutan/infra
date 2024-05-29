@@ -5,6 +5,7 @@ locals {
     "echoserver.harvestasya.org",
     "id.harvestasya.org",
     "grafana.harvestasya.org",
+    "navidrome.harvestasya.org",
   ]
 }
 
