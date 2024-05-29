@@ -60,14 +60,6 @@ helmCharts:
         replicas: 2
         deploymentAnnotations:
           operator.1password.io/auto-restart: "true"
-      prometheus:
-        rules:
-          enabled: true
-          namespace: "temporis"
-          # -- PrometheusRule selector
-          selector:
-            {}
-            # prometheus: kube-prometheus
 
       postgresql:
         # -- enable the Bitnami PostgreSQL chart. Refer to https://github.com/bitnami/charts/blob/main/bitnami/postgresql/ for possible values.
@@ -82,7 +74,6 @@ helmCharts:
             storageClass: nfs-client
             accessModes:
               - ReadWriteOnce
-          
 
       redis:
         # -- enable the Bitnami Redis chart. Refer to https://github.com/bitnami/charts/blob/main/bitnami/redis/ for possible values.
