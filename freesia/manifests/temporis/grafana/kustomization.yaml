@@ -4,12 +4,9 @@ kind: Kustomization
 namespace: temporis
 
 resources:
-  - configmap-grafana-config-dashboards.yaml
-  - configmap-grafana-datasource.yaml
   - cr.yaml
   - crb.yaml
   - deployment.yaml
-  - grafana-dashboards.yaml
   - ingress.yaml
   - pvc.yaml
   - role.yaml
@@ -22,10 +19,19 @@ configMapGenerator:
   - name: grafana
     files:
       - config/grafana.ini
+  - name: grafana-dashboards-1
+    files:
+      - dashboards/node-exporter.json
+      - dashboards/remo-exporter.json
+  - name: grafana-dashboard-provider
+    files:
+      - config/dashboard-provider.yaml
+  - name: grafana-datasource
+    files:
+      - config/datasource.yaml
+
 
 images:
-  - name: quay.io/kiwigrid/k8s-sidecar
-    newTag: 1.27.2
   - name: docker.io/grafana/grafana
     newTag: 11.0.0
 
