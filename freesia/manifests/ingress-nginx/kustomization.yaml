@@ -22,6 +22,7 @@ helmCharts:
       ##
 
       controller:
+        allowSnippetAnnotations: true
         extraArgs:
           default-ssl-certificate: "ingress-nginx/harvestasya-org-wildcard-tls"
 
