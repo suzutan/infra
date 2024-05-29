@@ -2,6 +2,7 @@
 locals {
   ingress_rules = [
     "argocd.harvestasya.org",
+    "echoserver.harvestasya.org",
     "id.harvestasya.org",
     "grafana.harvestasya.org",
   ]
