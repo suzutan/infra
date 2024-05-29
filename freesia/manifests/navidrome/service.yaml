@@ -1,0 +1,15 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: navidrome
+  labels:
+    app.kubernetes.io/name: navidrome
+spec:
+  type: ClusterIP
+  ports:
+  - port: 4533
+    targetPort: http
+    protocol: TCP
+    name: http
+  selector:
+    app.kubernetes.io/name: navidrome
