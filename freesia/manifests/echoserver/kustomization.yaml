@@ -5,7 +5,7 @@ namespace: echoserver
 
 resources:
   - deployment.yaml
-  - ingress.yaml
+  - ingressroute.yaml
   - namespace.yaml
   - service.yaml
 
