@@ -16,7 +16,7 @@ helmCharts:
     repo: https://helm.influxdata.com/
     includeCRDs: true
     valuesInline:
-      # admin password/token 
+      # admin password/token
       # https://github.com/influxdata/helm-charts/blob/master/charts/influxdb2/README.md#fixed-auth-credentials
 
       adminUser:
@@ -28,3 +28,5 @@ helmCharts:
         size: 50Gi
         mountPath: /var/lib/influxdb2
         subPath: ""
+      pdb:
+        create: false
