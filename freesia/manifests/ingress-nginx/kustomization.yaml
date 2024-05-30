@@ -22,6 +22,7 @@ helmCharts:
       ##
 
       controller:
+        allowSnippetAnnotations: true
         config:
           proxy-body-size: "0"
         extraArgs:
