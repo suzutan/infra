@@ -1,13 +1,13 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: ingress-nginx
+  name: traefik
   namespace: argocd
 spec:
   destination:
     server: "https://kubernetes.default.svc"
   source:
-    path: freesia/manifests/ingress-nginx
+    path: freesia/manifests/traefik
     repoURL: "https://github.com/suzutan/infra.git"
     targetRevision: HEAD
   project: k8s-infra
