@@ -4,6 +4,7 @@ kind: Kustomization
 namespace: navidrome
 
 resources:
-  - external-service.yaml
-  - ingressroute.yaml
+  - ingressroute-filebrowser.yaml
+  - ingressroute-navidrome.yaml
   - namespace.yaml
+  - service.yaml
