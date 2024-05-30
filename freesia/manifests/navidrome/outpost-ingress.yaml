@@ -1,0 +1,22 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: navidrome-outpost
+spec:
+  ingressClassName: nginx
+  tls:
+    - hosts:
+        - navidrome.harvestasya.org
+  rules:
+    - host: navidrome.harvestasya.org
+      http:
+        paths:
+          - path: /outpost.goauthentik.io
+            pathType: Prefix
+            backend:
+              # Or, to use an external Outpost, create an ExternalName service and reference that here.
+              # See https://kubernetes.io/docs/concepts/services-networking/service/#externalname
+              service:
+                name: authentik-outpost
+                port:
+                  number: 9000

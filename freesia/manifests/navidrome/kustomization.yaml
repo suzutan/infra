@@ -7,3 +7,5 @@ resources:
   - external-ingress.yaml
   - external-service.yaml
   - namespace.yaml
+  - outpost-ingress.yaml
+  - outpost-service.yaml
