@@ -5,7 +5,7 @@ namespace: navidrome
 
 resources:
   - deployment.yaml
-  - ingress.yaml
+  - ingressroute.yaml
   - service.yaml
 
 configMapGenerator:
