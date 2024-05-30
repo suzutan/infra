@@ -1,16 +1,16 @@
 apiVersion: traefik.io/v1alpha1
 kind: IngressRoute
 metadata:
-  name: filebrowser
+  name: navidrome
 
 spec:
   routes:
     - kind: Rule
-      match: Host(`navidrome-filebrowser.harvestasya.org`)
+      match: Host(`navidrome.harvestasya.org`)
       priority: 10
       services:
         - name: navidrome
-          port: 8080
+          port: 4533
 
       middlewares:
         - name: auto-detect-content-type
@@ -19,7 +19,7 @@ spec:
           namespace: authentik
 
     - kind: Rule
-      match: Host(`navidrome-filebrowser.harvestasya.org`) && PathPrefix(`/outpost.goauthentik.io/`)
+      match: Host(`navidrome.harvestasya.org`) && PathPrefix(`/outpost.goauthentik.io/`)
       priority: 15
       services:
         - name: authentik-server

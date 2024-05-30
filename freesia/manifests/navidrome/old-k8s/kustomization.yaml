@@ -5,8 +5,7 @@ namespace: navidrome
 
 resources:
   - deployment.yaml
-  - ingress.yaml
-  - namespace.yaml
+  - ingressroute.yaml
   - pvc-navidrome-music.yaml
   - pvc-navidrome-config.yaml
   - service.yaml

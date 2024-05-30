@@ -6,7 +6,7 @@ metadata:
     app.kubernetes.io/name: navidrome
 spec:
   revisionHistoryLimit: 3
-  replicas: 0
+  replicas: 1
   strategy:
     type: Recreate
   selector:
@@ -56,6 +56,10 @@ spec:
               value: /metrics
             - name: ND_ENABLEEXTERNALSERVICES
               value: "false"
+            - name: ND_REVERSEPROXYUSERHEADER
+              value: "X-authentik-username"
+            - name: ND_REVERSEPROXYWHITELIST
+              value: "0.0.0.0/0"
           ports:
             - name: http
               containerPort: 4533
