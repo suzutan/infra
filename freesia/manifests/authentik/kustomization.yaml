@@ -4,8 +4,9 @@ kind: Kustomization
 namespace: authentik
 
 resources:
-  - namespace.yaml
   - ingressroute.yaml
+  - middleware-authentik-forward-auth.yaml
+  - namespace.yaml
   - secret-authentik.yaml
   - secret-authentik-redis.yaml
   - secret-authentik-postgresql.yaml
