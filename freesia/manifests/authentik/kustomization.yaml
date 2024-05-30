@@ -5,6 +5,7 @@ namespace: authentik
 
 resources:
   - namespace.yaml
+  - ingressroute.yaml
   - secret-authentik.yaml
   - secret-authentik-redis.yaml
   - secret-authentik-postgresql.yaml
@@ -47,13 +48,7 @@ helmCharts:
       server:
         replicas: 2
         ingress:
-          enabled: true
-          ingressClassName: "nginx"
-          hosts:
-            - id.harvestasya.org
-          tls:
-            - hosts:
-                - id.harvestasya.org
+          enabled: false
         deploymentAnnotations:
           operator.1password.io/auto-restart: "true"
       worker:
