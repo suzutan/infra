@@ -1,0 +1,27 @@
+apiVersion: traefik.io/v1alpha1
+kind: IngressRoute
+metadata:
+  name: navidrome
+
+spec:
+  routes:
+    - kind: Rule
+      match: Host(`navidrome.harvestasya.org`)
+      priority: 10
+      services:
+        - name: external-navidrome
+          port: 4533
+
+      middlewares:
+        - name: auto-detect-content-type
+          namespace: traefik
+        - name: authentik-forward-auth
+          namespace: authentik
+
+    - kind: Rule
+      match: Host(`navidrome.harvestasya.org`) && PathPrefix(`/outpost.goauthentik.io/`)
+      priority: 15
+      services:
+        - name: authentik-server
+          namespace: authentik
+          port: http
