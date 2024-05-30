@@ -1,0 +1,12 @@
+apiVersion: traefik.io/v1alpha1
+kind: IngressRoute
+metadata:
+  name: minio
+
+spec:
+  routes:
+    - kind: Rule
+      match: Host(`minio.harvestasya.org`)
+      services:
+        - name: minio
+          port: 80

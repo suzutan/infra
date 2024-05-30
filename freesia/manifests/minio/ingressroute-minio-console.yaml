@@ -1,0 +1,12 @@
+apiVersion: traefik.io/v1alpha1
+kind: IngressRoute
+metadata:
+  name: minio-console
+
+spec:
+  routes:
+    - kind: Rule
+      match: Host(`minio-console.harvestasya.org`)
+      services:
+        - name: minio-console
+          port: 9090
