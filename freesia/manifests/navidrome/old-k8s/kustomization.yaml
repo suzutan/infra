@@ -1,0 +1,16 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+
+namespace: navidrome
+
+resources:
+  - deployment.yaml
+  - ingress.yaml
+  - namespace.yaml
+  - pvc-navidrome-music.yaml
+  - pvc-navidrome-config.yaml
+  - service.yaml
+
+images:
+  - name: deluan/navidrome:0.43.0
+    newTag: 0.43.0

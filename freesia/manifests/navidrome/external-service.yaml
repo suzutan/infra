@@ -1,0 +1,8 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: external-navidrome
+
+spec:
+  type: ExternalName
+  externalName: 172.20.0.162

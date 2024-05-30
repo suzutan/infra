@@ -4,13 +4,6 @@ kind: Kustomization
 namespace: navidrome
 
 resources:
-  - deployment.yaml
-  - ingress.yaml
+  - external-ingress.yaml
+  - external-service.yaml
   - namespace.yaml
-  - pvc-navidrome-music.yaml
-  - pvc-navidrome-config.yaml
-  - service.yaml
-
-images:
-  - name: deluan/navidrome:0.43.0
-    newTag: 0.43.0

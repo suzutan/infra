@@ -6,7 +6,7 @@ metadata:
     app.kubernetes.io/name: navidrome
 spec:
   revisionHistoryLimit: 3
-  replicas: 1
+  replicas: 0
   strategy:
     type: Recreate
   selector:
@@ -54,6 +54,8 @@ spec:
               value: "true"
             - name: ND_PROMETHEUS_METRICSPATH
               value: /metrics
+            - name: ND_ENABLEEXTERNALSERVICES
+              value: "false"
           ports:
             - name: http
               containerPort: 4533

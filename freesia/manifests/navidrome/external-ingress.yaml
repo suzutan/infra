@@ -1,0 +1,22 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: navidrome
+  labels:
+    app.kubernetes.io/name: navidrome
+spec:
+  ingressClassName: nginx
+  rules:
+    - host: "navidrome.harvestasya.org"
+      http:
+        paths:
+          - path: "/"
+            pathType: Prefix
+            backend:
+              service:
+                name: external-navidrome
+                port:
+                  number: 4533
+  tls:
+    - hosts:
+        - "navidrome.harvestasya.org"
