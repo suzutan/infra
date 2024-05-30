@@ -26,13 +26,13 @@ authentik:
     password: dummy
 
 server:
-  replicas: 2
+  replicas: 4
   ingress:
     enabled: false
   deploymentAnnotations:
     operator.1password.io/auto-restart: "true"
 worker:
-  replicas: 2
+  replicas: 4
   deploymentAnnotations:
     operator.1password.io/auto-restart: "true"
 
