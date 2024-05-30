@@ -4,22 +4,12 @@ kind: Kustomization
 namespace: minio-operator
 
 resources:
+  - ingressroute.yaml
   - namespace.yaml
 
 helmCharts:
-- name: operator
-  releaseName: minio-operator
-  namespace: minio-operator
-  version: 5.0.15
-  repo: https://operator.min.io/
-  valuesInline:
-    console:
-      ingress:
-        enabled: true
-        ingressClassName: "nginx"
-        tls:
-        - hosts:
-          - minio-op-console.harvestasya.org
-        host: minio-op-console.harvestasya.org
-        path: /
-        pathType: Prefix
+  - name: operator
+    releaseName: minio-operator
+    namespace: minio-operator
+    version: 5.0.15
+    repo: https://operator.min.io/
