@@ -1,3 +1,6 @@
+image:
+  registry: public.ecr.aws/docker/library
+
 deployment:
   replicas: 3
 
@@ -43,9 +46,42 @@ ports:
       enabled: true
       # this is the name of a TLSOption definition
       options: ""
-      certResolver: "letsencrypt-prod"
       domains:
         - main: harvestasya.org
           sans:
             - "*.harvestasya.org"
             - "*.suzutan.jp"
+# https://docs.traefik.io/observability/logs/
+logs:
+  access:
+    enabled: true
+    # https://docs.traefik.io/observability/access-logs/#limiting-the-fieldsincluding-headers
+    fields:
+      general:
+        defaultmode: keep
+        names:
+          ClientAddr: drop
+          DownstreamContentSize: drop
+          DownstreamStatus: drop
+          OriginDuration: drop
+          Overhead: drop
+          RequestCount: drop
+          RequestHost: drop
+          RequestPort: drop
+          RetryAttempts: drop
+          ServiceAddr: drop
+          ServiceName: drop
+          ServiceURL: drop
+          StartLocal: drop
+          StartUTC: drop
+      headers:
+        defaultmode: drop
+        names:
+          Cf-Ipcountry: keep
+          Cf-Ray: keep
+          Cf-Visitor: keep
+          Location: keep
+          User-Agent: keep
+    format: json
+  general:
+    level: INFO

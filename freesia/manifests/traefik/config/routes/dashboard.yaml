@@ -13,16 +13,13 @@ spec:
           kind: TraefikService
       middlewares:
         - name: auto-detect-content-type
-        # - name: forward-auth-authentik
-        #   namespace: authentik
+        - name: authentik-forward-auth
+          namespace: authentik
 
-    # - kind: Rule
-    #   match: Host(`traefik.harvestasya.org`) && PathPrefix(`/outpost.goauthentik.io/`)
-    #   priority: 15
-    #   services:
-    #     - name: authentik-server
-    #       namespace: authentik
-    #       port: http
-
----
-
+    - kind: Rule
+      match: Host(`traefik.harvestasya.org`) && PathPrefix(`/outpost.goauthentik.io/`)
+      priority: 15
+      services:
+        - name: authentik-server
+          namespace: authentik
+          port: http
