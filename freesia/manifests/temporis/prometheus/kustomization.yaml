@@ -9,7 +9,7 @@ namespace: temporis
 resources:
   - cr.yaml
   - crb.yaml
-  - ingress.yaml
+  - ingressroute.yaml
   - prometheus.yaml
   - service-thanos-sidecar.yaml
   - service.yaml

@@ -5,9 +5,9 @@ namespace: temporis
 
 resources:
   - deployment.yaml
-  - service.yaml
-  - ingress.yaml
+  - ingressroute.yaml
   - secret-nature-remo-token.yaml
+  - service.yaml
 
 labels:
   - pairs:

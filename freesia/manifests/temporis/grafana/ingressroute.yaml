@@ -1,0 +1,12 @@
+apiVersion: traefik.io/v1alpha1
+kind: IngressRoute
+metadata:
+  name: grafana
+
+spec:
+  routes:
+    - kind: Rule
+      match: Host(`grafana.harvestasya.org`)
+      services:
+        - name: grafana
+          port: 80

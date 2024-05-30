@@ -5,7 +5,7 @@ namespace: temporis
 
 resources:
   - deployment.yaml
-  - ingress.yaml
+  - ingressroute-http.yaml
   - secret-thanos-bucket-config.yaml
   - service.yaml
 

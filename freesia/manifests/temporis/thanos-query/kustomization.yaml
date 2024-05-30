@@ -6,7 +6,7 @@ namespace: temporis
 resources:
   - deployment.yaml
   - ingress-grpc.yaml
-  - ingress-http.yaml
+  - ingressroute-http.yaml
   - service-grpc.yaml
   - service-http.yaml
 

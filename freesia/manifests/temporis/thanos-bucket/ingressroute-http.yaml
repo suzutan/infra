@@ -1,0 +1,12 @@
+apiVersion: traefik.io/v1alpha1
+kind: IngressRoute
+metadata:
+  name: thanos-bucket
+
+spec:
+  routes:
+    - kind: Rule
+      match: Host(`thanos-bucket.harvestasya.org`)
+      services:
+        - name: thanos-bucket
+          port: 8080
