@@ -1,0 +1,16 @@
+# https://taskfile.dev
+
+version: "3"
+
+vars:
+  GREETING: Hello, World!
+
+tasks:
+  repo-update:
+    cmds:
+      - helm repo add traefik https://traefik.github.io/charts
+      - helm repo update
+      - helm search repo traefik
+  default-values:
+    cmds:
+      - helm show values traefik/traefik > default-values.yaml

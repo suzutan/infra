@@ -1,0 +1,27 @@
+apiVersion: traefik.io/v1alpha1
+kind: Middleware
+metadata:
+  name: security-headers
+
+spec:
+  # https://developers.cloudflare.com/rules/transform/managed-transforms/reference/#http-response-headers
+  headers:
+    # X-XSS-Protection: 1; mode=block
+    browserXssFilter: true
+
+    # X-Content-Type-Options: nosniff
+    contentTypeNosniff: true
+
+    # X-Frame-Options: SAMEORIGIN
+    customFrameOptionsValue: SAMEORIGIN
+
+    customResponseHeaders:
+      Expect-CT: max-age=86400, enforce
+
+    # Referrer-Policy
+    referrerPolicy: same-origin
+
+    # Strict-Transport-Security: max-age=31536000; includeSubDomains; preload
+    stsIncludeSubdomains: true
+    stsPreload: true
+    stsSeconds: 31536000

@@ -1,0 +1,51 @@
+deployment:
+  replicas: 3
+
+envFrom:
+  - configMapRef:
+      name: traefik-env
+
+ingressClass:
+  enabled: true
+  isDefaultClass: true
+
+providers:
+  kubernetesCRD:
+    allowCrossNamespace: true
+    allowEmptyServices: true
+    allowExternalNameServices: true
+    enabled: true
+  kubernetesIngress:
+    enabled: false
+
+service:
+  ipFamilyPolicy: PreferDualStack
+  externalIPs:
+    - 172.20.0.221
+
+globalArguments: []
+
+ingressRoute:
+  dashboard:
+    enabled: false
+
+ports:
+  web: null
+  websecure:
+    asDefault: true
+    expose:
+      default: true
+    exposedPort: 443
+    forwardedHeaders:
+      trustedIPs:
+        - 10.0.0.0/16
+    tls:
+      enabled: true
+      # this is the name of a TLSOption definition
+      options: ""
+      certResolver: "letsencrypt-prod"
+      domains:
+        - main: harvestasya.org
+          sans:
+            - "*.harvestasya.org"
+            - "*.suzutan.jp"
