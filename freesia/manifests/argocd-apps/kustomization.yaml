@@ -13,7 +13,6 @@ resources:
   - minio-operator.yaml
   - minio.yaml
   - navidrome.yaml
-  - navidrome-filebrowser.yaml
   - nfs-subdir-external-provisioner.yaml
   - onepassword-operator.yaml
   - temporis.yaml
