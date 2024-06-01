@@ -29,7 +29,7 @@ resource "cloudflare_tunnel_config" "k8s_ingress" {
       for_each = toset(local.ingress_rules)
       content {
         hostname = ingress_rule.value
-        service  = "https://ingress-nginx-controller.ingress-nginx.svc.cluster.local"
+        service  = "https://traefik.traefik.svc.cluster.local"
         origin_request {
           origin_server_name = ingress_rule.value
           http_host_header   = ingress_rule.value
