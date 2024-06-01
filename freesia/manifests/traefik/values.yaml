@@ -8,6 +8,13 @@ envFrom:
   - configMapRef:
       name: traefik-env
 
+# experimental:
+#   plugins:
+#     cloudflarewarp:
+#       moduleName: github.com/BetterCorp/cloudflarewarp
+#       # renovate: datasource=github-tags depName=BetterCorp/cloudflarewarp
+#       version: v1.3.3
+
 ingressClass:
   enabled: true
   isDefaultClass: true
@@ -42,6 +49,9 @@ ports:
     forwardedHeaders:
       trustedIPs:
         - 10.0.0.0/16
+    middlewares:
+      - traefik-security-headers@kubernetescrd
+      - traefik-ban-robots@kubernetescrd
     tls:
       enabled: true
       # this is the name of a TLSOption definition
