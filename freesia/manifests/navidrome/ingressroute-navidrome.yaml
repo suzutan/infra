@@ -6,17 +6,6 @@ metadata:
 spec:
   routes:
     - kind: Rule
-      match: Host(`navidrome.harvestasya.org`) && PathPrefix(`/rest/`) || PathPrefix(`/auth/`) || PathPrefix(`/api/`)
-      priority: 15
-      services:
-        - name: navidrome
-          port: 4533
-
-      middlewares:
-        - name: auto-detect-content-type
-          namespace: traefik
-
-    - kind: Rule
       match: Host(`navidrome.harvestasya.org`)
       priority: 10
       services:
