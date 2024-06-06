@@ -12,3 +12,13 @@ spec:
         - name: argocd-server
           port: https
           scheme: https
+          serversTransport: allow-insecure
+
+---
+apiVersion: traefik.io/v1alpha1
+kind: ServersTransport
+metadata:
+  name: allow-insecure
+
+spec:
+  insecureSkipVerify: true
