@@ -11,3 +11,4 @@ spec:
       services:
         - name: argocd-server
           port: https
+          scheme: https
