@@ -10,6 +10,7 @@ labels:
     app.kubernetes.io/part-of: argocd
 
 resources:
+- ingressroute.yaml
 - namespace.yaml
 - role.yaml
 - project-apps.yaml
@@ -17,19 +18,19 @@ resources:
 - secret-argocd-custom-secret.yaml
 
 patches:
-- path: cm-argocd-cm.yaml
+- path: patch/cm-argocd-cm.yaml
   target:
     kind: ConfigMap
     name: argocd-cm
-- path: cm-argocd-cmd-params-cm.yaml
+- path: patch/cm-argocd-cmd-params-cm.yaml
   target:
     kind: ConfigMap
     name: argocd-cmd-params-cm
-- path: cm-argocd-notifications-cm.yaml
+- path: patch/cm-argocd-notifications-cm.yaml
   target:
     kind: ConfigMap
     name: argocd-notifications-cm
-- path: cm-argocd-rbac-cm.yaml
+- path: patch/cm-argocd-rbac-cm.yaml
   target:
     kind: ConfigMap
     name: argocd-rbac-cm
@@ -46,14 +47,3 @@ helmCharts:
       domain: argocd.harvestasya.org
     dex:
       enabled: false
-    server:
-      ingress:
-        enabled: true
-        annotations:
-          nginx.ingress.kubernetes.io/backend-protocol: HTTPS
-          nginx.ingress.kubernetes.io/ssl-passthrough: "true"
-        https: true
-        ingressClassName: nginx
-        pathType: Prefix
-        tls: true
-      name: server
