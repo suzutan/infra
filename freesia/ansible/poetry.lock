@@ -337,5 +337,5 @@ test = ["commentjson", "packaging", "pytest"]
 
 [metadata]
 lock-version = "2.0"
-python-versions = "3.12.3"
-content-hash = "de222bf06cd040cebb5b4d7b55add8161e3d19952c45edc77af4fd6a61f7b2b2"
+python-versions = "3.12.4"
+content-hash = "328a56a1d2ff693a9d439e62b8fc5ae5f43cc8afdc5fc5f0eeecdc5962e9090c"
