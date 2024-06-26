@@ -18,9 +18,9 @@ kubectl -n minio scale statefulset/minio-pool-0 --replicas=0
 du -h -d 1 . | grep minio
 (
 # 前から使っていたPVCのディレクトリ名
-old=minio-data0-minio-pool-0-0-pvc-2a12a162-ebc4-4ad9-9e82-36ceabe8d1dd
+old=archived-minio-data0-minio-pool-0-0-pvc-2fc8fd12-3eda-429d-a64f-2ad630166c1f
 # 新しくk8sを作成して発行されたディレクトリ名
-new=minio-data0-minio-pool-0-0-pvc-2fc8fd12-3eda-429d-a64f-2ad630166c1f
+new=minio-data0-minio-pool-0-0-pvc-3f7a9f84-593b-4b6c-82bd-81d677d958bb
 mv $new ${new}.tmp
 mv $old $new
 )
