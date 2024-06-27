@@ -6,3 +6,4 @@ metadata:
 spec:
   type: ExternalName
   externalName: 172.20.0.178
+# dnsで設定するとbad gatewayの復旧がなぜか長いので一旦IP指定する
