@@ -10,8 +10,7 @@ resources:
   - cloudflared.yaml
   - ddns.yaml
   - echoserver.yaml
-  # - minio-operator.yaml
-  # - minio.yaml
+  - minio.yaml
   - navidrome.yaml
   - nfs-subdir-external-provisioner.yaml
   - onepassword-operator.yaml

@@ -1,0 +1,34 @@
+apiVersion: traefik.io/v1alpha1
+kind: IngressRoute
+metadata:
+  name: minio
+
+spec:
+  routes:
+    - kind: Rule
+      match: Host(`storage.harvestasya.org`)
+      services:
+        - name: minio
+          port: 9000
+          scheme: https
+          serversTransport: minio
+    - kind: Rule
+      match: Host(`storage-console.harvestasya.org`)
+      services:
+        - name: minio
+          port: 9001
+          scheme: https
+          serversTransport: minio
+      middlewares:
+        - name: auto-detect-content-type
+          namespace: traefik
+        - name: authentik-forward-auth
+          namespace: authentik
+
+    - kind: Rule
+      match: Host(`storage-console.harvestasya.org`) && PathPrefix(`/outpost.goauthentik.io/`)
+      priority: 15
+      services:
+        - name: authentik-server
+          namespace: authentik
+          port: http
