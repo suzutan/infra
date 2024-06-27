@@ -3,5 +3,6 @@ kind: ServersTransport
 metadata:
   name: minio
 spec:
+  serverName: storage.ssa.suzutan.jp
   rootCAsSecrets:
     - harvestasya-root-ca

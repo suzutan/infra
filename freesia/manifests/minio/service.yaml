@@ -5,4 +5,4 @@ metadata:
 
 spec:
   type: ExternalName
-  externalName: storage.ssa.suzutan.jp
+  externalName: 172.20.0.178
