@@ -7,6 +7,8 @@ locals {
     "grafana.harvestasya.org",
     "navidrome.harvestasya.org",
     "navidrome-filebrowser.harvestasya.org",
+    "storage.harvestasya.org",
+    "storage-console.harvestasya.org",
   ]
 }
 
