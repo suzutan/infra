@@ -26,8 +26,8 @@ spec:
             - --objstore.config-file=/etc/config/object-store.yaml
             - --http-address=0.0.0.0:10902
             - --grpc-address=0.0.0.0:10901
-            - --index-cache-size=2GB
-            - --chunk-pool-size=2GB
+            - --index-cache-size=4GB
+            - --chunk-pool-size=4GB
           ports:
             - name: http
               containerPort: 10902
@@ -45,7 +45,7 @@ spec:
               memory: 128Mi
             limits:
               cpu: 3000m
-              memory: 1Gi
+              memory: 4Gi
       volumes:
         - name: data-dir
           emptyDir: {}
