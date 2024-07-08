@@ -1,14 +1,12 @@
 
 locals {
-  ingress_rules = [
+  k8s_ingress_rules = [
     "argocd.harvestasya.org",
     "echoserver.harvestasya.org",
     "id.harvestasya.org",
     "grafana.harvestasya.org",
     "navidrome.harvestasya.org",
     "navidrome-filebrowser.harvestasya.org",
-    "storage.harvestasya.org",
-    "storage-console.harvestasya.org",
   ]
 }
 
@@ -28,7 +26,7 @@ resource "cloudflare_tunnel_config" "k8s_ingress" {
 
   config {
     dynamic "ingress_rule" {
-      for_each = toset(local.ingress_rules)
+      for_each = toset(local.k8s_ingress_rules)
       content {
         hostname = ingress_rule.value
         service  = "https://traefik.traefik.svc.cluster.local"
@@ -45,7 +43,7 @@ resource "cloudflare_tunnel_config" "k8s_ingress" {
 }
 
 resource "cloudflare_record" "k8s_ingress" {
-  for_each = toset(local.ingress_rules)
+  for_each = toset(local.k8s_ingress_rules)
   zone_id  = data.cloudflare_zone.domain.id
   name     = each.value
   value    = "${cloudflare_tunnel.k8s_ingress.id}.cfargotunnel.com"
