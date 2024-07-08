@@ -6,7 +6,7 @@ metadata:
     app.kubernetes.io/name: thanos-store
 
 spec:
-  replicas: 2
+  replicas: 4
   selector:
     matchLabels:
       app.kubernetes.io/name: thanos-store
