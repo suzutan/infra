@@ -19,7 +19,7 @@ images:
   - name: quay.io/prometheus/prometheus
     newTag: v2.53.1
   - name: quay.io/thanos/thanos
-    newTag: v0.35.1
+    newTag: v0.36.0
 
 configMapGenerator:
   - name: prometheus-config
