@@ -8,7 +8,7 @@ resources:
   - kube-state-metrics
   - node-exporter
   - prometheus
-  # - prometheus-exporter-kube-system
+  - prometheus-exporter-kube-system
   - remo-exporter
   - thanos-bucket
   - thanos-compact
