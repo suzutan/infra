@@ -13,14 +13,14 @@ tasks:
     deps:
       - context
     cmds:
-      - kustomize build . | kubectl diff -f-
+      - kustomize build --enable-helm . | kubectl diff -f-
   apply:
     deps:
       - context
     cmds:
-      - kustomize build . | kubectl apply -f-
+      - kustomize build --enable-helm . | kubectl apply -f-
   delete:
     deps:
       - context
     cmds:
-      - kustomize build . | kubectl delete -f-
+      - kustomize build --enable-helm . | kubectl delete -f-
