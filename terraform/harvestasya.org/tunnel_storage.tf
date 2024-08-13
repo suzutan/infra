@@ -30,6 +30,7 @@ resource "cloudflare_tunnel_config" "storage_ingress" {
         origin_request {
           origin_server_name = ingress_rule.value
           http_host_header   = ingress_rule.value
+          no_tls_verify      = true
         }
       }
     }
