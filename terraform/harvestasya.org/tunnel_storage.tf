@@ -2,8 +2,8 @@
 locals {
   storage_ingress_rules = [
     "storage.harvestasya.org",
+    "cdn.harvestasya.org",
     "storage-console.harvestasya.org",
-
   ]
 }
 
