@@ -6,7 +6,7 @@ authors = ["suzutan <6679870+suzutan@users.noreply.github.com>"]
 readme = "README.md"
 
 [tool.poetry.dependencies]
-python = "3.12.5"
+python = "3.12.6"
 ansible = "10.3.0"
 
 
