@@ -4,7 +4,6 @@ locals {
     "argocd.harvestasya.org",
     "echoserver.harvestasya.org",
     "id.harvestasya.org",
-    "grafana.harvestasya.org",
     "navidrome.harvestasya.org",
     "navidrome-filebrowser.harvestasya.org",
   ]
