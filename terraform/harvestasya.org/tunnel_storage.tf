@@ -11,15 +11,15 @@ resource "random_bytes" "storage_ingress" {
   length = 32
 }
 
-resource "cloudflare_tunnel" "storage_ingress" {
+resource "cloudflare_zero_trust_tunnel_cloudflared" "storage_ingress" {
   account_id = var.cloudflare_account_id
   name       = "storage-ingress"
   secret     = random_bytes.storage_ingress.base64
 }
 
-resource "cloudflare_tunnel_config" "storage_ingress" {
+resource "cloudflare_zero_trust_tunnel_cloudflared_config" "storage_ingress" {
   account_id = var.cloudflare_account_id
-  tunnel_id  = cloudflare_tunnel.storage_ingress.id
+  tunnel_id  = cloudflare_zero_trust_tunnel_cloudflared.storage_ingress.id
 
   config {
     dynamic "ingress_rule" {
@@ -44,7 +44,7 @@ resource "cloudflare_record" "storage_ingress" {
   for_each = toset(local.storage_ingress_rules)
   zone_id  = data.cloudflare_zone.domain.id
   name     = each.value
-  value    = "${cloudflare_tunnel.storage_ingress.id}.cfargotunnel.com"
+  value    = "${cloudflare_zero_trust_tunnel_cloudflared.storage_ingress.id}.cfargotunnel.com"
   type     = "CNAME"
   proxied  = true
 }

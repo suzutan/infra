@@ -6,5 +6,5 @@ resource "cloudflare_record" "bluesky_site_verification" {
   type    = "TXT"
   ttl     = "1"
   proxied = "false"
-  value   = "did=did:plc:ovhusurkc5uzc4zdfzeecuza"
+  content = "did=did:plc:ovhusurkc5uzc4zdfzeecuza"
 }

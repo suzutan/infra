@@ -10,15 +10,15 @@ resource "random_bytes" "metrics" {
   length = 32
 }
 
-resource "cloudflare_tunnel" "metrics" {
+resource "cloudflare_zero_trust_tunnel_cloudflared" "metrics" {
   account_id = var.cloudflare_account_id
   name       = "metrics-ingress"
   secret     = random_bytes.metrics.base64
 }
 
-resource "cloudflare_tunnel_config" "metrics" {
+resource "cloudflare_zero_trust_tunnel_cloudflared_config" "metrics" {
   account_id = var.cloudflare_account_id
-  tunnel_id  = cloudflare_tunnel.metrics.id
+  tunnel_id  = cloudflare_zero_trust_tunnel_cloudflared.metrics.id
 
   config {
     dynamic "ingress_rule" {
@@ -43,7 +43,7 @@ resource "cloudflare_record" "metrics" {
   for_each = toset(local.metrics_rules)
   zone_id  = data.cloudflare_zone.domain.id
   name     = each.value
-  value    = "${cloudflare_tunnel.metrics.id}.cfargotunnel.com"
+  value    = "${cloudflare_zero_trust_tunnel_cloudflared.metrics.id}.cfargotunnel.com"
   type     = "CNAME"
   proxied  = true
 }

@@ -5,5 +5,5 @@ resource "cloudflare_record" "blog" {
   type    = "CNAME"
   ttl     = "1"
   proxied = "false"
-  value   = "hatenablog.com"
+  content = "hatenablog.com"
 }

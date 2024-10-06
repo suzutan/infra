@@ -14,5 +14,5 @@ resource "cloudflare_record" "google_site_verification" {
   type     = "TXT"
   ttl      = "1"
   proxied  = "false"
-  value    = each.value
+  content  = each.value
 }

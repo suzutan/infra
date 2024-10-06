@@ -13,15 +13,15 @@ resource "random_bytes" "k8s_ingress" {
   length = 32
 }
 
-resource "cloudflare_tunnel" "k8s_ingress" {
+resource "cloudflare_zero_trust_tunnel_cloudflared" "k8s_ingress" {
   account_id = var.cloudflare_account_id
   name       = "k8s-ingress"
   secret     = random_bytes.k8s_ingress.base64
 }
 
-resource "cloudflare_tunnel_config" "k8s_ingress" {
+resource "cloudflare_zero_trust_tunnel_cloudflared_config" "k8s_ingress" {
   account_id = var.cloudflare_account_id
-  tunnel_id  = cloudflare_tunnel.k8s_ingress.id
+  tunnel_id  = cloudflare_zero_trust_tunnel_cloudflared.k8s_ingress.id
 
   config {
     dynamic "ingress_rule" {
@@ -45,7 +45,7 @@ resource "cloudflare_record" "k8s_ingress" {
   for_each = toset(local.k8s_ingress_rules)
   zone_id  = data.cloudflare_zone.domain.id
   name     = each.value
-  value    = "${cloudflare_tunnel.k8s_ingress.id}.cfargotunnel.com"
+  content  = "${cloudflare_zero_trust_tunnel_cloudflared.k8s_ingress.id}.cfargotunnel.com"
   type     = "CNAME"
   proxied  = true
 }
