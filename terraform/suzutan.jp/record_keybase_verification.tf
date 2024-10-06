@@ -6,5 +6,5 @@ resource "cloudflare_record" "keybase_site_verification" {
   type    = "TXT"
   ttl     = "1"
   proxied = "false"
-  value   = "keybase-site-verification=fobrj4oPvLgdvilm6f8LaHFKxMVvtwUGaLlZERXyydk"
+  content = "keybase-site-verification=fobrj4oPvLgdvilm6f8LaHFKxMVvtwUGaLlZERXyydk"
 }

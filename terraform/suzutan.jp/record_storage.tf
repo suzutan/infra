@@ -6,5 +6,5 @@ resource "cloudflare_record" "storage" {
   type    = "CNAME"
   ttl     = "1"
   proxied = "false"
-  value   = "c.storage.googleapis.com"
+  content = "c.storage.googleapis.com"
 }
