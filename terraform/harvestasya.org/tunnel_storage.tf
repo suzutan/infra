@@ -44,7 +44,7 @@ resource "cloudflare_record" "storage_ingress" {
   for_each = toset(local.storage_ingress_rules)
   zone_id  = data.cloudflare_zone.domain.id
   name     = each.value
-  value    = "${cloudflare_zero_trust_tunnel_cloudflared.storage_ingress.id}.cfargotunnel.com"
+  content  = "${cloudflare_zero_trust_tunnel_cloudflared.storage_ingress.id}.cfargotunnel.com"
   type     = "CNAME"
   proxied  = true
 }

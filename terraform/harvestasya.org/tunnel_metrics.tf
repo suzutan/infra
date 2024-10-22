@@ -43,7 +43,7 @@ resource "cloudflare_record" "metrics" {
   for_each = toset(local.metrics_rules)
   zone_id  = data.cloudflare_zone.domain.id
   name     = each.value
-  value    = "${cloudflare_zero_trust_tunnel_cloudflared.metrics.id}.cfargotunnel.com"
+  content  = "${cloudflare_zero_trust_tunnel_cloudflared.metrics.id}.cfargotunnel.com"
   type     = "CNAME"
   proxied  = true
 }
