@@ -7,7 +7,7 @@ locals {
     "asf.harvestasya.org",
     "navidrome.harvestasya.org",
     "navidrome-filebrowser.harvestasya.org",
-    "influxdb.harvestasya.org",
+    "influxdb2.harvestasya.org",
   ]
 }
 
