@@ -11,7 +11,7 @@ resources:
 
 images:
   - name: registry.k8s.io/kube-state-metrics/kube-state-metrics
-    newTag: v2.14.0
+    newTag: v2.15.0
 
 labels:
   - pairs:
