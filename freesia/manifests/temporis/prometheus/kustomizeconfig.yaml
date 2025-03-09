@@ -1,5 +1,5 @@
 images:
-  - path: spec/image
-    kind: Prometheus
-  - path: spec/thanos/image
-    kind: Prometheus
+- path: spec/image
+  kind: Prometheus
+- path: spec/thanos/image
+  kind: Prometheus

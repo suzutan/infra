@@ -5,23 +5,23 @@ metadata:
 
 spec:
   routes:
-    - kind: Rule
-      match: Host(`asf.harvestasya.org`)
-      priority: 10
-      services:
-        - name: asf
-          port: 1242
+  - kind: Rule
+    match: Host(`asf.harvestasya.org`)
+    priority: 10
+    services:
+    - name: asf
+      port: 1242
 
-      middlewares:
-        - name: auto-detect-content-type
-          namespace: traefik
-        - name: authentik-forward-auth
-          namespace: authentik
+    middlewares:
+    - name: auto-detect-content-type
+      namespace: traefik
+    - name: authentik-forward-auth
+      namespace: authentik
 
-    - kind: Rule
-      match: Host(`asf.harvestasya.org`) && PathPrefix(`/outpost.goauthentik.io/`)
-      priority: 15
-      services:
-        - name: authentik-server
-          namespace: authentik
-          port: http
+  - kind: Rule
+    match: Host(`asf.harvestasya.org`) && PathPrefix(`/outpost.goauthentik.io/`)
+    priority: 15
+    services:
+    - name: authentik-server
+      namespace: authentik
+      port: http

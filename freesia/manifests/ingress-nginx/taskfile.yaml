@@ -8,8 +8,8 @@ vars:
 tasks:
   repo-update:
     cmds:
-      - helm repo add ingress-nginx https://kubernetes.github.io/ingress-nginx
-      - helm repo update
+    - helm repo add ingress-nginx https://kubernetes.github.io/ingress-nginx
+    - helm repo update
   default-values:
     cmds:
-      - helm show values ingress-nginx/ingress-nginx > default-values.yaml
+    - helm show values ingress-nginx/ingress-nginx > default-values.yaml

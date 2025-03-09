@@ -22,5 +22,5 @@ jobs:
       uses: FairwindsOps/pluto/github-action@master
 
     - name: Deprecated check
-      run: |
+      run: |-
         pluto detect-files -d ${PLUTO_TARGET_DIRECTORY}

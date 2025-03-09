@@ -5,8 +5,8 @@ deployment:
   replicas: 3
 
 envFrom:
-  - configMapRef:
-      name: traefik-env
+- configMapRef:
+    name: traefik-env
 
 # experimental:
 #   plugins:
@@ -31,7 +31,7 @@ providers:
 service:
   ipFamilyPolicy: PreferDualStack
   externalIPs:
-    - 172.20.0.221
+  - 172.20.0.221
 
 globalArguments: []
 
@@ -48,19 +48,19 @@ ports:
     exposedPort: 443
     forwardedHeaders:
       trustedIPs:
-        - 10.0.0.0/16
+      - 10.0.0.0/16
     middlewares:
-      - traefik-security-headers@kubernetescrd
-      - traefik-ban-robots@kubernetescrd
+    - traefik-security-headers@kubernetescrd
+    - traefik-ban-robots@kubernetescrd
     tls:
       enabled: true
       # this is the name of a TLSOption definition
       options: ""
       domains:
-        - main: harvestasya.org
-          sans:
-            - "*.harvestasya.org"
-            - "*.suzutan.jp"
+      - main: harvestasya.org
+        sans:
+        - "*.harvestasya.org"
+        - "*.suzutan.jp"
 # https://docs.traefik.io/observability/logs/
 logs:
   access:

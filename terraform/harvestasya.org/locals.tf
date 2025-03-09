@@ -1,6 +1,5 @@
 
 locals {
-  owner       = "harvestasya"
-  zone_name   = "harvestasya.org"
-  ddns_domain = "ddns.harvestasya.org"
+  zone_id   = "98fc606abe946efeabebe1fdbf0af490"
+  zone_name = "harvestasya.org"
 }

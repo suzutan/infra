@@ -16,4 +16,4 @@ spec:
       prune: true
       selfHeal: true
     syncOptions:
-      - RespectIgnoreDifferences=true
+    - RespectIgnoreDifferences=true

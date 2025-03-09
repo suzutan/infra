@@ -1,5 +1,7 @@
 
 module "fastmail" {
   source = "../modules/fastmail"
-  domain = data.cloudflare_zone.domain.name
+
+  cloudflare_dns_zone_id = local.zone_id
+  domain                 = local.zone_name
 }

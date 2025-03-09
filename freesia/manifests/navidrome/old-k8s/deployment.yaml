@@ -25,76 +25,76 @@ spec:
       dnsPolicy: ClusterFirst
       enableServiceLinks: true
       containers:
-        - name: navidrome
-          image: deluan/navidrome:0.52.5
-          imagePullPolicy: IfNotPresent
-          resources:
-            limits:
-              cpu: 4000m
-              memory: 2048Mi
-            requests:
-              cpu: 100m
-              memory: 128Mi
-          env:
-            - name: ND_ENABLETRANSCODINGCONFIG
-              value: "true"
-            - name: ND_COVERARTPRIORITY
-              value: "cover.*, folder.*, front.*, embedded"
-            - name: ND_TRANSCODINGCACHESIZE
-              value: "10GiB"
-            - name: ND_LOGLEVEL
-              value: info
-            - name: ND_MUSICFOLDER
-              value: /music
-            - name: ND_SESSIONTIMEOUT
-              value: 24h
-            - name: TZ
-              value: Asia/Tokyo
-            - name: ND_PROMETHEUS_ENABLED
-              value: "true"
-            - name: ND_PROMETHEUS_METRICSPATH
-              value: /metrics
-            - name: ND_ENABLEEXTERNALSERVICES
-              value: "false"
-            - name: ND_REVERSEPROXYUSERHEADER
-              value: "X-authentik-username"
-            - name: ND_REVERSEPROXYWHITELIST
-              value: "0.0.0.0/0"
-          ports:
-            - name: http
-              containerPort: 4533
-              protocol: TCP
-          volumeMounts:
-            - name: config
-              mountPath: /data
-            - name: music
-              mountPath: /music
-              readOnly: true
-          livenessProbe:
-            tcpSocket:
-              port: 4533
-            initialDelaySeconds: 0
-            failureThreshold: 3
-            timeoutSeconds: 1
-            periodSeconds: 10
-          readinessProbe:
-            tcpSocket:
-              port: 4533
-            initialDelaySeconds: 0
-            failureThreshold: 3
-            timeoutSeconds: 1
-            periodSeconds: 10
-          startupProbe:
-            tcpSocket:
-              port: 4533
-            initialDelaySeconds: 0
-            failureThreshold: 30
-            timeoutSeconds: 1
-            periodSeconds: 5
-      volumes:
+      - name: navidrome
+        image: deluan/navidrome:0.52.5
+        imagePullPolicy: IfNotPresent
+        resources:
+          limits:
+            cpu: 4000m
+            memory: 2048Mi
+          requests:
+            cpu: 100m
+            memory: 128Mi
+        env:
+        - name: ND_ENABLETRANSCODINGCONFIG
+          value: "true"
+        - name: ND_COVERARTPRIORITY
+          value: "cover.*, folder.*, front.*, embedded"
+        - name: ND_TRANSCODINGCACHESIZE
+          value: "10GiB"
+        - name: ND_LOGLEVEL
+          value: info
+        - name: ND_MUSICFOLDER
+          value: /music
+        - name: ND_SESSIONTIMEOUT
+          value: 24h
+        - name: TZ
+          value: Asia/Tokyo
+        - name: ND_PROMETHEUS_ENABLED
+          value: "true"
+        - name: ND_PROMETHEUS_METRICSPATH
+          value: /metrics
+        - name: ND_ENABLEEXTERNALSERVICES
+          value: "false"
+        - name: ND_REVERSEPROXYUSERHEADER
+          value: "X-authentik-username"
+        - name: ND_REVERSEPROXYWHITELIST
+          value: "0.0.0.0/0"
+        ports:
+        - name: http
+          containerPort: 4533
+          protocol: TCP
+        volumeMounts:
         - name: config
-          persistentVolumeClaim:
-            claimName: navidrome-config
+          mountPath: /data
         - name: music
-          persistentVolumeClaim:
-            claimName: navidrome-music
+          mountPath: /music
+          readOnly: true
+        livenessProbe:
+          tcpSocket:
+            port: 4533
+          initialDelaySeconds: 0
+          failureThreshold: 3
+          timeoutSeconds: 1
+          periodSeconds: 10
+        readinessProbe:
+          tcpSocket:
+            port: 4533
+          initialDelaySeconds: 0
+          failureThreshold: 3
+          timeoutSeconds: 1
+          periodSeconds: 10
+        startupProbe:
+          tcpSocket:
+            port: 4533
+          initialDelaySeconds: 0
+          failureThreshold: 30
+          timeoutSeconds: 1
+          periodSeconds: 5
+      volumes:
+      - name: config
+        persistentVolumeClaim:
+          claimName: navidrome-config
+      - name: music
+        persistentVolumeClaim:
+          claimName: navidrome-music

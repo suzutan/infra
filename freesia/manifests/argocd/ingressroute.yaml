@@ -5,14 +5,14 @@ metadata:
 
 spec:
   routes:
-    - kind: Rule
-      match: Host(`argocd.harvestasya.org`)
-      priority: 10
-      services:
-        - name: argocd-server
-          port: https
-          scheme: https
-          serversTransport: allow-insecure
+  - kind: Rule
+    match: Host(`argocd.harvestasya.org`)
+    priority: 10
+    services:
+    - name: argocd-server
+      port: https
+      scheme: https
+      serversTransport: allow-insecure
 
 ---
 apiVersion: traefik.io/v1alpha1

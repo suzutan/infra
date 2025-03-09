@@ -54,7 +54,7 @@ data:
     - when: app.status.operationState.phase in ['Succeeded'] and app.status.health.status == 'Healthy'
       oncePer: app.status.sync.revision
       send: [github-success]
-  trigger.on-status-change: |
+  trigger.on-status-change: |-
     - when: app.status.operationState.phase in ['Succeeded', 'Error', 'Failed']
       oncePer: app.status.sync.revision
       send: [discord-status]

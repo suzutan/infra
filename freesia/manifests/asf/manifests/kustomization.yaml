@@ -3,10 +3,10 @@ kind: Kustomization
 
 namespace: asf
 resources:
-  - deployment.yaml
-  - persistentvolumeclaim.yaml
-  - ingressroute.yaml
-  - service.yaml
+- deployment.yaml
+- persistentvolumeclaim.yaml
+- ingressroute.yaml
+- service.yaml
 
 commonLabels:
   app: asf

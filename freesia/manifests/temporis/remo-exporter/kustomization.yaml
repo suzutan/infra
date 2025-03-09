@@ -4,16 +4,16 @@ kind: Kustomization
 namespace: temporis
 
 resources:
-  - deployment.yaml
-  - ingressroute.yaml
-  - secret-nature-remo-token.yaml
-  - service.yaml
+- deployment.yaml
+- ingressroute.yaml
+- secret-nature-remo-token.yaml
+- service.yaml
 
 labels:
-  - pairs:
-      app.kubernetes.io/name: remo-exporter
-    includeSelectors: true
-  - pairs:
-      app.kubernetes.io/instance: remo-exporter
-      app.kubernetes.io/component: prometheus-exporter
-    includeSelectors: false
+- pairs:
+    app.kubernetes.io/name: remo-exporter
+  includeSelectors: true
+- pairs:
+    app.kubernetes.io/instance: remo-exporter
+    app.kubernetes.io/component: prometheus-exporter
+  includeSelectors: false

@@ -8,19 +8,19 @@ vars:
 tasks:
   context:
     cmds:
-      - kubectl config set-context kubernetes-admin@kubernetes
+    - kubectl config set-context kubernetes-admin@kubernetes
   diff:
     deps:
-      - context
+    - context
     cmds:
-      - kustomize build --enable-helm . | kubectl diff -f-
+    - kustomize build --enable-helm . | kubectl diff -f-
   apply:
     deps:
-      - context
+    - context
     cmds:
-      - kustomize build --enable-helm . | kubectl apply -f-
+    - kustomize build --enable-helm . | kubectl apply -f-
   delete:
     deps:
-      - context
+    - context
     cmds:
-      - kustomize build --enable-helm . | kubectl delete -f-
+    - kustomize build --enable-helm . | kubectl delete -f-

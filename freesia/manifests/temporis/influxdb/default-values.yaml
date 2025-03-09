@@ -21,16 +21,16 @@ fullnameOverride: ""
 ## ref: http://kubernetes.io/docs/user-guide/compute-resources/
 ##
 resources: {}
-  # We usually recommend not to specify default resources and to leave this as a conscious
-  # choice for the user. This also increases chances charts run on environments with little
-  # resources, such as Minikube. If you do want to specify resources, uncomment the following
-  # lines, adjust them as necessary, and remove the curly braces after 'resources:'.
-  # limits:
-  #  cpu: 100m
-  #  memory: 128Mi
-  # requests:
-  #  cpu: 100m
-  #  memory: 128Mi
+# We usually recommend not to specify default resources and to leave this as a conscious
+# choice for the user. This also increases chances charts run on environments with little
+# resources, such as Minikube. If you do want to specify resources, uncomment the following
+# lines, adjust them as necessary, and remove the curly braces after 'resources:'.
+# limits:
+#  cpu: 100m
+#  memory: 128Mi
+# requests:
+#  cpu: 100m
+#  memory: 128Mi
 
 ## Node labels for pod assignment
 ## ref: https://kubernetes.io/docs/user-guide/node-selection/
@@ -53,21 +53,21 @@ securityContext: {}
 ## ref: https://kubernetes.io/docs/tasks/configure-pod-container/configure-liveness-readiness-startup-probes/
 ##
 livenessProbe: {}
-  # path: "/health"
-  # scheme: "HTTP"
-  # initialDelaySeconds: 0
-  # periodSeconds: 10
-  # timeoutSeconds: 1
-  # failureThreshold: 3
+# path: "/health"
+# scheme: "HTTP"
+# initialDelaySeconds: 0
+# periodSeconds: 10
+# timeoutSeconds: 1
+# failureThreshold: 3
 
 readinessProbe: {}
-  # path: "/health"
-  # scheme: "HTTP"
-  # initialDelaySeconds: 0
-  # periodSeconds: 10
-  # timeoutSeconds: 1
-  # successThreshold: 1
-  # failureThreshold: 3
+# path: "/health"
+# scheme: "HTTP"
+# initialDelaySeconds: 0
+# periodSeconds: 10
+# timeoutSeconds: 1
+# successThreshold: 1
+# failureThreshold: 3
 
 startupProbe:
   enabled: false
@@ -149,7 +149,7 @@ persistence:
 initScripts:
   enabled: false
   scripts:
-    init.sh: |+
+    init.sh: |
       #!/bin/bash
       influx apply --force yes -u https://raw.githubusercontent.com/influxdata/community-templates/master/influxdb2_operational_monitoring/influxdb2_operational_monitoring.yml
 
@@ -182,8 +182,8 @@ ingress:
   # secretName: my-tls-cert # only needed if tls above is true or default certificate is not configured for Nginx
   hostname: influxdb.foobar.com
   annotations: {}
-    # kubernetes.io/ingress.class: "nginx"
-    # kubernetes.io/tls-acme: "true"
+  # kubernetes.io/ingress.class: "nginx"
+  # kubernetes.io/tls-acme: "true"
   path: /
 
 ## Pod disruption budget configuration

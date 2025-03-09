@@ -3,21 +3,21 @@ kind: Kustomization
 
 namespace: temporis
 resources:
-  - cr.yaml
-  - crb.yaml
-  - deployment.yaml
-  - service.yaml
-  - serviceaccount.yaml
+- cr.yaml
+- crb.yaml
+- deployment.yaml
+- service.yaml
+- serviceaccount.yaml
 
 images:
-  - name: registry.k8s.io/kube-state-metrics/kube-state-metrics
-    newTag: v2.15.0
+- name: registry.k8s.io/kube-state-metrics/kube-state-metrics
+  newTag: v2.15.0
 
 labels:
-  - pairs:
-      app.kubernetes.io/name: kube-state-metrics
-    includeSelectors: true
-  - pairs:
-      app.kubernetes.io/component: kube-state-metrics
-      app.kubernetes.io/part-of: temporis
-    includeSelectors: false
+- pairs:
+    app.kubernetes.io/name: kube-state-metrics
+  includeSelectors: true
+- pairs:
+    app.kubernetes.io/component: kube-state-metrics
+    app.kubernetes.io/part-of: temporis
+  includeSelectors: false

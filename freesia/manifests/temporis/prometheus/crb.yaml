@@ -9,6 +9,6 @@ roleRef:
   kind: ClusterRole
   name: prometheus
 subjects:
-  - kind: ServiceAccount
-    name: prometheus
-    namespace: temporis
+- kind: ServiceAccount
+  name: prometheus
+  namespace: temporis

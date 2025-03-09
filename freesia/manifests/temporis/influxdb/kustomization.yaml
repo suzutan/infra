@@ -4,29 +4,29 @@ kind: Kustomization
 namespace: temporis
 
 resources:
-  - ingressroute.yaml
-  - secret-influxdb2-auth.yaml
+- ingressroute.yaml
+- secret-influxdb2-auth.yaml
 
 helmCharts:
-  # https://github.com/influxdata/helm-charts
-  - name: influxdb2
-    releaseName: influxdb2
-    namespace: temporis
-    version: 2.1.2
-    repo: https://helm.influxdata.com/
-    includeCRDs: true
-    valuesInline:
-      # admin password/token
-      # https://github.com/influxdata/helm-charts/blob/master/charts/influxdb2/README.md#fixed-auth-credentials
+# https://github.com/influxdata/helm-charts
+- name: influxdb2
+  releaseName: influxdb2
+  namespace: temporis
+  version: 2.1.2
+  repo: https://helm.influxdata.com/
+  includeCRDs: true
+  valuesInline:
+    # admin password/token
+    # https://github.com/influxdata/helm-charts/blob/master/charts/influxdb2/README.md#fixed-auth-credentials
 
-      adminUser:
-        existingSecret: influxdb2-auth
-      persistence:
-        enabled: true
-        storageClass: "nfs-client"
-        accessMode: ReadWriteOnce
-        size: 50Gi
-        mountPath: /var/lib/influxdb2
-        subPath: ""
-      pdb:
-        create: false
+    adminUser:
+      existingSecret: influxdb2-auth
+    persistence:
+      enabled: true
+      storageClass: "nfs-client"
+      accessMode: ReadWriteOnce
+      size: 50Gi
+      mountPath: /var/lib/influxdb2
+      subPath: ""
+    pdb:
+      create: false

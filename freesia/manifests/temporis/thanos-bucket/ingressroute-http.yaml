@@ -5,8 +5,8 @@ metadata:
 
 spec:
   routes:
-    - kind: Rule
-      match: Host(`thanos-bucket.harvestasya.org`)
-      services:
-        - name: thanos-bucket
-          port: 8080
+  - kind: Rule
+    match: Host(`thanos-bucket.harvestasya.org`)
+    services:
+    - name: thanos-bucket
+      port: 8080
