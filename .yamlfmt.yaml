@@ -1,0 +1,9 @@
+formatter:
+  type: basic
+  retain_line_breaks: true
+  indentless_arrays: true
+  trim_trailing_whitespace: true
+  eof_newline: true
+exclude:
+  - "charts/"
+gitignore_excludes: true
