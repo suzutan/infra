@@ -1,10 +1,7 @@
 
-data "cloudflare_zone" "domain" {
-  name = var.domain
-}
 
-resource "cloudflare_record" "mx_0" {
-  zone_id  = data.cloudflare_zone.domain.id
+resource "cloudflare_dns_record" "mx_0" {
+  zone_id  = var.cloudflare_dns_zone_id
   name     = var.subdomain
   type     = "MX"
   ttl      = "1"
@@ -12,8 +9,8 @@ resource "cloudflare_record" "mx_0" {
   priority = "10"
   content  = "in1-smtp.messagingengine.com"
 }
-resource "cloudflare_record" "mx_1" {
-  zone_id  = data.cloudflare_zone.domain.id
+resource "cloudflare_dns_record" "mx_1" {
+  zone_id  = var.cloudflare_dns_zone_id
   name     = var.subdomain
   type     = "MX"
   ttl      = "1"
@@ -22,8 +19,8 @@ resource "cloudflare_record" "mx_1" {
   content  = "in2-smtp.messagingengine.com"
 }
 
-resource "cloudflare_record" "spf" {
-  zone_id = data.cloudflare_zone.domain.id
+resource "cloudflare_dns_record" "spf" {
+  zone_id = var.cloudflare_dns_zone_id
   name    = var.subdomain
   type    = "TXT"
   ttl     = "1"
@@ -31,24 +28,24 @@ resource "cloudflare_record" "spf" {
   content = "v=spf1 include:spf.messagingengine.com ?all"
 }
 
-resource "cloudflare_record" "dkim_1" {
-  zone_id = data.cloudflare_zone.domain.id
+resource "cloudflare_dns_record" "dkim_1" {
+  zone_id = var.cloudflare_dns_zone_id
   name    = var.subdomain == "@" ? "fm1._domainkey" : "fm1._domainkey.${var.subdomain}"
   type    = "CNAME"
   ttl     = "1"
   proxied = "false"
   content = "fm1.${var.subdomain == "@" ? var.domain : "${var.subdomain}.${var.domain}"}.dkim.fmhosted.com"
 }
-resource "cloudflare_record" "dkim_2" {
-  zone_id = data.cloudflare_zone.domain.id
+resource "cloudflare_dns_record" "dkim_2" {
+  zone_id = var.cloudflare_dns_zone_id
   name    = var.subdomain == "@" ? "fm2._domainkey" : "fm2._domainkey.${var.subdomain}"
   type    = "CNAME"
   ttl     = "1"
   proxied = "false"
   content = "fm2.${var.subdomain == "@" ? var.domain : "${var.subdomain}.${var.domain}"}.dkim.fmhosted.com"
 }
-resource "cloudflare_record" "dkim_3" {
-  zone_id = data.cloudflare_zone.domain.id
+resource "cloudflare_dns_record" "dkim_3" {
+  zone_id = var.cloudflare_dns_zone_id
   name    = var.subdomain == "@" ? "fm3._domainkey" : "fm3._domainkey.${var.subdomain}"
   type    = "CNAME"
   ttl     = "1"
