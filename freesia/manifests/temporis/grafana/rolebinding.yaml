@@ -9,6 +9,6 @@ roleRef:
   kind: Role
   name: grafana
 subjects:
-  - kind: ServiceAccount
-    name: grafana
-    namespace: temporis
+- kind: ServiceAccount
+  name: grafana
+  namespace: temporis

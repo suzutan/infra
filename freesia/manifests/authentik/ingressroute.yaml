@@ -5,8 +5,8 @@ metadata:
 
 spec:
   routes:
-    - kind: Rule
-      match: Host(`id.harvestasya.org`)
-      services:
-        - name: authentik-server
-          port: http
+  - kind: Rule
+    match: Host(`id.harvestasya.org`)
+    services:
+    - name: authentik-server
+      port: http

@@ -1,0 +1,9 @@
+# https://taskfile.dev
+
+version: '3'
+
+tasks:
+  yamlfmt:
+    cmds:
+    - find ./ -name "*.yaml" | grep -v "charts/" | xargs yamlfmt -lint
+    silent: true

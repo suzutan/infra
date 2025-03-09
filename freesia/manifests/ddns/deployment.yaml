@@ -17,15 +17,15 @@ spec:
       - name: ddns
         image: timothyjmiller/cloudflare-ddns:latest
         env:
-          - name: PUID
-            value: "1000"
-          - name: PGID
-            value: "1000"
+        - name: PUID
+          value: "1000"
+        - name: PGID
+          value: "1000"
         volumeMounts:
-          - name: config
-            mountPath: /config.json
-            readOnly: true
-            subPath: config.json
+        - name: config
+          mountPath: /config.json
+          readOnly: true
+          subPath: config.json
         resources:
           limits:
             cpu: 50m
@@ -33,7 +33,7 @@ spec:
         securityContext:
           allowPrivilegeEscalation: false
       volumes:
-        - name: config
-          secret:
-            secretName: config
+      - name: config
+        secret:
+          secretName: config
 

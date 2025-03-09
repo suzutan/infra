@@ -8,7 +8,7 @@ metadata:
 # https://argo-cd.readthedocs.io/en/stable/operator-manual/rbac/
 data:
   policy.default: role:readonly
-  policy.csv: |
+  policy.csv: |-
     p, role:admin, applications, *, */*, allow
     p, role:admin, clusters, get, *, allow
     p, role:admin, repositories, get, *, allow

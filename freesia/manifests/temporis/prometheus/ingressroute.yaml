@@ -5,8 +5,8 @@ metadata:
 
 spec:
   routes:
-    - kind: Rule
-      match: Host(`prometheus.harvestasya.org`)
-      services:
-        - name: prometheus
-          port: 9090
+  - kind: Rule
+    match: Host(`prometheus.harvestasya.org`)
+    services:
+    - name: prometheus
+      port: 9090

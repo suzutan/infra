@@ -1,7 +1,7 @@
 global:
   envFrom:
-    - secretRef:
-        name: authentik-custom
+  - secretRef:
+      name: authentik-custom
 authentik:
   log_level: info
   secret_key: dummy
@@ -48,7 +48,7 @@ postgresql:
       enabled: true
       storageClass: nfs-client
       accessModes:
-        - ReadWriteOnce
+      - ReadWriteOnce
 
 redis:
   # -- enable the Bitnami Redis chart. Refer to https://github.com/bitnami/charts/blob/main/bitnami/redis/ for possible values.
@@ -61,4 +61,4 @@ redis:
       enabled: true
       storageClass: nfs-client
       accessModes:
-        - ReadWriteOnce
+      - ReadWriteOnce

@@ -5,8 +5,8 @@ metadata:
 
 spec:
   routes:
-    - kind: Rule
-      match: Host(`grafana.harvestasya.org`)
-      services:
-        - name: grafana
-          port: 80
+  - kind: Rule
+    match: Host(`grafana.harvestasya.org`)
+    services:
+    - name: grafana
+      port: 80

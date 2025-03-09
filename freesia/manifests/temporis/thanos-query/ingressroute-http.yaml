@@ -5,8 +5,8 @@ metadata:
 
 spec:
   routes:
-    - kind: Rule
-      match: Host(`thanos-query.harvestasya.org`)
-      services:
-        - name: thanos-query-http
-          port: 10902
+  - kind: Rule
+    match: Host(`thanos-query.harvestasya.org`)
+    services:
+    - name: thanos-query-http
+      port: 10902

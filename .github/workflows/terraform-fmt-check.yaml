@@ -3,9 +3,9 @@ name: Terraform fmt check
 on:
   pull_request:
     branches:
-      - master
+    - master
     paths:
-      - terraform/**
+    - terraform/**
 
 jobs:
   check_format:
@@ -14,12 +14,12 @@ jobs:
     strategy:
       matrix:
         directory:
-          - terraform/harvestasya.org
-          - terraform/suzutan.jp
+        - terraform/harvestasya.org
+        - terraform/suzutan.jp
     steps:
-      - name: Checkout
-        uses: actions/checkout@v4
-      - name: terraform fmt
-        uses: dflook/terraform-fmt-check@v1
-        with:
-          path: ${{ matrix.directory }}
+    - name: Checkout
+      uses: actions/checkout@v4
+    - name: terraform fmt
+      uses: dflook/terraform-fmt-check@v1
+      with:
+        path: ${{ matrix.directory }}

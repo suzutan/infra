@@ -2,36 +2,36 @@ apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 
 configurations:
-  - kustomizeconfig.yaml
+- kustomizeconfig.yaml
 
 namespace: temporis
 
 resources:
-  - cr.yaml
-  - crb.yaml
-  - ingressroute.yaml
-  - prometheus.yaml
-  - service-thanos-sidecar.yaml
-  - service.yaml
-  - serviceaccount.yaml
+- cr.yaml
+- crb.yaml
+- ingressroute.yaml
+- prometheus.yaml
+- service-thanos-sidecar.yaml
+- service.yaml
+- serviceaccount.yaml
 
 images:
-  - name: quay.io/prometheus/prometheus
-    newTag: v3.2.1
-  - name: quay.io/thanos/thanos
-    newTag: v0.37.2
+- name: quay.io/prometheus/prometheus
+  newTag: v3.2.1
+- name: quay.io/thanos/thanos
+  newTag: v0.37.2
 
 configMapGenerator:
-  - name: prometheus-config
-    files:
-      - config/prometheus.yaml
+- name: prometheus-config
+  files:
+  - config/prometheus.yaml
 
 
 labels:
-  - pairs:
-      app.kubernetes.io/name: prometheus
-    includeSelectors: true
-  - pairs:
-      app.kubernetes.io/component: prometheus
-      app.kubernetes.io/part-of: temporis
-    includeSelectors: false
+- pairs:
+    app.kubernetes.io/name: prometheus
+  includeSelectors: true
+- pairs:
+    app.kubernetes.io/component: prometheus
+    app.kubernetes.io/part-of: temporis
+  includeSelectors: false

@@ -2,16 +2,16 @@ apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 
 resources:
-  - argocd-apps.yaml
-  - argocd.yaml
-  - asf.yaml
-  - authentik.yaml
-  - cert-manager.yaml
-  - cloudflared.yaml
-  - ddns.yaml
-  - echoserver.yaml
-  - navidrome.yaml
-  - nfs-subdir-external-provisioner.yaml
-  - onepassword-operator.yaml
-  - temporis.yaml
-  - traefik.yaml
+- argocd-apps.yaml
+- argocd.yaml
+- asf.yaml
+- authentik.yaml
+- cert-manager.yaml
+- cloudflared.yaml
+- ddns.yaml
+- echoserver.yaml
+- navidrome.yaml
+- nfs-subdir-external-provisioner.yaml
+- onepassword-operator.yaml
+- temporis.yaml
+- traefik.yaml

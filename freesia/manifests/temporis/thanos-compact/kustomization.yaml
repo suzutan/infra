@@ -4,16 +4,16 @@ kind: Kustomization
 namespace: temporis
 
 resources:
-  - service.yaml
-  - statefulset.yaml
+- service.yaml
+- statefulset.yaml
 
 images:
-  - name: quay.io/thanos/thanos
-    newTag: v0.37.2
+- name: quay.io/thanos/thanos
+  newTag: v0.37.2
 
 labels:
-  - pairs:
-      app.kubernetes.io/name: thanos
-      app.kubernetes.io/instance: thanos
-      app.kubernetes.io/component: compact
-    includeSelectors: true
+- pairs:
+    app.kubernetes.io/name: thanos
+    app.kubernetes.io/instance: thanos
+    app.kubernetes.io/component: compact
+  includeSelectors: true

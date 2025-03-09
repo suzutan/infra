@@ -8,13 +8,13 @@ metadata:
     kubernetes.io/ingress.class: nginx
 spec:
   rules:
-    - host: thanos-query-grpc.harvestasya.org
-      http:
-        paths:
-          - path: /
-            pathType: ImplementationSpecific
-            backend:
-              service:
-                name: thanos-query-grpc
-                port:
-                  number: 10901
+  - host: thanos-query-grpc.harvestasya.org
+    http:
+      paths:
+      - path: /
+        pathType: ImplementationSpecific
+        backend:
+          service:
+            name: thanos-query-grpc
+            port:
+              number: 10901

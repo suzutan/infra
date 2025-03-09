@@ -277,15 +277,15 @@ providers:
     watch: true
     # -- File content (YAML format, go template supported) (see https://doc.traefik.io/traefik/providers/file/)
     content: ""
-      # http:
-      #   routers:
-      #     router0:
-      #       entryPoints:
-      #       - web
-      #       middlewares:
-      #       - my-basic-auth
-      #       service: service-foo
-      #       rule: Path(`/foo`)
+    # http:
+    #   routers:
+    #     router0:
+    #       entryPoints:
+    #       - web
+    #       middlewares:
+    #       - my-basic-auth
+    #       service: service-foo
+    #       rule: Path(`/foo`)
 
 #
 # -- Add volumes to the traefik pod. The volume name will be passed to tpl.

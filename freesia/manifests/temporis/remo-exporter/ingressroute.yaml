@@ -5,8 +5,8 @@ metadata:
 
 spec:
   routes:
-    - kind: Rule
-      match: Host(`remo-exporter.harvestasya.org`)
-      services:
-        - name: remo-exporter
-          port: 80
+  - kind: Rule
+    match: Host(`remo-exporter.harvestasya.org`)
+    services:
+    - name: remo-exporter
+      port: 80

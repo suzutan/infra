@@ -5,7 +5,7 @@ metadata:
     app.kubernetes.io/name: grafana
   name: grafana
 rules:
-  - apiGroups:
-      - ""
-    resources: ["configmaps", "secrets"]
-    verbs: ["get", "watch", "list"]
+- apiGroups:
+  - ""
+  resources: ["configmaps", "secrets"]
+  verbs: ["get", "watch", "list"]
