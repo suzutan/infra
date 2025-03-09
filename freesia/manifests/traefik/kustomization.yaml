@@ -4,29 +4,29 @@ kind: Kustomization
 namespace: traefik
 
 resources:
-  - namespace.yaml
-  - config/middlewares/auto-detect-content-type.yaml
-  - config/middlewares/ban-robots.yaml
-  - config/middlewares/circuit-breaker.yaml
-  - config/middlewares/compress.yaml
-  - config/middlewares/security-headers.yaml
-  - config/routes/dashboard.yaml
-  - config/tls/cert-harvestasya-org-wildcard.yaml
-  - config/tls/cert-suzutan-jp-wildcard.yaml
-  - config/tls/tlsoption-default.yaml
-  - config/tls/tlsstore.yaml
+- namespace.yaml
+- config/middlewares/auto-detect-content-type.yaml
+- config/middlewares/ban-robots.yaml
+- config/middlewares/circuit-breaker.yaml
+- config/middlewares/compress.yaml
+- config/middlewares/security-headers.yaml
+- config/routes/dashboard.yaml
+- config/tls/cert-harvestasya-org-wildcard.yaml
+- config/tls/cert-suzutan-jp-wildcard.yaml
+- config/tls/tlsoption-default.yaml
+- config/tls/tlsstore.yaml
 
 configMapGenerator:
-  - name: traefik-env
-    literals:
-      - TZ=Asia/Tokyo
+- name: traefik-env
+  literals:
+  - TZ=Asia/Tokyo
 
 helmCharts:
-  # https://doc.traefik.io/traefik/getting-started/install-traefik/#use-the-helm-chart
-  - name: traefik
-    releaseName: traefik
-    namespace: traefik
-    version: 34.4.0
-    repo: https://traefik.github.io/charts
-    includeCRDs: true
-    valuesFile: values.yaml
+# https://doc.traefik.io/traefik/getting-started/install-traefik/#use-the-helm-chart
+- name: traefik
+  releaseName: traefik
+  namespace: traefik
+  version: 34.4.1
+  repo: https://traefik.github.io/charts
+  includeCRDs: true
+  valuesFile: values.yaml

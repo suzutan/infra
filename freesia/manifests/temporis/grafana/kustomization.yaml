@@ -4,42 +4,42 @@ kind: Kustomization
 namespace: temporis
 
 resources:
-  - cr.yaml
-  - crb.yaml
-  - deployment.yaml
-  - ingressroute.yaml
-  - pvc.yaml
-  - role.yaml
-  - rolebinding.yaml
-  - secret-grafana.yaml
-  - service.yaml
-  - serviceaccount.yaml
+- cr.yaml
+- crb.yaml
+- deployment.yaml
+- ingressroute.yaml
+- pvc.yaml
+- role.yaml
+- rolebinding.yaml
+- secret-grafana.yaml
+- service.yaml
+- serviceaccount.yaml
 
 configMapGenerator:
-  - name: grafana
-    files:
-      - config/grafana.ini
-  - name: grafana-dashboards-1
-    files:
-      - dashboards/node-exporter.json
-      - dashboards/remo-exporter.json
-      - dashboards/proxmox-flux.json
-  - name: grafana-dashboard-provider
-    files:
-      - config/dashboard-provider.yaml
-  - name: grafana-datasource
-    files:
-      - config/datasource.yaml
+- name: grafana
+  files:
+  - config/grafana.ini
+- name: grafana-dashboards-1
+  files:
+  - dashboards/node-exporter.json
+  - dashboards/remo-exporter.json
+  - dashboards/proxmox-flux.json
+- name: grafana-dashboard-provider
+  files:
+  - config/dashboard-provider.yaml
+- name: grafana-datasource
+  files:
+  - config/datasource.yaml
 
 images:
-  - name: docker.io/grafana/grafana
-    newTag: 11.5.2
+- name: docker.io/grafana/grafana
+  newTag: 11.5.2
 
 labels:
-  - pairs:
-      app.kubernetes.io/name: grafana
-    includeSelectors: true
-  - pairs:
-      app.kubernetes.io/component: grafana
-      app.kubernetes.io/part-of: temporis
-    includeSelectors: false
+- pairs:
+    app.kubernetes.io/name: grafana
+  includeSelectors: true
+- pairs:
+    app.kubernetes.io/component: grafana
+    app.kubernetes.io/part-of: temporis
+  includeSelectors: false

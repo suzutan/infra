@@ -17,38 +17,38 @@ spec:
         app.kubernetes.io/name: thanos-store
     spec:
       containers:
-        - name: thanos-store
-          image: "quay.io/thanos/thanos:REPLACE_HERE"
-          imagePullPolicy: IfNotPresent
-          args:
-            - store
-            - --data-dir=/var/thanos/store
-            - --objstore.config-file=/etc/config/object-store.yaml
-            - --http-address=0.0.0.0:10902
-            - --grpc-address=0.0.0.0:10901
-            - --index-cache-size=4GB
-            - --chunk-pool-size=4GB
-          ports:
-            - name: http
-              containerPort: 10902
-            - name: grpc
-              containerPort: 10901
-          volumeMounts:
-            - name: config-volume
-              mountPath: /etc/config
-              readOnly: true
-            - name: data-dir
-              mountPath: /var/thanos/store
-          resources:
-            requests:
-              cpu: 1000m
-              memory: 128Mi
-            limits:
-              cpu: 3000m
-              memory: 4Gi
-      volumes:
-        - name: data-dir
-          emptyDir: {}
+      - name: thanos-store
+        image: "quay.io/thanos/thanos:REPLACE_HERE"
+        imagePullPolicy: IfNotPresent
+        args:
+        - store
+        - --data-dir=/var/thanos/store
+        - --objstore.config-file=/etc/config/object-store.yaml
+        - --http-address=0.0.0.0:10902
+        - --grpc-address=0.0.0.0:10901
+        - --index-cache-size=4GB
+        - --chunk-pool-size=4GB
+        ports:
+        - name: http
+          containerPort: 10902
+        - name: grpc
+          containerPort: 10901
+        volumeMounts:
         - name: config-volume
-          secret:
-            secretName: "thanos-bucket-config"
+          mountPath: /etc/config
+          readOnly: true
+        - name: data-dir
+          mountPath: /var/thanos/store
+        resources:
+          requests:
+            cpu: 1000m
+            memory: 128Mi
+          limits:
+            cpu: 3000m
+            memory: 4Gi
+      volumes:
+      - name: data-dir
+        emptyDir: {}
+      - name: config-volume
+        secret:
+          secretName: "thanos-bucket-config"

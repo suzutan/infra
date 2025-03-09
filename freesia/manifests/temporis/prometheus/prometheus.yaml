@@ -28,142 +28,142 @@ spec:
         seccompProfile:
           type: RuntimeDefault
       containers:
-        - name: prometheus
-          image: quay.io/prometheus/prometheus:REPLACE_HERE
-          args:
-            - --config.file=/etc/prometheus/prometheus.yaml
-            - --web.enable-lifecycle
-            - --web.route-prefix=/
-            - --storage.tsdb.retention.time=1d
-            - --storage.tsdb.path=/prometheus
-            - --web.enable-admin-api
-            - --storage.tsdb.wal-compression
-            - --storage.tsdb.max-block-duration=2h
-            - --storage.tsdb.min-block-duration=2h
-          livenessProbe:
-            failureThreshold: 6
-            httpGet:
-              path: /-/healthy
-              port: http-web
-              scheme: HTTP
-            periodSeconds: 5
-            successThreshold: 1
-            timeoutSeconds: 3
-          ports:
-            - containerPort: 9090
-              name: http-web
-              protocol: TCP
-          readinessProbe:
-            failureThreshold: 3
-            httpGet:
-              path: /-/ready
-              port: http-web
-              scheme: HTTP
-            periodSeconds: 5
-            successThreshold: 1
-            timeoutSeconds: 3
-          resources: {}
-        
-          startupProbe:
-            failureThreshold: 60
-            httpGet:
-              path: /-/ready
-              port: http-web
-              scheme: HTTP
-            periodSeconds: 15
-            successThreshold: 1
-            timeoutSeconds: 3
-          volumeMounts:
-            - mountPath: /etc/prometheus
-              name: prometheus-config
-              readOnly: true
-            - mountPath: /prometheus
-              name: prometheus-data
-              subPath: prometheus-db
-        - name: thanos-sidecar
-          image: quay.io/thanos/thanos:REPLACE_HERE
-          imagePullPolicy: IfNotPresent
-          args:
-            - sidecar
-            - --prometheus.url=http://127.0.0.1:9090/
-            - '--prometheus.http-client={"tls_config": {"insecure_skip_verify":true}}'
-            - --grpc-address=:10901
-            - --http-address=:10902
-            - --objstore.config=$(OBJSTORE_CONFIG)
-            - --tsdb.path=/prometheus
-            - --log.level=info
-            - --log.format=logfmt
-          env:
-            - name: OBJSTORE_CONFIG
-              valueFrom:
-                secretKeyRef:
-                  key: object-store.yaml
-                  name: thanos-bucket-config
-          ports:
-            - containerPort: 10902
-              name: http
-              protocol: TCP
-            - containerPort: 10901
-              name: grpc
-              protocol: TCP
-          resources: {}
-          securityContext:
-            allowPrivilegeEscalation: false
-            capabilities:
-              drop:
-                - ALL
-            readOnlyRootFilesystem: true
-          volumeMounts:
-            - mountPath: /prometheus
-              name: prometheus-data
-              subPath: prometheus-db
+      - name: prometheus
+        image: quay.io/prometheus/prometheus:REPLACE_HERE
+        args:
+        - --config.file=/etc/prometheus/prometheus.yaml
+        - --web.enable-lifecycle
+        - --web.route-prefix=/
+        - --storage.tsdb.retention.time=1d
+        - --storage.tsdb.path=/prometheus
+        - --web.enable-admin-api
+        - --storage.tsdb.wal-compression
+        - --storage.tsdb.max-block-duration=2h
+        - --storage.tsdb.min-block-duration=2h
+        livenessProbe:
+          failureThreshold: 6
+          httpGet:
+            path: /-/healthy
+            port: http-web
+            scheme: HTTP
+          periodSeconds: 5
+          successThreshold: 1
+          timeoutSeconds: 3
+        ports:
+        - containerPort: 9090
+          name: http-web
+          protocol: TCP
+        readinessProbe:
+          failureThreshold: 3
+          httpGet:
+            path: /-/ready
+            port: http-web
+            scheme: HTTP
+          periodSeconds: 5
+          successThreshold: 1
+          timeoutSeconds: 3
+        resources: {}
 
-        # - name: oauth2-proxy
-        #   image: quay.io/oauth2-proxy/oauth2-proxy:REPLACE_HERE
-        #   args:
-        #     - --cookie-secure=true
-        #     - --cookie-refresh=12h
-        #     - --email-domain=harvestasya.org
-        #     - --skip-provider-button=true
-        #     - --http-address=0.0.0.0:4180
-        #     - --provider=google
-        #     - --reverse-proxy=true
-        #     - --upstream=http://localhost:9090
-        #   env:
-        #     - name: OAUTH2_PROXY_CLIENT_ID
-        #       valueFrom:
-        #         secretKeyRef:
-        #           key: client-id
-        #           name: telemetry-google-oauth2-client
-        #     - name: OAUTH2_PROXY_CLIENT_SECRET
-        #       valueFrom:
-        #         secretKeyRef:
-        #           key: client-secret
-        #           name: telemetry-google-oauth2-client
-        #     - name: OAUTH2_PROXY_COOKIE_SECRET
-        #       valueFrom:
-        #         secretKeyRef:
-        #           key: cookie-secret
-        #           name: oauth2-proxy-secret
-        #   ports:
-        #     - containerPort: 4180
-        #       name: oauth2-proxy
-        #       protocol: TCP
+        startupProbe:
+          failureThreshold: 60
+          httpGet:
+            path: /-/ready
+            port: http-web
+            scheme: HTTP
+          periodSeconds: 15
+          successThreshold: 1
+          timeoutSeconds: 3
+        volumeMounts:
+        - mountPath: /etc/prometheus
+          name: prometheus-config
+          readOnly: true
+        - mountPath: /prometheus
+          name: prometheus-data
+          subPath: prometheus-db
+      - name: thanos-sidecar
+        image: quay.io/thanos/thanos:REPLACE_HERE
+        imagePullPolicy: IfNotPresent
+        args:
+        - sidecar
+        - --prometheus.url=http://127.0.0.1:9090/
+        - '--prometheus.http-client={"tls_config": {"insecure_skip_verify":true}}'
+        - --grpc-address=:10901
+        - --http-address=:10902
+        - --objstore.config=$(OBJSTORE_CONFIG)
+        - --tsdb.path=/prometheus
+        - --log.level=info
+        - --log.format=logfmt
+        env:
+        - name: OBJSTORE_CONFIG
+          valueFrom:
+            secretKeyRef:
+              key: object-store.yaml
+              name: thanos-bucket-config
+        ports:
+        - containerPort: 10902
+          name: http
+          protocol: TCP
+        - containerPort: 10901
+          name: grpc
+          protocol: TCP
+        resources: {}
+        securityContext:
+          allowPrivilegeEscalation: false
+          capabilities:
+            drop:
+            - ALL
+          readOnlyRootFilesystem: true
+        volumeMounts:
+        - mountPath: /prometheus
+          name: prometheus-data
+          subPath: prometheus-db
+
+      # - name: oauth2-proxy
+      #   image: quay.io/oauth2-proxy/oauth2-proxy:REPLACE_HERE
+      #   args:
+      #     - --cookie-secure=true
+      #     - --cookie-refresh=12h
+      #     - --email-domain=harvestasya.org
+      #     - --skip-provider-button=true
+      #     - --http-address=0.0.0.0:4180
+      #     - --provider=google
+      #     - --reverse-proxy=true
+      #     - --upstream=http://localhost:9090
+      #   env:
+      #     - name: OAUTH2_PROXY_CLIENT_ID
+      #       valueFrom:
+      #         secretKeyRef:
+      #           key: client-id
+      #           name: telemetry-google-oauth2-client
+      #     - name: OAUTH2_PROXY_CLIENT_SECRET
+      #       valueFrom:
+      #         secretKeyRef:
+      #           key: client-secret
+      #           name: telemetry-google-oauth2-client
+      #     - name: OAUTH2_PROXY_COOKIE_SECRET
+      #       valueFrom:
+      #         secretKeyRef:
+      #           key: cookie-secret
+      #           name: oauth2-proxy-secret
+      #   ports:
+      #     - containerPort: 4180
+      #       name: oauth2-proxy
+      #       protocol: TCP
       dnsPolicy: ClusterFirst
       volumes:
-        - name: prometheus-config
-          configMap:
-            name: prometheus-config
+      - name: prometheus-config
+        configMap:
+          name: prometheus-config
 
   volumeClaimTemplates:
-    - apiVersion: v1
-      kind: PersistentVolumeClaim
-      metadata:
-        name: prometheus-data
-      spec:
-        storageClassName: nfs-client
-        accessModes:
-          - ReadWriteOnce
-        resources:
-          requests:
-            storage: 50Gi
+  - apiVersion: v1
+    kind: PersistentVolumeClaim
+    metadata:
+      name: prometheus-data
+    spec:
+      storageClassName: nfs-client
+      accessModes:
+      - ReadWriteOnce
+      resources:
+        requests:
+          storage: 50Gi

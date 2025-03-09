@@ -9,6 +9,6 @@ roleRef:
   name: grafana
   apiGroup: rbac.authorization.k8s.io
 subjects:
-  - kind: ServiceAccount
-    name: grafana
-    namespace: temporis
+- kind: ServiceAccount
+  name: grafana
+  namespace: temporis

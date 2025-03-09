@@ -6,9 +6,9 @@ metadata:
     app.kubernetes.io/name: thanos-compact
 spec:
   ports:
-    - port: 10902
-      protocol: TCP
-      targetPort: http
-      name: http
+  - port: 10902
+    protocol: TCP
+    targetPort: http
+    name: http
   selector:
     app.kubernetes.io/name: thanos-compact

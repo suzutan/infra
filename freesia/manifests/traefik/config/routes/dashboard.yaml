@@ -5,21 +5,21 @@ metadata:
 
 spec:
   routes:
-    - kind: Rule
-      match: Host(`traefik.harvestasya.org`)
-      priority: 10
-      services:
-        - name: api@internal
-          kind: TraefikService
-      middlewares:
-        - name: auto-detect-content-type
-        - name: authentik-forward-auth
-          namespace: authentik
+  - kind: Rule
+    match: Host(`traefik.harvestasya.org`)
+    priority: 10
+    services:
+    - name: api@internal
+      kind: TraefikService
+    middlewares:
+    - name: auto-detect-content-type
+    - name: authentik-forward-auth
+      namespace: authentik
 
-    - kind: Rule
-      match: Host(`traefik.harvestasya.org`) && PathPrefix(`/outpost.goauthentik.io/`)
-      priority: 15
-      services:
-        - name: authentik-server
-          namespace: authentik
-          port: http
+  - kind: Rule
+    match: Host(`traefik.harvestasya.org`) && PathPrefix(`/outpost.goauthentik.io/`)
+    priority: 15
+    services:
+    - name: authentik-server
+      namespace: authentik
+      port: http

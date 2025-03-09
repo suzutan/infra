@@ -8,9 +8,9 @@ metadata:
 spec:
   type: ClusterIP
   ports:
-    - port: 10902
-      targetPort: http
-      protocol: TCP
-      name: http
+  - port: 10902
+    targetPort: http
+    protocol: TCP
+    name: http
   selector:
     app.kubernetes.io/name: thanos-store

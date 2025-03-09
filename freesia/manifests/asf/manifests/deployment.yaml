@@ -15,18 +15,18 @@ spec:
     spec:
       restartPolicy: Always
       containers:
-        - name: archisteamfarm
-          image: justarchi/archisteamfarm:5.4.4.5
-          env:
-            - name: TZ
-              value: Asia/Tokyo
-          ports:
-            - name: http
-              containerPort: 1242
-          volumeMounts:
-            - name: config
-              mountPath: /app/config
-      volumes:
+      - name: archisteamfarm
+        image: justarchi/archisteamfarm:5.4.4.5
+        env:
+        - name: TZ
+          value: Asia/Tokyo
+        ports:
+        - name: http
+          containerPort: 1242
+        volumeMounts:
         - name: config
-          persistentVolumeClaim:
-            claimName: archisteamfarm-config
+          mountPath: /app/config
+      volumes:
+      - name: config
+        persistentVolumeClaim:
+          claimName: archisteamfarm-config

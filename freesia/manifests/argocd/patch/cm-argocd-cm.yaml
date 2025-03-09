@@ -17,7 +17,7 @@ data:
   url: https://argocd.harvestasya.org
 
   users.anonymous.enabled: "false"
-  oidc.config: |
+  oidc.config: |-
     # https://argo-cd.readthedocs.io/en/stable/operator-manual/user-management/#existing-oidc-provider
     name: Authentik
     issuer: https://id.harvestasya.org/application/o/argocd/

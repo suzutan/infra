@@ -9,9 +9,9 @@ metadata:
 spec:
   type: ClusterIP
   ports:
-    - port: 9100
-      targetPort: 9100
-      protocol: TCP
-      name: http-metrics
+  - port: 9100
+    targetPort: 9100
+    protocol: TCP
+    name: http-metrics
   selector:
     app.kubernetes.io/name: node-exporter

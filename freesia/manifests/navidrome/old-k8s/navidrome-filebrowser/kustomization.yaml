@@ -4,11 +4,11 @@ kind: Kustomization
 namespace: navidrome
 
 resources:
-  - deployment.yaml
-  - ingressroute.yaml
-  - service.yaml
+- deployment.yaml
+- ingressroute.yaml
+- service.yaml
 
 configMapGenerator:
-  - name: filebrowser-config
-    files:
-      - config/settings.json
+- name: filebrowser-config
+  files:
+  - config/settings.json

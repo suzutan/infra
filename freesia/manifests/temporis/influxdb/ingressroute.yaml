@@ -5,8 +5,8 @@ metadata:
 
 spec:
   routes:
-    - kind: Rule
-      match: Host(`influxdb2.harvestasya.org`)
-      services:
-        - name: influxdb2
-          port: 80
+  - kind: Rule
+    match: Host(`influxdb2.harvestasya.org`)
+    services:
+    - name: influxdb2
+      port: 80

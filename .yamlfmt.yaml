@@ -1,0 +1,7 @@
+formatter:
+  type: basic
+  retain_line_breaks: true
+  indentless_arrays: true
+  trim_trailing_whitespace: true
+  eof_newline: true
+gitignore_excludes: true

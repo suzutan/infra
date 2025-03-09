@@ -4,42 +4,42 @@ kind: Kustomization
 namespace: authentik
 
 resources:
-  - ingressroute.yaml
-  - middleware-authentik-forward-auth.yaml
-  - namespace.yaml
-  - secret-authentik.yaml
-  - secret-authentik-redis.yaml
-  - secret-authentik-postgresql.yaml
+- ingressroute.yaml
+- middleware-authentik-forward-auth.yaml
+- namespace.yaml
+- secret-authentik.yaml
+- secret-authentik-redis.yaml
+- secret-authentik-postgresql.yaml
 
 helmCharts:
-  # https://artifacthub.io/packages/helm/goauthentik/authentik
-  - name: authentik
-    releaseName: authentik
-    namespace: authentik
-    version: 2025.2.0
-    repo: https://charts.goauthentik.io
-    valuesFile: values.yaml
+# https://artifacthub.io/packages/helm/goauthentik/authentik
+- name: authentik
+  releaseName: authentik
+  namespace: authentik
+  version: 2025.2.1
+  repo: https://charts.goauthentik.io
+  valuesFile: values.yaml
 
 patches:
-  # デフォルトで生成されるsecret/authentikを削除し、onepassworditem/authentik-customをかならず使う
-  - target:
-      kind: Secret
-    patch: |
-      $patch: delete
-      kind: Secret
-      metadata:
-        name: authentik
-  - target:
-      version: v1
-      kind: Deployment
-      name: authentik-server
-    patch: |-
-      - path: /spec/template/spec/containers/0/envFrom/0
-        op: remove
-  - target:
-      version: v1
-      kind: Deployment
-      name: authentik-worker
-    patch: |-
-      - path: /spec/template/spec/containers/0/envFrom/0
-        op: remove
+# デフォルトで生成されるsecret/authentikを削除し、onepassworditem/authentik-customをかならず使う
+- target:
+    kind: Secret
+  patch: |
+    $patch: delete
+    kind: Secret
+    metadata:
+      name: authentik
+- target:
+    version: v1
+    kind: Deployment
+    name: authentik-server
+  patch: |-
+    - path: /spec/template/spec/containers/0/envFrom/0
+      op: remove
+- target:
+    version: v1
+    kind: Deployment
+    name: authentik-worker
+  patch: |-
+    - path: /spec/template/spec/containers/0/envFrom/0
+      op: remove

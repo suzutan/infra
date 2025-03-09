@@ -4,10 +4,10 @@ metadata:
   name: echoserver
 spec:
   ports:
-    - name: http
-      port: 8080
-      protocol: TCP
-      targetPort: 8080
+  - name: http
+    port: 8080
+    protocol: TCP
+    targetPort: 8080
   selector:
     app: echoserver
   type: ClusterIP

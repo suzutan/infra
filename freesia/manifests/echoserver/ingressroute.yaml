@@ -5,10 +5,10 @@ metadata:
 
 spec:
   routes:
-    - kind: Rule
-      match: Host(`echoserver.harvestasya.org`)
-      priority: 10
-      services:
-        - name: echoserver
-          port: http
-      middlewares:
+  - kind: Rule
+    match: Host(`echoserver.harvestasya.org`)
+    priority: 10
+    services:
+    - name: echoserver
+      port: http
+    middlewares:

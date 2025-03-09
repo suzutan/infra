@@ -15,38 +15,38 @@ spec:
         app.kubernetes.io/name: thanos-query
     spec:
       containers:
-        - name: thanos-query
-          image: "quay.io/thanos/thanos:REPLACE_HERE"
-          imagePullPolicy: IfNotPresent
-          args:
-            - query
-            - --grpc-address=0.0.0.0:10901
-            - --http-address=0.0.0.0:10902
-            - --query.replica-label=receive_replica
-            - --query.replica-label=rule_replica
-            - --query.replica-label=sidecar_replica
-            - --query.replica-label=tenant_id
-            - --store=dnssrv+_grpc._tcp.thanos-store-grpc.temporis.svc.cluster.local
-            - --store=dnssrv+_grpc._tcp.prometheus-thanos-sidecar.temporis.svc.cluster.local
-          ports:
-            - name: http
-              containerPort: 10902
-            - name: grpc
-              containerPort: 10901
-          resources:
-            requests:
-              cpu: 1000m
-              memory: 128Mi
-            limits:
-              cpu: 3000m
-              memory: 1Gi
-          volumeMounts: []
-          livenessProbe:
-            httpGet:
-              path: /-/healthy
-              port: http
-          readinessProbe:
-            httpGet:
-              path: /-/ready
-              port: http
+      - name: thanos-query
+        image: "quay.io/thanos/thanos:REPLACE_HERE"
+        imagePullPolicy: IfNotPresent
+        args:
+        - query
+        - --grpc-address=0.0.0.0:10901
+        - --http-address=0.0.0.0:10902
+        - --query.replica-label=receive_replica
+        - --query.replica-label=rule_replica
+        - --query.replica-label=sidecar_replica
+        - --query.replica-label=tenant_id
+        - --store=dnssrv+_grpc._tcp.thanos-store-grpc.temporis.svc.cluster.local
+        - --store=dnssrv+_grpc._tcp.prometheus-thanos-sidecar.temporis.svc.cluster.local
+        ports:
+        - name: http
+          containerPort: 10902
+        - name: grpc
+          containerPort: 10901
+        resources:
+          requests:
+            cpu: 1000m
+            memory: 128Mi
+          limits:
+            cpu: 3000m
+            memory: 1Gi
+        volumeMounts: []
+        livenessProbe:
+          httpGet:
+            path: /-/healthy
+            port: http
+        readinessProbe:
+          httpGet:
+            path: /-/ready
+            port: http
       volumes: []

@@ -2,16 +2,16 @@ name: "terraform plan"
 
 permissions:
   id-token: write # This is required for requesting the JWT
-  contents: read  # This is required for actions/checkout
+  contents: read # This is required for actions/checkout
   pull-requests: write
 
 on:
   pull_request:
     branches:
-      - main
-      - master
+    - main
+    - master
     paths:
-      - terraform/**
+    - terraform/**
 jobs:
   terraform_plan:
     name: "Terraform Plan"
@@ -19,8 +19,8 @@ jobs:
     strategy:
       matrix:
         directory:
-          - terraform/harvestasya.org
-          - terraform/suzutan.jp
+        - terraform/harvestasya.org
+        - terraform/suzutan.jp
     env:
       TF_VAR_cloudflare_account_id: ${{ secrets.TF_VAR_CLOUDFLARE_ACCOUNT_ID }}
       TF_VAR_cloudflare_api_token: ${{ secrets.TF_VAR_CLOUDFLARE_API_TOKEN }}
@@ -31,17 +31,17 @@ jobs:
       TF_VAR_github_client_secret: ${{ secrets.TF_VAR_GITHUB_CLIENT_SECRET }}
       GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
     steps:
-      - uses: actions/checkout@v4
+    - uses: actions/checkout@v4
 
-      - name: configure aws credentials
-        uses: aws-actions/configure-aws-credentials@v4
-        with:
-          role-to-assume: arn:aws:iam::${{ secrets.AWS_ACCOUNT_ID }}:role/TerraformBackendAccessForGitHubActions
-          aws-region: ap-northeast-3
+    - name: configure aws credentials
+      uses: aws-actions/configure-aws-credentials@v4
+      with:
+        role-to-assume: arn:aws:iam::${{ secrets.AWS_ACCOUNT_ID }}:role/TerraformBackendAccessForGitHubActions
+        aws-region: ap-northeast-3
 
-      - name: Terraform Plan
-        id: plan
-        uses: dflook/terraform-plan@v1
-        with:
-          path: ${{ matrix.directory }}
-          add_github_comment: true
+    - name: Terraform Plan
+      id: plan
+      uses: dflook/terraform-plan@v1
+      with:
+        path: ${{ matrix.directory }}
+        add_github_comment: true
