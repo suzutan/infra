@@ -21,7 +21,7 @@ resource "cloudflare_zero_trust_tunnel_cloudflared_config" "k8s_ingress" {
   account_id = var.cloudflare_account_id
   tunnel_id  = cloudflare_zero_trust_tunnel_cloudflared.k8s_ingress.id
   config = {
-    ingress = [for ingress_rule in local.k8s_ingress_rules : {
+    ingress = concat([for ingress_rule in local.k8s_ingress_rules : {
 
       hostname = ingress_rule
       service  = "https://traefik.traefik.svc.cluster.local"
@@ -30,10 +30,10 @@ resource "cloudflare_zero_trust_tunnel_cloudflared_config" "k8s_ingress" {
         http_host_header   = ingress_rule
         no_tls_verify      = true
       }
-    }]
-    ingress = [{
-      service = "http_status:404"
-    }]
+      }],
+      [{
+        service = "http_status:404"
+    }])
   }
 }
 

@@ -17,7 +17,7 @@ resource "cloudflare_zero_trust_tunnel_cloudflared_config" "metrics" {
   tunnel_id  = cloudflare_zero_trust_tunnel_cloudflared.metrics.id
 
   config = {
-    ingress = [for ingress_rule in local.metrics_rules : {
+    ingress = concat([for ingress_rule in local.metrics_rules : {
 
       hostname = ingress_rule
       service  = "https://traefik"
@@ -26,10 +26,10 @@ resource "cloudflare_zero_trust_tunnel_cloudflared_config" "metrics" {
         http_host_header   = ingress_rule
         no_tls_verify      = true
       }
-    }]
-    ingress = [{
-      service = "http_status:404"
-    }]
+      }],
+      [{
+        service = "http_status:404"
+    }])
   }
 }
 
