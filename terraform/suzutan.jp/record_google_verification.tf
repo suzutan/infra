@@ -7,9 +7,9 @@ locals {
   ]
 }
 
-resource "cloudflare_record" "google_site_verification" {
+resource "cloudflare_dns_record" "google_site_verification" {
   for_each = toset(local.google_site_verifications)
-  zone_id  = data.cloudflare_zone.domain.id
+  zone_id  = local.zone_id
   name     = "suzutan.jp"
   type     = "TXT"
   ttl      = "1"

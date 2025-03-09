@@ -1,7 +1,7 @@
 
 
-resource "cloudflare_record" "bluesky_site_verification" {
-  zone_id = data.cloudflare_zone.domain.id
+resource "cloudflare_dns_record" "bluesky_site_verification" {
+  zone_id = local.zone_id
   name    = "_atproto"
   type    = "TXT"
   ttl     = "1"
