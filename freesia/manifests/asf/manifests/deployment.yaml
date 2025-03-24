@@ -16,7 +16,7 @@ spec:
       restartPolicy: Always
       containers:
       - name: archisteamfarm
-        image: justarchi/archisteamfarm:5.4.4.5
+        image: justarchi/archisteamfarm:REPLACE_HERE
         env:
         - name: TZ
           value: Asia/Tokyo
