@@ -5,5 +5,5 @@ packages:
 - name: kubernetes-sigs/kustomize@kustomize/v5.6.0
 - name: kubernetes/kubectl
   version: "v1.23.0"
-- name: helm/helm@v3.17.2
+- name: helm/helm@v3.17.3
 - name: hashicorp/terraform@v1.11.3
