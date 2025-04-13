@@ -10,3 +10,7 @@ resources:
 
 commonLabels:
   app: asf
+
+images:
+- name: justarchi/archisteamfarm
+  newTag: 6.1.4.3
