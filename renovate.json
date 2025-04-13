@@ -12,21 +12,36 @@
   "automerge": true,
   "branchConcurrentLimit": 0,
   "argocd": {
-    "fileMatch": ["\\.yaml$"]
+    "fileMatch": [
+      "\\.yaml$"
+    ]
   },
-  "regexManagers":[
+  "customManagers": [
     {
-      "fileMatch": ["kustomization\\.ya?ml$"],
-      "matchStrings": ["https://github.com/(?<depName>.*\/.*?)/releases/download/(?<currentValue>.*?)/"],
+      "customType": "regex",
+      "fileMatch": [
+        "kustomization\\.ya?ml$"
+      ],
+      "matchStrings": [
+        "https://github.com/(?<depName>.*/.*?)/releases/download/(?<currentValue>.*?)/"
+      ],
       "datasourceTemplate": "github-releases"
     },
     {
-      "fileMatch": ["kustomization\\.ya?ml$"],
-      "matchStrings": ["https://raw.githubusercontent.com/(?<depName>[^\/]*\/[^\/]*)/(?<currentValue>.*?)/"],
+      "customType": "regex",
+      "fileMatch": [
+        "kustomization\\.ya?ml$"
+      ],
+      "matchStrings": [
+        "https://raw.githubusercontent.com/(?<depName>[^/]*/[^/]*)/(?<currentValue>.*?)/"
+      ],
       "datasourceTemplate": "github-tags"
     },
     {
-      "fileMatch": ["kustomization\\.ya?ml$"],
+      "customType": "regex",
+      "fileMatch": [
+        "kustomization\\.ya?ml$"
+      ],
       "matchStrings": [
         "https://download.elastic.co/downloads/eck/(?<currentValue>.*?)/.*"
       ],
