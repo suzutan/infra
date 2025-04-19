@@ -3,6 +3,14 @@
 ## single node でインストールする
 
 ```bash
+
+(
+  # /etc/resolv.conf をsystemd-resolvedの出力ではなくstaticな固定値を使う
+rm -f /etc/resolv.conf
+echo "nameserver 172.20.0.200" > /etc/resolv.conf
+)
+
+
 (
 for pkg in docker.io docker-doc docker-compose docker-compose-v2 podman-docker containerd runc; do apt-get -y remove $pkg; done
 
@@ -28,7 +36,21 @@ containerd config default | sudo tee /etc/containerd/config.toml
 
 sed -i 's/SystemdCgroup \= false/SystemdCgroup \= true/g' /etc/containerd/config.toml
 systemctl restart containerd
+
+cat <<EOF > /etc/modules-load.d/crio.conf
+overlay
+br_netfilter
+EOF
+
+# カーネルパラメータの設定
+cat <<EOF > /etc/sysctl.d/k8s.conf
+net.bridge.bridge-nf-call-ip6tables = 1
+net.bridge.bridge-nf-call-iptables = 1
+net.ipv4.ip_forward                 = 1
+EOF
+
 )
+
 
 
 (
