@@ -33,5 +33,6 @@ systemctl restart containerd
 
 (
 kubeadm init --pod-network-cidr=10.244.0.0/16
+kubectl taint nodes --all node-role.kubernetes.io/control-plane-
 )
 ```
