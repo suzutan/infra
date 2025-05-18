@@ -8,6 +8,8 @@ locals {
     "navidrome.harvestasya.org",
     "navidrome-filebrowser.harvestasya.org",
     "influxdb2.harvestasya.org",
+    "grafana.harvestasya.org",
+    "prometheus.harvestasya.org",
   ]
 }
 
