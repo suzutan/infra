@@ -3,5 +3,5 @@ kind: StorageClass
 metadata:
   name: local-path
 parameters:
-  pathPattern: "{{ .PVC.Namespace }}_{{ .PVC.Name }}" # PV nameをあえて使わず同じpathを再利用できるようにする https://github.com/rancher/local-path-provisioner?tab=readme-ov-file#storage-classes
+  pathPattern: "{{ .PVC.Namespace }}/{{ .PVC.Name }}" # PV nameをあえて使わず同じpathを再利用できるようにする https://github.com/rancher/local-path-provisioner?tab=readme-ov-file#storage-classes
 reclaimPolicy: Retain
