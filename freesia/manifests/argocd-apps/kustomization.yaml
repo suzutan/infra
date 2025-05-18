@@ -10,8 +10,8 @@ resources:
 - cloudflared.yaml
 - ddns.yaml
 - echoserver.yaml
+- local-path-storage.yaml
 - navidrome.yaml
-- nfs-subdir-external-provisioner.yaml
 - onepassword-operator.yaml
 - temporis.yaml
 - traefik.yaml
