@@ -2,7 +2,26 @@ image:
   registry: public.ecr.aws/docker/library
 
 deployment:
-  replicas: 3
+  replicas: 1
+  dnsPolicy: ClusterFirstWithHostNet
+
+# type:LoadBalancerを使わずにingressを解放するためhostNetworkをtrueにする
+hostNetwork: true
+# hostNetwork:true で80,443がPermission Deniedな状態になるのを対応するためにsecurityContextを定義する
+# https://stackoverflow.com/questions/66138370/permission-problem-w-helm3-installation-of-traefik-on-port-80-hostnetwork
+securityContext:
+  capabilities:
+    drop: [ALL]
+    add: [NET_BIND_SERVICE]
+  readOnlyRootFilesystem: true
+  runAsGroup: 0
+  runAsNonRoot: false
+  runAsUser: 0
+updateStrategy:
+  type: RollingUpdate
+  rollingUpdate:
+    maxUnavailable: 1 # hostNetworkでportを解放しないといけないのでダウンを許容する
+    maxSurge: 1
 
 envFrom:
 - configMapRef:
@@ -29,9 +48,7 @@ providers:
     enabled: false
 
 service:
-  ipFamilyPolicy: PreferDualStack
-  externalIPs:
-  - 172.20.0.221
+  type: ClusterIP
 
 globalArguments: []
 
@@ -42,6 +59,7 @@ ingressRoute:
 ports:
   web: null
   websecure:
+    port: 443
     asDefault: true
     expose:
       default: true
@@ -61,6 +79,14 @@ ports:
         sans:
         - "*.harvestasya.org"
         - "*.suzutan.jp"
+  metrics:
+    # -- When using hostNetwork, use another port to avoid conflict with node exporter:
+    # https://github.com/prometheus/prometheus/wiki/Default-port-allocations
+    port: 9101
+
+
+
+
 # https://docs.traefik.io/observability/logs/
 logs:
   access:
