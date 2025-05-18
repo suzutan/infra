@@ -161,7 +161,7 @@ spec:
     metadata:
       name: prometheus-data
     spec:
-      storageClassName: nfs-client
+      storageClassName: local-path
       accessModes:
       - ReadWriteOnce
       resources:
