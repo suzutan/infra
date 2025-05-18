@@ -3,17 +3,14 @@ kind: Kustomization
 
 resources:
 - namespace.yaml
-# - grafana
+- grafana
 - influxdb
-# - kube-state-metrics
-# - node-exporter
-# - prometheus
+- kube-state-metrics
+- node-exporter
+- prometheus
 # - prometheus-exporter-kube-system
-# - remo-exporter
-# - thanos-bucket
-# - thanos-compact
-# - thanos-query
-# - thanos-store
+- remo-exporter
+
 
 labels:
 - pairs:

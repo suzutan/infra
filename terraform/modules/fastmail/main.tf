@@ -2,7 +2,7 @@
 
 resource "cloudflare_dns_record" "mx_0" {
   zone_id  = var.cloudflare_dns_zone_id
-  name     = var.subdomain
+  name     = var.subdomain == "@" ? var.domain : "${var.subdomain}.${var.domain}"
   type     = "MX"
   ttl      = "1"
   proxied  = "false"
@@ -11,7 +11,7 @@ resource "cloudflare_dns_record" "mx_0" {
 }
 resource "cloudflare_dns_record" "mx_1" {
   zone_id  = var.cloudflare_dns_zone_id
-  name     = var.subdomain
+  name     = var.subdomain == "@" ? var.domain : "${var.subdomain}.${var.domain}"
   type     = "MX"
   ttl      = "1"
   proxied  = "false"
@@ -21,7 +21,7 @@ resource "cloudflare_dns_record" "mx_1" {
 
 resource "cloudflare_dns_record" "spf" {
   zone_id = var.cloudflare_dns_zone_id
-  name    = var.subdomain
+  name    = var.subdomain == "@" ? var.domain : "${var.subdomain}.${var.domain}"
   type    = "TXT"
   ttl     = "1"
   proxied = "false"
@@ -30,7 +30,7 @@ resource "cloudflare_dns_record" "spf" {
 
 resource "cloudflare_dns_record" "dkim_1" {
   zone_id = var.cloudflare_dns_zone_id
-  name    = var.subdomain == "@" ? "fm1._domainkey" : "fm1._domainkey.${var.subdomain}"
+  name    = var.subdomain == "@" ? "fm1._domainkey.${var.domain}" : "fm1._domainkey.${var.subdomain}"
   type    = "CNAME"
   ttl     = "1"
   proxied = "false"
@@ -38,7 +38,7 @@ resource "cloudflare_dns_record" "dkim_1" {
 }
 resource "cloudflare_dns_record" "dkim_2" {
   zone_id = var.cloudflare_dns_zone_id
-  name    = var.subdomain == "@" ? "fm2._domainkey" : "fm2._domainkey.${var.subdomain}"
+  name    = var.subdomain == "@" ? "fm2._domainkey.${var.domain}" : "fm2._domainkey.${var.subdomain}"
   type    = "CNAME"
   ttl     = "1"
   proxied = "false"
@@ -46,7 +46,7 @@ resource "cloudflare_dns_record" "dkim_2" {
 }
 resource "cloudflare_dns_record" "dkim_3" {
   zone_id = var.cloudflare_dns_zone_id
-  name    = var.subdomain == "@" ? "fm3._domainkey" : "fm3._domainkey.${var.subdomain}"
+  name    = var.subdomain == "@" ? "fm3._domainkey.${var.domain}" : "fm3._domainkey.${var.subdomain}"
   type    = "CNAME"
   ttl     = "1"
   proxied = "false"

@@ -2,7 +2,7 @@ image:
   registry: public.ecr.aws/docker/library
 
 deployment:
-  replicas: 3
+  replicas: 2
 
 envFrom:
 - configMapRef:
@@ -29,9 +29,7 @@ providers:
     enabled: false
 
 service:
-  ipFamilyPolicy: PreferDualStack
-  externalIPs:
-  - 172.20.0.221
+  type: ClusterIP
 
 globalArguments: []
 
@@ -61,6 +59,7 @@ ports:
         sans:
         - "*.harvestasya.org"
         - "*.suzutan.jp"
+
 # https://docs.traefik.io/observability/logs/
 logs:
   access:

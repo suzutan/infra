@@ -8,9 +8,11 @@ vars:
 tasks:
   init-1:
     dir: init/
+    desc: "Initialize the cluster"
     cmds:
     - kustomize build --enable-helm . | kubectl apply -f-
   init-2:
     dir: manifests/argocd-apps
+    desc: "Initialize argocd-apps"
     cmds:
     - kustomize build --enable-helm  . | kubectl create -f-

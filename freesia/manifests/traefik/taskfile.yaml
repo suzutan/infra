@@ -14,3 +14,6 @@ tasks:
   default-values:
     cmds:
     - helm show values traefik/traefik > default-values.yaml
+  apply:
+    cmds:
+    - kustomize build --enable-helm . | kubectl apply -f-

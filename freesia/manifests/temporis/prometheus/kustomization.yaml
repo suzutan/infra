@@ -10,8 +10,7 @@ resources:
 - cr.yaml
 - crb.yaml
 - ingressroute.yaml
-- prometheus.yaml
-- service-thanos-sidecar.yaml
+- statefulset.yaml
 - service.yaml
 - serviceaccount.yaml
 

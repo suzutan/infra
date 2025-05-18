@@ -1,0 +1,6 @@
+
+resources:
+- https://raw.githubusercontent.com/rancher/local-path-provisioner/v0.0.31/deploy/local-path-storage.yaml
+patches:
+- path: patch-config.yaml
+- path: patch-storageclass.yaml

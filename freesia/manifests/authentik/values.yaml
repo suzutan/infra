@@ -26,13 +26,13 @@ authentik:
     password: dummy
 
 server:
-  replicas: 4
+  replicas: 2
   ingress:
     enabled: false
   deploymentAnnotations:
     operator.1password.io/auto-restart: "true"
 worker:
-  replicas: 4
+  replicas: 2
   deploymentAnnotations:
     operator.1password.io/auto-restart: "true"
 
@@ -46,7 +46,7 @@ postgresql:
       max_connections = 500
     persistence:
       enabled: true
-      storageClass: nfs-client
+      storageClass: local-path
       accessModes:
       - ReadWriteOnce
 
@@ -59,6 +59,6 @@ redis:
   master:
     persistence:
       enabled: true
-      storageClass: nfs-client
+      storageClass: local-path
       accessModes:
       - ReadWriteOnce
