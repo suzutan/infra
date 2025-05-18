@@ -54,46 +54,8 @@ EOF
 
 
 (
-# TODO: metallb用設定をkubeadm-configで事前に定義する
-# https://metallb.io/installation/
-cat << EOL > kubeadm-config.yaml
-apiVersion: kubeproxy.config.k8s.io/v1alpha1
-kind: KubeProxyConfiguration
-mode: "ipvs"
-ipvs:
-  strictARP: true
-EOL
-
-
 kubeadm upgrade --pod-network-cidr=10.244.0.0/16 --config kubeadm-config.yaml
 kubectl taint nodes --all node-role.kubernetes.io/control-plane-
-)
-
-# metallb config
-# https://metallb.io/installation/ に従って作業する
-(
-# see what changes would be made, returns nonzero returncode if different
-kubectl get configmap kube-proxy -n kube-system -o yaml | \
-sed -e "s/strictARP: false/strictARP: true/" | \
-kubectl diff -f - -n kube-system
-
-# actually apply the changes, returns nonzero returncode on errors only
-kubectl get configmap kube-proxy -n kube-system -o yaml | \
-sed -e "s/strictARP: false/strictARP: true/" | \
-kubectl apply -f - -n kube-system
-
-kubectl get configmap kube-proxy -n kube-system -o yaml | \
-sed -e "s/mode: \"\"/mode: \"ipvs\"/" | \
-kubectl diff -f - -n kube-system
-
-# actually apply the changes, returns nonzero returncode on errors only
-kubectl get configmap kube-proxy -n kube-system -o yaml | \
-sed -e "s/strictARP: false/strictARP: true/" | \
-kubectl apply -f - -n kube-system
-
-
-# kube-proxy再起動
-
 )
 
 ```
