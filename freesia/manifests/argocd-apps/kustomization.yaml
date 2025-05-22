@@ -10,6 +10,7 @@ resources:
 - cloudflared.yaml
 - ddns.yaml
 - echoserver.yaml
+- hsr-auto-claimer.yaml
 - local-path-storage.yaml
 - navidrome.yaml
 - onepassword-operator.yaml
