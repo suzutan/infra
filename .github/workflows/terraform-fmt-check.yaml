@@ -20,6 +20,6 @@ jobs:
     - name: Checkout
       uses: actions/checkout@v4
     - name: terraform fmt
-      uses: dflook/terraform-fmt-check@v1
+      uses: dflook/terraform-fmt-check@v2
       with:
         path: ${{ matrix.directory }}
