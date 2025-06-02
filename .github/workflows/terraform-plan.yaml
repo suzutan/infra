@@ -41,7 +41,7 @@ jobs:
 
     - name: Terraform Plan
       id: plan
-      uses: dflook/terraform-plan@v1
+      uses: dflook/terraform-plan@v2
       with:
         path: ${{ matrix.directory }}
         add_github_comment: true
