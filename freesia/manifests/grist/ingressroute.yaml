@@ -1,0 +1,13 @@
+apiVersion: traefik.io/v1alpha1
+kind: IngressRoute
+metadata:
+  name: grist
+spec:
+  routes:
+  - kind: Rule
+    match: Host(`grist.harvestasya.org`)
+    priority: 10
+    services:
+    - name: grist
+      port: http
+    middlewares:

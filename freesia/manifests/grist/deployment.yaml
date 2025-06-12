@@ -1,0 +1,42 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: grist
+spec:
+  selector:
+    matchLabels:
+      app: grist
+  template:
+    metadata:
+      labels:
+        app: grist
+    spec:
+      containers:
+      - name: grist
+        image: gristlabs/grist:latest
+        ports:
+        - containerPort: 8484
+        env:
+        - name: APP_HOME_URL
+          value: "https://grist.harvestasya.org"
+        - name: GRIST_SINGLE_ORG
+          value: "docs"
+        - name: GRIST_SESSION_SECRET
+          valueFrom:
+            secretKeyRef:
+              name: grist-secret
+              key: session-secret
+        volumeMounts:
+        - name: persist
+          mountPath: /persist
+        resources:
+          limits:
+            cpu: 500m
+            memory: 1Gi
+          requests:
+            cpu: 100m
+            memory: 256Mi
+      volumes:
+      - name: persist
+        persistentVolumeClaim:
+          claimName: grist-data
