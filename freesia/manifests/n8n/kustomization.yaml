@@ -1,0 +1,23 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+resources:
+- deployment.yaml
+- ingressroute.yaml
+- namespace.yaml
+- pvc.yaml
+- service.yaml
+
+generatorOptions:
+  disableNameSuffixHash: false
+
+configMapGenerator:
+- literals:
+  - N8N_METRICS=true
+  - GENERIC_TIMEZONE=Asia/Tokyo
+  - VUE_APP_URL_BASE_API=https://n8n.harvestasya.org/
+  name: n8n-config-env
+
+labels:
+- pairs:
+    app.kubernetes.io/name: n8n
+  includeSelectors: true
