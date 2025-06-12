@@ -8,7 +8,7 @@ resources:
 - service.yaml
 
 generatorOptions:
-  disableNameSuffixHash: false
+  disableNameSuffixHash: true
 
 configMapGenerator:
 - literals:
