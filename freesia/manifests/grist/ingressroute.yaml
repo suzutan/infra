@@ -1,0 +1,18 @@
+apiVersion: traefik.io/v1alpha1
+kind: IngressRoute
+metadata:
+  name: grist
+  labels:
+    app.kubernetes.io/name: grist
+    app.kubernetes.io/instance: grist
+spec:
+  entryPoints:
+  - websecure
+  routes:
+  - match: Host(`grist.harvestasya.org`)
+    kind: Rule
+    services:
+    - name: grist
+      port: 80
+  tls:
+    certResolver: letsencrypt-prod
