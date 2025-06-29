@@ -1,0 +1,95 @@
+version: 1
+metadata:
+  name: OIDC Applications
+  description: Authentik OIDC アプリケーションの管理
+entries:
+  # Example Application
+  - model: authentik_providers_oauth2.oauth2provider
+    id: example-app-provider
+    attrs:
+      name: Example App Provider
+      client_id: example-app
+      client_secret: !Secret example-app
+      client_type: confidential
+      authorization_flow: !Find [authentik_flows.flow, [slug, default-provider-authorization-implicit-consent]]
+      redirect_uris: |
+        http://example.com/callback
+        http://localhost:8080/callback
+      sub_mode: hashed_user_id
+      include_claims_in_id_token: true
+      issuer_mode: per_provider
+      access_code_validity: minutes=1
+      access_token_validity: minutes=5
+      refresh_token_validity: days=30
+  - model: authentik_core.application
+    id: example-app
+    attrs:
+      name: Example App
+      slug: example-app
+      provider: !KeyOf example-app-provider
+      meta_launch_url: "https://example.com"
+      meta_description: "Example OIDC Application"
+
+  # ArgoCD
+  - model: authentik_providers_oauth2.oauth2provider
+    id: argocd-provider
+    attrs:
+      name: ArgoCD Provider
+      client_id: argocd
+      client_secret: !Secret argocd
+      client_type: confidential
+      authorization_flow: !Find [authentik_flows.flow, [slug, default-provider-authorization-implicit-consent]]
+      redirect_uris: |
+        https://argocd.harvestasya.org/auth/callback
+        https://argocd.harvestasya.org/applications
+      sub_mode: hashed_user_id
+      include_claims_in_id_token: true
+      issuer_mode: per_provider
+      access_code_validity: minutes=1
+      access_token_validity: minutes=5
+      refresh_token_validity: days=30
+      property_mappings:
+        - !Find [authentik_providers_oauth2.scopemapping, [scope_name, openid]]
+        - !Find [authentik_providers_oauth2.scopemapping, [scope_name, profile]]
+        - !Find [authentik_providers_oauth2.scopemapping, [scope_name, email]]
+        - !Find [authentik_providers_oauth2.scopemapping, [scope_name, groups]]
+  - model: authentik_core.application
+    id: argocd
+    attrs:
+      name: ArgoCD
+      slug: argocd
+      provider: !KeyOf argocd-provider
+      meta_launch_url: "https://argocd.harvestasya.org"
+      meta_description: "ArgoCD GitOps"
+      meta_icon: "https://argocd.harvestasya.org/assets/favicon.png"
+
+  # Grafana
+  - model: authentik_providers_oauth2.oauth2provider
+    id: grafana-provider
+    attrs:
+      name: Grafana Provider
+      client_id: grafana
+      client_secret: !Secret grafana
+      client_type: confidential
+      authorization_flow: !Find [authentik_flows.flow, [slug, default-provider-authorization-implicit-consent]]
+      redirect_uris: |
+        https://grafana.harvestasya.org/login/generic_oauth
+      sub_mode: hashed_user_id
+      include_claims_in_id_token: true
+      issuer_mode: per_provider
+      access_code_validity: minutes=1
+      access_token_validity: minutes=5
+      refresh_token_validity: days=30
+      property_mappings:
+        - !Find [authentik_providers_oauth2.scopemapping, [scope_name, openid]]
+        - !Find [authentik_providers_oauth2.scopemapping, [scope_name, profile]]
+        - !Find [authentik_providers_oauth2.scopemapping, [scope_name, email]]
+  - model: authentik_core.application
+    id: grafana
+    attrs:
+      name: Grafana
+      slug: grafana
+      provider: !KeyOf grafana-provider
+      meta_launch_url: "https://grafana.harvestasya.org"
+      meta_description: "Grafana モニタリング"
+      meta_icon: "https://grafana.harvestasya.org/public/img/grafana_icon.svg"

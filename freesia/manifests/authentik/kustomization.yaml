@@ -10,6 +10,13 @@ resources:
 - secret-authentik.yaml
 - secret-authentik-redis.yaml
 - secret-authentik-postgresql.yaml
+- secret-authentik-oidc-apps.yaml
+
+# Blueprint ConfigMapを生成
+configMapGenerator:
+- name: authentik-blueprints
+  files:
+  - blueprints/oidc-apps.yaml
 
 helmCharts:
 # https://artifacthub.io/packages/helm/goauthentik/authentik

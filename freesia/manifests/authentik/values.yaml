@@ -2,6 +2,20 @@ global:
   envFrom:
   - secretRef:
       name: authentik-custom
+  # Blueprint directory configuration
+  env:
+    AUTHENTIK_BLUEPRINTS_DIR: /blueprints/custom:/blueprints/system
+  
+  # Volume mounts for blueprints
+  volumeMounts:
+  - name: blueprints
+    mountPath: /blueprints/custom
+    
+  volumes:
+  - name: blueprints
+    configMap:
+      name: authentik-blueprints
+      
 authentik:
   log_level: info
   secret_key: dummy
