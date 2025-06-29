@@ -1,0 +1,131 @@
+# Authentik Blueprint for OIDC Applications
+# This blueprint automatically creates OIDC providers and applications
+# Client secrets are stored in 1Password and referenced via placeholders
+version: 1
+metadata:
+  name: oidc-applications
+  labels:
+    blueprints.goauthentik.io/description: "OIDC Applications managed via GitOps"
+    blueprints.goauthentik.io/instantiate: "true"
+
+entries:
+  # Example OIDC Application - Remove or modify this example
+  - model: authentik_providers_oauth2.oauth2provider
+    id: example-app-provider
+    state: present
+    identifiers:
+      name: Example App Provider
+    attrs:
+      name: Example App Provider
+      client_type: confidential
+      client_id: example-app
+      # Client secret will be replaced from 1Password during runtime
+      # !Secret placeholder will be replaced by Authentik's secret management
+      client_secret: !Secret authentik-oidc-secrets:example-app
+      authorization_flow: !Find [authentik_flows.flow, [slug, default-provider-authorization-implicit-consent]]
+      token_validity: hours=24
+      access_code_validity: minutes=1
+      refresh_token_validity: days=30
+      sub_mode: hashed_user_id
+      include_claims_in_id_token: true
+      issuer_mode: per_provider
+      redirect_uris: |
+        https://example.harvestasya.org/oauth2/callback
+        http://localhost:8080/oauth2/callback
+      property_mappings:
+        - !Find [authentik_providers_oauth2.scopemapping, [scope_name, openid]]
+        - !Find [authentik_providers_oauth2.scopemapping, [scope_name, email]]
+        - !Find [authentik_providers_oauth2.scopemapping, [scope_name, profile]]
+
+  - model: authentik_core.application
+    id: example-app
+    state: present
+    identifiers:
+      slug: example-app
+    attrs:
+      name: Example App
+      slug: example-app
+      provider: !KeyOf example-app-provider
+      policy_engine_mode: any
+      meta_launch_url: "https://example.harvestasya.org"
+      meta_icon: "https://example.harvestasya.org/favicon.ico"
+      meta_description: "Example OIDC Application"
+
+  # ArgoCD - Already exists but included as reference
+  - model: authentik_providers_oauth2.oauth2provider
+    id: argocd-provider
+    state: present
+    identifiers:
+      name: ArgoCD Provider
+    attrs:
+      name: ArgoCD Provider
+      client_type: confidential
+      client_id: argocd
+      client_secret: !Secret authentik-oidc-secrets:argocd
+      authorization_flow: !Find [authentik_flows.flow, [slug, default-provider-authorization-implicit-consent]]
+      token_validity: hours=24
+      access_code_validity: minutes=1
+      refresh_token_validity: days=30
+      sub_mode: hashed_user_id
+      include_claims_in_id_token: true
+      issuer_mode: per_provider
+      redirect_uris: |
+        https://argocd.harvestasya.org/auth/callback
+        https://argocd.harvestasya.org/applications
+      property_mappings:
+        - !Find [authentik_providers_oauth2.scopemapping, [scope_name, openid]]
+        - !Find [authentik_providers_oauth2.scopemapping, [scope_name, email]]
+        - !Find [authentik_providers_oauth2.scopemapping, [scope_name, profile]]
+
+  - model: authentik_core.application
+    id: argocd
+    state: present
+    identifiers:
+      slug: argocd
+    attrs:
+      name: ArgoCD
+      slug: argocd
+      provider: !KeyOf argocd-provider
+      policy_engine_mode: any
+      meta_launch_url: "https://argocd.harvestasya.org"
+      meta_icon: "https://raw.githubusercontent.com/argoproj/argo-cd/master/ui/src/assets/logo.png"
+      meta_description: "ArgoCD - Declarative GitOps CD for Kubernetes"
+
+  # Grafana Example
+  - model: authentik_providers_oauth2.oauth2provider
+    id: grafana-provider
+    state: present
+    identifiers:
+      name: Grafana Provider
+    attrs:
+      name: Grafana Provider
+      client_type: confidential
+      client_id: grafana
+      client_secret: !Secret authentik-oidc-secrets:grafana
+      authorization_flow: !Find [authentik_flows.flow, [slug, default-provider-authorization-implicit-consent]]
+      token_validity: hours=24
+      access_code_validity: minutes=1
+      refresh_token_validity: days=30
+      sub_mode: hashed_user_id
+      include_claims_in_id_token: true
+      issuer_mode: per_provider
+      redirect_uris: |
+        https://grafana.harvestasya.org/login/generic_oauth
+      property_mappings:
+        - !Find [authentik_providers_oauth2.scopemapping, [scope_name, openid]]
+        - !Find [authentik_providers_oauth2.scopemapping, [scope_name, email]]
+        - !Find [authentik_providers_oauth2.scopemapping, [scope_name, profile]]
+
+  - model: authentik_core.application
+    id: grafana
+    state: present
+    identifiers:
+      slug: grafana
+    attrs:
+      name: Grafana
+      slug: grafana
+      provider: !KeyOf grafana-provider
+      policy_engine_mode: any
+      meta_launch_url: "https://grafana.harvestasya.org"
+      meta_icon: "https://raw.githubusercontent.com/grafana/grafana/main/public/img/apple-touch-icon.png"
+      meta_description: "Grafana - The open observability platform"

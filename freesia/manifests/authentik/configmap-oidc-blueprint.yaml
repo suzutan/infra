@@ -1,0 +1,8 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: authentik-oidc-blueprint
+  namespace: authentik
+data:
+  oidc-apps.yaml: |
+    # This content will be replaced by Kustomize configMapGenerator

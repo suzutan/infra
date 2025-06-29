@@ -10,6 +10,13 @@ resources:
 - secret-authentik.yaml
 - secret-authentik-redis.yaml
 - secret-authentik-postgresql.yaml
+- secret-authentik-oidc-secrets.yaml
+
+configMapGenerator:
+- name: authentik-oidc-blueprint
+  namespace: authentik
+  files:
+  - blueprints/oidc-apps.yaml
 
 helmCharts:
 # https://artifacthub.io/packages/helm/goauthentik/authentik

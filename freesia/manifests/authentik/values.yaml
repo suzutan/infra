@@ -2,9 +2,18 @@ global:
   envFrom:
   - secretRef:
       name: authentik-custom
+  volumes:
+  - name: blueprints
+    configMap:
+      name: authentik-oidc-blueprint
+  volumeMounts:
+  - name: blueprints
+    mountPath: /blueprints/oidc
+    readOnly: true
 authentik:
   log_level: info
   secret_key: dummy
+  blueprints_dir: /blueprints
 
   email:
     host: ""
