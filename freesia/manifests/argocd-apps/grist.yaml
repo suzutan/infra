@@ -1,0 +1,20 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: grist
+  namespace: argocd
+spec:
+  project: apps
+  source:
+    repoURL: https://github.com/suzutan/infra
+    targetRevision: HEAD
+    path: freesia/manifests/grist
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: grist
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+    syncOptions:
+    - RespectIgnoreDifferences=true
