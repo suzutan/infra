@@ -1,0 +1,18 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+
+namespace: actions-runner-system
+
+resources:
+- namespace.yaml
+
+helmCharts:
+- name: gha-runner-scale-set-controller
+  repo: oci://ghcr.io/actions/actions-runner-controller-charts
+  version: 0.11.0
+  includeCRDs: true
+  valuesInline:
+    flags:
+      updateStrategy: "eventual"
+    logLevel: "info"
+    logFormat: "text"
