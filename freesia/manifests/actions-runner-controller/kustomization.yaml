@@ -1,0 +1,17 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+namespace: actions-runner-system
+
+resources:
+  - namespace.yaml
+  - onepassword-github-app-id.yaml
+  - onepassword-github-app-installation-id.yaml
+  - onepassword-github-app-private-key.yaml
+
+helmCharts:
+  - name: gha-runner-scale-set-controller
+    repo: oci://ghcr.io/actions/actions-runner-controller-charts
+    version: 0.9.3
+    releaseName: actions-runner-controller
+    namespace: actions-runner-system
+    valuesFile: values.yaml

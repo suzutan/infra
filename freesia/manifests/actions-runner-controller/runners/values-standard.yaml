@@ -1,0 +1,30 @@
+githubConfigUrl: "https://github.com/suzutan"
+
+githubConfigSecret:
+  create: false
+
+# Use the controller manager for authentication
+controllerServiceAccount:
+  name: actions-runner-controller-gha-rs-controller
+  namespace: actions-runner-system
+
+# Runner configuration
+minRunners: 0
+maxRunners: 5
+
+runnerScaleSetName: "suzutan-self-hosted"
+
+# Runner pod template
+template:
+  spec:
+    containers:
+      - name: runner
+        image: ghcr.io/actions/actions-runner:latest
+        command: ["/home/runner/run.sh"]
+        resources:
+          requests:
+            memory: "256Mi"
+            cpu: "250m"
+          limits:
+            memory: "512Mi"
+            cpu: "500m"

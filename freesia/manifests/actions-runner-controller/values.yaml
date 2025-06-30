@@ -1,0 +1,51 @@
+replicaCount: 1
+
+image:
+  repository: ghcr.io/actions/gha-runner-scale-set-controller
+  pullPolicy: IfNotPresent
+
+# GitHub App authentication using individual secrets
+env:
+  - name: GITHUB_APP_ID
+    valueFrom:
+      secretKeyRef:
+        name: github-app-id
+        key: app-id
+  - name: GITHUB_APP_INSTALLATION_ID
+    valueFrom:
+      secretKeyRef:
+        name: github-app-installation-id
+        key: installation-id
+  - name: GITHUB_APP_PRIVATE_KEY
+    valueFrom:
+      secretKeyRef:
+        name: github-app-private-key
+        key: private-key
+
+# Metrics and webhook configuration
+metrics:
+  controllerManagerAddr: ":8080"
+  listenerAddr: ":8080"
+  listenerEndpoint: "/metrics"
+
+# Webhook server configuration
+webhookServer:
+  enabled: true
+  port: 9443
+
+# Resource limits
+resources:
+  limits:
+    cpu: 100m
+    memory: 128Mi
+  requests:
+    cpu: 50m
+    memory: 64Mi
+
+# Log configuration
+logLevel: info
+logFormat: json
+
+# Pod annotations for automatic restart on secret updates
+podAnnotations:
+  operator.1password.io/auto-restart: "true"
