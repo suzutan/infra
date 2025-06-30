@@ -1,0 +1,84 @@
+apiVersion: actions.github.com/v1alpha1
+kind: AutoScalingRunnerSet
+metadata:
+  name: suzutan-runners
+spec:
+  githubConfigUrl: "https://github.com/suzutan"
+  githubConfigSecret:
+    name: secret-github-app
+  maxRunners: 5
+  minRunners: 0
+  runnerScaleSetName: "suzutan-self-hosted"
+  template:
+    spec:
+      containers:
+        - name: runner
+          image: ghcr.io/actions/actions-runner:latest
+          command: ["/home/runner/run.sh"]
+          resources:
+            requests:
+              cpu: 500m
+              memory: 1Gi
+            limits:
+              cpu: 2000m
+              memory: 4Gi
+          volumeMounts:
+            - name: work
+              mountPath: /home/runner/_work
+      volumes:
+        - name: work
+          emptyDir: {}
+      securityContext:
+        runAsUser: 1000
+        runAsGroup: 1000
+        fsGroup: 1000
+---
+apiVersion: actions.github.com/v1alpha1
+kind: AutoScalingRunnerSet
+metadata:
+  name: suzutan-docker-runners
+spec:
+  githubConfigUrl: "https://github.com/suzutan"
+  githubConfigSecret:
+    name: secret-github-app
+  maxRunners: 3
+  minRunners: 0
+  runnerScaleSetName: "suzutan-docker"
+  template:
+    spec:
+      containers:
+        - name: runner
+          image: ghcr.io/actions/actions-runner:latest
+          command: ["/home/runner/run.sh"]
+          resources:
+            requests:
+              cpu: 500m
+              memory: 1Gi
+            limits:
+              cpu: 2000m
+              memory: 4Gi
+          volumeMounts:
+            - name: work
+              mountPath: /home/runner/_work
+            - name: docker
+              mountPath: /var/run/docker.sock
+        - name: docker
+          image: docker:dind
+          securityContext:
+            privileged: true
+          volumeMounts:
+            - name: docker
+              mountPath: /var/run/docker.sock
+            - name: dind-storage
+              mountPath: /var/lib/docker
+      volumes:
+        - name: work
+          emptyDir: {}
+        - name: docker
+          emptyDir: {}
+        - name: dind-storage
+          emptyDir: {}
+      securityContext:
+        runAsUser: 1000
+        runAsGroup: 1000
+        fsGroup: 1000

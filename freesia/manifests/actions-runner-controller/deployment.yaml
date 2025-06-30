@@ -1,0 +1,85 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: actions-runner-controller
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: actions-runner-controller
+  template:
+    metadata:
+      labels:
+        app: actions-runner-controller
+    spec:
+      serviceAccountName: actions-runner-controller
+      securityContext:
+        runAsNonRoot: true
+        runAsUser: 1000
+      containers:
+        - name: controller
+          image: ghcr.io/actions/actions-runner-controller:v0.27.6
+          imagePullPolicy: IfNotPresent
+          env:
+            - name: GITHUB_APP_ID
+              valueFrom:
+                secretKeyRef:
+                  name: secret-github-app
+                  key: github_app_id
+            - name: GITHUB_APP_INSTALLATION_ID
+              valueFrom:
+                secretKeyRef:
+                  name: secret-github-app
+                  key: github_app_installation_id
+            - name: GITHUB_APP_PRIVATE_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: secret-github-app
+                  key: github_app_private_key
+            - name: RUNNER_NAMESPACE
+              value: actions-runner-controller
+            - name: ENABLE_LEGACY_RUNNER_DEPLOYMENT
+              value: "false"
+            - name: LOG_LEVEL
+              value: info
+          ports:
+            - containerPort: 9443
+              name: webhook
+              protocol: TCP
+            - containerPort: 8080
+              name: metrics
+              protocol: TCP
+            - containerPort: 8081
+              name: health
+              protocol: TCP
+          livenessProbe:
+            httpGet:
+              path: /healthz
+              port: 8081
+            initialDelaySeconds: 15
+            periodSeconds: 20
+          readinessProbe:
+            httpGet:
+              path: /readyz
+              port: 8081
+            initialDelaySeconds: 5
+            periodSeconds: 10
+          resources:
+            limits:
+              cpu: 500m
+              memory: 512Mi
+            requests:
+              cpu: 100m
+              memory: 128Mi
+          securityContext:
+            allowPrivilegeEscalation: false
+            readOnlyRootFilesystem: true
+            runAsNonRoot: true
+            runAsUser: 1000
+          volumeMounts:
+            - mountPath: /tmp
+              name: tmp
+      terminationGracePeriodSeconds: 10
+      volumes:
+        - emptyDir: {}
+          name: tmp
