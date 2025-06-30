@@ -1,0 +1,21 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: actions-runner-controller
+  namespace: argocd
+spec:
+  project: apps
+  source:
+    repoURL: https://github.com/suzutan/infra
+    targetRevision: HEAD
+    path: freesia/manifests/actions-runner-controller
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: actions-runner-controller
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+    syncOptions:
+      - CreateNamespace=true
+      - ServerSideApply=true
