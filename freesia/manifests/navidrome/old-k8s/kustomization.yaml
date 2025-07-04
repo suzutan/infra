@@ -12,4 +12,4 @@ resources:
 
 images:
 - name: deluan/navidrome:0.43.0
-  newTag: 0.56.1
+  newTag: 0.57.0
