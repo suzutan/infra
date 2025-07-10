@@ -1,0 +1,32 @@
+# Values for gha-runner-scale-set-controller
+# https://github.com/actions/actions-runner-controller/tree/master/charts/gha-runner-scale-set-controller
+
+replicaCount: 1
+
+image:
+  repository: ghcr.io/actions/gha-runner-scale-set-controller
+  pullPolicy: IfNotPresent
+
+serviceAccount:
+  create: true
+  name: arc-controller
+
+controller:
+  logLevel: info
+  logFormat: text
+
+metrics:
+  enabled: true
+  port: 8080
+
+webhook:
+  enabled: true
+  port: 9443
+
+resources:
+  limits:
+    cpu: 500m
+    memory: 256Mi
+  requests:
+    cpu: 100m
+    memory: 128Mi
