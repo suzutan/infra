@@ -1,0 +1,10 @@
+auth:
+  existingSecret: "n8n-postgresql"
+primary:
+  extendedConfiguration: |
+    max_connections = 500
+  persistence:
+    enabled: true
+    storageClass: local-path
+    accessModes:
+    - ReadWriteOnce

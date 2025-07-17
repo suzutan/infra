@@ -1,23 +1,38 @@
 apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
+
+namespace: n8n
+
 resources:
 - deployment.yaml
 - ingressroute.yaml
 - namespace.yaml
 - pvc.yaml
+- secret.yaml
 - service.yaml
 
-generatorOptions:
-  disableNameSuffixHash: false
 
 configMapGenerator:
 - literals:
-  - N8N_METRICS=true
   - GENERIC_TIMEZONE=Asia/Tokyo
-  - VUE_APP_URL_BASE_API=https://n8n.harvestasya.org/
+  - N8N_PROTOCOL=http
+  - N8N_PORT=5678
+  - WEBHOOK_URL=https://n8n.harvestasya.org/
+  - N8N_PROXY_HOPS=1
+  - N8N_HOST=n8n.harvestasya.org
+  - N8N_EDITOR_BASE_URL=https://n8n.harvestasya.org
   name: n8n-config-env
 
 labels:
 - pairs:
     app.kubernetes.io/name: n8n
   includeSelectors: true
+
+helmCharts:
+- name: postgresql
+  releaseName: postgresql
+  namespace: n8n
+  version: 16.7.17
+  repo: oci://registry-1.docker.io/bitnamicharts
+  includeCRDs: true
+  valuesFile: values-postgresql.yaml

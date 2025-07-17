@@ -11,6 +11,7 @@ locals {
     "grafana.harvestasya.org",
     "prometheus.harvestasya.org",
     "n8n.harvestasya.org",
+    "traefik.harvestasya.org",
   ]
 }
 
