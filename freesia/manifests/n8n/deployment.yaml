@@ -14,13 +14,13 @@ spec:
       labels:
         app.kubernetes.io/name: n8n
     spec:
-      initContainers:
-      - name: volume-permissions
-        image: busybox:latest
-        command: ["sh", "-c", "chown 1000:1000 /data"]
-        volumeMounts:
-        - name: data
-          mountPath: /data
+      # initContainers:
+      # - name: volume-permissions
+      #   image: busybox:latest
+      #   command: ["sh", "-c", "chown 1000:1000 /data"]
+      #   volumeMounts:
+      #   - name: data
+      #     mountPath: /data
       containers:
       - name: n8n
         image: n8nio/n8n:latest
@@ -32,6 +32,13 @@ spec:
             name: n8n-config-env
         - secretRef:
             name: n8n-secret-env
+        env:
+        - name: DB_POSTGRESDB_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: n8n-postgresql
+              key: password
+
         resources:
           requests:
             cpu: 100m
@@ -39,18 +46,29 @@ spec:
           limits:
             cpu: "1"
             memory: "500Mi"
+        startupProbe:
+          httpGet:
+            path: /healthz
+            port: 5678
+          initialDelaySeconds: 6
+          periodSeconds: 3
+        readinessProbe:
+          httpGet:
+            path: /healthz
+            port: 5678
+          initialDelaySeconds: 6
+          periodSeconds: 3
         livenessProbe:
           httpGet:
             path: /healthz
             port: 5678
           initialDelaySeconds: 6
           periodSeconds: 3
+          #   volumeMounts:
+          #   - name: data
+          #     mountPath: /home/node/.n8n
 
-        volumeMounts:
-        - name: data
-          mountPath: /home/node/.n8n
-
-      volumes:
-      - name: data
-        persistentVolumeClaim:
-          claimName: n8n
+          # volumes:
+          # - name: data
+          #   persistentVolumeClaim:
+          #     claimName: n8n
