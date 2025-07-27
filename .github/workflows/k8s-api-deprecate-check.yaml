@@ -5,10 +5,10 @@ on:
     branches:
     - master
     paths:
-    - freesia/k8s/**/*.yaml
+    - freesia/**/*.yaml
 
 env:
-  PLUTO_TARGET_DIRECTORY: freesia/k8s/
+  PLUTO_TARGET_DIRECTORY: freesia
 
 jobs:
   api-deprecate-check:
