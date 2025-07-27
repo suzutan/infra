@@ -8,7 +8,7 @@ on:
     - freesia/**/*.yaml
 
 env:
-  PLUTO_TARGET_DIRECTORY: freesia
+  PLUTO_TARGET_DIRECTORY: freesia/
 
 jobs:
   api-deprecate-check:
