@@ -10,7 +10,6 @@ locals {
     "influxdb2.harvestasya.org",
     "grafana.harvestasya.org",
     "prometheus.harvestasya.org",
-    "n8n.harvestasya.org",
   ]
 }
 
