@@ -1,0 +1,25 @@
+# https://taskfile.dev
+
+version: '3'
+
+vars:
+  GREETING: Hello, World!
+
+tasks:
+  update:
+    desc: update chart
+    cmds:
+    - helm repo add strrl.dev https://helm.strrl.dev
+    - helm repo update
+  default-values:
+    desc: output default values.yaml
+    cmds:
+    - helm show values strrl.dev/cloudflare-tunnel-ingress-controller > default_values.yaml
+  build:
+    desc: build k8s manifests
+    cmds:
+    - kustomize build --enable-helm .
+  apply:
+    desc: apply k8s manifests
+    cmds:
+    - kustomize build --enable-helm . | kubectl apply -f-
