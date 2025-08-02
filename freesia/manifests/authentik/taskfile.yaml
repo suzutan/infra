@@ -1,0 +1,14 @@
+version: "3"
+
+tasks:
+  repo-update:
+    cmds:
+    - helm repo add authentik https://charts.goauthentik.io
+    - helm repo update
+    - helm search repo authentik
+  default-values:
+    cmds:
+    - helm show values authentik/authentik > default-values.yaml
+  apply:
+    cmds:
+    - kustomize build --enable-helm . | kubectl apply -f-
