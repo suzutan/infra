@@ -5,6 +5,7 @@ namespace: n8n
 
 resources:
 - deployment.yaml
+- ingress.yaml
 - ingressroute.yaml
 - namespace.yaml
 - pvc.yaml

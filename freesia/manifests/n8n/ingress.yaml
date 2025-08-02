@@ -1,0 +1,17 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: n8n
+spec:
+  ingressClassName: "cloudflare-tunnel"
+  rules:
+  - host: n8n.harvestasya.org
+    http:
+      paths:
+      - pathType: Prefix
+        path: "/"
+        backend:
+          service:
+            name: n8n
+            port:
+              name: http
