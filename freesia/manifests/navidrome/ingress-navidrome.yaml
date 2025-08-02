@@ -1,0 +1,21 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: navidrome
+  annotations:
+    cloudflare-tunnel-ingress-controller.strrl.dev/backend-protocol: https
+    cloudflare-tunnel-ingress-controller.strrl.dev/http-host-header: navidrome.harvestasya.org
+    cloudflare-tunnel-ingress-controller.strrl.dev/origin-server-name: navidrome.harvestasya.org
+spec:
+  ingressClassName: cloudflare-tunnel
+  rules:
+  - host: navidrome.harvestasya.org
+    http:
+      paths:
+      - backend:
+          service:
+            name: traefik-proxy
+            port:
+              name: https
+        path: /
+        pathType: Prefix

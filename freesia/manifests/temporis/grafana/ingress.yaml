@@ -1,0 +1,17 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: grafana
+spec:
+  ingressClassName: cloudflare-tunnel
+  rules:
+  - host: grafana.harvestasya.org
+    http:
+      paths:
+      - backend:
+          service:
+            name: grafana
+            port:
+              name: http
+        path: /
+        pathType: Prefix

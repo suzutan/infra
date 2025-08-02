@@ -4,7 +4,6 @@ kind: Kustomization
 namespace: authentik
 
 resources:
-- ingressroute.yaml
 - middleware-authentik-forward-auth.yaml
 - namespace.yaml
 - secret-authentik.yaml
@@ -16,7 +15,7 @@ helmCharts:
 - name: authentik
   releaseName: authentik
   namespace: authentik
-  version: 2025.6.3
+  version: 2025.6.4
   repo: https://charts.goauthentik.io
   valuesFile: values.yaml
 

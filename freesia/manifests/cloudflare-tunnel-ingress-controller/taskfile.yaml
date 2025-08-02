@@ -1,14 +1,16 @@
-version: "3"
+
+version: '3'
 
 tasks:
   repo-update:
+    desc: update chart
     cmds:
-    - helm repo add traefik https://traefik.github.io/charts
+    - helm repo add strrl.dev https://helm.strrl.dev
     - helm repo update
-    - helm search repo traefik
   default-values:
+    desc: output default values.yaml
     cmds:
-    - helm show values traefik/traefik > default-values.yaml
+    - helm show values strrl.dev/cloudflare-tunnel-ingress-controller > default_values.yaml
   build:
     desc: build k8s manifests
     cmds:

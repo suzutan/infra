@@ -27,8 +27,13 @@ authentik:
 
 server:
   replicas: 2
+
   ingress:
-    enabled: false
+    enabled: true
+    ingressClassName: "cloudflare-tunnel"
+    hosts:
+    - grathnode.harvestasya.org
+
   deploymentAnnotations:
     operator.1password.io/auto-restart: "true"
 worker:

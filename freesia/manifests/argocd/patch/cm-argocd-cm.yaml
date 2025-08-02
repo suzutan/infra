@@ -19,8 +19,8 @@ data:
   users.anonymous.enabled: "false"
   oidc.config: |-
     # https://argo-cd.readthedocs.io/en/stable/operator-manual/user-management/#existing-oidc-provider
-    name: Authentik
-    issuer: https://id.harvestasya.org/application/o/argocd/
+    name: Grathnode
+    issuer: https://grathnode.harvestasya.org/application/o/argocd/
     clientID: $argocd-custom-secret:authentik.client-id
     clientSecret: $argocd-custom-secret:authentik.client-secret
     requestedIDTokenClaims: {"groups": {"essential": true}}
