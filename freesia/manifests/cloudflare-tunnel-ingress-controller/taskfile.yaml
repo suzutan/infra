@@ -1,9 +1,5 @@
-# https://taskfile.dev
 
 version: '3'
-
-vars:
-  GREETING: Hello, World!
 
 tasks:
   update:
@@ -23,3 +19,7 @@ tasks:
     desc: apply k8s manifests
     cmds:
     - kustomize build --enable-helm . | kubectl apply -f-
+  delete:
+    desc: delete k8s manifests
+    cmds:
+    - kustomize build --enable-helm . | kubectl delete -f-
