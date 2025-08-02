@@ -2,7 +2,7 @@
 version: '3'
 
 tasks:
-  update:
+  repo-update:
     desc: update chart
     cmds:
     - helm repo add strrl.dev https://helm.strrl.dev
