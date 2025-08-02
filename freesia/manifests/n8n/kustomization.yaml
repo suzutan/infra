@@ -18,10 +18,10 @@ configMapGenerator:
   - GENERIC_TIMEZONE=Asia/Tokyo
   - N8N_PROTOCOL=http
   - N8N_PORT=5678
-  - WEBHOOK_URL=https://n8n.harvestasya.org/
+  - WEBHOOK_URL=https://reyvateils.harvestasya.org/
   - N8N_PROXY_HOPS=1
   - N8N_HOST=n8n.harvestasya.org
-  - N8N_EDITOR_BASE_URL=https://n8n.harvestasya.org
+  - N8N_EDITOR_BASE_URL=https://reyvateils.harvestasya.org
   - DB_TYPE=postgresdb
   - DB_POSTGRESDB_HOST=postgresql
   - DB_POSTGRESDB_PORT=5432

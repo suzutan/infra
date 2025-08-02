@@ -5,7 +5,7 @@ metadata:
 spec:
   ingressClassName: "cloudflare-tunnel"
   rules:
-  - host: n8n.harvestasya.org
+  - host: reyvateils.harvestasya.org
     http:
       paths:
       - pathType: Prefix
