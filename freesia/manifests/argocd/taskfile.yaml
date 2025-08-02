@@ -15,6 +15,10 @@ tasks:
     desc: build k8s manifests
     cmds:
     - kustomize build --enable-helm .
+  diff:
+    desc: diff k8s manifests
+    cmds:
+    - kustomize build --enable-helm . | kubectl apply -f-
   apply:
     desc: apply k8s manifests
     cmds:

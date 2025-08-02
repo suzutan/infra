@@ -1,26 +1,19 @@
-# https://taskfile.dev
-
 version: "3"
 
-vars:
-  GREETING: Hello, World!
-
 tasks:
-  context:
+  build:
+    desc: build k8s manifests
     cmds:
-    - kubectl config set-context kubernetes-admin@kubernetes
+    - kustomize build --enable-helm .
   diff:
-    deps:
-    - context
+    desc: diff k8s manifests
     cmds:
     - kustomize build --enable-helm . | kubectl diff -f-
   apply:
-    deps:
-    - context
+    desc: apply k8s manifests
     cmds:
     - kustomize build --enable-helm . | kubectl apply -f-
   delete:
-    deps:
-    - context
+    desc: delete k8s manifests
     cmds:
     - kustomize build --enable-helm . | kubectl delete -f-
