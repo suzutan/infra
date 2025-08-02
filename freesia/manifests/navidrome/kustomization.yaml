@@ -4,7 +4,10 @@ kind: Kustomization
 namespace: navidrome
 
 resources:
-- namespace.yaml
+- ingress-filebrowser.yaml
+- ingress-navidrome.yaml
 - ingressroute-filebrowser.yaml
 - ingressroute-navidrome.yaml
+- namespace.yaml
 - service-navidrome.yaml
+- service-traefik-proxy.yaml
