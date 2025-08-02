@@ -1,7 +1,6 @@
 
 locals {
   k8s_ingress_rules = [
-    "asf.harvestasya.org",
   ]
 }
 
