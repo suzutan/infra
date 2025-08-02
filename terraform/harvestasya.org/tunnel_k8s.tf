@@ -2,8 +2,6 @@
 locals {
   k8s_ingress_rules = [
     "asf.harvestasya.org",
-    "navidrome.harvestasya.org",
-    "navidrome-filebrowser.harvestasya.org",
     "prometheus.harvestasya.org",
   ]
 }
