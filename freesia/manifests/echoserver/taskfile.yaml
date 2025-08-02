@@ -1,0 +1,16 @@
+
+version: '3'
+
+tasks:
+  build:
+    desc: build k8s manifests
+    cmds:
+    - kustomize build --enable-helm .
+  apply:
+    desc: apply k8s manifests
+    cmds:
+    - kustomize build --enable-helm . | kubectl apply -f-
+  delete:
+    desc: delete k8s manifests
+    cmds:
+    - kustomize build --enable-helm . | kubectl delete -f-

@@ -1,0 +1,17 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: authentik-server
+spec:
+  ingressClassName: cloudflare-tunnel
+  rules:
+  - host: echoserver.harvestasya.org
+    http:
+      paths:
+      - backend:
+          service:
+            name: echoserver
+            port:
+              name: http
+        path: /
+        pathType: Prefix

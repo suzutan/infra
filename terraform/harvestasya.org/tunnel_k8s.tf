@@ -2,8 +2,6 @@
 locals {
   k8s_ingress_rules = [
     "argocd.harvestasya.org",
-    "echoserver.harvestasya.org",
-    "grathnode.harvestasya.org",
     "asf.harvestasya.org",
     "navidrome.harvestasya.org",
     "navidrome-filebrowser.harvestasya.org",
