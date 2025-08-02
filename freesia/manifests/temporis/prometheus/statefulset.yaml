@@ -34,7 +34,7 @@ spec:
         - --config.file=/etc/prometheus/prometheus.yaml
         - --web.enable-lifecycle
         - --web.route-prefix=/
-        - --storage.tsdb.retention.time=1d
+        - --storage.tsdb.retention.time=1y
         - --storage.tsdb.path=/prometheus
         - --web.enable-admin-api
         - --storage.tsdb.wal-compression
