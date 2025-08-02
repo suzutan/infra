@@ -12,6 +12,7 @@ resources:
 - echoserver.yaml
 - hsr-auto-claimer.yaml
 - local-path-storage.yaml
+- n8n.yaml
 - navidrome.yaml
 - onepassword-operator.yaml
 - temporis.yaml
