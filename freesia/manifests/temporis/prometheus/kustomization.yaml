@@ -9,8 +9,10 @@ namespace: temporis
 resources:
 - cr.yaml
 - crb.yaml
+- ingress.yaml
 - ingressroute.yaml
 - statefulset.yaml
+- service-traefik-proxy.yaml
 - service.yaml
 - serviceaccount.yaml
 

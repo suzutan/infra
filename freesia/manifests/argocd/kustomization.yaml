@@ -10,7 +10,6 @@ labels:
     app.kubernetes.io/part-of: argocd
 
 resources:
-- ingressroute.yaml
 - namespace.yaml
 - role.yaml
 - project-apps.yaml
@@ -42,8 +41,4 @@ helmCharts:
   version: 8.2.5
   repo: https://argoproj.github.io/argo-helm
   includeCRDs: true
-  valuesInline:
-    global:
-      domain: argocd.harvestasya.org
-    dex:
-      enabled: false
+  valuesFile: values.yaml

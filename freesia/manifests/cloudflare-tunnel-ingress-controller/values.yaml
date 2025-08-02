@@ -1,0 +1,12 @@
+
+cloudflare:
+  secretRef:
+    name: cloudflare-external-secret
+    accountIDKey: account_id
+    tunnelNameKey: tunnel_name
+    apiTokenKey: api_token
+
+image:
+  repository: ghcr.io/suzutan/cloudflare-tunnel-ingress-controller
+  pullPolicy: IfNotPresent
+  tag: master-2b917f4-amd64
