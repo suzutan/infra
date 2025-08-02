@@ -4,7 +4,6 @@ locals {
     "asf.harvestasya.org",
     "navidrome.harvestasya.org",
     "navidrome-filebrowser.harvestasya.org",
-    "grafana.harvestasya.org",
     "prometheus.harvestasya.org",
   ]
 }
