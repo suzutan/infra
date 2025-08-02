@@ -1,0 +1,32 @@
+# Values for standard runner scale set
+githubConfigUrl: "https://github.com/suzutan"
+
+githubConfigSecret: github-app-arc
+
+minRunners: 0
+maxRunners: 5
+runnerScaleSetName: suzutan-self-hosted
+runnerGroup: default
+
+containerMode:
+  type: kubernetes
+  kubernetesModeWorkVolumeClaim:
+    accessModes:
+    - ReadWriteOnce
+    storageClassName: local-path
+    resources:
+      requests:
+        storage: 10Gi
+
+template:
+  spec:
+    containers:
+    - name: runner
+      image: ghcr.io/actions/actions-runner:latest
+      resources:
+        limits:
+          cpu: 2
+          memory: 4Gi
+        requests:
+          cpu: 500m
+          memory: 1Gi
