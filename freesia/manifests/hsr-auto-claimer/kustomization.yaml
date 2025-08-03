@@ -4,7 +4,11 @@ kind: Kustomization
 namespace: hsr-auto-claimer
 
 resources:
-# - cronjob.yaml
-# - namespace.yaml
-# - pvc.yaml
+- cronjob.yaml
+- namespace.yaml
+- pvc.yaml
 - secret.yaml
+
+images:
+- name: ghcr.io/slashnephy/auto-claimer:latest
+  newTag: sha256-42192ce896b6e6076bf56c2f3de6f6aa0ae7928c8349ab8c675ff07d596d9ce9.sbom
