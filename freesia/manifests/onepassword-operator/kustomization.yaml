@@ -10,7 +10,7 @@ helmCharts:
 - name: connect
   releaseName: connect
   namespace: onepassword
-  version: 2.0.3
+  version: 2.0.5
   repo: https://1password.github.io/connect-helm-charts
   includeCRDs: true
   valuesInline:
