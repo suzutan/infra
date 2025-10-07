@@ -33,7 +33,7 @@ helmCharts:
 - name: postgresql
   releaseName: postgresql
   namespace: n8n
-  version: 16.7.27
+  version: 18.0.8
   repo: oci://registry-1.docker.io/bitnamicharts
   includeCRDs: true
   valuesFile: values-postgresql.yaml
