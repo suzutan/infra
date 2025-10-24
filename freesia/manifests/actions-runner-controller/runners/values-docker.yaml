@@ -1,0 +1,36 @@
+# Values for Docker-enabled runner scale set
+githubConfigUrl: "https://github.com/suzutan"
+
+githubConfigSecret: github-app-arc
+
+minRunners: 0
+maxRunners: 3
+runnerScaleSetName: suzutan-docker
+runnerGroup: docker
+
+containerMode:
+  type: dind
+
+template:
+  spec:
+    containers:
+    - name: runner
+      image: ghcr.io/actions/actions-runner:latest
+      resources:
+        limits:
+          cpu: 2
+          memory: 4Gi
+        requests:
+          cpu: 500m
+          memory: 1Gi
+    - name: dind
+      image: docker:24-dind
+      securityContext:
+        privileged: true
+      resources:
+        limits:
+          cpu: 2
+          memory: 4Gi
+        requests:
+          cpu: 500m
+          memory: 1Gi
