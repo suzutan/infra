@@ -18,7 +18,7 @@ resources:
 
 images:
 - name: quay.io/prometheus/prometheus
-  newTag: v3.7.2
+  newTag: v3.7.3
 - name: quay.io/thanos/thanos
   newTag: v0.40.1
 
