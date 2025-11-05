@@ -12,6 +12,6 @@ helmCharts:
 - name: cloudflare-tunnel-ingress-controller
   releaseName: cloudflare-tunnel-ingress-controller
   namespace: cloudflare-tunnel-ingress-controller
-  version: 0.0.18
+  version: 0.0.21
   repo: https://helm.strrl.dev
   valuesFile: values.yaml
