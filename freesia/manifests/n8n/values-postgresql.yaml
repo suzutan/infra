@@ -7,6 +7,6 @@ primary:
     max_connections = 500
   persistence:
     enabled: true
-    storageClass: local-path
+    storageClass: nfs-client
     accessModes:
     - ReadWriteOnce

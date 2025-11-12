@@ -14,6 +14,7 @@ resources:
 - local-path-storage.yaml
 - n8n.yaml
 - navidrome.yaml
+- nfs-subdir-external-provisioner.yaml
 - onepassword-operator.yaml
 - temporis.yaml
 - traefik.yaml
