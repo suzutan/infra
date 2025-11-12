@@ -1,0 +1,9 @@
+auth:
+  database: outline
+  username: outline
+  existingSecret: outline-postgresql-secret
+
+primary:
+  persistence:
+    size: 10Gi
+    storageClass: local-path

@@ -1,0 +1,54 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+
+namespace: outline
+
+resources:
+- namespace.yaml
+- deployment.yaml
+- service.yaml
+- ingress.yaml
+- pvc.yaml
+- secret-outline.yaml
+- secret-postgresql.yaml
+- secret-redis.yaml
+- secret-oidc.yaml
+
+configMapGenerator:
+- name: outline-config-env
+  literals:
+  - NODE_ENV=production
+  - SECRET_KEY=changeme
+  - UTILS_SECRET=changeme
+  - DATABASE_URL=postgres://outline:changeme@postgresql:5432/outline
+  - DATABASE_CONNECTION_POOL_MIN=1
+  - DATABASE_CONNECTION_POOL_MAX=10
+  - REDIS_URL=redis://:changeme@redis-master:6379
+  - URL=https://outline.harvestasya.org
+  - PORT=3000
+  - COLLABORATION_URL=
+  - FILE_STORAGE=local
+  - FILE_STORAGE_LOCAL_ROOT_DIR=/var/lib/outline/data
+  - FILE_STORAGE_UPLOAD_MAX_SIZE=26214400
+  - ENABLE_UPDATES=false
+  - WEB_CONCURRENCY=1
+  - LOG_LEVEL=info
+  - FORCE_HTTPS=false
+  - PGSSLMODE=disable
+
+helmCharts:
+- name: postgresql
+  releaseName: postgresql
+  namespace: outline
+  version: 16.7.27
+  repo: oci://registry-1.docker.io/bitnamicharts
+  includeCRDs: true
+  valuesFile: values-postgresql.yaml
+
+- name: redis
+  releaseName: redis
+  namespace: outline
+  version: 20.6.2
+  repo: oci://registry-1.docker.io/bitnamicharts
+  includeCRDs: true
+  valuesFile: values-redis.yaml
