@@ -23,7 +23,7 @@ helmCharts:
       existingSecret: influxdb2-auth
     persistence:
       enabled: true
-      storageClass: "local-path"
+      storageClass: nfs-client
       accessMode: ReadWriteOnce
       size: 50Gi
       mountPath: /var/lib/influxdb2
