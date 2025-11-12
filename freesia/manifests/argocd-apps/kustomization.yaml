@@ -8,6 +8,7 @@ resources:
 - authentik.yaml
 - cert-manager.yaml
 - cloudflare-tunnel-ingress-controller.yaml
+- cnpg-operator.yaml
 - ddns.yaml
 - echoserver.yaml
 - hsr-auto-claimer.yaml
