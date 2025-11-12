@@ -1,0 +1,12 @@
+architecture: standalone
+
+auth:
+  enabled: true
+  existingSecret: outline-redis-secret
+  existingSecretPasswordKey: password
+
+master:
+  persistence:
+    enabled: true
+    size: 2Gi
+    storageClass: local-path
