@@ -12,7 +12,6 @@ resources:
 - ddns.yaml
 - echoserver.yaml
 - hsr-auto-claimer.yaml
-- local-path-storage.yaml
 - n8n.yaml
 - navidrome.yaml
 - nfs-subdir-external-provisioner.yaml
