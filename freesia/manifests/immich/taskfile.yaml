@@ -3,20 +3,20 @@ tasks:
   build:
     desc: build k8s manifests
     cmds:
-      - kustomize build .
+    - kustomize build .
   diff:
     desc: diff k8s manifests
     cmds:
-      - kustomize build . | kubectl diff -f-
+    - kustomize build . | kubectl diff -f-
   apply:
     desc: apply k8s manifests
     cmds:
-      - kustomize build . | kubectl apply -f-
+    - kustomize build . | kubectl apply -f-
   apply-dry-run:
     desc: apply k8s manifests
     cmds:
-      - kustomize build . | kubectl apply -f- --dry-run=server
+    - kustomize build . | kubectl apply -f- --dry-run=server
   delete:
     desc: delete k8s manifests
     cmds:
-      - kustomize build . | kubectl delete -f-
+    - kustomize build . | kubectl delete -f-
