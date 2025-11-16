@@ -2,6 +2,21 @@ allowVolumeExpansion: true
 apiVersion: storage.k8s.io/v1
 kind: StorageClass
 metadata:
+  labels:
+    app: nfs-subdir-external-provisioner
+    heritage: Helm
+    release: nfs-subdir-external-provisioner
+  name: nfs-client-delete
+parameters:
+  archiveOnDelete: "true"
+provisioner: cluster.local/nfs-subdir-external-provisioner
+reclaimPolicy: Delete
+volumeBindingMode: Immediate
+---
+allowVolumeExpansion: true
+apiVersion: storage.k8s.io/v1
+kind: StorageClass
+metadata:
   annotations:
     storageclass.kubernetes.io/is-default-class: "true"
   labels:
