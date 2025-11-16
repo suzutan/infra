@@ -48,6 +48,18 @@
       "datasourceTemplate": "github-releases",
       "depNameTemplate": "elastic/cloud-on-k8s",
       "versioningTemplate": "semver-coerced"
+    },
+    {
+      "customType": "regex",
+      "managerFilePatterns": [
+        "/immich/kustomization\\.ya?ml$/"
+      ],
+      "matchStrings": [
+        "repository:\\s+immich-app/postgres\\s+tag:\\s+(?<currentValue>\\S+)"
+      ],
+      "datasourceTemplate": "docker",
+      "depNameTemplate": "ghcr.io/immich-app/postgres",
+      "versioningTemplate": "loose"
     }
   ]
 }
