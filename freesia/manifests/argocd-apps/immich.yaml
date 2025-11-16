@@ -1,0 +1,19 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: immich
+  namespace: argocd
+spec:
+  destination:
+    server: https://kubernetes.default.svc
+  source:
+    path: freesia/manifests/immich
+    repoURL: https://github.com/suzutan/infra.git
+    targetRevision: HEAD
+  project: apps
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+    syncOptions:
+    - RespectIgnoreDifferences=true
