@@ -12,6 +12,9 @@ resources:
 - secret-n8n.yaml
 - service.yaml
 
+images:
+- name: n8nio/n8n
+  newTag: latest
 
 configMapGenerator:
 - literals:

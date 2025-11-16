@@ -12,6 +12,13 @@ resources:
 - server-pvc.yaml
 - server-service.yaml
 - valkey-secret.yaml
+
+images:
+- name: ghcr.io/immich-app/immich-server
+  newTag: v1.122.3
+- name: ghcr.io/immich-app/immich-machine-learning
+  newTag: v1.122.3
+
 helmCharts:
 # Immich は 公式の Helm チャートが用意されているが、実装が不十分なので手書きする
 # https://immich.app/docs/install/kubernetes/
