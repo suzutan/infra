@@ -3,12 +3,10 @@ kind: Ingress
 metadata:
   name: immich
   namespace: immich
-  annotations:
-    nginx.ingress.kubernetes.io/proxy-body-size: "0"
 spec:
   ingressClassName: cloudflare-tunnel
   rules:
-  - host: immich.harvestasya.org
+  - host: chronicle.harvestasya.org
     http:
       paths:
       - pathType: Prefix

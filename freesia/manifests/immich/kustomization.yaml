@@ -2,74 +2,74 @@ apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 namespace: immich
 resources:
-  # - namespace.yaml
-  - ml-deployment.yaml
-  - ml-pvc.yaml
-  - ml-service.yaml
-  - postgresql-secret.yaml
-  - server-deployment.yaml
-  - server-ingress.yaml
-  - server-pvc.yaml
-  - server-service.yaml
-  - valkey-secret.yaml
+# - namespace.yaml
+- ml-deployment.yaml
+- ml-pvc.yaml
+- ml-service.yaml
+- postgresql-secret.yaml
+- server-deployment.yaml
+- server-ingress.yaml
+- server-pvc.yaml
+- server-service.yaml
+- valkey-secret.yaml
 helmCharts:
-  # Immich は 公式の Helm チャートが用意されているが、実装が不十分なので手書きする
-  # https://immich.app/docs/install/kubernetes/
-  - name: valkey
-    releaseName: valkey
-    version: 5.0.8
-    repo: oci://registry-1.docker.io/bitnamicharts
-    valuesInline:
-      architecture: standalone
-      auth:
-        existingSecret: valkey-secret
-      global:
-        imageRegistry: public.ecr.aws
-        security:
-          # imageRegistry を変更するために必要
-          allowInsecureImages: true
-      primary:
-        extraEnvVars:
-          - name: TZ
-            value: Asia/Tokyo
-        persistence:
-          enabled: true
-        resourcesPreset: nano
-  - name: postgresql
-    releaseName: postgresql
-    version: 16.7.27
-    repo: oci://registry-1.docker.io/bitnamicharts
-    valuesInline:
-      auth:
-        database: immich
-        existingSecret: postgresql-secret
-        username: immich
-      image:
-        registry: ghcr.io
-        repository: immich-app/postgres
-        tag: 18-vectorchord0.5.3-pgvector0.8.1
-      global:
-        security:
-          # image を変更するために必要
-          allowInsecureImages: true
-      primary:
-        extraEnvVars:
-          - name: TZ
-            value: Asia/Tokyo
-        persistence:
-          enabled: true
-        resources:
-          limits:
-            cpu: 500m
-            memory: 1Gi
-        initdb:
-          args: --data-checksums
-          scripts:
-            init-extensions.sql: |
-              CREATE EXTENSION IF NOT EXISTS vchord CASCADE;
-              CREATE EXTENSION IF NOT EXISTS vector CASCADE;
-              CREATE EXTENSION IF NOT EXISTS vector CASCADE;
-              CREATE EXTENSION IF NOT EXISTS earthdistance CASCADE;
-              CREATE EXTENSION IF NOT EXISTS cube CASCADE;
-        containerSecurityContext:
-          readOnlyRootFilesystem: false
+# Immich は 公式の Helm チャートが用意されているが、実装が不十分なので手書きする
+# https://immich.app/docs/install/kubernetes/
+- name: valkey
+  releaseName: valkey
+  version: 5.0.8
+  repo: oci://registry-1.docker.io/bitnamicharts
+  valuesInline:
+    architecture: standalone
+    auth:
+      existingSecret: valkey-secret
+    global:
+      imageRegistry: public.ecr.aws
+      security:
+        # imageRegistry を変更するために必要
+        allowInsecureImages: true
+    primary:
+      extraEnvVars:
+      - name: TZ
+        value: Asia/Tokyo
+      persistence:
+        enabled: true
+      resourcesPreset: nano
+- name: postgresql
+  releaseName: postgresql
+  version: 16.7.27
+  repo: oci://registry-1.docker.io/bitnamicharts
+  valuesInline:
+    auth:
+      database: immich
+      existingSecret: postgresql-secret
+      username: immich
+    image:
+      registry: ghcr.io
+      repository: immich-app/postgres
+      tag: 18-vectorchord0.5.3-pgvector0.8.1
+    global:
+      security:
+        # image を変更するために必要
+        allowInsecureImages: true
+    primary:
+      extraEnvVars:
+      - name: TZ
+        value: Asia/Tokyo
+      persistence:
+        enabled: true
+      resources:
+        limits:
+          cpu: 500m
+          memory: 1Gi
+      initdb:
+        args: --data-checksums
+        scripts:
+          init-extensions.sql: |
+            CREATE EXTENSION IF NOT EXISTS vchord CASCADE;
+            CREATE EXTENSION IF NOT EXISTS vector CASCADE;
+            CREATE EXTENSION IF NOT EXISTS vector CASCADE;
+            CREATE EXTENSION IF NOT EXISTS earthdistance CASCADE;
+            CREATE EXTENSION IF NOT EXISTS cube CASCADE;
+      containerSecurityContext:
+        readOnlyRootFilesystem: false
