@@ -25,6 +25,10 @@ spec:
         ports:
         - containerPort: 2283
           name: http
+        - containerPort: 8081
+          name: metrics-api
+        - containerPort: 8082
+          name: metrics-micro
         env:
         - name: DB_HOSTNAME
           valueFrom:
@@ -64,6 +68,8 @@ spec:
           value: http://immich-machine-learning:3003
         - name: TZ
           value: Asia/Tokyo
+        - name: IMMICH_TELEMETRY_INCLUDE
+          value: all
         volumeMounts:
         - name: library
           mountPath: /usr/src/app/upload
@@ -72,8 +78,8 @@ spec:
             cpu: 100m
             memory: 512Mi
           limits:
-            cpu: "2"
-            memory: 2Gi
+            cpu: "4"
+            memory: 4Gi
         livenessProbe:
           httpGet:
             path: /api/server/ping

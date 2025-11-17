@@ -9,6 +9,7 @@ resources:
 - ml-service.yaml
 - server-deployment.yaml
 - server-ingress.yaml
+- server-metrics-service.yaml
 - server-pvc.yaml
 - server-service.yaml
 - valkey-secret.yaml
