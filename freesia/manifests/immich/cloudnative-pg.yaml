@@ -1,0 +1,20 @@
+apiVersion: postgresql.cnpg.io/v1
+kind: Cluster
+metadata:
+  name: immich-database
+  namespace: immich
+spec:
+  instances: 1
+  storage:
+    size: 20Gi
+  # microservices worker error: Error: The VectorChord extension version is 1.0.0, but Immich only supports >=0.3 <0.6.
+  # のため、vchordは1.0.0ではなく0.5.3を使う
+  imageName: ghcr.io/tensorchord/cloudnative-vectorchord:18.0-0.5.3
+  postgresql:
+    shared_preload_libraries:
+    - vchord.so
+  bootstrap:
+    initdb:
+      postInitApplicationSQL:
+      - CREATE EXTENSION IF NOT EXISTS vchord CASCADE;
+      - CREATE EXTENSION IF NOT EXISTS earthdistance CASCADE;
