@@ -5,47 +5,16 @@ metadata:
   namespace: immich
 spec:
   instances: 1
-
   storage:
     size: 20Gi
-    storageClass: nfs-client
-
-  imageName: ghcr.io/tensorchord/cloudnative-vectorchord:16.9-0.4.3
-
+  # microservices worker error: Error: The VectorChord extension version is 1.0.0, but Immich only supports >=0.3 <0.6.
+  # のため、vchordは1.0.0ではなく0.5.3を使う
+  imageName: ghcr.io/tensorchord/cloudnative-vectorchord:18.0-0.5.3
   postgresql:
     shared_preload_libraries:
     - vchord.so
-    parameters:
-      max_connections: "100"
-      shared_buffers: 256MB
-      effective_cache_size: 1GB
-      maintenance_work_mem: 64MB
-      checkpoint_completion_target: "0.9"
-      wal_buffers: 7864kB
-      default_statistics_target: "100"
-      random_page_cost: "1.1"
-      effective_io_concurrency: "200"
-      work_mem: 2621kB
-      min_wal_size: 1GB
-      max_wal_size: 4GB
-
   bootstrap:
     initdb:
-      database: immich
-      owner: immich
-      secret:
-        name: postgresql-secret
       postInitApplicationSQL:
       - CREATE EXTENSION IF NOT EXISTS vchord CASCADE;
       - CREATE EXTENSION IF NOT EXISTS earthdistance CASCADE;
-
-  resources:
-    requests:
-      cpu: 100m
-      memory: 512Mi
-    limits:
-      cpu: 500m
-      memory: 1Gi
-
-  monitoring:
-    enablePodMonitor: false
