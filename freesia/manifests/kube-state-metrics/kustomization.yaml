@@ -1,7 +1,7 @@
 apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 
-namespace: temporis
+namespace: kube-system
 resources:
 - cr.yaml
 - crb.yaml
@@ -17,7 +17,3 @@ labels:
 - pairs:
     app.kubernetes.io/name: kube-state-metrics
   includeSelectors: true
-- pairs:
-    app.kubernetes.io/component: kube-state-metrics
-    app.kubernetes.io/part-of: temporis
-  includeSelectors: false

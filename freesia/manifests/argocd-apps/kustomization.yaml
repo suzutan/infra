@@ -13,6 +13,7 @@ resources:
 - echoserver.yaml
 - hsr-auto-claimer.yaml
 - immich.yaml
+- kube-state-metrics.yaml
 - n8n.yaml
 - navidrome.yaml
 - nfs-subdir-external-provisioner.yaml
