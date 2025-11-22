@@ -58,3 +58,27 @@ output "ssh_hostname" {
   description = "SSH hostname to connect through Cloudflare Tunnel"
   value       = "ssh.${local.zone_name}"
 }
+
+# Cloudflare Zero Trust Access Application for SSH
+resource "cloudflare_zero_trust_access_application" "ssh" {
+  account_id                = var.cloudflare_account_id
+  name                      = "SSH Access"
+  domain                    = "ssh.${local.zone_name}"
+  type                      = "self_hosted"
+  session_duration          = "24h"
+  auto_redirect_to_identity = true
+  allowed_idps              = [cloudflare_zero_trust_access_identity_provider.authentik.id]
+
+  policies = [
+    {
+      decision = "allow"
+      include = [
+        {
+          login_method = {
+            id = cloudflare_zero_trust_access_identity_provider.authentik.id
+          }
+        }
+      ]
+    }
+  ]
+}
