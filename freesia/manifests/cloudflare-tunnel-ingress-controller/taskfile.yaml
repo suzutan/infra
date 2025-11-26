@@ -22,7 +22,7 @@ tasks:
   apply:
     desc: apply k8s manifests
     cmds:
-    - kustomize build --enable-helm . | kubectl apply -f-
+    - kustomize build --enable-helm . | kubectl apply --server-side -f-
   delete:
     desc: delete k8s manifests
     cmds:

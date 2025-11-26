@@ -11,11 +11,11 @@ tasks:
   apply:
     desc: apply k8s manifests
     cmds:
-    - kustomize build --enable-helm . | kubectl apply -f-
+    - kustomize build --enable-helm . | kubectl apply --server-side -f-
   apply-dry-run:
     desc: apply k8s manifests
     cmds:
-    - kustomize build --enable-helm . | kubectl apply -f- --dry-run=server
+    - kustomize build --enable-helm . | kubectl apply --server-side -f- --dry-run=server
   delete:
     desc: delete k8s manifests
     cmds:
