@@ -1,0 +1,23 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: artonelico
+  annotations:
+    cloudflare-tunnel-ingress-controller.strrl.dev/backend-protocol: https
+    cloudflare-tunnel-ingress-controller.strrl.dev/http-host-header: pve02.ssa.suzutan.jp:8006
+    cloudflare-tunnel-ingress-controller.strrl.dev/origin-server-name: pve02.ssa.suzutan.jp
+    # Skip TLS verification for self-signed certificate
+    cloudflare-tunnel-ingress-controller.strrl.dev/no-tls-verify: "true"
+spec:
+  ingressClassName: cloudflare-tunnel
+  rules:
+  - host: artonelico.harvestasya.org
+    http:
+      paths:
+      - backend:
+          service:
+            name: artonelico-proxy
+            port:
+              name: https
+        path: /
+        pathType: Prefix

@@ -1,0 +1,34 @@
+version: "3"
+
+tasks:
+  fmt:
+    desc: format terraform files
+    dir: "{{.USER_WORKING_DIR}}"
+    cmds:
+    - terraform fmt -recursive .
+  init:
+    desc: initialize terraform
+    dir: "{{.USER_WORKING_DIR}}"
+    cmds:
+    - terraform init
+  plan:
+    desc: plan terraform changes
+    dir: "{{.USER_WORKING_DIR}}"
+    cmds:
+    - terraform fmt -recursive ..
+    - terraform init
+    - terraform plan
+  apply:
+    desc: apply terraform changes
+    dir: "{{.USER_WORKING_DIR}}"
+    cmds:
+    - terraform fmt -recursive ..
+    - terraform init
+    - terraform apply
+  destroy:
+    desc: destroy terraform resources
+    dir: "{{.USER_WORKING_DIR}}"
+    cmds:
+    - terraform fmt -recursive ..
+    - terraform init
+    - terraform destroy
