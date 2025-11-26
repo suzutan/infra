@@ -1,106 +1,395 @@
 # CLAUDE.md
 
-このファイルは、Claude AIがこのリポジトリで作業する際のガイドラインとルールを定義しています。
+This file defines guidelines and rules for Claude Code when working on this repository.
 
-## リポジトリの概要
+**Important: All conversations with the user should be conducted in Japanese (日本語).**
 
-このリポジトリは個人のホームサーバー環境のInfrastructure as Code (IaC)を管理しています。
+## Repository Overview
 
-### 主要なコンポーネント
+This repository manages Infrastructure as Code (IaC) for a personal HomeLab environment.
 
-- **Kubernetes**: `freesia/` ディレクトリ配下
-  - ArgoCD を使用した GitOps 環境
-  - Kustomize による manifest 管理
-  - 各種アプリケーションの Kubernetes manifest
-  
-- **Terraform**: `terraform/` ディレクトリ配下
-  - Cloudflare DNS 設定
-  - その他のクラウドインフラストラクチャ
+**For detailed documentation, see the `docs/` directory:**
 
-## 作業時のルール
+- [ARCHITECTURE.md](docs/ARCHITECTURE.md) - Overall architecture
+- [NETWORK_TOPOLOGY.md](docs/NETWORK_TOPOLOGY.md) - Network configuration
+- [APPLICATION_CATALOG.md](docs/APPLICATION_CATALOG.md) - Application catalog
+- [DATA_FLOW.md](docs/DATA_FLOW.md) - Data flows
+- [SECRETS_MANAGEMENT.md](docs/SECRETS_MANAGEMENT.md) - Secrets management
+- [AGENT_MANAGEMENT.md](docs/AGENT_MANAGEMENT.md) - Agent team structure and workflow
 
-### 1. ファイル形式とスタイル
+## Quick Reference
 
-- **YAML ファイル**:
-  - インデントは2スペースを使用
-  - `yamlfmt` でフォーマットされている必要がある
-  - Kubernetes manifest は標準的な記法に従う
-  
-- **Terraform**:
-  - HCL2 形式に従う
-  - モジュール化を推奨
+### Environment Information
 
-### 2. コミットメッセージ
+| Item | Value |
+|------|-------|
+| Kubernetes Cluster Name | freesia |
+| Primary Domains | harvestasya.org, suzutan.jp |
+| GitOps | ArgoCD |
+| Secrets Management | 1Password Operator |
+| Ingress | Traefik + Cloudflare Tunnel |
+| Identity Provider | Authentik |
+| Monitoring | Prometheus + Grafana (temporis namespace) |
 
-- Conventional Commits 形式を使用
-- 例: `feat:`, `fix:`, `chore:`, `docs:` など
-- Renovate が管理する依存関係の更新は自動化されている
+### Directory Structure
 
-### 3. 依存関係管理
+```
+/infra
+├── freesia/                      # Kubernetes manifests
+│   ├── init/                     # Initialization scripts
+│   │   └── onepassword-operator/ # 1Password initial setup
+│   └── manifests/                # Application manifests
+│       ├── argocd/               # ArgoCD configuration
+│       ├── argocd-apps/          # ArgoCD Application definitions
+│       ├── authentik/            # Identity provider
+│       ├── traefik/              # Ingress Controller
+│       ├── cert-manager/         # TLS certificate management
+│       ├── cnpg-operator/        # PostgreSQL Operator
+│       ├── onepassword/          # Secrets management
+│       ├── temporis/             # Monitoring stack
+│       ├── immich/               # Photo management
+│       ├── n8n/                  # Workflow automation
+│       ├── navidrome/            # Music streaming
+│       └── [other applications]
+├── terraform/                    # Cloud infrastructure
+│   ├── suzutan.jp/               # DNS/LAN configuration
+│   ├── harvestasya.org/          # Cloudflare Tunnel/OIDC
+│   └── modules/                  # Shared modules
+│       └── fastmail/             # Email configuration
+├── docs/                         # Documentation
+├── aqua.yaml                     # Tool version management
+├── renovate.json                 # Auto-update configuration
+└── taskfile.yaml                 # Task definitions
+```
 
-- **aqua.yaml**: 開発ツールのバージョン管理
-  - kubectl, helm, terraform, kustomize など
-- **renovate.json**: 依存関係の自動更新設定
-  - 自動マージが有効
-  - セマンティックコミットを使用
+## Key Components
 
-### 4. Kubernetes 作業時の注意点
+### Kubernetes (freesia/)
 
-- 新しいアプリケーションは `freesia/manifests/` 配下に配置
-- ArgoCD Application は `freesia/manifests/argocd-apps/` に定義
-- Kustomization を使用してマニフェストを構成
-- 以下のパターンに従う:
-  - `namespace.yaml`: 名前空間の定義
-  - `kustomization.yaml`: Kustomize 設定
-  - 適切なディレクトリ構造を維持
+- **ArgoCD**: GitOps management (v9.1.3)
+- **Traefik**: Ingress Controller (v37.4.0, 2 replicas)
+- **Authentik**: Identity Provider (2025.10.2)
+- **cert-manager**: TLS certificate management (v1.19.1)
+- **CNPG Operator**: PostgreSQL management (v0.26.1)
+- **1Password Operator**: Secrets management (v2.0.5)
 
-### 5. セキュリティ
+### Terraform (terraform/)
 
-- **シークレット管理**:
-  - 1Password Operator を使用
-  - 直接的なシークレットのコミットは禁止
-  - シークレット名は `secret-` プレフィックスを使用
-  
-- **証明書管理**:
-  - cert-manager を使用
-  - Let's Encrypt または自己署名証明書
+- **Cloudflare DNS**: harvestasya.org, suzutan.jp
+- **Cloudflare Tunnel**: External access tunnels
+- **Zero Trust Access**: Access control including SSH
 
-### 6. ネットワーク
+## Working Rules
 
-- **Ingress**:
-  - Traefik を使用
-  - IngressRoute リソースを使用
-  
-- **DNS**:
-  - Cloudflare で管理
-  - Terraform で定義
+### 1. File Formats and Style
 
-### 7. モニタリング
+**YAML Files:**
+- Use 2-space indentation
+- Format with `task yamlfmt`
+- Follow standard Kubernetes manifest conventions
 
-- Prometheus/Grafana スタック (`temporis/` 配下)
-- メトリクスの収集と可視化
+**Terraform:**
+- Use HCL2 format
+- Prefer modularization
 
-## 推奨される作業フロー
+### 2. Commit Messages
 
-1. 変更前に既存のパターンを確認
-2. 同様のコンポーネントの実装を参照
-3. Kustomize を使用してマニフェストを管理
-4. ArgoCD による自動同期を考慮
-5. 適切なラベルとアノテーションを使用
+Use Conventional Commits format:
+- `feat:` - New feature
+- `fix:` - Bug fix
+- `chore:` - Maintenance
+- `docs:` - Documentation
 
-## テスト
+### 3. Adding New Applications
 
-- `task yamlfmt` で YAML のフォーマットチェック
-- Kubernetes manifest は `kubectl --dry-run=client` でバリデーション
-- Terraform は `terraform plan` で変更確認
+1. Create `freesia/manifests/<app-name>/` directory
+2. Required files:
+   - `namespace.yaml` - Namespace definition
+   - `kustomization.yaml` - Kustomize configuration
+3. Add ArgoCD Application to `freesia/manifests/argocd-apps/`
+4. Use `OnePasswordItem` for secrets
 
-## 禁止事項
+**Manifest Templates:**
 
-- 本番環境のシークレットを直接コミットしない
-- 既存の命名規則から逸脱しない
-- ArgoCD の自動同期を無効化しない（特別な理由がない限り）
-- 未承認のサービスやツールを追加しない
+```yaml
+# namespace.yaml
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: <app-name>
+```
 
-## ディレクトリ構造の維持
+```yaml
+# kustomization.yaml
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+namespace: <app-name>
+resources:
+  - namespace.yaml
+  - deployment.yaml
+  - service.yaml
+```
 
-現在のディレクトリ構造を維持し、新しいコンポーネントは適切な場所に配置してください。不明な場合は、類似のコンポーネントの配置を参考にしてください。
+### 4. Secrets Management
+
+**Required Rules:**
+- Use 1Password Operator
+- Direct secret commits are **prohibited**
+- Use `secret-` prefix for secret names
+
+**OnePasswordItem Definition:**
+
+```yaml
+apiVersion: onepassword.com/v1
+kind: OnePasswordItem
+metadata:
+  name: <app>-secret
+  namespace: <namespace>
+spec:
+  itemPath: "vaults/5mixaulvwor6zfvbfmtqlksdy4/items/<item-name>"
+```
+
+### 5. Ingress Configuration
+
+**Traefik IngressRoute (internal/authentication required):**
+
+```yaml
+apiVersion: traefik.io/v1alpha1
+kind: IngressRoute
+metadata:
+  name: <app>
+  namespace: <namespace>
+spec:
+  entryPoints:
+    - websecure
+  routes:
+    - match: Host(`<app>.harvestasya.org`)
+      kind: Rule
+      services:
+        - name: <service>
+          port: <port>
+      middlewares:
+        - name: security-headers
+          namespace: traefik
+        - name: authentik-forward-auth  # If authentication required
+          namespace: traefik
+  tls:
+    secretName: harvestasya-wildcard-tls
+```
+
+**Cloudflare Tunnel Ingress (external exposure):**
+
+```yaml
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: <app>
+  namespace: <namespace>
+  annotations:
+    kubernetes.io/ingress.class: cloudflare-tunnel
+spec:
+  rules:
+    - host: <app>.harvestasya.org
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: <service>
+                port:
+                  number: <port>
+```
+
+### 6. Database (PostgreSQL)
+
+Use CloudNative PostgreSQL (CNPG):
+
+```yaml
+apiVersion: postgresql.cnpg.io/v1
+kind: Cluster
+metadata:
+  name: <app>-database
+  namespace: <namespace>
+spec:
+  instances: 1
+  storage:
+    size: 1Gi
+    storageClass: nfs-client
+```
+
+### 7. Storage
+
+**StorageClass:** `nfs-client`
+
+```yaml
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: <app>-data
+  namespace: <namespace>
+spec:
+  accessModes:
+    - ReadWriteOnce
+  storageClassName: nfs-client
+  resources:
+    requests:
+      storage: 1Gi
+```
+
+## Workflow
+
+### Applying Changes
+
+1. Push changes to repository
+2. Renovate auto-updates dependencies (as needed)
+3. ArgoCD auto-syncs (within 2-3 minutes)
+4. Verify status with Prometheus/Grafana
+
+### Testing
+
+```bash
+# YAML format check
+task yamlfmt
+
+# Kubernetes manifest validation
+kubectl apply --dry-run=client -f <manifest.yaml>
+
+# Terraform change verification
+cd terraform/<directory>
+terraform plan
+```
+
+## Prohibited Actions
+
+- Do not commit production secrets directly
+- Do not deviate from existing naming conventions
+- Do not disable ArgoCD auto-sync (without special reason)
+- Do not add unapproved services or tools
+- Do not use Helm Charts directly; wrap with Kustomize
+
+## Reference Implementations
+
+When adding new applications, refer to these existing implementations:
+
+| Pattern | Reference Directory |
+|---------|---------------------|
+| Helm + Kustomize | `freesia/manifests/traefik/` |
+| Custom manifest + DB | `freesia/manifests/n8n/` |
+| Authenticated Ingress | `freesia/manifests/navidrome/` |
+| Monitoring stack | `freesia/manifests/temporis/` |
+| CronJob | `freesia/manifests/ddns/` |
+
+## Troubleshooting
+
+### ArgoCD Sync Errors
+
+```bash
+# Check ArgoCD logs
+kubectl logs -n argocd -l app.kubernetes.io/name=argocd-application-controller
+
+# Check application status
+kubectl get application -n argocd <app-name> -o yaml
+```
+
+### Secrets Not Created
+
+```bash
+# Check 1Password Operator logs
+kubectl logs -n onepassword -l app=onepassword-connect
+
+# Check OnePasswordItem status
+kubectl get onepassworditem -n <namespace>
+```
+
+### Pod Not Starting
+
+```bash
+# Check Pod events
+kubectl describe pod -n <namespace> <pod-name>
+
+# Check logs
+kubectl logs -n <namespace> <pod-name>
+```
+
+## Tool Versions (aqua.yaml)
+
+| Tool | Version |
+|------|---------|
+| kustomize | v5.7.1 |
+| kubectl | v1.23.0 |
+| helm | v3.19.2 |
+| terraform | v1.14.0 |
+
+## Agent-Based Development Workflow
+
+This repository uses specialized sub-agents for different tasks. See [AGENT_MANAGEMENT.md](docs/AGENT_MANAGEMENT.md) for full details.
+
+### Available Agents (Slash Commands)
+
+| Command | Agent | Purpose |
+|---------|-------|---------|
+| `/infra` | Infrastructure Agent | Kubernetes/Terraform changes |
+| `/security` | Security Agent | Security auditing, secrets review |
+| `/monitoring` | Monitoring Agent | Prometheus/Grafana configuration |
+| `/review` | Review Agent | Pre-commit validation |
+| `/docs` | Documentation Agent | Documentation updates |
+
+### Standard Task Flow
+
+```
+User Request
+    │
+    ▼
+┌─────────────────┐
+│  Explore/Plan   │  Understand current state
+└────────┬────────┘
+         │
+         ▼
+┌─────────────────┐
+│  /infra         │  Make infrastructure changes
+└────────┬────────┘
+         │
+    ┌────┴────┐
+    ▼         ▼
+┌───────┐ ┌──────────┐
+│/security│ │/monitoring│  Parallel validation
+└───┬───┘ └────┬─────┘
+    └────┬─────┘
+         ▼
+┌─────────────────┐
+│  /review        │  Final validation
+└────────┬────────┘
+         │
+         ▼
+┌─────────────────┐
+│  /docs          │  Update documentation
+└────────┬────────┘
+         │
+         ▼
+     Commit
+```
+
+### Usage Examples
+
+```bash
+# Add new application
+/infra Add new application "myapp" with PostgreSQL database
+
+# Security audit before merge
+/security Audit freesia/manifests/myapp/
+
+# Validate changes
+/review Check all files in freesia/manifests/myapp/
+
+# Update docs after changes
+/docs Update APPLICATION_CATALOG.md with myapp
+```
+
+### Task Management
+
+Always use `TodoWrite` to track multi-step tasks:
+1. Break down complex tasks into steps
+2. Mark tasks `in_progress` when starting
+3. Mark tasks `completed` immediately when done
+4. Only one task should be `in_progress` at a time
