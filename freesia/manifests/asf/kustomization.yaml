@@ -14,7 +14,7 @@ resources:
 
 images:
 - name: justarchi/archisteamfarm
-  newTag: 6.3.0.1
+  newTag: 6.3.0.2
 
 labels:
 - pairs:
