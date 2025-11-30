@@ -4,6 +4,8 @@ metadata:
   name: default
 
 spec:
+  defaultCertificate:
+    secretName: harvestasya-org-wildcard-tls
   certificates:
   - secretName: harvestasya-org-wildcard-tls
   - secretName: suzutan-jp-wildcard-tls

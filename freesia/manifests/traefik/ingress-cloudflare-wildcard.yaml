@@ -5,6 +5,7 @@ metadata:
   namespace: traefik
   annotations:
     cloudflare-tunnel-ingress-controller.strrl.dev/backend-protocol: https
+    cloudflare-tunnel-ingress-controller.strrl.dev/no-tls-verify: "true"
 spec:
   ingressClassName: cloudflare-tunnel
   rules:
