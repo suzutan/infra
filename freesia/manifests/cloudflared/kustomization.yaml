@@ -4,15 +4,14 @@ kind: Kustomization
 namespace: cloudflared
 
 resources:
+- deployment.yaml
 - namespace.yaml
 - secret.yaml
-- deployment.yaml
-
-images:
-- name: cloudflare/cloudflared
-  newTag: "2024.11.1"
 
 labels:
-- pairs:
+- includeSelectors: true
+  pairs:
     app.kubernetes.io/name: cloudflared
-  includeSelectors: true
+images:
+- name: cloudflare/cloudflared
+  newTag: 2025.11.1
