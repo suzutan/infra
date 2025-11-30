@@ -12,9 +12,11 @@ resources:
 - cnpg-operator.yaml
 - ddns.yaml
 - echoserver.yaml
+- echoserver-vela.yaml
 - hsr-auto-claimer.yaml
 - immich.yaml
 - kube-state-metrics.yaml
+- kubevela.yaml
 - n8n.yaml
 - navidrome.yaml
 - nfs-subdir-external-provisioner.yaml
