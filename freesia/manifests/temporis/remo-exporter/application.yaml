@@ -1,0 +1,25 @@
+apiVersion: core.oam.dev/v1beta1
+kind: Application
+metadata:
+  name: remo-exporter
+  namespace: temporis
+spec:
+  components:
+  - name: remo-exporter
+    type: webservice
+    properties:
+      image: kenfdev/remo-exporter:latest
+      port: 9352
+      cpu: "100m"
+      memory: 50Mi
+      env:
+      - name: OAUTH_TOKEN
+        valueFrom:
+          secretKeyRef:
+            name: nature-remo-token
+            key: OAUTH_TOKEN
+    traits:
+    - type: traefik-route
+      properties:
+        domain: remo-exporter.harvestasya.org
+        port: 9352
