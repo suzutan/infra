@@ -1,0 +1,22 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: traefik-cloudflare-wildcard
+  namespace: traefik
+  annotations:
+    cloudflare-tunnel-ingress-controller.strrl.dev/backend-protocol: https
+    cloudflare-tunnel-ingress-controller.strrl.dev/http-host-header: "*.harvestasya.org"
+    cloudflare-tunnel-ingress-controller.strrl.dev/origin-server-name: "*.harvestasya.org"
+spec:
+  ingressClassName: cloudflare-tunnel
+  rules:
+  - host: "*.harvestasya.org"
+    http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: traefik
+            port:
+              number: 443

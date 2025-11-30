@@ -5,6 +5,7 @@ namespace: traefik
 
 resources:
 - namespace.yaml
+- ingress-cloudflare-wildcard.yaml
 - config/middlewares/auto-detect-content-type.yaml
 - config/middlewares/ban-robots.yaml
 - config/middlewares/circuit-breaker.yaml

@@ -4,22 +4,16 @@ kind: Kustomization
 namespace: asf
 
 resources:
-- ingress.yaml
-- ingressroute.yaml
-- deployment.yaml
+# K8s native resources
 - namespace.yaml
-- persistentvolumeclaim.yaml
-- service.yaml
-- service-traefik-proxy.yaml
+- pvc.yaml
+- ingressroute.yaml
 
-images:
-- name: justarchi/archisteamfarm
-  newTag: 6.3.0.2
+# KubeVela Application
+- application.yaml
 
 labels:
 - pairs:
     app.kubernetes.io/name: asf
   includeSelectors: true
   includeTemplates: true
-
-

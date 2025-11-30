@@ -1,0 +1,27 @@
+apiVersion: core.oam.dev/v1beta1
+kind: Application
+metadata:
+  name: asf
+  namespace: asf
+spec:
+  components:
+  - name: asf
+    type: webservice
+    properties:
+      image: justarchi/archisteamfarm:6.3.0.2
+      port: 1242
+
+      env:
+      - name: TZ
+        value: Asia/Tokyo
+
+      volumeMounts:
+        pvc:
+        - name: config
+          mountPath: /app/config
+          claimName: archisteamfarm-config
+
+    traits:
+    - type: scaler
+      properties:
+        replicas: 1
