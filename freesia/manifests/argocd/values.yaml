@@ -5,9 +5,5 @@ dex:
 
 server:
   ingress:
-    enabled: true
-    tls: true
-    annotations:
-      cloudflare-tunnel-ingress-controller.strrl.dev/backend-protocol: https
-    ingressClassName: "cloudflare-tunnel"
+    enabled: false
 
