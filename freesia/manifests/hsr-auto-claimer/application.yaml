@@ -1,0 +1,43 @@
+apiVersion: core.oam.dev/v1beta1
+kind: Application
+metadata:
+  name: hsr-auto-claimer
+  namespace: hsr-auto-claimer
+spec:
+  components:
+  - name: hsr-auto-claimer
+    type: cron-task
+    properties:
+      image: ghcr.io/slashnephy/auto-claimer:latest
+      schedule: "0 0 * * *"
+      concurrencyPolicy: Forbid
+      backoffLimit: 0
+      restart: Never
+      env:
+      - name: DATABASE_DSN
+        value: /data/auto-claimer.db
+      - name: DISCORD_WEBHOOK_URL
+        valueFrom:
+          secretKeyRef:
+            name: hsr-auto-claimer-config
+            key: DISCORD_WEBHOOK_URL
+      - name: GAMES
+        valueFrom:
+          secretKeyRef:
+            name: hsr-auto-claimer-config
+            key: GAMES
+      - name: HOYOVERSE_EMAIL
+        valueFrom:
+          secretKeyRef:
+            name: hsr-auto-claimer-config
+            key: HOYOVERSE_EMAIL
+      - name: HOYOVERSE_PASSWORD
+        valueFrom:
+          secretKeyRef:
+            name: hsr-auto-claimer-config
+            key: HOYOVERSE_PASSWORD
+      volumeMounts:
+        pvc:
+        - name: data
+          mountPath: /data
+          claimName: hsr-auto-claimer

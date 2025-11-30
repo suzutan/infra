@@ -5,10 +5,5 @@ namespace: ddns
 
 resources:
 - namespace.yaml
-- deployment.yaml
+- application.yaml
 - secret-cloudflare-ddns.yaml
-
-labels:
-- includeSelectors: true
-  pairs:
-    app: ddns
