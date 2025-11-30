@@ -112,16 +112,42 @@ spec:
 
 ### Cloudflare Tunnel Ingress
 
+#### ワイルドカードIngress (Traefik経由)
 ```yaml
-# 典型的なTunnel Ingress設定
+# traefik/ingress-cloudflare-wildcard.yaml
+# Authentik認証が必要なアプリはこのルートを経由
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: traefik-cloudflare-wildcard
+  namespace: traefik
+  annotations:
+    cloudflare-tunnel-ingress-controller.strrl.dev/backend-protocol: https
+spec:
+  ingressClassName: cloudflare-tunnel
+  rules:
+  - host: "*.harvestasya.org"
+    http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: traefik
+            port:
+              number: 443
+```
+
+#### 直接アクセスIngress
+```yaml
+# 認証不要なアプリは直接Serviceにアクセス
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
   name: example
   namespace: example
-  annotations:
-    kubernetes.io/ingress.class: cloudflare-tunnel
 spec:
+  ingressClassName: cloudflare-tunnel
   rules:
     - host: example.harvestasya.org
       http:
@@ -137,20 +163,29 @@ spec:
 
 ## 公開エンドポイント一覧
 
-| ホスト名 | アプリケーション | Ingress Type | 認証 | ポート |
-|---------|----------------|--------------|------|-------|
-| chronicle.harvestasya.org | Immich | CF Tunnel | なし | 443 |
-| grathnode.harvestasya.org | Authentik | CF Tunnel | - | 443 |
-| reyvateils.harvestasya.org | n8n | CF Tunnel | なし | 443 |
-| navidrome.harvestasya.org | Navidrome | Traefik | Authentik | 443 |
-| navidrome-filebrowser.harvestasya.org | FileBrowser | CF Tunnel | なし | 443 |
-| asf.harvestasya.org | ArchiSteamFarm | CF Tunnel | なし | 443 |
-| traefik.harvestasya.org | Traefik Dashboard | Traefik | Authentik | 443 |
-| prometheus.harvestasya.org | Prometheus | CF Tunnel | なし | 443 |
-| grafana.harvestasya.org | Grafana | CF Tunnel | なし | 443 |
-| echoserver.harvestasya.org | EchoServer | CF Tunnel | なし | 443 |
-| argocd.harvestasya.org | ArgoCD | CF Tunnel | Authentik OIDC | 443 |
-| ssh.harvestasya.org | SSH Access | CF Tunnel | Zero Trust | 22 |
+### ワイルドカード経由 (Traefik → IngressRoute)
+
+| ホスト名 | アプリケーション | 認証 |
+|---------|----------------|------|
+| asf.harvestasya.org | ArchiSteamFarm | Authentik Forward Auth |
+| navidrome.harvestasya.org | Navidrome | Authentik Forward Auth |
+| navidrome-filebrowser.harvestasya.org | FileBrowser | Authentik Forward Auth |
+| prometheus.harvestasya.org | Prometheus | Authentik Forward Auth |
+| traefik.harvestasya.org | Traefik Dashboard | Authentik Forward Auth |
+
+### 直接アクセス (CF Tunnel → Service)
+
+| ホスト名 | アプリケーション | 認証 |
+|---------|----------------|------|
+| chronicle.harvestasya.org | Immich | アプリ内認証 |
+| grathnode.harvestasya.org | Authentik | - |
+| reyvateils.harvestasya.org | n8n | アプリ内認証 |
+| grafana.harvestasya.org | Grafana | アプリ内認証 |
+| influxdb2.harvestasya.org | InfluxDB | アプリ内認証 |
+| echoserver.harvestasya.org | EchoServer | なし |
+| argocd.harvestasya.org | ArgoCD | Authentik OIDC |
+| artonelico.harvestasya.org | Proxmox (外部) | Proxmox認証 |
+| ssh.harvestasya.org | SSH Access | Zero Trust |
 
 ## Traefik Middleware
 

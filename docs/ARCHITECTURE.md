@@ -84,6 +84,33 @@
 - **バージョン**: v0.0.21
 - **用途**: 外部公開エンドポイント管理
 
+#### Ingress経路パターン
+
+```
+Internet → Cloudflare → cloudflare-tunnel-ingress-controller
+                                    │
+            ┌───────────────────────┼───────────────────────┐
+            ▼                       ▼                       ▼
+      ワイルドカード           具体的host              具体的host
+    *.harvestasya.org      chronicle...            grafana...
+            │               (immich直接)           (grafana直接)
+            ▼
+         Traefik
+            │
+            ▼
+      IngressRoute
+    (Authentik認証)
+            │
+      ┌─────┼─────┐
+      ▼     ▼     ▼
+     asf navidrome prometheus
+```
+
+| パターン | 対象アプリ | 認証 |
+|---------|-----------|------|
+| ワイルドカード → Traefik | asf, navidrome, prometheus | Authentik Forward Auth |
+| 直接アクセス | immich, grafana, influxdb, echoserver | アプリ内認証 or なし |
+
 ### 3. Core Services
 
 | サービス | 名前空間 | バージョン | 用途 |
@@ -93,6 +120,7 @@
 | cert-manager | cert-manager | v1.19.1 | TLS証明書管理 |
 | CNPG Operator | cnpg-system | v0.26.1 | PostgreSQL管理 |
 | 1Password Operator | onepassword | v2.0.5 | シークレット管理 |
+| KubeVela | vela-system | v1.10.5 | アプリケーション抽象化 |
 
 ### 4. Application Layer
 
