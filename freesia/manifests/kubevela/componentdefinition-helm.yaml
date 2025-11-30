@@ -1,0 +1,71 @@
+apiVersion: core.oam.dev/v1beta1
+kind: ComponentDefinition
+metadata:
+  name: helm
+  namespace: vela-system
+  annotations:
+    definition.oam.dev/description: "Deploy a Helm chart using FluxCD HelmRelease"
+spec:
+  workload:
+    type: autodetects.core.oam.dev
+  schematic:
+    cue:
+      template: |
+        output: {
+          apiVersion: "source.toolkit.fluxcd.io/v1"
+          kind:       "HelmRepository"
+          metadata: {
+            name: context.name + "-repo"
+          }
+          spec: {
+            interval: parameter.interval
+            url:      parameter.repoUrl
+            if parameter.repoType != _|_ {
+              type: parameter.repoType
+            }
+          }
+        }
+
+        outputs: release: {
+          apiVersion: "helm.toolkit.fluxcd.io/v2"
+          kind:       "HelmRelease"
+          metadata: {
+            name: context.name
+          }
+          spec: {
+            interval: parameter.interval
+            chart: {
+              spec: {
+                chart:   parameter.chart
+                version: parameter.version
+                sourceRef: {
+                  kind: "HelmRepository"
+                  name: context.name + "-repo"
+                }
+              }
+            }
+            if parameter.values != _|_ {
+              values: parameter.values
+            }
+          }
+        }
+
+        parameter: {
+          // +usage=Helm repository URL
+          repoUrl: string
+
+          // +usage=Helm repository type (default, oci)
+          repoType?: string
+
+          // +usage=Chart name
+          chart: string
+
+          // +usage=Chart version
+          version: string
+
+          // +usage=Reconciliation interval
+          interval: *"5m" | string
+
+          // +usage=Helm values
+          values?: {...}
+        }

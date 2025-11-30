@@ -9,6 +9,7 @@ resources:
 - secret-authentik.yaml
 - secret-authentik-redis.yaml
 - secret-authentik-postgresql.yaml
+- ingressroute.yaml
 
 helmCharts:
 # https://artifacthub.io/packages/helm/goauthentik/authentik

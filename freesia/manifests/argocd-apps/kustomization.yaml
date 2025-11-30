@@ -12,7 +12,7 @@ resources:
 - cnpg-operator.yaml
 - ddns.yaml
 - echoserver.yaml
-- echoserver-vela.yaml
+- fluxcd.yaml
 - hsr-auto-claimer.yaml
 - immich.yaml
 - kube-state-metrics.yaml

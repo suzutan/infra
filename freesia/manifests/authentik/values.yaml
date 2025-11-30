@@ -29,10 +29,7 @@ server:
   replicas: 2
 
   ingress:
-    enabled: true
-    ingressClassName: "cloudflare-tunnel"
-    hosts:
-    - grathnode.harvestasya.org
+    enabled: false
 
   deploymentAnnotations:
     operator.1password.io/auto-restart: "true"

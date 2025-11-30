@@ -2,7 +2,7 @@ apiVersion: core.oam.dev/v1beta1
 kind: Application
 metadata:
   name: echoserver
-  namespace: echoserver-vela
+  namespace: echoserver
 spec:
   components:
   - name: echoserver
@@ -13,11 +13,7 @@ spec:
       cpu: "100m"
       memory: 100Mi
     traits:
-    - type: gateway
+    - type: traefik-route
       properties:
-        class: cloudflare-tunnel
-        classInSpec: true
-        domain: echoserver-vela.harvestasya.org
-        http:
-          "/": 8080
-        pathType: Prefix
+        domain: echoserver.harvestasya.org
+        port: 8080

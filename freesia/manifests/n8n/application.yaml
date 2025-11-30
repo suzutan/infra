@@ -93,12 +93,8 @@ spec:
     - type: scaler
       properties:
         replicas: 1
-    # Ingress設定
-    - type: gateway
+    # Traefik IngressRoute
+    - type: traefik-route
       properties:
-        class: cloudflare-tunnel
-        classInSpec: true
         domain: reyvateils.harvestasya.org
-        http:
-          "/": 5678
-        pathType: Prefix
+        port: 5678

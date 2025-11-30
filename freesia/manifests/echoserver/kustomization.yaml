@@ -4,12 +4,5 @@ kind: Kustomization
 namespace: echoserver
 
 resources:
-- deployment.yaml
-- ingressroute.yaml
 - namespace.yaml
-- service.yaml
-
-labels:
-- includeSelectors: true
-  pairs:
-    app: echoserver
+- application.yaml

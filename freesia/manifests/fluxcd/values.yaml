@@ -1,0 +1,21 @@
+# FluxCD Helm values
+# https://github.com/fluxcd-community/helm-charts/tree/main/charts/flux2
+
+# Enable only helm-controller and source-controller for Helm support
+helmController:
+  create: true
+
+sourceController:
+  create: true
+
+kustomizeController:
+  create: false
+
+notificationController:
+  create: false
+
+imageReflectorController:
+  create: false
+
+imageAutomationController:
+  create: false
