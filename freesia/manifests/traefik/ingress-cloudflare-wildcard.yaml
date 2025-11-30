@@ -5,8 +5,6 @@ metadata:
   namespace: traefik
   annotations:
     cloudflare-tunnel-ingress-controller.strrl.dev/backend-protocol: https
-    cloudflare-tunnel-ingress-controller.strrl.dev/http-host-header: "*.harvestasya.org"
-    cloudflare-tunnel-ingress-controller.strrl.dev/origin-server-name: "*.harvestasya.org"
 spec:
   ingressClassName: cloudflare-tunnel
   rules:
