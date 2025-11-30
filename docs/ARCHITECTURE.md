@@ -86,30 +86,33 @@
 
 #### Ingress経路パターン
 
+すべてのHTTPトラフィックはTraefikを経由します。
+
 ```
 Internet → Cloudflare → cloudflare-tunnel-ingress-controller
                                     │
-            ┌───────────────────────┼───────────────────────┐
-            ▼                       ▼                       ▼
-      ワイルドカード           具体的host              具体的host
-    *.harvestasya.org      chronicle...            grafana...
-            │               (immich直接)           (grafana直接)
-            ▼
-         Traefik
-            │
-            ▼
-      IngressRoute
-    (Authentik認証)
-            │
-      ┌─────┼─────┐
-      ▼     ▼     ▼
-     asf navidrome prometheus
+                                    ▼
+                        ワイルドカードIngress
+                        *.harvestasya.org
+                                    │
+                                    ▼
+                               Traefik
+                                    │
+                                    ▼
+                            IngressRoute
+                                    │
+     ┌────────────┬────────────┬────────────┬────────────┐
+     ▼            ▼            ▼            ▼            ▼
+   asf      navidrome      immich      grafana     その他
+(Authentik) (Authentik) (アプリ内認証) (アプリ内認証)
 ```
 
-| パターン | 対象アプリ | 認証 |
-|---------|-----------|------|
-| ワイルドカード → Traefik | asf, navidrome, prometheus | Authentik Forward Auth |
-| 直接アクセス | immich, grafana, influxdb, echoserver | アプリ内認証 or なし |
+| 認証方式 | 対象アプリ |
+|---------|-----------|
+| Authentik Forward Auth | asf, navidrome, prometheus, traefik |
+| アプリ内認証 | immich, grafana, influxdb, n8n |
+| 認証なし | echoserver |
+| 外部認証 | artonelico (Proxmox), argocd (OIDC) |
 
 ### 3. Core Services
 

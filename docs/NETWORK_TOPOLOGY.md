@@ -163,29 +163,24 @@ spec:
 
 ## 公開エンドポイント一覧
 
-### ワイルドカード経由 (Traefik → IngressRoute)
+すべてのHTTPトラフィックはCloudflare Tunnel → Traefik → IngressRouteの経路を通ります。
 
 | ホスト名 | アプリケーション | 認証 |
 |---------|----------------|------|
+| argocd.harvestasya.org | ArgoCD | Authentik OIDC |
+| artonelico.harvestasya.org | Proxmox (外部) | Proxmox認証 |
 | asf.harvestasya.org | ArchiSteamFarm | Authentik Forward Auth |
+| chronicle.harvestasya.org | Immich | アプリ内認証 |
+| echoserver.harvestasya.org | EchoServer | なし |
+| grafana.harvestasya.org | Grafana | アプリ内認証 |
+| grathnode.harvestasya.org | Authentik | - |
+| influxdb2.harvestasya.org | InfluxDB | アプリ内認証 |
 | navidrome.harvestasya.org | Navidrome | Authentik Forward Auth |
 | navidrome-filebrowser.harvestasya.org | FileBrowser | Authentik Forward Auth |
 | prometheus.harvestasya.org | Prometheus | Authentik Forward Auth |
-| traefik.harvestasya.org | Traefik Dashboard | Authentik Forward Auth |
-
-### 直接アクセス (CF Tunnel → Service)
-
-| ホスト名 | アプリケーション | 認証 |
-|---------|----------------|------|
-| chronicle.harvestasya.org | Immich | アプリ内認証 |
-| grathnode.harvestasya.org | Authentik | - |
 | reyvateils.harvestasya.org | n8n | アプリ内認証 |
-| grafana.harvestasya.org | Grafana | アプリ内認証 |
-| influxdb2.harvestasya.org | InfluxDB | アプリ内認証 |
-| echoserver.harvestasya.org | EchoServer | なし |
-| argocd.harvestasya.org | ArgoCD | Authentik OIDC |
-| artonelico.harvestasya.org | Proxmox (外部) | Proxmox認証 |
-| ssh.harvestasya.org | SSH Access | Zero Trust |
+| traefik.harvestasya.org | Traefik Dashboard | Authentik Forward Auth |
+| ssh.harvestasya.org | SSH Access | Zero Trust (SSH専用) |
 
 ## Traefik Middleware
 
