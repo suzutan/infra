@@ -1,0 +1,104 @@
+apiVersion: core.oam.dev/v1beta1
+kind: Application
+metadata:
+  name: n8n
+  namespace: n8n
+spec:
+  components:
+  - name: n8n
+    type: webservice
+    properties:
+      image: n8nio/n8n:latest
+      port: 5678
+      cpu: "1"
+      memory: 500Mi
+
+      # 環境変数
+      env:
+      # 基本設定
+      - name: GENERIC_TIMEZONE
+        value: Asia/Tokyo
+      - name: N8N_PROTOCOL
+        value: http
+      - name: N8N_PORT
+        value: "5678"
+      - name: WEBHOOK_URL
+        value: https://reyvateils.harvestasya.org/
+      - name: N8N_PROXY_HOPS
+        value: "1"
+      - name: N8N_HOST
+        value: reyvateils.harvestasya.org
+      - name: N8N_EDITOR_BASE_URL
+        value: https://reyvateils.harvestasya.org
+      - name: DB_TYPE
+        value: postgresdb
+
+      # DB接続情報（CNPGが生成するSecretから取得）
+      - name: DB_POSTGRESDB_HOST
+        valueFrom:
+          secretKeyRef:
+            name: n8n-pg-app
+            key: host
+      - name: DB_POSTGRESDB_PORT
+        valueFrom:
+          secretKeyRef:
+            name: n8n-pg-app
+            key: port
+      - name: DB_POSTGRESDB_DATABASE
+        valueFrom:
+          secretKeyRef:
+            name: n8n-pg-app
+            key: dbname
+      - name: DB_POSTGRESDB_USER
+        valueFrom:
+          secretKeyRef:
+            name: n8n-pg-app
+            key: user
+      - name: DB_POSTGRESDB_PASSWORD
+        valueFrom:
+          secretKeyRef:
+            name: n8n-pg-app
+            key: password
+
+      # 1Passwordから取得するSecret
+      - name: N8N_ENCRYPTION_KEY
+        valueFrom:
+          secretKeyRef:
+            name: n8n-secret-env
+            key: N8N_ENCRYPTION_KEY
+
+      # ヘルスチェック
+      livenessProbe:
+        httpGet:
+          path: /healthz
+          port: 5678
+        initialDelaySeconds: 6
+        periodSeconds: 3
+      readinessProbe:
+        httpGet:
+          path: /healthz
+          port: 5678
+        initialDelaySeconds: 6
+        periodSeconds: 3
+
+      # ボリュームマウント（既存PVCを使用）
+      volumeMounts:
+        pvc:
+        - name: n8n-data
+          mountPath: /home/node/.n8n
+          claimName: n8n
+
+    traits:
+    # レプリカ数
+    - type: scaler
+      properties:
+        replicas: 1
+    # Ingress設定
+    - type: gateway
+      properties:
+        class: cloudflare-tunnel
+        classInSpec: true
+        domain: reyvateils.harvestasya.org
+        http:
+          "/": 5678
+        pathType: Prefix

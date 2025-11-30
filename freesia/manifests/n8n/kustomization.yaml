@@ -4,26 +4,11 @@ kind: Kustomization
 namespace: n8n
 
 resources:
-- cnpg-cluster.yaml
-- deployment.yaml
-- ingress.yaml
+# K8s native resources
 - namespace.yaml
-- pvc.yaml
+- cnpg-cluster.yaml
 - secret-n8n.yaml
-- service.yaml
+- pvc.yaml
 
-images:
-- name: n8nio/n8n
-  newTag: latest
-
-configMapGenerator:
-- literals:
-  - GENERIC_TIMEZONE=Asia/Tokyo
-  - N8N_PROTOCOL=http
-  - N8N_PORT=5678
-  - WEBHOOK_URL=https://reyvateils.harvestasya.org/
-  - N8N_PROXY_HOPS=1
-  - N8N_HOST=n8n.harvestasya.org
-  - N8N_EDITOR_BASE_URL=https://reyvateils.harvestasya.org
-  - DB_TYPE=postgresdb
-  name: n8n-config-env
+# KubeVela Application
+- application.yaml
