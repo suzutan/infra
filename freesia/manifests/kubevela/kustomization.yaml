@@ -5,6 +5,7 @@ namespace: vela-system
 
 resources:
 - namespace.yaml
+- traitdefinition-traefik-route.yaml
 
 helmCharts:
 - name: vela-core
