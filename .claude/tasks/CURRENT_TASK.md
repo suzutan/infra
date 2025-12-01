@@ -1,0 +1,68 @@
+# Current Task
+
+## Metadata
+- **Task ID:** TASK-20251201-1300
+- **Started:** 2025-12-01 13:00
+- **Last Updated:** 2025-12-01 13:00
+- **Status:** in_progress
+
+## Request
+ArgoCD の GitHub commit status について：
+1. pending と failure の status を追加
+2. 現在の success status が反映されていない原因を調査
+
+## Objective
+- GitHub commit status に pending/failure を追加
+- success が動作しない原因を特定・修正
+
+## Context
+- ArgoCD Notifications は既に設定済み
+- GitHub App 認証情報は argocd-custom-secret に保存
+- Discord 通知は動作している模様
+
+## Plan
+### Phase 1: 原因調査
+- [x] ArgoCD Notifications Controller のログを確認
+- [x] argocd-custom-secret のキー名を確認
+
+### Phase 2: 設定修正
+- [x] argocd-notifications-secret を作成
+- [x] ConfigMap の参照先を修正
+- [x] pending/failure テンプレートを追加
+
+## Progress Log
+### 2025-12-01 13:05
+- Notifications Controller のログを確認
+- エラー: `config referenced '$argocd-custom-secret:github.app-id', but key does not exist in secret`
+- 原因: ArgoCD Notifications は `argocd-notifications-secret` という名前の Secret を参照する仕様
+
+### 2025-12-01 13:10
+- argocd-notifications-secret を 1Password Operator で作成
+- ConfigMap の参照を `argocd-notifications-secret` に変更
+- github-pending, github-failure テンプレートを追加
+- on-sync-running, on-sync-failed トリガーを追加
+
+## Modified Files
+| File | Action | Status |
+|------|--------|--------|
+| freesia/manifests/argocd/secret-argocd-notifications-secret.yaml | Created | Done |
+| freesia/manifests/argocd/kustomization.yaml | Modified | Done |
+| freesia/manifests/argocd/patch/cm-argocd-notifications-cm.yaml | Modified | Done |
+
+## Decisions Made
+| Decision | Rationale | Alternatives Considered |
+|----------|-----------|------------------------|
+| 同じ 1Password アイテムから argocd-notifications-secret を作成 | ArgoCD Notifications は argocd-notifications-secret から secret を参照する仕様 | ConfigMap で参照先 secret 名を変更する（サポートされていない） |
+
+## Blockers / Open Questions
+- [x] なぜ success が反映されなかったか → Secret 名が違っていた
+
+## Next Steps
+1. コミット & プッシュ
+2. 動作確認
+
+## Notes
+- 同じ 1Password アイテムから3つの Kubernetes Secret が作成される
+  - argocd-custom-secret: OIDC 設定用（argocd-cm から参照）
+  - argocd-secret: webhook secret 用
+  - argocd-notifications-secret: Notifications 用
