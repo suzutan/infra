@@ -3,6 +3,11 @@ global:
 dex:
   enabled: false
 
+configs:
+  secret:
+    # Use 1Password Operator to manage argocd-secret (for webhook.github.secret)
+    createSecret: false
+
 server:
   ingress:
     enabled: false

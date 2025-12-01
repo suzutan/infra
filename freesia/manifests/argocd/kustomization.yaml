@@ -15,6 +15,7 @@ resources:
 - project-apps.yaml
 - project-k8s-infra.yaml
 - secret-argocd-custom-secret.yaml
+- secret-argocd-secret.yaml
 - ingressroute.yaml
 - serverstransport.yaml
 
