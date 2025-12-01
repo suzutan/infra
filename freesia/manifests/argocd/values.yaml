@@ -12,3 +12,8 @@ server:
   ingress:
     enabled: false
 
+notifications:
+  secret:
+    # Use 1Password Operator to manage argocd-notifications-secret
+    create: false
+
