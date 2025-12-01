@@ -17,3 +17,4 @@ notifications:
     # Use 1Password Operator to manage argocd-notifications-secret
     create: false
 
+
