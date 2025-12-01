@@ -13,10 +13,6 @@ server:
     enabled: false
 
 notifications:
-  logLevel: debug
   secret:
     # Use 1Password Operator to manage argocd-notifications-secret
     create: false
-
-
-# Test notification
