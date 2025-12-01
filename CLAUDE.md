@@ -16,6 +16,7 @@ This repository manages Infrastructure as Code (IaC) for a personal HomeLab envi
 - [DATA_FLOW.md](docs/DATA_FLOW.md) - Data flows
 - [SECRETS_MANAGEMENT.md](docs/SECRETS_MANAGEMENT.md) - Secrets management
 - [AGENT_MANAGEMENT.md](docs/AGENT_MANAGEMENT.md) - Agent team structure and workflow
+- [TASK_WORKFLOW.md](docs/TASK_WORKFLOW.md) - Task management and session continuity
 
 ## Quick Reference
 
@@ -388,8 +389,66 @@ User Request
 
 ### Task Management
 
-Always use `TodoWrite` to track multi-step tasks:
-1. Break down complex tasks into steps
-2. Mark tasks `in_progress` when starting
-3. Mark tasks `completed` immediately when done
-4. Only one task should be `in_progress` at a time
+**CRITICAL: All tasks must follow the persistent task management workflow.**
+
+See [TASK_WORKFLOW.md](docs/TASK_WORKFLOW.md) for full details.
+
+#### Session Start Protocol
+
+```
+1. Check .claude/tasks/CURRENT_TASK.md
+2. If exists → Resume or confirm new task
+3. If not exists → Create for new tasks
+```
+
+#### During Task Execution
+
+1. **TodoWrite** - In-memory task tracking (always use)
+2. **CURRENT_TASK.md** - Persistent state file (update frequently)
+
+Both must be kept in sync throughout the task.
+
+#### Task State File Location
+
+```
+.claude/tasks/CURRENT_TASK.md
+```
+
+#### Mandatory Updates
+
+Update CURRENT_TASK.md when:
+- Starting a new phase
+- Completing any step
+- Making decisions
+- Modifying files
+- Encountering blockers
+- Before any pause/interruption
+
+#### Quick Reference
+
+| Action | TodoWrite | CURRENT_TASK.md |
+|--------|-----------|-----------------|
+| Start task | Create todos | Create file |
+| Start step | Mark in_progress | Log in Progress |
+| Complete step | Mark completed | Update checklist |
+| Modify file | - | Add to Modified Files |
+| Decision made | - | Add to Decisions |
+| Blocked | Keep in_progress | Add to Blockers |
+| Session end | - | Update Next Steps |
+
+#### Parallel Agent Execution
+
+When tasks are independent, launch agents in parallel:
+
+```
+# In single response, multiple Task calls:
+Task(subagent_type="security", prompt="...")
+Task(subagent_type="review", prompt="...")
+```
+
+Document parallel groups in CURRENT_TASK.md:
+```markdown
+### Phase 3: Validation (Parallel)
+- [ ] Security audit [PARALLEL-GROUP-1]
+- [ ] Review check [PARALLEL-GROUP-1]
+```
