@@ -19,6 +19,11 @@ spec:
             name: nature-remo-token
             key: OAUTH_TOKEN
     traits:
+    - type: annotations
+      properties:
+        prometheus.io/scrape: "true"
+        prometheus.io/port: "9352"
+        prometheus.io/path: /metrics
     - type: traefik-route
       properties:
         domain: remo-exporter.harvestasya.org
