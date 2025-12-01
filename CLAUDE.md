@@ -398,7 +398,7 @@ See [TASK_WORKFLOW.md](docs/TASK_WORKFLOW.md) for full details.
 ```
 1. Check .claude/tasks/CURRENT_TASK.md
 2. If exists → Resume or confirm new task
-3. If not exists → Create for new tasks
+3. If not exists → Create CURRENT_TASK.md for new tasks (REQUIRED)
 ```
 
 #### During Task Execution
@@ -414,6 +414,20 @@ Both must be kept in sync throughout the task.
 .claude/tasks/CURRENT_TASK.md
 ```
 
+#### File Naming Convention
+
+**IMPORTANT: Follow exact naming format**
+
+| File | Format | Example |
+|------|--------|---------|
+| Active task | `CURRENT_TASK.md` | `.claude/tasks/CURRENT_TASK.md` |
+| Archived task | `TASK-YYYYMMDD-HHMM.md` | `.claude/tasks/archive/TASK-20251201-1330.md` |
+
+**DO NOT add descriptive suffixes to archive filenames.** Task description goes inside the file, not in the filename.
+
+- Correct: `TASK-20251201-1330.md`
+- Wrong: `TASK-20251201-1330-argocd-fix.md`
+
 #### Mandatory Updates
 
 Update CURRENT_TASK.md when:
@@ -423,6 +437,13 @@ Update CURRENT_TASK.md when:
 - Modifying files
 - Encountering blockers
 - Before any pause/interruption
+
+#### Task Completion Protocol
+
+1. Verify all steps completed
+2. Archive: `mv CURRENT_TASK.md archive/TASK-YYYYMMDD-HHMM.md`
+3. Clear TodoWrite
+4. Commit archive file
 
 #### Quick Reference
 
@@ -435,6 +456,7 @@ Update CURRENT_TASK.md when:
 | Decision made | - | Add to Decisions |
 | Blocked | Keep in_progress | Add to Blockers |
 | Session end | - | Update Next Steps |
+| Task complete | Clear todos | Archive to `TASK-YYYYMMDD-HHMM.md` |
 
 #### Parallel Agent Execution
 
