@@ -14,7 +14,7 @@ resources:
 - role.yaml
 - project-apps.yaml
 - project-k8s-infra.yaml
-- secret-argocd-custom-secret.yaml
+- secret-argocd-oidc-secret.yaml
 - secret-argocd-secret.yaml
 - secret-argocd-notifications-secret.yaml
 - ingressroute.yaml

@@ -21,8 +21,8 @@ data:
     # https://argo-cd.readthedocs.io/en/stable/operator-manual/user-management/#existing-oidc-provider
     name: Grathnode
     issuer: https://grathnode.harvestasya.org/application/o/argocd/
-    clientID: $argocd-custom-secret:authentik.client-id
-    clientSecret: $argocd-custom-secret:authentik.client-secret
+    clientID: $argocd-oidc-secret:authentik.client-id
+    clientSecret: $argocd-oidc-secret:authentik.client-secret
     requestedIDTokenClaims: {"groups": {"essential": true}}
     requestedScopes:
       - openid
