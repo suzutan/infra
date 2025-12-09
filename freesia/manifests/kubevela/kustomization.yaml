@@ -14,7 +14,7 @@ helmCharts:
 - name: vela-core
   releaseName: kubevela
   namespace: vela-system
-  version: 1.10.5
+  version: 1.10.6
   repo: https://kubevela.github.io/charts
   includeCRDs: true
   valuesFile: values.yaml
