@@ -10,7 +10,7 @@ spec:
     type: autodetects.core.oam.dev
   schematic:
     cue:
-      template: |
+      template: |-
         output: {
           apiVersion: "source.toolkit.fluxcd.io/v1"
           kind:       "HelmRepository"

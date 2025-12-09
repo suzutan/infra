@@ -12,7 +12,7 @@ spec:
   podDisruptive: false
   schematic:
     cue:
-      template: |
+      template: |-
         import "strconv"
 
         // Service output
