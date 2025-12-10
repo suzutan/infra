@@ -13,4 +13,4 @@ commonLabels:
 
 images:
 - name: justarchi/archisteamfarm
-  newTag: 6.3.0.2
+  newTag: 6.3.1.1
