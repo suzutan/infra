@@ -4,7 +4,7 @@
 # Cloudflare Tunnelの作成
 resource "cloudflare_zero_trust_tunnel_cloudflared" "web_tunnel" {
   account_id = var.cloudflare_account_id
-  name       = "harvestasya symphonic-reactor"
+  name       = "harvestasya k8s"
 }
 
 # Tunnel設定 - すべての *.harvestasya.org をTraefikにルーティング

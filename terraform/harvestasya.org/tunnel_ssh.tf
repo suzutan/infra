@@ -30,13 +30,13 @@ resource "cloudflare_dns_record" "ssh_tunnel_cname" {
   content = "${cloudflare_zero_trust_tunnel_cloudflared.ssh_tunnel.id}.cfargotunnel.com"
   type    = "CNAME"
   proxied = true
-  comment = "SSH access to HomeLab"
+  comment = "SSH access to Harvestasya"
 }
 
 # Access Application
 resource "cloudflare_zero_trust_access_application" "ssh" {
   account_id                = var.cloudflare_account_id
-  name                      = "SSH Access"
+  name                      = "Harvestasya ssh"
   domain                    = "ssh.${local.zone_name}"
   type                      = "self_hosted"
   session_duration          = "24h"
@@ -45,7 +45,7 @@ resource "cloudflare_zero_trust_access_application" "ssh" {
 
   policies = [
     {
-      name       = "GitHub Auth + Email"
+      name       = "infrastructure admin access"
       precedence = 1
       decision   = "allow"
       include = [

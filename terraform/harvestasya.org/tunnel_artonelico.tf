@@ -51,7 +51,7 @@ resource "cloudflare_zero_trust_access_application" "artonelico" {
 
   policies = [
     {
-      name       = "GitHub Auth + admin email"
+      name       = "infrastructure admin access"
       precedence = 1
       decision   = "allow"
       include = [
