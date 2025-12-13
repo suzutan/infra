@@ -1,19 +1,12 @@
-# Cloudflare Zero Trust Tunnel for SSH access to Proxmox VM
+# SSH Tunnel + Access
 
-# ランダムなシークレットを生成
-resource "random_password" "tunnel_secret" {
-  length  = 64
-  special = false
-}
-
-# Cloudflare Tunnelの作成
+# Tunnel
 resource "cloudflare_zero_trust_tunnel_cloudflared" "ssh_tunnel" {
-  account_id    = var.cloudflare_account_id
-  name          = "harvestasya ssh"
-  tunnel_secret = base64encode(random_password.tunnel_secret.result)
+  account_id = var.cloudflare_account_id
+  name       = "harvestasya ssh"
 }
 
-# Tunnel設定
+# Config
 resource "cloudflare_zero_trust_tunnel_cloudflared_config" "ssh_tunnel_config" {
   account_id = var.cloudflare_account_id
   tunnel_id  = cloudflare_zero_trust_tunnel_cloudflared.ssh_tunnel.id
@@ -29,7 +22,7 @@ resource "cloudflare_zero_trust_tunnel_cloudflared_config" "ssh_tunnel_config" {
   }
 }
 
-# DNS CNAMEレコードの作成
+# DNS
 resource "cloudflare_dns_record" "ssh_tunnel_cname" {
   zone_id = local.zone_id
   name    = "ssh"
@@ -37,29 +30,10 @@ resource "cloudflare_dns_record" "ssh_tunnel_cname" {
   content = "${cloudflare_zero_trust_tunnel_cloudflared.ssh_tunnel.id}.cfargotunnel.com"
   type    = "CNAME"
   proxied = true
-  comment = "Cloudflare Tunnel for SSH access to HomeLab"
+  comment = "SSH access to HomeLab"
 }
 
-# Output: トンネルトークン (VM側のcloudflared設定に使用)
-output "tunnel_secret" {
-  description = "Cloudflare Tunnel token for cloudflared installation"
-  value       = cloudflare_zero_trust_tunnel_cloudflared.ssh_tunnel.tunnel_secret
-  sensitive   = true
-}
-
-# Output: トンネルID
-output "tunnel_id" {
-  description = "Cloudflare Tunnel ID"
-  value       = cloudflare_zero_trust_tunnel_cloudflared.ssh_tunnel.id
-}
-
-# Output: SSH接続先ホスト名
-output "ssh_hostname" {
-  description = "SSH hostname to connect through Cloudflare Tunnel"
-  value       = "ssh.${local.zone_name}"
-}
-
-# Cloudflare Zero Trust Access Application for SSH
+# Access Application
 resource "cloudflare_zero_trust_access_application" "ssh" {
   account_id                = var.cloudflare_account_id
   name                      = "SSH Access"
@@ -67,18 +41,36 @@ resource "cloudflare_zero_trust_access_application" "ssh" {
   type                      = "self_hosted"
   session_duration          = "24h"
   auto_redirect_to_identity = true
-  allowed_idps              = [cloudflare_zero_trust_access_identity_provider.authentik.id]
+  allowed_idps              = [cloudflare_zero_trust_access_identity_provider.github.id]
 
   policies = [
     {
-      decision = "allow"
+      name       = "GitHub Auth + Email"
+      precedence = 1
+      decision   = "allow"
       include = [
         {
           login_method = {
-            id = cloudflare_zero_trust_access_identity_provider.authentik.id
+            id = cloudflare_zero_trust_access_identity_provider.github.id
+          }
+        }
+      ]
+      require = [
+        {
+          email = {
+            email = var.infrastructure_admin_email
           }
         }
       ]
     }
   ]
+}
+
+# Outputs
+output "ssh_tunnel_id" {
+  value = cloudflare_zero_trust_tunnel_cloudflared.ssh_tunnel.id
+}
+
+output "ssh_hostname" {
+  value = "ssh.${local.zone_name}"
 }
