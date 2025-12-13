@@ -4,7 +4,6 @@ kind: Kustomization
 resources:
 - argocd-apps.yaml
 - argocd.yaml
-- artonelico.yaml
 - asf.yaml
 - authentik.yaml
 - cert-manager.yaml
