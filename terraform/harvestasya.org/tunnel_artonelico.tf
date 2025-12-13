@@ -51,23 +51,7 @@ resource "cloudflare_zero_trust_access_application" "artonelico" {
 
   policies = [
     {
-      name       = "infrastructure admin access"
-      precedence = 1
-      decision   = "allow"
-      include = [
-        {
-          login_method = {
-            id = cloudflare_zero_trust_access_identity_provider.github.id
-          }
-        }
-      ]
-      require = [
-        {
-          email = {
-            email = var.infrastructure_admin_email
-          }
-        }
-      ]
+      id = cloudflare_zero_trust_access_policy.infrastructure_admin.id
     }
   ]
 }
