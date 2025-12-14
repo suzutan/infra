@@ -50,7 +50,3 @@ resource "cloudflare_zero_trust_access_application" "archia" {
 output "archia_tunnel_id" {
   value = cloudflare_zero_trust_tunnel_cloudflared.archia.id
 }
-
-output "archia_hostname" {
-  value = "archia.${local.zone_name}"
-}
