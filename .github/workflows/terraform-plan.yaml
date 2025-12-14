@@ -26,6 +26,9 @@ jobs:
       TF_VAR_cloudflare_api_token: ${{ secrets.TF_VAR_CLOUDFLARE_API_TOKEN }}
       TF_VAR_authentik_client_id: ${{ secrets.TF_VAR_AUTHENTIK_CLIENT_ID }}
       TF_VAR_authentik_client_secret: ${{ secrets.TF_VAR_AUTHENTIK_CLIENT_SECRET }}
+      TF_VAR_github_oauth_client_id: ${{ secrets.TF_VAR_GITHUB_OAUTH_CLIENT_ID }}
+      TF_VAR_github_oauth_client_secret: ${{ secrets.TF_VAR_GITHUB_OAUTH_CLIENT_SECRET }}
+      TF_VAR_infrastructure_admin_email: ${{ secrets.TF_VAR_INFRASTRUCTURE_ADMIN_EMAIL }}
       GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
     steps:
     - uses: actions/checkout@v6
