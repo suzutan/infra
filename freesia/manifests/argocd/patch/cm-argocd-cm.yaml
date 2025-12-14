@@ -19,8 +19,8 @@ data:
   users.anonymous.enabled: "false"
   oidc.config: |-
     # https://argo-cd.readthedocs.io/en/stable/operator-manual/user-management/#existing-oidc-provider
-    name: Grathnode
-    issuer: https://grathnode.harvestasya.org/application/o/argocd/
+    name: Qualia
+    issuer: https://qualia.harvestasya.org/application/o/argocd/
     clientID: $argocd-oidc-secret:authentik.client-id
     clientSecret: $argocd-oidc-secret:authentik.client-secret
     requestedIDTokenClaims: {"groups": {"essential": true}}
