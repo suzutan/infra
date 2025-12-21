@@ -19,7 +19,7 @@ data:
   users.anonymous.enabled: "false"
   oidc.config: |-
     # https://argo-cd.readthedocs.io/en/stable/operator-manual/user-management/#existing-oidc-provider
-    name: Qualia
+    name: Harvestasya
     issuer: https://qualia.harvestasya.org/application/o/argocd/
     clientID: $argocd-oidc-secret:authentik.client-id
     clientSecret: $argocd-oidc-secret:authentik.client-secret
