@@ -22,3 +22,4 @@ resources:
 - onepassword-operator.yaml
 - temporis.yaml
 - traefik.yaml
+- voidauth.yaml

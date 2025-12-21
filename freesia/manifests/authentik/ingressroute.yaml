@@ -6,7 +6,7 @@ metadata:
 spec:
   routes:
   - kind: Rule
-    match: Host(`qualia.harvestasya.org`)
+    match: Host(`authentik.harvestasya.org`)
     services:
     - name: authentik-server
       port: 80
