@@ -6,7 +6,7 @@ metadata:
 spec:
   routes:
   - kind: Rule
-    match: Host(`qualia.harvestasya.org`)
+    match: Host(`voidauth.harvestasya.org`)
     services:
     - name: voidauth
       port: 3000
