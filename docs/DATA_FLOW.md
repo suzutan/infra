@@ -269,7 +269,7 @@
 ### 外部アクセス (Cloudflare Tunnel)
 
 ```
-User ──▶ Cloudflare Edge ──▶ CF Tunnel ──▶ CF Tunnel Controller ──▶ Service ──▶ Pod
+User ──▶ Cloudflare Edge ──▶ CF Tunnel (cloudflared) ──▶ Traefik ──▶ Service ──▶ Pod
 ```
 
 ### 外部アクセス (Traefik Direct)

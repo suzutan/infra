@@ -1,0 +1,70 @@
+# Task: cloudflare-tunnel-ingress-controller完全廃止
+
+**Started**: 2025-12-22
+**Status**: In Progress
+
+## Overview
+
+cloudflare-tunnel-ingress-controllerを完全に廃止し、deployment/cloudflared → Traefik IngressRouteの構成に統一する。
+
+## Current Architecture
+
+- ❌ 旧: cloudflare-tunnel-ingress-controller (廃止対象)
+- ✅ 現: deployment/cloudflared → Traefik IngressRoute
+
+## Checklist
+
+- [x] 前のタスクをアーカイブ
+- [x] ArgoCD Applicationをkustomizationから除外
+- [x] echoserver-velaのIngress削除を確認
+- [x] cloudflare-tunnel-ingress-controllerマニフェスト削除
+- [x] ドキュメントから参照を削除
+  - [x] ARCHITECTURE.md
+  - [x] NETWORK_TOPOLOGY.md
+  - [x] APPLICATION_CATALOG.md
+  - [x] DATA_FLOW.md
+- [ ] 変更をコミット
+
+## Progress
+
+### Phase 1: アーカイブと事前確認 (Completed)
+
+- [x] 前のタスク（voidauth）をアーカイブ
+- [x] echoserver-velaのIngressを削除
+
+### Phase 2: マニフェストとドキュメント削除 (Completed)
+
+- [x] ArgoCD kustomizationからcloudflare-tunnel-ingress-controller.yaml除外
+- [x] cloudflare-tunnel-ingress-controllerマニフェストディレクトリ削除
+- [x] ArgoCD Application定義ファイル削除
+- [x] ドキュメント4ファイルから参照削除
+
+### Phase 3: コミット (In Progress)
+
+## Modified Files
+
+1. `.claude/tasks/CURRENT_TASK.md` - 新規タスク作成
+2. `.claude/tasks/archive/TASK-20251220-1400.md` - 前タスクアーカイブ
+3. `freesia/manifests/argocd-apps/kustomization.yaml` - cloudflare-tunnel-ingress-controller除外
+4. `freesia/manifests/cloudflare-tunnel-ingress-controller/` - ディレクトリ削除
+5. `freesia/manifests/argocd-apps/cloudflare-tunnel-ingress-controller.yaml` - ファイル削除
+6. `docs/ARCHITECTURE.md` - cloudflare-tunnel-ingress-controller参照削除
+7. `docs/NETWORK_TOPOLOGY.md` - cloudflare-tunnel-ingress-controller参照削除
+8. `docs/APPLICATION_CATALOG.md` - cloudflare-tunnel-ingress-controller参照削除
+9. `docs/DATA_FLOW.md` - cloudflare-tunnel-ingress-controller参照削除
+
+## Decisions
+
+- cloudflare-tunnel-ingress-controllerは完全廃止
+- 新アーキテクチャ: deployment/cloudflared → Traefik IngressRoute
+
+## Blockers
+
+(none)
+
+## Next Steps
+
+1. echoserver-velaのIngress確認
+2. ArgoCD kustomizationから除外
+3. マニフェスト削除
+4. ドキュメント更新

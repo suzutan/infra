@@ -13,7 +13,6 @@
 | cert-manager | cert-manager | v1.19.1 | jetstack/cert-manager | TLS証明書管理 |
 | CNPG Operator | cnpg-system | v0.26.1 | cloudnative-pg/cloudnative-pg | PostgreSQL Operator |
 | 1Password Operator | onepassword | v2.0.5 | 1password/connect | シークレット管理 |
-| CF Tunnel Ingress | cloudflare-tunnel-ingress-controller | v0.0.21 | strrl/cloudflare-tunnel-ingress-controller | Tunnel管理 |
 
 ### Authentication & Authorization
 
@@ -193,7 +192,6 @@ Ingress Controller。
 | authentik | 認証 | Authentik |
 | asf | ゲーム | ArchiSteamFarm |
 | cert-manager | 証明書 | cert-manager |
-| cloudflare-tunnel-ingress-controller | Tunnel | CF Tunnel Controller |
 | cnpg-system | DB Operator | CNPG Operator |
 | ddns | DNS | DDNS CronJob |
 | echoserver | テスト | EchoServer |

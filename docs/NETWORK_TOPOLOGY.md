@@ -30,8 +30,8 @@
                     │                                                         │
          ┌──────────▼──────────┐                              ┌───────────────▼───────────────┐
          │  Cloudflare Tunnel  │                              │     Internal Network          │
-         │  Ingress Controller │                              │        (LAN)                  │
-         │   (Port: 443)       │                              │                               │
+         │    (cloudflared)    │                              │        (LAN)                  │
+         │                     │                              │                               │
          └──────────┬──────────┘                              │  ┌─────────────────────────┐  │
                     │                                         │  │  osk.nw (172.20.1.1)    │  │
                     │                                         │  │  - Router               │  │
@@ -110,56 +110,22 @@ spec:
     secretName: harvestasya-wildcard-tls
 ```
 
-### Cloudflare Tunnel Ingress
+### Cloudflare Tunnel経路
 
-#### ワイルドカードIngress (Traefik経由)
-```yaml
-# traefik/ingress-cloudflare-wildcard.yaml
-# Authentik認証が必要なアプリはこのルートを経由
-apiVersion: networking.k8s.io/v1
-kind: Ingress
-metadata:
-  name: traefik-cloudflare-wildcard
-  namespace: traefik
-  annotations:
-    cloudflare-tunnel-ingress-controller.strrl.dev/backend-protocol: https
-spec:
-  ingressClassName: cloudflare-tunnel
-  rules:
-  - host: "*.harvestasya.org"
-    http:
-      paths:
-      - path: /
-        pathType: Prefix
-        backend:
-          service:
-            name: traefik
-            port:
-              number: 443
+すべてのHTTPトラフィックは以下の経路で処理されます：
+
+```
+Cloudflare Edge → Cloudflare Tunnel (cloudflared deployment)
+                              ↓
+                          Traefik
+                              ↓
+                       IngressRoute
+                              ↓
+                         Service
 ```
 
-#### 直接アクセスIngress
-```yaml
-# 認証不要なアプリは直接Serviceにアクセス
-apiVersion: networking.k8s.io/v1
-kind: Ingress
-metadata:
-  name: example
-  namespace: example
-spec:
-  ingressClassName: cloudflare-tunnel
-  rules:
-    - host: example.harvestasya.org
-      http:
-        paths:
-          - path: /
-            pathType: Prefix
-            backend:
-              service:
-                name: example-service
-                port:
-                  number: 80
-```
+Cloudflare Tunnelの設定はcloudflaredデプロイメントで管理され、
+すべてのトラフィックはTraefikを経由してルーティングされます。
 
 ## 公開エンドポイント一覧
 

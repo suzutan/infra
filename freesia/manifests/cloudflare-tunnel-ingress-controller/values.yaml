@@ -1,7 +1,0 @@
-
-cloudflare:
-  secretRef:
-    name: cloudflare-external-secret
-    accountIDKey: account_id
-    tunnelNameKey: tunnel_name
-    apiTokenKey: api_token

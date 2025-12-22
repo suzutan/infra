@@ -80,20 +80,15 @@
   - TLS終端
   - Middleware (security headers, compression等)
 
-#### Cloudflare Tunnel Ingress Controller
-- **バージョン**: v0.0.21
-- **用途**: 外部公開エンドポイント管理
+#### Cloudflared Deployment
+- **用途**: Cloudflare Tunnelへの接続
 
 #### Ingress経路パターン
 
 すべてのHTTPトラフィックはTraefikを経由します。
 
 ```
-Internet → Cloudflare → cloudflare-tunnel-ingress-controller
-                                    │
-                                    ▼
-                        ワイルドカードIngress
-                        *.harvestasya.org
+Internet → Cloudflare → Cloudflare Tunnel (cloudflared)
                                     │
                                     ▼
                                Traefik
