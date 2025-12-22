@@ -27,21 +27,21 @@
                               └──────────────────┬──────────────────┘
                                                  │
                     ┌────────────────────────────┴────────────────────────────┐
-                    │                                                         │
-         ┌──────────▼──────────┐                              ┌───────────────▼───────────────┐
-         │  Cloudflare Tunnel  │                              │     Internal Network          │
-         │    (cloudflared)    │                              │        (LAN)                  │
-         │                     │                              │                               │
-         └──────────┬──────────┘                              │  ┌─────────────────────────┐  │
-                    │                                         │  │  osk.nw (172.20.1.1)    │  │
-                    │                                         │  │  - Router               │  │
-                    ▼                                         │  └─────────────────────────┘  │
-         ┌─────────────────────────────────────────────┐     │  ┌─────────────────────────┐  │
-         │          Kubernetes Cluster                  │     │  │  silverstone.osk.nw    │  │
-         │               "freesia"                      │     │  │  (172.20.1.2)          │  │
-         │                                              │     │  │  - Primary Server      │  │
-         │  ┌────────────────────────────────────────┐ │     │  └─────────────────────────┘  │
-         │  │         Traefik (Ingress)              │ │     └───────────────────────────────┘
+                    │
+         ┌──────────▼──────────┐
+         │  Cloudflare Tunnel  │
+         │    (cloudflared)    │
+         │  Deployment (2pods) │
+         └──────────┬──────────┘
+                    │
+                    ▼
+         ┌─────────────────────────────────────────────┐
+         │          Kubernetes Cluster                  │
+         │               "freesia"                      │
+         │         Node: node01 (172.20.2.2)           │
+         │                                              │
+         │  ┌────────────────────────────────────────┐ │
+         │  │         Traefik (Ingress)              │ │
          │  │  - 2 replicas                          │ │
          │  │  - ClusterIP Service                   │ │
          │  │  - IngressRoute CRD                    │ │
@@ -62,7 +62,7 @@
 | ホスト名 | タイプ | 値 | Proxy |
 |---------|-------|-----|-------|
 | chronicle | CNAME | Tunnel | Yes |
-| grathnode | CNAME | Tunnel | Yes |
+| grathnode | CNAME | R2 Custom Domain | Yes |
 | reyvateils | CNAME | Tunnel | Yes |
 | navidrome | A | Internal | No |
 | navidrome-filebrowser | CNAME | Tunnel | Yes |
@@ -78,8 +78,6 @@
 
 | ホスト名 | タイプ | 値 | 用途 |
 |---------|-------|-----|------|
-| osk.nw | A | 172.20.1.1 | Router |
-| silverstone.osk.nw | A | 172.20.1.2 | Primary Server |
 | spica | CNAME | - | Cloudflare Proxy |
 | atria | CNAME | - | Cloudflare Proxy |
 
@@ -139,7 +137,7 @@ Cloudflare Tunnelの設定はcloudflaredデプロイメントで管理され、
 | chronicle.harvestasya.org | Immich | アプリ内認証 |
 | echoserver.harvestasya.org | EchoServer | なし |
 | grafana.harvestasya.org | Grafana | アプリ内認証 |
-| grathnode.harvestasya.org | Authentik | - |
+| grathnode.harvestasya.org | Cloudflare R2 | R2バケット (ストレージ) |
 | influxdb2.harvestasya.org | InfluxDB | アプリ内認証 |
 | navidrome.harvestasya.org | Navidrome | Authentik Forward Auth |
 | navidrome-filebrowser.harvestasya.org | FileBrowser | Authentik Forward Auth |
