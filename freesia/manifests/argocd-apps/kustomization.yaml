@@ -14,8 +14,8 @@ resources:
 - hsr-auto-claimer.yaml
 - immich.yaml
 - kube-state-metrics.yaml
+- kube-vip.yaml
 - kubevela.yaml
-- metallb.yaml
 - n8n.yaml
 - navidrome.yaml
 - nfs-subdir-external-provisioner.yaml
