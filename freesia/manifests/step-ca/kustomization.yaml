@@ -11,6 +11,7 @@ resources:
 - secret-step-certificates-ca-password.yaml
 - secret-step-issuer-provisioner.yaml
 - stepclusterissuer.yaml
+- service-loadbalancer.yaml
 
 helmCharts:
 - name: step-certificates
