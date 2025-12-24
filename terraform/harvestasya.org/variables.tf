@@ -8,18 +8,6 @@ variable "cloudflare_api_token" {
   description = "API token for Cloudflare"
 }
 
-variable "authentik_client_id" {
-  type        = string
-  description = "Authentik OIDC Client ID for Cloudflare Access"
-  sensitive   = true
-}
-
-variable "authentik_client_secret" {
-  type        = string
-  description = "Authentik OIDC Client Secret for Cloudflare Access"
-  sensitive   = true
-}
-
 # GitHub OAuth for Infrastructure Access
 variable "github_oauth_client_id" {
   type        = string
