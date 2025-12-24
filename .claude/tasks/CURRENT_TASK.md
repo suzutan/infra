@@ -12,7 +12,7 @@ VM上のAdGuardHome（`adguard.ssa.suzutan.jp`）のTLS証明書をACMEプロト
 ### 既存環境
 - **AdGuardHome VM**: `172.20.0.200`（Ubuntu/Debian想定）
 - **step-ca**: Kubernetes上で稼働中（step-ca namespace）
-- **MetalLB**: IPアドレス範囲 `172.20.0.201-172.20.0.250`
+- **MetalLB**: IPアドレス範囲 `172.20.2.201-172.20.2.250`
 - **Cloudflare DNS**: `harvestasya.org`ゾーン管理
 - **PowerDNS**: LAN内DNS（`ssa.suzutan.jp`ゾーン管理）
 - **現在の証明書**: 手動設定（AdGuardHome.yamlに直接記載）
