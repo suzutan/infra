@@ -1,0 +1,18 @@
+apiVersion: postgresql.cnpg.io/v1
+kind: Cluster
+metadata:
+  name: zitadel-database
+  namespace: zitadel
+spec:
+  instances: 1
+  imageName: ghcr.io/cloudnative-pg/postgresql:17.7-standard-trixie
+  enableSuperuserAccess: true
+  storage:
+    size: 5Gi
+    storageClass: nfs-client
+  bootstrap:
+    initdb:
+      database: zitadel
+      owner: zitadel
+  monitoring:
+    enablePodMonitor: true

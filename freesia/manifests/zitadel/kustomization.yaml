@@ -1,0 +1,19 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+
+namespace: zitadel
+
+resources:
+- namespace.yaml
+- database.yaml
+- secret-zitadel-masterkey.yaml
+- ingressroute.yaml
+
+helmCharts:
+# https://artifacthub.io/packages/helm/zitadel/zitadel
+- name: zitadel
+  releaseName: zitadel
+  namespace: zitadel
+  version: 9.13.0
+  repo: https://charts.zitadel.com
+  valuesFile: values.yaml

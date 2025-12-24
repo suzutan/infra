@@ -1,0 +1,79 @@
+# Zitadel Helm Chart values
+# https://artifacthub.io/packages/helm/zitadel/zitadel
+
+zitadel:
+  # Masterkey for symmetric encryption
+  # Managed by 1Password Operator
+  masterkeySecretName: zitadel-masterkey
+
+  # Database configuration
+  # Password is referenced from CNPG auto-generated secret
+  configmapConfig:
+    Database:
+      Postgres:
+        Host: zitadel-database-rw.zitadel.svc.cluster.local
+        Port: 5432
+        Database: zitadel
+        User:
+          Username: zitadel
+          SSL:
+            Mode: disable
+        Admin:
+          Username: postgres
+          SSL:
+            Mode: disable
+
+    # External domain configuration
+    ExternalDomain: qualia.harvestasya.org
+    ExternalPort: 443
+    ExternalSecure: true
+
+  # TLS mode (external TLS termination by Traefik)
+  TLS:
+    Enabled: false
+
+# Environment variables to reference CNPG auto-generated secret
+env:
+- name: ZITADEL_DATABASE_POSTGRES_USER_PASSWORD
+  valueFrom:
+    secretKeyRef:
+      name: zitadel-database-app
+      key: password
+- name: ZITADEL_DATABASE_POSTGRES_ADMIN_PASSWORD
+  valueFrom:
+    secretKeyRef:
+      name: zitadel-database-superuser
+      key: password
+
+# Replicas (1 for HomeLab, 3+ for production)
+replicaCount: 1
+
+# Resources
+resources:
+  requests:
+    cpu: 100m
+    memory: 256Mi
+  limits:
+    cpu: 500m
+    memory: 512Mi
+
+# Ingress disabled (using Traefik IngressRoute)
+ingress:
+  enabled: false
+
+# ServiceMonitor for Prometheus
+serviceMonitor:
+  enabled: true
+
+# Secrets from 1Password
+dbSslRootCrtSecret: ""
+dbSslClientCrtSecret: ""
+
+# Init job to setup database
+setupJob:
+  activeDeadlineSeconds: 300
+  backoffLimit: 5
+
+# Annotations for 1Password auto-restart
+podAnnotations:
+  operator.1password.io/auto-restart: "true"
