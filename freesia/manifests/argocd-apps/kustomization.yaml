@@ -23,4 +23,3 @@ resources:
 - temporis.yaml
 - traefik.yaml
 - voidauth.yaml
-- zitadel.yaml
