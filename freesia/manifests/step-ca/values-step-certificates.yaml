@@ -1,0 +1,47 @@
+# step-certificates Helm Chart Values
+# Using existing secrets and config from 1Password
+
+# Disable bootstrap init-container and use existing secrets
+bootstrap:
+  enabled: false
+  secrets: false
+  configmaps: false
+
+inject:
+  enabled: false
+
+# Use existing secrets created by 1Password Operator
+existingSecrets:
+  enabled: true
+  ca: true
+  issuer: false
+  certsAsSecret: true
+  configAsSecret: true
+  sshHostCa: false
+  sshUserCa: false
+
+# Service configuration
+service:
+  type: ClusterIP
+  port: 443
+  targetPort: 9000
+
+# Resource limits
+resources:
+  limits:
+    cpu: 100m
+    memory: 128Mi
+  requests:
+    cpu: 100m
+    memory: 128Mi
+
+# Replicas
+replicaCount: 1
+
+# Persistence for BadgerDB
+persistence:
+  enabled: true
+  size: 1Gi
+  storageClass: nfs-client
+  accessModes:
+  - ReadWriteOnce

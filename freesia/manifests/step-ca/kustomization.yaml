@@ -1,0 +1,30 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+
+namespace: step-ca
+
+resources:
+- namespace.yaml
+- secret-ca-config.yaml
+- secret-step-certificates-certs.yaml
+- secret-step-certificates-secrets.yaml
+- secret-step-certificates-ca-password.yaml
+- secret-step-issuer-provisioner.yaml
+- stepclusterissuer.yaml
+
+helmCharts:
+- name: step-certificates
+  releaseName: step-certificates
+  namespace: step-ca
+  version: 1.29.0
+  repo: https://smallstep.github.io/helm-charts
+  includeCRDs: false
+  valuesFile: values-step-certificates.yaml
+
+- name: step-issuer
+  releaseName: step-issuer
+  namespace: step-ca
+  version: 1.9.11
+  repo: https://smallstep.github.io/helm-charts
+  includeCRDs: true
+  valuesFile: values-step-issuer.yaml

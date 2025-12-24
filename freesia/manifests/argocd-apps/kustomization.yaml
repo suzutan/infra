@@ -19,6 +19,7 @@ resources:
 - navidrome.yaml
 - nfs-subdir-external-provisioner.yaml
 - onepassword-operator.yaml
+- step-ca.yaml
 - temporis.yaml
 - traefik.yaml
 - voidauth.yaml

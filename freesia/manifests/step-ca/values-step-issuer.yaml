@@ -1,0 +1,16 @@
+# step-issuer Helm Chart Values
+
+# step-certificates CA URL
+stepCAServerURL: https://step-certificates.step-ca.svc.cluster.local:9000
+
+# Resource limits
+resources:
+  limits:
+    cpu: 100m
+    memory: 128Mi
+  requests:
+    cpu: 50m
+    memory: 64Mi
+
+# Replicas
+replicaCount: 1
