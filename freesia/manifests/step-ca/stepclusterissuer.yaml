@@ -10,7 +10,7 @@ spec:
   # Provisioner configuration
   provisioner:
     name: step-issuer@harvestasya.org
-    kid: GNfYKucuQD6cVhhnxhYPcj7N2mglMdXCDSoSxmt4fEw
+    kid: VjFDb15x_MB3BOIE3p90ucyEBF4q-sG-5InHhClzqyg
     passwordRef:
       name: step-issuer-provisioner
       key: provisioner-password.txt
