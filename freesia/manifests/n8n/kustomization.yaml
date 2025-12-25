@@ -4,11 +4,10 @@ kind: Kustomization
 namespace: n8n
 
 resources:
-# K8s native resources
 - namespace.yaml
 - cnpg-cluster.yaml
 - pvc.yaml
 - secret-n8n.yaml
-
-# KubeVela Application
-- application.yaml
+- statefulset.yaml
+- service.yaml
+- ingressroute.yaml

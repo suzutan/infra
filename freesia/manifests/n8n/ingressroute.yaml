@@ -1,0 +1,12 @@
+apiVersion: traefik.io/v1alpha1
+kind: IngressRoute
+metadata:
+  name: n8n
+
+spec:
+  routes:
+  - kind: Rule
+    match: Host(`reyvateils.harvestasya.org`)
+    services:
+    - name: n8n
+      port: 5678
