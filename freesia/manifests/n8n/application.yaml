@@ -13,6 +13,10 @@ spec:
       cpu: "1"
       memory: 500Mi
 
+      # UpdateStrategy
+      deploymentStrategy:
+        type: Recreate
+
       # 環境変数
       env:
       # 基本設定
