@@ -3,8 +3,6 @@ kind: Kustomization
 
 resources:
 - https://github.com/cert-manager/cert-manager/releases/download/v1.19.2/cert-manager.yaml
-- ci-harvestasya.yaml
 - ci-letsencrypt-prod.yaml
 - ci-letsencrypt-staging.yaml
 - secret-cert-manager-cloudflare.yaml
-- secret-harvestasya-root-ca.yaml
