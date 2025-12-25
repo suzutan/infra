@@ -17,7 +17,7 @@ resource "cloudflare_zero_trust_tunnel_cloudflared_config" "harvestasya" {
         hostname = "vista.${local.zone_name}"
         service  = "https://localhost:8006"
         origin_request = {
-          no_tls_verify = true # pveの自己署名証明書を許容する
+          origin_server_name = "pve02.ssa.suzutan.jp"
         }
       },
       {
