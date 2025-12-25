@@ -9,6 +9,7 @@ resources:
 - cert-manager.yaml
 - cnpg-operator.yaml
 - ddns.yaml
+- cloudflared.yaml
 - echoserver.yaml
 - fluxcd.yaml
 - hsr-auto-claimer.yaml
