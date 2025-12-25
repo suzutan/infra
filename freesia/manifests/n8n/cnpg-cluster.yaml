@@ -5,11 +5,5 @@ metadata:
   namespace: n8n
 spec:
   instances: 1
-
   storage:
     size: 1Gi
-
-  bootstrap:
-    initdb:
-      database: n8n
-      owner: n8n
