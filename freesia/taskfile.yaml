@@ -15,4 +15,4 @@ tasks:
     dir: manifests/argocd-apps
     desc: "Initialize argocd-apps"
     cmds:
-    - kustomize build --enable-helm  . | kubectl create -f-
+    - kustomize build --enable-helm  . | kubectl apply -f- --server-side
