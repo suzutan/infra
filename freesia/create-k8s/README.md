@@ -41,14 +41,14 @@ qm set 201 --delete ide2
 qm set 201 --boot order=scsi0
 
 # step5 インストールディスクを確認する
-export CONTROL_PLANE_IP=172.20.2.17
-talosctl get disks --insecure --nodes $CONTROL_PLANE_IP
-# sdaが出力されるはずなのでメモ
+# talosctl get disks --insecure --nodes $CONTROL_PLANE_IP
+# # sdaが出力されるはずなのでメモ
 
 # step6 構成の作成
+export CONTROL_PLANE_IP=172.20.2.17
 export CLUSTER_NAME=symphonic-reactor
-export DISK_NAME=sda
-talosctl gen config $CLUSTER_NAME https://$CONTROL_PLANE_IP:6443 --install-disk /dev/$DISK_NAME
+talosctl gen config --with-secrets secrets.yaml $CLUSTER_NAME https://$CONTROL_PLANE_IP:6443 --config-patch @patch-dns.yaml --config-patch @patch-ifnames.yaml
+
 
 # step7 構成適用
 talosctl apply-config --insecure --nodes $CONTROL_PLANE_IP --file controlplane.yaml

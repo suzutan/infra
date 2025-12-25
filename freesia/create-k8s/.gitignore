@@ -1,0 +1,5 @@
+## Talos OS (generated files containing secrets)
+secrets.yaml
+talosconfig
+controlplane.yaml
+worker.yaml
