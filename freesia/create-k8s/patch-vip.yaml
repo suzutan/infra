@@ -1,6 +1,7 @@
 machine:
   network:
     interfaces:
-      - interface: eth0
-        vip:
-          ip: 172.20.0.201
+    - interface: ens18
+      dhcp: true
+      vip:
+        ip: 172.20.2.201

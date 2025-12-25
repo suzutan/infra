@@ -24,6 +24,7 @@
 | `patch-dns.yaml` | DNS サーバー設定 |
 | `patch-ifnames.yaml` | インターフェース名設定 |
 | `patch-vip.yaml` | VIP 設定 (Control Plane 用) |
+| `patch-scheduling.yaml` | Control Plane でワークロード実行を許可 |
 
 ## ISOイメージの準備
 
@@ -49,12 +50,12 @@ https://factory.talos.dev/ から起動するISOイメージを設定する
 ```bash
 qm create 201 \
   --name node01.symphonic-reactor \
-  --cores 8 \
-  --memory 16384 \
+  --cores 4 \
+  --memory 8192 \
   --net0 virtio,bridge=vnet2 \
   --scsihw virtio-scsi-pci \
   --scsi0 local-lvm:32 \
-  --ide2 local:iso/talos-v1.12.0-nocloud-amd64.iso,media=cdrom \
+  --ide2 local:iso/talos1.12.0-nocloud-amd64.iso,media=cdrom \
   --boot order=ide2 \
   --ostype l26 \
   --cpu host \
@@ -62,15 +63,14 @@ qm create 201 \
 qm start 201
 
 # 起動後、ISOのマウント解除
-qm set 201 --delete ide2
-qm set 201 --boot order=scsi0
+qm set 201 --delete ide2 && qm set 201 --boot order=scsi0
 ```
 
 ### 構成の生成と適用
 
 ```bash
 export CLUSTER_NAME=symphonic-reactor
-export VIP=172.20.0.201
+export VIP=172.20.2.201
 export NODE1_IP=172.20.2.17
 
 # シークレットの生成（初回のみ）
@@ -81,9 +81,8 @@ talosctl gen config \
   --with-secrets secrets.yaml \
   --config-patch @patch-dns.yaml \
   --config-patch @patch-ifnames.yaml \
-  --config-patch-control-plane @patch-vip.yaml \
-  --install-disk /dev/sda \
-  $CLUSTER_NAME https://$VIP:6443
+  --config-patch @patch-scheduling.yaml \
+  $CLUSTER_NAME https://$VIP:6443 --force
 
 # 1台目に構成適用
 talosctl apply-config --insecure --nodes $NODE1_IP --file controlplane.yaml
@@ -110,11 +109,11 @@ talosctl --nodes $NODE1_IP --talosconfig=./talosconfig health
 qm create 202 \
   --name node02.symphonic-reactor \
   --cores 8 \
-  --memory 16384 \
+  --memory 8192 \
   --net0 virtio,bridge=vnet2 \
   --scsihw virtio-scsi-pci \
   --scsi0 local-lvm:32 \
-  --ide2 local:iso/talos-v1.12.0-nocloud-amd64.iso,media=cdrom \
+  --ide2 local:iso/talos1.12.0-nocloud-amd64.iso,media=cdrom \
   --boot order=ide2 \
   --ostype l26 \
   --cpu host \
@@ -125,11 +124,11 @@ qm start 202
 qm create 203 \
   --name node03.symphonic-reactor \
   --cores 8 \
-  --memory 16384 \
+  --memory 8192 \
   --net0 virtio,bridge=vnet2 \
   --scsihw virtio-scsi-pci \
   --scsi0 local-lvm:32 \
-  --ide2 local:iso/talos-v1.12.0-nocloud-amd64.iso,media=cdrom \
+  --ide2 local:iso/talos1.12.0-nocloud-amd64.iso,media=cdrom \
   --boot order=ide2 \
   --ostype l26 \
   --cpu host \
@@ -157,7 +156,9 @@ talosctl apply-config --insecure --nodes $NODE3_IP --file controlplane.yaml
 talosctl --talosconfig=./talosconfig config endpoints $NODE1_IP $NODE2_IP $NODE3_IP
 
 # 健全性確認
-talosctl --talosconfig=./talosconfig health
+talosctl --talosconfig=./talosconfig health -n $NODE1_IP
+talosctl --talosconfig=./talosconfig health -n $NODE2_IP
+talosctl --talosconfig=./talosconfig health -n $NODE3_IP
 kubectl get nodes
 ```
 
@@ -176,6 +177,7 @@ talosctl gen config \
   --with-secrets secrets.yaml \
   --config-patch @patch-dns.yaml \
   --config-patch @patch-ifnames.yaml \
+  --config-patch @patch-scheduling.yaml \
   --config-patch-control-plane @patch-vip.yaml \
   --install-disk /dev/sda \
   symphonic-reactor https://172.20.0.201:6443
@@ -189,6 +191,7 @@ talosctl gen config \
 talosctl patch machineconfig -n $NODE1_IP --patch @patch-dns.yaml --talosconfig=./talosconfig
 talosctl patch machineconfig -n $NODE1_IP --patch @patch-ifnames.yaml --talosconfig=./talosconfig
 talosctl patch machineconfig -n $NODE1_IP --patch @patch-vip.yaml --talosconfig=./talosconfig
+talosctl patch machineconfig -n $NODE1_IP --patch @patch-scheduling.yaml --talosconfig=./talosconfig
 ```
 
 ## Talos アップグレード
