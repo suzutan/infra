@@ -23,4 +23,3 @@ resources:
 - step-ca.yaml
 - temporis.yaml
 - traefik.yaml
-- voidauth.yaml
