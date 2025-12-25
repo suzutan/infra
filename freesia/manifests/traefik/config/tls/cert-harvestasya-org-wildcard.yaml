@@ -7,5 +7,6 @@ spec:
   dnsNames:
   - '*.harvestasya.org'
   issuerRef:
-    name: letsencrypt-prod
-    kind: ClusterIssuer
+    name: step-issuer
+    kind: StepClusterIssuer
+    group: certmanager.step.sm
