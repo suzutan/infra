@@ -1,0 +1,12 @@
+# cert-manager Helm chart values
+# https://github.com/cert-manager/cert-manager/tree/master/deploy/charts/cert-manager
+
+# CRDs are required for cert-manager to function
+crds:
+  enabled: true
+  keep: true
+
+# DNS01 solver requires additional permissions
+global:
+  leaderElection:
+    namespace: cert-manager
