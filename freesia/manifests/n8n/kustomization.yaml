@@ -7,8 +7,8 @@ resources:
 # K8s native resources
 - namespace.yaml
 - cnpg-cluster.yaml
-- secret-n8n.yaml
 - pvc.yaml
+- secret-n8n.yaml
 
 # KubeVela Application
 - application.yaml

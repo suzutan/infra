@@ -13,20 +13,3 @@ spec:
     initdb:
       database: n8n
       owner: n8n
-      #     import:
-      #       type: microservice
-      #       databases:
-      #       - n8n
-      #       source:
-      #         externalCluster: n8n-old
-
-      # externalClusters:
-      # - name: n8n-old
-      #   connectionParameters:
-      #     host: postgresql
-      #     dbname: n8n
-      #     user: n8n
-      #     dbname: n8n
-      #   password:
-      #     name: n8n-postgresql
-      #     key: password
