@@ -5,7 +5,7 @@
 | 項目 | 値 |
 |------|-----|
 | クラスター名 | symphonic-reactor |
-| VIP (API Server) | 172.20.0.201 |
+| VIP (API Server) | 172.20.2.201 |
 | Talos バージョン | v1.12.0 |
 | Kubernetes バージョン | v1.35.0 |
 
@@ -22,7 +22,6 @@
 | ファイル | 説明 |
 |---------|------|
 | `patch-dns.yaml` | DNS サーバー設定 |
-| `patch-ifnames.yaml` | インターフェース名設定 |
 | `patch-vip.yaml` | VIP 設定 (Control Plane 用) |
 | `patch-scheduling.yaml` | Control Plane でワークロード実行を許可 |
 
@@ -80,8 +79,8 @@ talosctl gen secrets -o secrets.yaml
 talosctl gen config \
   --with-secrets secrets.yaml \
   --config-patch @patch-dns.yaml \
-  --config-patch @patch-ifnames.yaml \
   --config-patch @patch-scheduling.yaml \
+  --config-patch-control-plane @patch-vip.yaml \
   $CLUSTER_NAME https://$VIP:6443 --force
 
 # 1台目に構成適用
@@ -162,34 +161,10 @@ talosctl --talosconfig=./talosconfig health -n $NODE3_IP
 kubectl get nodes
 ```
 
-## 既存クラスターへの VIP 追加（1台→3台への移行）
-
-既存の単一ノードクラスターに VIP を追加して HA 構成にする場合:
-
-```bash
-export NODE1_IP=172.20.2.17
-
-# 1. 既存ノードに VIP 設定を追加
-talosctl patch machineconfig -n $NODE1_IP --patch @patch-vip.yaml --talosconfig=./talosconfig
-
-# 2. 構成を再生成（VIP をエンドポイントに）
-talosctl gen config \
-  --with-secrets secrets.yaml \
-  --config-patch @patch-dns.yaml \
-  --config-patch @patch-ifnames.yaml \
-  --config-patch @patch-scheduling.yaml \
-  --config-patch-control-plane @patch-vip.yaml \
-  --install-disk /dev/sda \
-  symphonic-reactor https://172.20.0.201:6443
-
-# 3. 追加ノードに適用（上記「追加の Control Plane ノード」セクション参照）
-```
-
 ## パッチ適用
 
 ```bash
 talosctl patch machineconfig -n $NODE1_IP --patch @patch-dns.yaml --talosconfig=./talosconfig
-talosctl patch machineconfig -n $NODE1_IP --patch @patch-ifnames.yaml --talosconfig=./talosconfig
 talosctl patch machineconfig -n $NODE1_IP --patch @patch-vip.yaml --talosconfig=./talosconfig
 talosctl patch machineconfig -n $NODE1_IP --patch @patch-scheduling.yaml --talosconfig=./talosconfig
 ```
