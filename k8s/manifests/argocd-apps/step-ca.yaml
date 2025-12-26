@@ -1,13 +1,13 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: cert-manager
+  name: step-ca
   namespace: argocd
 spec:
   destination:
     server: "https://kubernetes.default.svc"
   source:
-    path: freesia/manifests/cert-manager
+    path: k8s/manifests/step-ca
     repoURL: "https://github.com/suzutan/infra.git"
     targetRevision: HEAD
   project: k8s-infra

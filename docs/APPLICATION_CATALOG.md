@@ -88,7 +88,7 @@
 - Server: CPU 100m-4, Memory 512Mi-4Gi
 - ML: GPU対応可能
 
-**マニフェスト:** `freesia/manifests/immich/`
+**マニフェスト:** `k8s/manifests/immich/`
 
 ### Authentik
 
@@ -122,7 +122,7 @@
 - Scopes: openid, profile, email
 - グループクレーム: 有効
 
-**マニフェスト:** `freesia/manifests/authentik/`
+**マニフェスト:** `k8s/manifests/authentik/`
 
 ### n8n
 
@@ -137,7 +137,7 @@
 - CPU: 100m - 1
 - Memory: 250Mi - 500Mi
 
-**マニフェスト:** `freesia/manifests/n8n/`
+**マニフェスト:** `k8s/manifests/n8n/`
 
 ### Navidrome
 
@@ -148,7 +148,7 @@
 - 認証: Authentik Forward Auth
 - 追加: FileBrowser サイドカー
 
-**マニフェスト:** `freesia/manifests/navidrome/`
+**マニフェスト:** `k8s/manifests/navidrome/`
 
 ### ArgoCD
 
@@ -163,7 +163,7 @@ GitOps継続的デリバリーツール。
 1. **k8s-infra**: 基盤コンポーネント
 2. **apps**: アプリケーション
 
-**マニフェスト:** `freesia/manifests/argocd/`
+**マニフェスト:** `k8s/manifests/argocd/`
 
 ### Traefik
 
@@ -180,7 +180,7 @@ Ingress Controller。
 - compress
 - circuit-breaker
 
-**マニフェスト:** `freesia/manifests/traefik/`
+**マニフェスト:** `k8s/manifests/traefik/`
 
 ---
 
@@ -212,7 +212,7 @@ Ingress Controller。
 ### Helm + Kustomize
 
 ```
-freesia/manifests/<app>/
+k8s/manifests/<app>/
 ├── kustomization.yaml     # Kustomize設定
 ├── namespace.yaml         # 名前空間定義
 ├── helmrelease.yaml       # Helm値 (values.yaml相当)
@@ -222,7 +222,7 @@ freesia/manifests/<app>/
 ### カスタムマニフェスト
 
 ```
-freesia/manifests/<app>/
+k8s/manifests/<app>/
 ├── kustomization.yaml
 ├── namespace.yaml
 ├── deployment.yaml

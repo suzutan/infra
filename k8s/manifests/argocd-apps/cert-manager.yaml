@@ -1,16 +1,16 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: hsr-auto-claimer
+  name: cert-manager
   namespace: argocd
 spec:
   destination:
     server: "https://kubernetes.default.svc"
   source:
-    path: freesia/manifests/hsr-auto-claimer
+    path: k8s/manifests/cert-manager
     repoURL: "https://github.com/suzutan/infra.git"
     targetRevision: HEAD
-  project: apps
+  project: k8s-infra
   syncPolicy:
     automated:
       prune: true

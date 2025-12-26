@@ -52,7 +52,7 @@ This document defines the team structure and management policy for Claude Code s
 **Required Context:**
 - `docs/ARCHITECTURE.md`
 - `docs/APPLICATION_CATALOG.md`
-- Reference implementations in `freesia/manifests/`
+- Reference implementations in `k8s/manifests/`
 
 ### 2. Security Agent (`/security`)
 
@@ -95,7 +95,7 @@ This document defines the team structure and management policy for Claude Code s
 
 **Required Context:**
 - `docs/DATA_FLOW.md` (Monitoring section)
-- `freesia/manifests/temporis/`
+- `k8s/manifests/temporis/`
 - Existing ServiceMonitor configurations
 
 ### 4. Review Agent (`/review`)
@@ -283,8 +283,8 @@ When delegating to another agent:
 - Created ingressroute.yaml
 
 **Files to Review:**
-- freesia/manifests/newapp/deployment.yaml
-- freesia/manifests/newapp/ingressroute.yaml
+- k8s/manifests/newapp/deployment.yaml
+- k8s/manifests/newapp/ingressroute.yaml
 
 **Concerns:**
 - Verify TLS configuration
@@ -333,7 +333,7 @@ Agents are available as slash commands in `.claude/commands/`:
 /security Audit the immich deployment
 
 # Before commit
-/review Check all changes in freesia/manifests/newapp/
+/review Check all changes in k8s/manifests/newapp/
 
 # Update documentation
 /docs Update APPLICATION_CATALOG.md with new app

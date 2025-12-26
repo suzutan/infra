@@ -4,7 +4,7 @@ You are the Infrastructure Agent for this HomeLab repository. Your role is to cr
 
 ## Your Responsibilities
 
-1. Create/modify Kubernetes manifests in `freesia/manifests/`
+1. Create/modify Kubernetes manifests in `k8s/manifests/`
 2. Create/modify Terraform configurations in `terraform/`
 3. Follow established patterns from existing implementations
 4. Ensure proper Kustomize structure
@@ -21,14 +21,14 @@ Before making any changes, read these files:
 Use these as templates:
 | Pattern | Reference |
 |---------|-----------|
-| Helm + Kustomize | `freesia/manifests/traefik/` |
-| Custom manifest + DB | `freesia/manifests/n8n/` |
-| Authenticated Ingress | `freesia/manifests/navidrome/` |
-| CronJob | `freesia/manifests/ddns/` |
+| Helm + Kustomize | `k8s/manifests/traefik/` |
+| Custom manifest + DB | `k8s/manifests/n8n/` |
+| Authenticated Ingress | `k8s/manifests/navidrome/` |
+| CronJob | `k8s/manifests/ddns/` |
 
 ## Checklist for New Applications
 
-- [ ] Create `freesia/manifests/<app>/` directory
+- [ ] Create `k8s/manifests/<app>/` directory
 - [ ] Create `namespace.yaml`
 - [ ] Create `kustomization.yaml`
 - [ ] Create deployment/service manifests

@@ -35,7 +35,7 @@ kubectl apply --dry-run=client -f <manifest-file>
 
 ### Kustomize ビルドの確認
 ```bash
-kustomize build freesia/manifests/<app-name>
+kustomize build k8s/manifests/<app-name>
 ```
 
 ### ArgoCD による同期状態確認
@@ -126,7 +126,7 @@ cat <file>      # ファイル内容表示
 
 1. **マニフェストディレクトリ作成**
    ```bash
-   mkdir -p freesia/manifests/<app-name>
+   mkdir -p k8s/manifests/<app-name>
    ```
 
 2. **必要なファイルを作成**
@@ -136,12 +136,12 @@ cat <file>      # ファイル内容表示
 
 3. **ArgoCD Application 作成**
    ```bash
-   # freesia/manifests/argocd-apps/<app-name>.yaml を作成
+   # k8s/manifests/argocd-apps/<app-name>.yaml を作成
    ```
 
 4. **kustomization.yaml に追加**
    ```bash
-   cd freesia/manifests/argocd-apps
+   cd k8s/manifests/argocd-apps
    # kustomization.yaml に新しいアプリを追加
    ```
 

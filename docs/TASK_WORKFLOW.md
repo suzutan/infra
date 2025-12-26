@@ -373,10 +373,10 @@ Deploy webhook-relay application with:
 ## Modified Files
 | File | Action | Status |
 |------|--------|--------|
-| freesia/manifests/webhook-relay/namespace.yaml | Created | Done |
-| freesia/manifests/webhook-relay/kustomization.yaml | Created | Done |
-| freesia/manifests/webhook-relay/deployment.yaml | Created | Done |
-| freesia/manifests/webhook-relay/service.yaml | Planned | Pending |
+| k8s/manifests/webhook-relay/namespace.yaml | Created | Done |
+| k8s/manifests/webhook-relay/kustomization.yaml | Created | Done |
+| k8s/manifests/webhook-relay/deployment.yaml | Created | Done |
+| k8s/manifests/webhook-relay/service.yaml | Planned | Pending |
 
 ## Decisions Made
 | Decision | Rationale | Alternatives Considered |

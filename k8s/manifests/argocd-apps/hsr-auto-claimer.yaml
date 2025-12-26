@@ -1,16 +1,16 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: traefik
+  name: hsr-auto-claimer
   namespace: argocd
 spec:
   destination:
     server: "https://kubernetes.default.svc"
   source:
-    path: freesia/manifests/traefik
+    path: k8s/manifests/hsr-auto-claimer
     repoURL: "https://github.com/suzutan/infra.git"
     targetRevision: HEAD
-  project: k8s-infra
+  project: apps
   syncPolicy:
     automated:
       prune: true

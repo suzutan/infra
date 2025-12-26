@@ -1,14 +1,14 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: immich
+  name: echoserver
   namespace: argocd
 spec:
   destination:
-    server: https://kubernetes.default.svc
+    server: "https://kubernetes.default.svc"
   source:
-    path: freesia/manifests/immich
-    repoURL: https://github.com/suzutan/infra.git
+    path: k8s/manifests/echoserver
+    repoURL: "https://github.com/suzutan/infra.git"
     targetRevision: HEAD
   project: apps
   syncPolicy:

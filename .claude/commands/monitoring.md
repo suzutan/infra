@@ -14,7 +14,7 @@ You are the Monitoring Agent for this HomeLab repository. Your role is to config
 
 - `docs/DATA_FLOW.md` - Monitoring data flow section
 - `docs/ARCHITECTURE.md` - Monitoring stack overview
-- `freesia/manifests/temporis/` - Current monitoring setup
+- `k8s/manifests/temporis/` - Current monitoring setup
 
 ## Monitoring Stack Components
 

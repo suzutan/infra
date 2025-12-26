@@ -1,13 +1,13 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: step-ca
+  name: nfs-subdir-external-provisioner
   namespace: argocd
 spec:
   destination:
     server: "https://kubernetes.default.svc"
   source:
-    path: freesia/manifests/step-ca
+    path: k8s/manifests/nfs-subdir-external-provisioner
     repoURL: "https://github.com/suzutan/infra.git"
     targetRevision: HEAD
   project: k8s-infra

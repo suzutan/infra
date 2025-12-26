@@ -10,7 +10,7 @@
 
 ## 主要コンポーネント
 
-### Kubernetes クラスタ (freesia/)
+### Kubernetes クラスタ (k8s/)
 - ArgoCD による GitOps デプロイメント
 - Kustomize によるマニフェスト管理
 - シングルノード構成

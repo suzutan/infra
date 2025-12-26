@@ -29,7 +29,7 @@ kubectl apply --dry-run=client -f <manifest-file>
 または Kustomize を使用している場合:
 
 ```bash
-kustomize build freesia/manifests/<app-name> | kubectl apply --dry-run=client -f -
+kustomize build k8s/manifests/<app-name> | kubectl apply --dry-run=client -f -
 ```
 
 ### 3. Terraform の検証 (Terraform 変更時のみ)
@@ -103,12 +103,12 @@ kubectl get applications -n argocd
 
 ### 新しい Kubernetes アプリケーション追加時
 
-- [ ] `freesia/manifests/<app-name>/` ディレクトリ作成
+- [ ] `k8s/manifests/<app-name>/` ディレクトリ作成
 - [ ] `namespace.yaml` 作成
 - [ ] `kustomization.yaml` 作成
 - [ ] 必要なリソース (Deployment, Service など) 作成
-- [ ] `freesia/manifests/argocd-apps/<app-name>.yaml` 作成
-- [ ] `freesia/manifests/argocd-apps/kustomization.yaml` に追加
+- [ ] `k8s/manifests/argocd-apps/<app-name>.yaml` 作成
+- [ ] `k8s/manifests/argocd-apps/kustomization.yaml` に追加
 - [ ] yamlfmt でフォーマット
 - [ ] kubectl dry-run で検証
 - [ ] コミットとプッシュ

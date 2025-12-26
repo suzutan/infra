@@ -48,9 +48,9 @@
 
 ## ディレクトリ構造の規則
 
-### Kubernetes アプリケーション (freesia/manifests/)
+### Kubernetes アプリケーション (k8s/manifests/)
 ```
-freesia/manifests/<app-name>/
+k8s/manifests/<app-name>/
 ├── namespace.yaml          # 名前空間定義
 ├── kustomization.yaml      # Kustomize 設定
 ├── deployment.yaml         # デプロイメント
@@ -59,7 +59,7 @@ freesia/manifests/<app-name>/
 └── ...                    # その他のリソース
 ```
 
-### ArgoCD Application (freesia/manifests/argocd-apps/)
+### ArgoCD Application (k8s/manifests/argocd-apps/)
 - アプリケーション定義は個別のファイルとして作成
 - ファイル名: `<app-name>.yaml`
 - kustomization.yaml でまとめる

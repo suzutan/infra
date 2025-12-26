@@ -1,13 +1,13 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: temporis
+  name: kube-state-metrics
   namespace: argocd
 spec:
   destination:
     server: "https://kubernetes.default.svc"
   source:
-    path: freesia/manifests/temporis
+    path: k8s/manifests/kube-state-metrics
     repoURL: "https://github.com/suzutan/infra.git"
     targetRevision: HEAD
   project: k8s-infra

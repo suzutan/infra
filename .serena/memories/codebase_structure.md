@@ -4,7 +4,7 @@
 
 ```
 /
-├── freesia/                    # Kubernetes 関連
+├── k8s/                    # Kubernetes 関連
 │   ├── init/                  # 初期セットアップスクリプト
 │   ├── ansible/               # Ansible playbooks
 │   ├── manifests/             # Kubernetes manifests
@@ -52,12 +52,12 @@
 
 ## 主要ディレクトリの説明
 
-### freesia/manifests/
+### k8s/manifests/
 Kubernetes のすべてのマニフェストを管理。各アプリケーションは独立したディレクトリを持ちます。
 
 **典型的なアプリケーション構造:**
 ```
-freesia/manifests/<app-name>/
+k8s/manifests/<app-name>/
 ├── namespace.yaml          # 名前空間定義
 ├── kustomization.yaml      # Kustomize 設定
 ├── deployment.yaml         # Deployment
@@ -67,7 +67,7 @@ freesia/manifests/<app-name>/
 └── ingressroute.yaml      # IngressRoute (Traefik)
 ```
 
-### freesia/manifests/argocd-apps/
+### k8s/manifests/argocd-apps/
 すべての ArgoCD Application リソースを集約。各アプリケーションの自動デプロイメントを定義します。
 
 **ArgoCD Application の構造:**
@@ -81,7 +81,7 @@ spec:
   destination:
     server: https://kubernetes.default.svc
   source:
-    path: freesia/manifests/<app-name>
+    path: k8s/manifests/<app-name>
     repoURL: https://github.com/suzutan/infra.git
     targetRevision: HEAD
   project: apps

@@ -1,16 +1,16 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: kube-vip
+  name: authentik
   namespace: argocd
 spec:
   destination:
     server: "https://kubernetes.default.svc"
   source:
-    path: freesia/manifests/kube-vip
+    path: k8s/manifests/authentik
     repoURL: "https://github.com/suzutan/infra.git"
     targetRevision: HEAD
-  project: k8s-infra
+  project: apps
   syncPolicy:
     automated:
       prune: true

@@ -24,7 +24,7 @@ This repository manages Infrastructure as Code (IaC) for a personal HomeLab envi
 
 | Item | Value |
 |------|-------|
-| Kubernetes Cluster Name | freesia |
+| Kubernetes Cluster Name | k8s |
 | Primary Domains | harvestasya.org, suzutan.jp |
 | GitOps | ArgoCD |
 | Secrets Management | 1Password Operator |
@@ -36,7 +36,7 @@ This repository manages Infrastructure as Code (IaC) for a personal HomeLab envi
 
 ```
 /infra
-├── freesia/                      # Kubernetes manifests
+├── k8s/                      # Kubernetes manifests
 │   ├── init/                     # Initialization scripts
 │   │   └── onepassword-operator/ # 1Password initial setup
 │   └── manifests/                # Application manifests
@@ -65,7 +65,7 @@ This repository manages Infrastructure as Code (IaC) for a personal HomeLab envi
 
 ## Key Components
 
-### Kubernetes (freesia/)
+### Kubernetes (k8s/)
 
 - **ArgoCD**: GitOps management (v9.1.3)
 - **Traefik**: Ingress Controller (v37.4.0, 2 replicas)
@@ -103,11 +103,11 @@ Use Conventional Commits format:
 
 ### 3. Adding New Applications
 
-1. Create `freesia/manifests/<app-name>/` directory
+1. Create `k8s/manifests/<app-name>/` directory
 2. Required files:
    - `namespace.yaml` - Namespace definition
    - `kustomization.yaml` - Kustomize configuration
-3. Add ArgoCD Application to `freesia/manifests/argocd-apps/`
+3. Add ArgoCD Application to `k8s/manifests/argocd-apps/`
 4. Use `OnePasswordItem` for secrets
 
 **Manifest Templates:**
@@ -275,11 +275,11 @@ When adding new applications, refer to these existing implementations:
 
 | Pattern | Reference Directory |
 |---------|---------------------|
-| Helm + Kustomize | `freesia/manifests/traefik/` |
-| Custom manifest + DB | `freesia/manifests/n8n/` |
-| Authenticated Ingress | `freesia/manifests/navidrome/` |
-| Monitoring stack | `freesia/manifests/temporis/` |
-| CronJob | `freesia/manifests/ddns/` |
+| Helm + Kustomize | `k8s/manifests/traefik/` |
+| Custom manifest + DB | `k8s/manifests/n8n/` |
+| Authenticated Ingress | `k8s/manifests/navidrome/` |
+| Monitoring stack | `k8s/manifests/temporis/` |
+| CronJob | `k8s/manifests/ddns/` |
 
 ## Troubleshooting
 
@@ -378,10 +378,10 @@ User Request
 /infra Add new application "myapp" with PostgreSQL database
 
 # Security audit before merge
-/security Audit freesia/manifests/myapp/
+/security Audit k8s/manifests/myapp/
 
 # Validate changes
-/review Check all files in freesia/manifests/myapp/
+/review Check all files in k8s/manifests/myapp/
 
 # Update docs after changes
 /docs Update APPLICATION_CATALOG.md with myapp

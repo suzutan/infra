@@ -1,16 +1,16 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: navidrome
+  name: argocd
   namespace: argocd
 spec:
   destination:
     server: "https://kubernetes.default.svc"
   source:
-    path: freesia/manifests/navidrome
+    path: k8s/manifests/argocd
     repoURL: "https://github.com/suzutan/infra.git"
     targetRevision: HEAD
-  project: apps
+  project: k8s-infra
   syncPolicy:
     automated:
       prune: true

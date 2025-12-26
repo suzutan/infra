@@ -10,7 +10,7 @@ spec:
   source:
     repoURL: https://github.com/suzutan/infra
     targetRevision: HEAD
-    path: freesia/manifests/cloudflared
+    path: k8s/manifests/cloudflared
   destination:
     server: https://kubernetes.default.svc
     namespace: cloudflared

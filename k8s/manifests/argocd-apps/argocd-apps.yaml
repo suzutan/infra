@@ -1,13 +1,13 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: argocd
+  name: argocd-apps
   namespace: argocd
 spec:
   destination:
     server: "https://kubernetes.default.svc"
   source:
-    path: freesia/manifests/argocd
+    path: k8s/manifests/argocd-apps
     repoURL: "https://github.com/suzutan/infra.git"
     targetRevision: HEAD
   project: k8s-infra

@@ -24,7 +24,7 @@ task yamlfmt
 
 ### 2. Kustomize Build
 ```bash
-kustomize build freesia/manifests/<app>/
+kustomize build k8s/manifests/<app>/
 ```
 
 ### 3. Kubernetes Dry Run
@@ -42,7 +42,7 @@ terraform plan
 ## Review Checklist
 
 ### Structure
-- [ ] Correct directory structure (`freesia/manifests/<app>/`)
+- [ ] Correct directory structure (`k8s/manifests/<app>/`)
 - [ ] Required files present (namespace.yaml, kustomization.yaml)
 - [ ] ArgoCD Application defined
 

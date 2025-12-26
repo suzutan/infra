@@ -1,16 +1,16 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: nfs-subdir-external-provisioner
+  name: ddns
   namespace: argocd
 spec:
   destination:
     server: "https://kubernetes.default.svc"
   source:
-    path: freesia/manifests/nfs-subdir-external-provisioner
+    path: k8s/manifests/ddns
     repoURL: "https://github.com/suzutan/infra.git"
     targetRevision: HEAD
-  project: k8s-infra
+  project: apps
   syncPolicy:
     automated:
       prune: true

@@ -1,16 +1,16 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: kubevela
+  name: immich
   namespace: argocd
 spec:
   destination:
-    server: "https://kubernetes.default.svc"
+    server: https://kubernetes.default.svc
   source:
-    path: freesia/manifests/kubevela
-    repoURL: "https://github.com/suzutan/infra.git"
+    path: k8s/manifests/immich
+    repoURL: https://github.com/suzutan/infra.git
     targetRevision: HEAD
-  project: k8s-infra
+  project: apps
   syncPolicy:
     automated:
       prune: true
