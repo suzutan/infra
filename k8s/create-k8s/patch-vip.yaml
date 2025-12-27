@@ -4,4 +4,7 @@ machine:
     - interface: ens18
       dhcp: true
       vip:
-        ip: 172.20.2.201
+        ip: 10.11.0.201
+      routes:
+        - network: 0.0.0.0/0
+          gateway: 10.11.0.1

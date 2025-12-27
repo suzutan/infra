@@ -1,0 +1,4 @@
+machine:
+  time:
+    servers:
+      - 172.20.20.11
