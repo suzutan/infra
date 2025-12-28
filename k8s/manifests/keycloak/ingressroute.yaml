@@ -8,10 +8,9 @@ spec:
   - websecure
   routes:
   # 公開エンドポイント (qualia.harvestasya.org)
-  # 認証なしでアクセス可能なパス
-  # TODO: 本番では /realms/, /resources/, /.well-known/, /js/ のみに制限
+  # 認証・アカウント管理に必要なパスのみ許可
   - kind: Rule
-    match: Host(`qualia.harvestasya.org`)
+    match: Host(`qualia.harvestasya.org`) && (PathPrefix(`/realms/`) || PathPrefix(`/resources/`) || PathPrefix(`/js/`))
     services:
     - name: keycloak-keycloakx-http
       port: 80
