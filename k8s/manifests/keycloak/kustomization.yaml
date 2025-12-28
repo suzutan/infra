@@ -1,0 +1,19 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+
+namespace: keycloak
+
+resources:
+- namespace.yaml
+- cnpg-cluster.yaml
+- secret-keycloak-admin.yaml
+- ingressroute.yaml
+
+helmCharts:
+# https://github.com/codecentric/helm-charts/tree/master/charts/keycloakx
+- name: keycloakx
+  releaseName: keycloak
+  namespace: keycloak
+  version: 7.1.5
+  repo: https://codecentric.github.io/helm-charts
+  valuesFile: values.yaml

@@ -1,0 +1,69 @@
+# Keycloak X (Quarkus) Helm Chart Values
+# https://github.com/codecentric/helm-charts/tree/master/charts/keycloakx
+
+replicas: 1
+
+command:
+- "/opt/keycloak/bin/kc.sh"
+- "start"
+- "--http-port=8080"
+- "--hostname-strict=false"
+- "--hostname-debug=true"
+# Traefik uses X-Forwarded-* headers
+proxy:
+  enabled: true
+  mode: xforwarded
+
+http:
+  relativePath: "/"
+
+extraEnv: |
+
+  - name: KC_DB
+    value: postgres
+  - name: KC_DB_URL_HOST
+    valueFrom:
+      secretKeyRef:
+        name: keycloak-pg-app
+        key: host
+  - name: KC_DB_URL_PORT
+    valueFrom:
+      secretKeyRef:
+        name: keycloak-pg-app
+        key: port
+  - name: KC_DB_URL_DATABASE
+    valueFrom:
+      secretKeyRef:
+        name: keycloak-pg-app
+        key: dbname
+  - name: KC_DB_USERNAME
+    valueFrom:
+      secretKeyRef:
+        name: keycloak-pg-app
+        key: username
+  - name: KC_DB_PASSWORD
+    valueFrom:
+      secretKeyRef:
+        name: keycloak-pg-app
+        key: password
+  - name: KC_BOOTSTRAP_ADMIN_USERNAME
+    valueFrom:
+      secretKeyRef:
+        name: keycloak-admin
+        key: username
+  - name: KC_BOOTSTRAP_ADMIN_PASSWORD
+    valueFrom:
+      secretKeyRef:
+        name: keycloak-admin
+        key: password
+
+ingress:
+  enabled: false
+
+resources:
+  requests:
+    cpu: "250m"
+    memory: "512Mi"
+  limits:
+    cpu: "1000m"
+    memory: "1024Mi"
