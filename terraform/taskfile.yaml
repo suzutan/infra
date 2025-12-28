@@ -24,7 +24,7 @@ tasks:
     cmds:
     - terraform fmt -recursive ..
     - terraform init
-    - terraform apply
+    - terraform apply --auto-approve
   destroy:
     desc: destroy terraform resources
     dir: "{{.USER_WORKING_DIR}}"
