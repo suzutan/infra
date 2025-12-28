@@ -7,6 +7,15 @@ spec:
   entryPoints:
   - websecure
   routes:
+  # ルートパスをアカウントページにリダイレクト
+  - kind: Rule
+    match: Host(`qualia.harvestasya.org`) && Path(`/`)
+    services:
+    - name: keycloak-keycloakx-http
+      port: 80
+    middlewares:
+    - name: redirect-to-account
+
   # 公開エンドポイント (qualia.harvestasya.org)
   # 認証・アカウント管理に必要なパスのみ許可
   - kind: Rule

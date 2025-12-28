@@ -1,0 +1,9 @@
+apiVersion: traefik.io/v1alpha1
+kind: Middleware
+metadata:
+  name: redirect-to-account
+spec:
+  redirectRegex:
+    regex: ^https://qualia\.harvestasya\.org/?$
+    replacement: https://qualia.harvestasya.org/realms/harvestasya/account/
+    permanent: false
