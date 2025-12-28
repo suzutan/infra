@@ -16,16 +16,27 @@
 
 ### Authentication & Authorization
 
-| アプリケーション | 名前空間 | バージョン | 用途 |
-|----------------|---------|-----------|------|
-| Authentik | authentik | 2025.10.2 | Identity Provider (IdP) |
+| アプリケーション | 名前空間 | バージョン | 用途 | 状態 |
+|----------------|---------|-----------|------|------|
+| Keycloak | keycloak | 26.x (Helm v7.1.5) | Identity Provider (IdP) | Active |
+| Authentik | authentik | 2025.10.2 | Identity Provider (IdP) | 廃止予定 |
 
-**Authentik 詳細:**
+**Keycloak 詳細:**
+- **Helm Chart**: codecentric/keycloakx v7.1.5
+- **データベース**: CloudNative PostgreSQL (CNPG)
+- **公開URL**: qualia.harvestasya.org
+- **管理URL**: qualia-admin.harvestasya.org
+- **Realm**: harvestasya
+- **SAML連携**: Google Workspace
+- **OIDC連携**: ArgoCD, Grafana
+
+**Authentik 詳細:** (廃止予定)
 - **Server**: 2レプリカ
 - **Worker**: 2レプリカ
 - **データベース**: CloudNative PostgreSQL
 - **キャッシュ**: Redis (Bitnami)
 - **OIDC連携**: ArgoCD, Cloudflare Zero Trust
+- **移行先**: Keycloak
 
 ### Applications
 
@@ -176,9 +187,10 @@ Ingress Controller。
 
 **Middleware:**
 - security-headers
-- authentik-forward-auth
+- authentik-forward-auth (廃止予定)
 - compress
 - circuit-breaker
+- redirect-to-account (keycloak)
 
 **マニフェスト:** `k8s/manifests/traefik/`
 
@@ -189,7 +201,8 @@ Ingress Controller。
 | 名前空間 | 用途 | アプリケーション |
 |---------|------|----------------|
 | argocd | GitOps | ArgoCD |
-| authentik | 認証 | Authentik |
+| authentik | 認証 | Authentik (廃止予定) |
+| keycloak | 認証 | Keycloak |
 | asf | ゲーム | ArchiSteamFarm |
 | cert-manager | 証明書 | cert-manager |
 | cnpg-system | DB Operator | CNPG Operator |
