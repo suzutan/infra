@@ -28,7 +28,7 @@ spec:
       namespace: traefik
 
   # 管理コンソール (qualia-admin.harvestasya.org)
-  # TODO: 将来的にIP制限や追加認証を実装
+  # Cloudflare Access (GitHub認証) により保護済み
   - kind: Rule
     match: Host(`qualia-admin.harvestasya.org`)
     services:

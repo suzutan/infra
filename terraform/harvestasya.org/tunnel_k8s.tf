@@ -52,3 +52,25 @@ output "web_tunnel_id" {
   description = "Cloudflare Web Tunnel ID"
   value       = cloudflare_zero_trust_tunnel_cloudflared.web_tunnel.id
 }
+
+# =============================================================================
+# Cloudflare Access Applications (infra-core layer)
+# K8s上のインフラ管理系アプリケーションへのGitHub認証
+# =============================================================================
+
+# Keycloak Admin Console - GitHub認証必須
+resource "cloudflare_zero_trust_access_application" "keycloak_admin" {
+  account_id                = var.cloudflare_account_id
+  name                      = "Keycloak Admin Console"
+  domain                    = "qualia-admin.${local.zone_name}"
+  type                      = "self_hosted"
+  session_duration          = "24h"
+  auto_redirect_to_identity = true
+  allowed_idps              = [cloudflare_zero_trust_access_identity_provider.github.id]
+
+  policies = [
+    {
+      id = cloudflare_zero_trust_access_policy.infrastructure_admin.id
+    }
+  ]
+}
