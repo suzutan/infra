@@ -5,3 +5,5 @@ formatter:
   trim_trailing_whitespace: true
   eof_newline: true
 gitignore_excludes: true
+exclude:
+- .serena/

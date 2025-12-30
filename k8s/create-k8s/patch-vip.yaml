@@ -6,5 +6,5 @@ machine:
       vip:
         ip: 10.11.0.201
       routes:
-        - network: 0.0.0.0/0
-          gateway: 10.11.0.1
+      - network: 0.0.0.0/0
+        gateway: 10.11.0.1
