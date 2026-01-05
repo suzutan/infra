@@ -1,0 +1,53 @@
+# Cilium configuration for Talos Linux
+# Reference: https://docs.cilium.io/en/stable/helm-reference/
+
+# IPAM configuration
+ipam:
+  mode: kubernetes
+
+# Replace kube-proxy with Cilium eBPF
+kubeProxyReplacement: true
+
+# KubePrism endpoint (Talos specific)
+k8sServiceHost: localhost
+k8sServicePort: 7445
+
+# Security context for Talos Linux
+# SYS_MODULE is not allowed in Talos
+securityContext:
+  capabilities:
+    ciliumAgent:
+      - CHOWN
+      - KILL
+      - NET_ADMIN
+      - NET_RAW
+      - IPC_LOCK
+      - SYS_ADMIN
+      - SYS_RESOURCE
+      - DAC_OVERRIDE
+      - FOWNER
+      - SETGID
+      - SETUID
+    cleanCiliumState:
+      - NET_ADMIN
+      - SYS_ADMIN
+      - SYS_RESOURCE
+
+# cgroup configuration for Talos
+cgroup:
+  autoMount:
+    enabled: false
+  hostRoot: /sys/fs/cgroup
+
+# eBPF configuration
+# hostLegacyRouting for compatibility with Talos HostDNS
+bpf:
+  hostLegacyRouting: true
+
+# Hubble - Observability
+hubble:
+  enabled: true
+  relay:
+    enabled: true
+  ui:
+    enabled: true

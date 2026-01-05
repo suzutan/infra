@@ -1,0 +1,21 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: cilium
+  namespace: argocd
+spec:
+  destination:
+    server: "https://kubernetes.default.svc"
+    namespace: kube-system
+  source:
+    path: k8s/manifests/cilium
+    repoURL: "https://github.com/suzutan/infra.git"
+    targetRevision: HEAD
+  project: k8s-infra
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+    syncOptions:
+      - RespectIgnoreDifferences=true
+      - ServerSideApply=true

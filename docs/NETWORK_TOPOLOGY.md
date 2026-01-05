@@ -222,8 +222,32 @@ spec:
 
 ## 内部ネットワーク
 
-### Kubernetes Service CIDR
-- **CIDR**: 10.96.0.0/12 (デフォルト)
+### Kubernetes ネットワーク構成
+
+| 項目 | 値 | 備考 |
+|------|-----|------|
+| Pod CIDR | 10.244.0.0/16 | Flannel/Cilium 共通 |
+| Service CIDR | 10.96.0.0/12 | Kubernetes デフォルト |
+| CNI | Cilium 1.18.5 | kube-proxy 無効化、Hubble 有効 |
+
+### CNI (Cilium) 設定
+
+```yaml
+# 主要設定
+kubeProxyReplacement: true      # kube-proxy をCiliumで置き換え
+k8sServiceHost: localhost       # KubePrism エンドポイント
+k8sServicePort: 7445
+
+# Hubble (オブザーバビリティ)
+hubble:
+  enabled: true
+  relay:
+    enabled: true
+  ui:
+    enabled: true
+```
+
+詳細: `k8s/manifests/cilium/values.yaml`
 
 ### 主要サービスエンドポイント
 | サービス | 名前空間 | DNS |

@@ -3,3 +3,6 @@ secrets.yaml
 talosconfig
 controlplane.yaml
 worker.yaml
+
+## Migration backups
+backup/

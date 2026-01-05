@@ -25,6 +25,7 @@
 | `patch-vip.yaml` | VIP + デフォルトゲートウェイ設定 (Control Plane 用) |
 | `patch-ntp.yaml` | NTP サーバー設定 (172.20.20.11 = Proxmoxホスト) |
 | `patch-scheduling.yaml` | Control Plane でワークロード実行を許可 |
+| `patch-cilium.yaml` | CNI: Cilium (kube-proxy 無効化) |
 
 ### ネットワーク構成
 
@@ -221,4 +222,107 @@ talosctl patch machineconfig -n $ALL_NODES --patch @patch-scheduling.yaml --talo
 
 ```bash
 talosctl upgrade -n $NODE1_IP --image ghcr.io/siderolabs/installer:v1.12.0 --talosconfig=./talosconfig
+```
+
+## CNI移行: Flannel → Cilium
+
+### 前提条件
+
+- Helm v3 がインストール済み
+- クラスターへのアクセス権限がある
+
+### 移行手順
+
+#### 1. バックアップ取得
+
+```bash
+# Pod/Service状態
+kubectl get pods -A -o wide > backup-pods.txt
+kubectl get svc -A -o wide > backup-services.txt
+
+# ArgoCD Application
+kubectl get applications -n argocd -o yaml > backup-argocd-apps.yaml
+
+# PV/PVC（重要）
+kubectl get pv -o yaml > backup-pv.yaml
+kubectl get pvc -A -o yaml > backup-pvc.yaml
+```
+
+#### 2. Talos設定更新
+
+```bash
+export ALL_NODES=10.11.0.100,10.11.0.101,10.11.0.102
+
+talosctl patch machineconfig -n $ALL_NODES \
+  --patch @patch-cilium.yaml \
+  --talosconfig=./talosconfig
+```
+
+#### 3. Flannel/kube-proxy削除
+
+⚠️ **この時点でネットワーク接続が一時的に失われます**
+
+```bash
+kubectl delete daemonset -n kube-system kube-flannel
+kubectl delete cm kube-flannel-cfg -n kube-system
+kubectl delete daemonset -n kube-system kube-proxy
+kubectl delete cm kube-proxy -n kube-system
+```
+
+#### 4. Ciliumインストール
+
+```bash
+helm repo add cilium https://helm.cilium.io/
+helm repo update
+helm install cilium cilium/cilium --version 1.18.5 \
+  --namespace kube-system \
+  -f ../manifests/cilium/values.yaml
+```
+
+#### 5. 検証
+
+```bash
+# ノード状態
+kubectl get nodes -o wide
+
+# Cilium Pod状態
+kubectl get pods -n kube-system -l k8s-app=cilium
+
+# Pod間通信テスト
+kubectl run test-1 --image=busybox --restart=Never -- sleep 3600
+kubectl run test-2 --image=busybox --restart=Never -- sleep 3600
+kubectl exec test-1 -- ping -c 3 $(kubectl get pod test-2 -o jsonpath='{.status.podIP}')
+kubectl delete pod test-1 test-2
+
+# ArgoCD復旧確認
+kubectl get applications -n argocd
+```
+
+### ロールバック手順
+
+```bash
+# Cilium削除
+helm uninstall cilium -n kube-system
+
+# Talos設定を戻す
+cat > patch-rollback.yaml << 'EOF'
+cluster:
+  network:
+    cni:
+      name: flannel
+  proxy:
+    disabled: false
+machine:
+  features:
+    hostDNS:
+      enabled: true
+      forwardKubeDNSToHost: true
+EOF
+
+talosctl patch machineconfig -n $ALL_NODES \
+  --patch @patch-rollback.yaml \
+  --talosconfig=./talosconfig
+
+# ノード再起動
+talosctl reboot -n 10.11.0.100,10.11.0.101,10.11.0.102 --talosconfig=./talosconfig
 ```
