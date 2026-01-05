@@ -279,7 +279,17 @@ helm install cilium cilium/cilium --version 1.18.5 \
   -f ../manifests/cilium/values.yaml
 ```
 
-#### 5. 検証
+#### 5. 全Podの強制再作成
+
+⚠️ **重要**: 既存Podは古いCNI設定を保持しているため、強制削除が必要
+
+```bash
+# 全名前空間のPodを強制削除（kube-system以外）
+kubectl get ns -o name | grep -vE 'kube-system|kube-node-lease|kube-public' | \
+  cut -d/ -f2 | xargs -I{} kubectl delete pods -n {} --all --force --grace-period=0
+```
+
+#### 6. 検証
 
 ```bash
 # ノード状態
