@@ -213,32 +213,6 @@ scrape_configs:
     target_label: severity
     regex: (.+)
 
-- job_name: "airq-exporter"
-  scrape_interval: 1m
-  scrape_timeout: 30s
-
-  kubernetes_sd_configs:
-  - role: pod
-    namespaces:
-      names:
-      - temporis
-
-  relabel_configs:
-  - source_labels: [__meta_kubernetes_pod_label_app_oam_dev_name]
-    action: keep
-    regex: airq-exporter
-  - source_labels: [__address__]
-    action: replace
-    regex: ([^:]+)(?::\d+)?
-    replacement: $1:8080
-    target_label: __address__
-  - source_labels: [__meta_kubernetes_namespace]
-    action: replace
-    target_label: kubernetes_namespace
-  - source_labels: [__meta_kubernetes_pod_name]
-    action: replace
-    target_label: kubernetes_pod_name
-
 - job_name: "kubernetes-pods"
 
   tls_config:
@@ -255,10 +229,6 @@ scrape_configs:
   - source_labels: [__meta_kubernetes_pod_annotation_prometheus_io_scrape]
     action: keep
     regex: true
-  # Skip airq-exporter (handled by dedicated job)
-  - source_labels: [__meta_kubernetes_pod_label_app_oam_dev_name]
-    action: drop
-    regex: airq-exporter
   - source_labels: [__meta_kubernetes_pod_annotation_prometheus_io_scheme]
     action: replace
     target_label: __scheme__
