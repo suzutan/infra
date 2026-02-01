@@ -42,4 +42,4 @@ jobs:
       uses: dflook/terraform-apply@v2
       with:
         path: ${{ matrix.directory }}
-        add_github_comment: true
+        auto_approve: true
