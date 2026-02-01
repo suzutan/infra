@@ -3,10 +3,19 @@ kind: Ingress
 metadata:
   name: asf-pomerium
   annotations:
+    # BeyondCorp: tier-3 + automation
     ingress.pomerium.io/policy: |
-      allow:
-        and:
-          - claim/groups: admin
+      - allow:
+          and:
+            - groups:
+                has: "access.group.automation"
+            - or:
+                - groups:
+                    has: "access.tier.tier-3"
+                - groups:
+                    has: "access.tier.tier-2"
+                - groups:
+                    has: "access.tier.tier-1"
     ingress.pomerium.io/pass_identity_headers: "true"
     ingress.pomerium.io/set_response_headers: |
       Strict-Transport-Security: max-age=31536000; includeSubDomains; preload

@@ -3,10 +3,17 @@ kind: Ingress
 metadata:
   name: argocd-pomerium
   annotations:
+    # BeyondCorp: tier-2 + infra
     ingress.pomerium.io/policy: |
-      allow:
-        and:
-          - claim/groups: admin
+      - allow:
+          and:
+            - groups:
+                has: "access.group.infra"
+            - or:
+                - groups:
+                    has: "access.tier.tier-2"
+                - groups:
+                    has: "access.tier.tier-1"
     ingress.pomerium.io/pass_identity_headers: "true"
     ingress.pomerium.io/set_response_headers: |
       Strict-Transport-Security: max-age=31536000; includeSubDomains; preload
