@@ -3,19 +3,14 @@ kind: Ingress
 metadata:
   name: n8n-pomerium
   annotations:
-    # BeyondCorp: tier-3 + automation
+    # RBAC: n8n.admin or n8n.editor
     ingress.pomerium.io/policy: |
       - allow:
-          and:
+          or:
             - groups:
-                has: "access.group.automation"
-            - or:
-                - groups:
-                    has: "access.tier.tier-3"
-                - groups:
-                    has: "access.tier.tier-2"
-                - groups:
-                    has: "access.tier.tier-1"
+                has: "access.group.n8n.admin"
+            - groups:
+                has: "access.group.n8n.editor"
     ingress.pomerium.io/pass_identity_headers: "true"
     ingress.pomerium.io/set_response_headers: |
       Strict-Transport-Security: max-age=31536000; includeSubDomains; preload

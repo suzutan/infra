@@ -3,21 +3,14 @@ kind: Ingress
 metadata:
   name: influxdb2-pomerium
   annotations:
-    # BeyondCorp: tier-4 + monitoring
+    # RBAC: influxdb.admin or influxdb.viewer
     ingress.pomerium.io/policy: |
       - allow:
-          and:
+          or:
             - groups:
-                has: "access.group.monitoring"
-            - or:
-                - groups:
-                    has: "access.tier.tier-4"
-                - groups:
-                    has: "access.tier.tier-3"
-                - groups:
-                    has: "access.tier.tier-2"
-                - groups:
-                    has: "access.tier.tier-1"
+                has: "access.group.influxdb.admin"
+            - groups:
+                has: "access.group.influxdb.viewer"
     ingress.pomerium.io/pass_identity_headers: "true"
     ingress.pomerium.io/set_response_headers: |
       Strict-Transport-Security: max-age=31536000; includeSubDomains; preload
