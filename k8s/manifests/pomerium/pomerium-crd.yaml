@@ -7,7 +7,7 @@ spec:
     url: https://authenticate.harvestasya.org
   identityProvider:
     provider: oidc
-    url: https://qualia.harvestasya.org/realms/harvestasya
+    url: https://accounts.harvestasya.org/realms/harvestasya
     secret: pomerium/pomerium-keycloak-oidc
   certificates:
   - pomerium/pomerium-wildcard-tls

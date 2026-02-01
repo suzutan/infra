@@ -10,7 +10,7 @@
 # Environment variables:
 #   export TF_VAR_keycloak_client_secret="your-client-secret"
 
-keycloak_url       = "https://qualia-admin.harvestasya.org"
+keycloak_url       = "https://keycloak-admin.harvestasya.org"
 keycloak_client_id = "terraform"
 realm_name         = "harvestasya"
 

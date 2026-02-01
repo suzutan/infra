@@ -4,6 +4,6 @@ metadata:
   name: redirect-to-account
 spec:
   redirectRegex:
-    regex: ^https://qualia\.harvestasya\.org/?$
-    replacement: https://qualia.harvestasya.org/realms/harvestasya/account/
+    regex: ^https://accounts\.harvestasya\.org/?$
+    replacement: https://accounts.harvestasya.org/realms/harvestasya/account/
     permanent: false

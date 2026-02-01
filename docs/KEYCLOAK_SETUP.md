@@ -9,8 +9,8 @@
 | 名前空間 | keycloak |
 | Helm Chart | codecentric/keycloakx v7.1.5 |
 | データベース | CloudNative PostgreSQL |
-| 公開URL | qualia.harvestasya.org |
-| 管理URL | qualia-admin.harvestasya.org |
+| 公開URL | accounts.harvestasya.org |
+| 管理URL | keycloak-admin.harvestasya.org |
 | Realm | harvestasya |
 
 ## アーキテクチャ
@@ -30,13 +30,13 @@
          │ Traefik IngressRoute
          ▼
 ┌─────────────────────────────────────────────────────────────┐
-│  qualia.harvestasya.org (公開)                              │
+│  accounts.harvestasya.org (公開)                              │
 │    - /realms/* (認証エンドポイント)                         │
 │    - /resources/* (静的リソース)                            │
 │    - /js/* (JavaScript)                                     │
 │    - / → /realms/harvestasya/account/ (リダイレクト)        │
 │                                                              │
-│  qualia-admin.harvestasya.org (管理)                        │
+│  keycloak-admin.harvestasya.org (管理)                        │
 │    - 全パス許可                                             │
 └─────────────────────────────────────────────────────────────┘
 ```
@@ -59,7 +59,7 @@
 
 ### 1. Realm作成
 
-1. 管理コンソール（qualia-admin.harvestasya.org）にログイン
+1. 管理コンソール（keycloak-admin.harvestasya.org）にログイン
 2. 左上のドロップダウン > **Create realm**
 3. Realm name: `harvestasya`
 4. **Create**
@@ -107,9 +107,9 @@ GWSをSAML SPとして設定し、KeycloakをIdPとする。
 
 | 項目 | 値 |
 |------|-----|
-| IDP エンティティID | `https://qualia.harvestasya.org/realms/harvestasya` |
-| ログインページURL | `https://qualia.harvestasya.org/realms/harvestasya/protocol/saml` |
-| ログアウトページURL | `https://qualia.harvestasya.org/realms/harvestasya/protocol/saml` |
+| IDP エンティティID | `https://accounts.harvestasya.org/realms/harvestasya` |
+| ログインページURL | `https://accounts.harvestasya.org/realms/harvestasya/protocol/saml` |
+| ログアウトページURL | `https://accounts.harvestasya.org/realms/harvestasya/protocol/saml` |
 | 証明書 | Keycloak Realm Settings > Keys > RS256 > Certificate |
 
 3. **SSOプロファイルの割り当てを管理** でテスト対象の組織単位に割り当て
@@ -178,7 +178,7 @@ ArgoCD側設定 (`argocd-cm`):
 ```yaml
 oidc.config: |
   name: Keycloak
-  issuer: https://qualia.harvestasya.org/realms/harvestasya
+  issuer: https://accounts.harvestasya.org/realms/harvestasya
   clientID: argocd
   clientSecret: $oidc.keycloak.clientSecret
   requestedScopes:
@@ -201,9 +201,9 @@ Grafana側設定 (`grafana.ini`):
 enabled = true
 name = Keycloak
 scopes = openid profile email groups offline_access
-auth_url = https://qualia.harvestasya.org/realms/harvestasya/protocol/openid-connect/auth
-token_url = https://qualia.harvestasya.org/realms/harvestasya/protocol/openid-connect/token
-api_url = https://qualia.harvestasya.org/realms/harvestasya/protocol/openid-connect/userinfo
+auth_url = https://accounts.harvestasya.org/realms/harvestasya/protocol/openid-connect/auth
+token_url = https://accounts.harvestasya.org/realms/harvestasya/protocol/openid-connect/token
+api_url = https://accounts.harvestasya.org/realms/harvestasya/protocol/openid-connect/userinfo
 role_attribute_path = contains(groups[*], 'grafana.admin') && 'Admin' || contains(groups[*], 'grafana.editor') && 'Editor' || 'Viewer'
 ```
 

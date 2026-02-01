@@ -25,14 +25,14 @@ resource "cloudflare_zero_trust_tunnel_cloudflared_config" "web_tunnel_config" {
         }
       },
       {
-        hostname = "qualia.${local.zone_name}" # keycloak public
+        hostname = "accounts.${local.zone_name}" # keycloak public
         service  = "https://traefik.traefik.svc.cluster.local"
         origin_request = {
           no_tls_verify = true
         }
       },
       {
-        hostname = "qualia-admin.${local.zone_name}" # keycloak admin (Cloudflare Access保護)
+        hostname = "keycloak-admin.${local.zone_name}" # keycloak admin (Cloudflare Access保護)
         service  = "https://traefik.traefik.svc.cluster.local"
         origin_request = {
           no_tls_verify = true
@@ -87,7 +87,7 @@ output "web_tunnel_id" {
 resource "cloudflare_zero_trust_access_application" "keycloak_admin" {
   account_id                = var.cloudflare_account_id
   name                      = "Keycloak Admin Console"
-  domain                    = "qualia-admin.${local.zone_name}"
+  domain                    = "keycloak-admin.${local.zone_name}"
   type                      = "self_hosted"
   session_duration          = "24h"
   auto_redirect_to_identity = true

@@ -9,17 +9,17 @@ spec:
   routes:
   # ルートパスをアカウントページにリダイレクト
   - kind: Rule
-    match: Host(`qualia.harvestasya.org`) && Path(`/`)
+    match: Host(`accounts.harvestasya.org`) && Path(`/`)
     services:
     - name: keycloak-keycloakx-http
       port: 80
     middlewares:
     - name: redirect-to-account
 
-  # 公開エンドポイント (qualia.harvestasya.org)
+  # 公開エンドポイント (accounts.harvestasya.org)
   # 認証・アカウント管理に必要なパスのみ許可
   - kind: Rule
-    match: Host(`qualia.harvestasya.org`) && (PathPrefix(`/realms/`) || PathPrefix(`/resources/`) || PathPrefix(`/js/`))
+    match: Host(`accounts.harvestasya.org`) && (PathPrefix(`/realms/`) || PathPrefix(`/resources/`) || PathPrefix(`/js/`))
     services:
     - name: keycloak-keycloakx-http
       port: 80
@@ -27,10 +27,10 @@ spec:
     - name: security-headers
       namespace: traefik
 
-  # 管理コンソール (qualia-admin.harvestasya.org)
+  # 管理コンソール (keycloak-admin.harvestasya.org)
   # Cloudflare Access (GitHub認証) により保護済み
   - kind: Rule
-    match: Host(`qualia-admin.harvestasya.org`)
+    match: Host(`keycloak-admin.harvestasya.org`)
     services:
     - name: keycloak-keycloakx-http
       port: 80

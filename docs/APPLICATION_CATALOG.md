@@ -24,8 +24,8 @@
 **Keycloak 詳細:**
 - **Helm Chart**: codecentric/keycloakx v7.1.5
 - **データベース**: CloudNative PostgreSQL (CNPG)
-- **公開URL**: qualia.harvestasya.org
-- **管理URL**: qualia-admin.harvestasya.org
+- **公開URL**: accounts.harvestasya.org
+- **管理URL**: keycloak-admin.harvestasya.org
 - **Realm**: harvestasya
 - **SAML連携**: Google Workspace
 - **OIDC連携**: ArgoCD, Grafana

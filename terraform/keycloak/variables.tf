@@ -2,7 +2,7 @@
 variable "keycloak_url" {
   description = "Keycloak server URL"
   type        = string
-  default     = "https://qualia-admin.harvestasya.org"
+  default     = "https://keycloak-admin.harvestasya.org"
 }
 
 # Service Account Client Credentials (recommended)
