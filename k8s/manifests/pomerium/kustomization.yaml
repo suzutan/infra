@@ -10,3 +10,4 @@ resources:
 - onepassworditem-pomerium-idp.yaml
 - certificate-authenticate.yaml
 - pomerium-crd.yaml
+- serverstransport.yaml
