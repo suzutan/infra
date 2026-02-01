@@ -1,0 +1,28 @@
+apiVersion: traefik.io/v1alpha1
+kind: Middleware
+metadata:
+  name: cosmosphere-cors
+  labels:
+    app.kubernetes.io/name: cosmosphere
+    app.kubernetes.io/component: middleware
+spec:
+  headers:
+    accessControlAllowMethods:
+    - GET
+    - PUT
+    - POST
+    - HEAD
+    - DELETE
+    - OPTIONS
+    accessControlAllowHeaders:
+    - Accept
+    - Authorization
+    - Content-Type
+    - Origin
+    - Referer
+    accessControlAllowOriginList:
+    - app://obsidian.md
+    - capacitor://localhost
+    - http://localhost
+    accessControlAllowCredentials: true
+    accessControlMaxAge: 100

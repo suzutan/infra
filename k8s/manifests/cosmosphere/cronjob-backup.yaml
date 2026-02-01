@@ -1,0 +1,67 @@
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  name: cosmosphere-backup
+  labels:
+    app.kubernetes.io/name: cosmosphere
+    app.kubernetes.io/component: backup
+spec:
+  schedule: "0 3 * * *" # 毎日AM3:00
+  concurrencyPolicy: Forbid
+  successfulJobsHistoryLimit: 3
+  failedJobsHistoryLimit: 3
+  jobTemplate:
+    spec:
+      template:
+        spec:
+          restartPolicy: OnFailure
+          containers:
+          - name: backup
+            image: curlimages/curl:8.11.1
+            command:
+            - /bin/sh
+            - -c
+            - |
+              set -e
+              TIMESTAMP=$(date +%Y%m%d-%H%M%S)
+              BACKUP_DIR="/backup/${TIMESTAMP}"
+              mkdir -p "${BACKUP_DIR}"
+
+              echo "Starting CouchDB backup at ${TIMESTAMP}..."
+
+              # Get all databases
+              DATABASES=$(curl -s -u "${COUCHDB_USER}:${COUCHDB_PASSWORD}" \
+                "http://cosmosphere-couchdb:5984/_all_dbs" | tr -d '[]"' | tr ',' '\n')
+
+              for DB in ${DATABASES}; do
+                if [ "${DB}" != "_replicator" ] && [ "${DB}" != "_global_changes" ]; then
+                  echo "Backing up database: ${DB}"
+                  curl -s -u "${COUCHDB_USER}:${COUCHDB_PASSWORD}" \
+                    "http://cosmosphere-couchdb:5984/${DB}/_all_docs?include_docs=true" \
+                    > "${BACKUP_DIR}/${DB}.json"
+                fi
+              done
+
+              # Keep only last 7 days of backups
+              find /backup -maxdepth 1 -type d -mtime +7 -exec rm -rf {} \;
+
+              echo "Backup completed successfully!"
+              ls -la /backup/
+            env:
+            - name: COUCHDB_USER
+              valueFrom:
+                secretKeyRef:
+                  name: cosmosphere-couchdb-secret
+                  key: username
+            - name: COUCHDB_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: cosmosphere-couchdb-secret
+                  key: password
+            volumeMounts:
+            - name: backup
+              mountPath: /backup
+          volumes:
+          - name: backup
+            persistentVolumeClaim:
+              claimName: cosmosphere-backup

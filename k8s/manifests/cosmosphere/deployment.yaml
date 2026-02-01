@@ -1,0 +1,70 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: cosmosphere-couchdb
+  labels:
+    app.kubernetes.io/name: cosmosphere
+    app.kubernetes.io/component: couchdb
+spec:
+  replicas: 1
+  strategy:
+    type: Recreate
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: cosmosphere
+      app.kubernetes.io/component: couchdb
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: cosmosphere
+        app.kubernetes.io/component: couchdb
+    spec:
+      containers:
+      - name: couchdb
+        image: couchdb:3.4.2
+        ports:
+        - containerPort: 5984
+          name: http
+        env:
+        - name: COUCHDB_USER
+          valueFrom:
+            secretKeyRef:
+              name: cosmosphere-couchdb-secret
+              key: username
+        - name: COUCHDB_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: cosmosphere-couchdb-secret
+              key: password
+        volumeMounts:
+        - name: couchdb-data
+          mountPath: /opt/couchdb/data
+        - name: couchdb-config
+          mountPath: /opt/couchdb/etc/local.d/local.ini
+          subPath: local.ini
+        resources:
+          requests:
+            memory: "256Mi"
+            cpu: "100m"
+          limits:
+            memory: "512Mi"
+            cpu: "500m"
+        livenessProbe:
+          httpGet:
+            path: /
+            port: 5984
+          initialDelaySeconds: 30
+          periodSeconds: 10
+        readinessProbe:
+          httpGet:
+            path: /
+            port: 5984
+          initialDelaySeconds: 5
+          periodSeconds: 5
+      volumes:
+      - name: couchdb-data
+        persistentVolumeClaim:
+          claimName: cosmosphere-couchdb-data
+      - name: couchdb-config
+        configMap:
+          name: cosmosphere-couchdb-config

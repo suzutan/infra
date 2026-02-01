@@ -1,0 +1,14 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+namespace: cosmosphere
+resources:
+- namespace.yaml
+- secret-couchdb.yaml
+- configmap-couchdb.yaml
+- pvc.yaml
+- pvc-backup.yaml
+- deployment.yaml
+- service.yaml
+- middleware-cors.yaml
+- ingressroute.yaml
+- cronjob-backup.yaml

@@ -1,0 +1,14 @@
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: cosmosphere-couchdb-data
+  labels:
+    app.kubernetes.io/name: cosmosphere
+    app.kubernetes.io/component: couchdb
+spec:
+  accessModes:
+  - ReadWriteOnce
+  storageClassName: nfs-client
+  resources:
+    requests:
+      storage: 10Gi
