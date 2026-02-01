@@ -1,0 +1,23 @@
+# Keycloak Service Account (Client Credentials)
+#
+# Setup in Keycloak:
+#   1. Create client "terraform" in harvestasya realm
+#   2. Access Type: confidential
+#   3. Service Accounts Enabled: ON
+#   4. Service Account Roles: realm-management -> realm-admin
+#   5. Copy client secret from Credentials tab
+#
+# Environment variables:
+#   export TF_VAR_keycloak_client_secret="your-client-secret"
+
+keycloak_url       = "https://qualia-admin.harvestasya.org"
+keycloak_client_id = "terraform"
+realm_name         = "harvestasya"
+
+# Cloudflare Access (for GitHub Actions)
+# Get these values from terraform output in harvestasya.org:
+#   terraform output -raw github_actions_cf_access_client_id
+#   terraform output -raw github_actions_cf_access_client_secret
+#
+# cf_access_client_id     = ""
+# cf_access_client_secret = ""
