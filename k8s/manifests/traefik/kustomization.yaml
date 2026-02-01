@@ -15,7 +15,7 @@ resources:
 - config/tls/tlsoption-default.yaml
 - config/tls/tlsstore.yaml
 - traefik-api-service.yaml
-- ingress-pomerium-dashboard.yaml
+- ingress.yaml
 
 configMapGenerator:
 - name: traefik-env

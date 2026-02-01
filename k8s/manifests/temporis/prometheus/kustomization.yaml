@@ -9,7 +9,7 @@ namespace: temporis
 resources:
 - cr.yaml
 - crb.yaml
-- ingress-pomerium.yaml
+- ingress.yaml
 - statefulset.yaml
 - service.yaml
 - serviceaccount.yaml

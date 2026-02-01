@@ -10,4 +10,4 @@ resources:
 - secret-n8n.yaml
 - statefulset.yaml
 - service.yaml
-- ingress-pomerium.yaml
+- ingress.yaml

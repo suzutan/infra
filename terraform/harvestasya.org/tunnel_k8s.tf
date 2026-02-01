@@ -83,7 +83,7 @@ output "web_tunnel_id" {
 # K8s上のインフラ管理系アプリケーションへのGitHub認証
 # =============================================================================
 
-# Keycloak Admin Console - GitHub認証必須
+# Keycloak Admin Console - GitHub認証必須 + GitHub Actions Service Token
 resource "cloudflare_zero_trust_access_application" "keycloak_admin" {
   account_id                = var.cloudflare_account_id
   name                      = "Keycloak Admin Console"
@@ -95,7 +95,12 @@ resource "cloudflare_zero_trust_access_application" "keycloak_admin" {
 
   policies = [
     {
-      id = cloudflare_zero_trust_access_policy.infrastructure_admin.id
+      id         = cloudflare_zero_trust_access_policy.infrastructure_admin.id
+      precedence = 1
+    },
+    {
+      id         = cloudflare_zero_trust_access_policy.github_actions_service_token.id
+      precedence = 2
     }
   ]
 }
