@@ -17,5 +17,5 @@ spec:
       prune: true
       selfHeal: true
     syncOptions:
-      - RespectIgnoreDifferences=true
-      - ServerSideApply=true
+    - RespectIgnoreDifferences=true
+    - ServerSideApply=true
