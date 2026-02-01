@@ -1,6 +1,7 @@
 # Cloudflare Zero Trust Tunnel for Web traffic
 # - デフォルト: Pomerium Ingress Controller (policy-based access)
 # - Traefik直通: immich, keycloak (policy制御なし)
+# Updated: 2026-02-02
 
 # Cloudflare Tunnelの作成
 resource "cloudflare_zero_trust_tunnel_cloudflared" "web_tunnel" {
