@@ -7,6 +7,8 @@ resources:
 # K8s native resources
 - namespace.yaml
 - pvc.yaml
+- ingress-pomerium.yaml
+- ingressroute-pomerium.yaml
 
 # KubeVela Application
 - application.yaml

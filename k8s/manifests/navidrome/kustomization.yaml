@@ -6,5 +6,6 @@ namespace: navidrome
 resources:
 - namespace.yaml
 - service-navidrome.yaml
-- ingressroute-filebrowser.yaml
-- ingressroute-navidrome.yaml
+- ingress-pomerium.yaml
+- ingress-pomerium-filebrowser.yaml
+- ingressroute-pomerium.yaml

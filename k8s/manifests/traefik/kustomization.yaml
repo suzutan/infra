@@ -10,11 +10,14 @@ resources:
 - config/middlewares/circuit-breaker.yaml
 - config/middlewares/compress.yaml
 - config/middlewares/security-headers.yaml
-- config/routes/dashboard.yaml
+- config/routes/pomerium-proxy.yaml
 - config/tls/cert-harvestasya-org-wildcard.yaml
 - config/tls/cert-suzutan-jp-wildcard.yaml
 - config/tls/tlsoption-default.yaml
 - config/tls/tlsstore.yaml
+- traefik-api-service.yaml
+- ingress-pomerium-dashboard.yaml
+- ingressroute-pomerium-dashboard.yaml
 
 configMapGenerator:
 - name: traefik-env

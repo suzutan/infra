@@ -1,0 +1,29 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: navidrome-pomerium
+  annotations:
+    ingress.pomerium.io/policy: |
+      allow:
+        and:
+          - claim/groups: admin
+    ingress.pomerium.io/pass_identity_headers: "true"
+    ingress.pomerium.io/set_response_headers: |
+      Strict-Transport-Security: max-age=31536000; includeSubDomains; preload
+      X-Frame-Options: SAMEORIGIN
+      X-Content-Type-Options: nosniff
+      X-XSS-Protection: 1; mode=block
+      Referrer-Policy: same-origin
+spec:
+  ingressClassName: pomerium
+  rules:
+  - host: navidrome.harvestasya.org
+    http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: navidrome
+            port:
+              number: 4533

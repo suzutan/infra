@@ -7,7 +7,8 @@ resources:
 - cr.yaml
 - crb.yaml
 - deployment.yaml
-- ingressroute.yaml
+- ingress-pomerium.yaml
+- ingressroute-pomerium.yaml
 - pvc.yaml
 - role.yaml
 - rolebinding.yaml

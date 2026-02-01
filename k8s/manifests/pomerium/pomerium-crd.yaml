@@ -1,0 +1,19 @@
+apiVersion: ingress.pomerium.io/v1
+kind: Pomerium
+metadata:
+  name: global
+spec:
+  authenticate:
+    url: https://authenticate.harvestasya.org
+  identityProvider:
+    provider: oidc
+    url: https://qualia.harvestasya.org/realms/harvestasya
+    secret: pomerium/pomerium-keycloak-oidc
+  certificates:
+  - pomerium/pomerium-authenticate-tls
+  secrets: pomerium/bootstrap
+  cookie:
+    domain: harvestasya.org
+  storage:
+    postgres:
+      secret: pomerium/pomerium-postgres

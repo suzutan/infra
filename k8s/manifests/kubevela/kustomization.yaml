@@ -8,7 +8,8 @@ resources:
 - traitdefinition-traefik-route.yaml
 - componentdefinition-helm.yaml
 - application-velaux.yaml
-- ingressroute-velaux.yaml
+- ingress-pomerium-velaux.yaml
+- ingressroute-pomerium.yaml
 
 helmCharts:
 - name: vela-core

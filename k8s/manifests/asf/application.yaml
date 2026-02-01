@@ -25,13 +25,3 @@ spec:
     - type: scaler
       properties:
         replicas: 1
-    - type: traefik-route
-      properties:
-        domain: asf.harvestasya.org
-        port: 1242
-        authentikAuth: true
-        middlewares:
-        - name: auto-detect-content-type
-          namespace: traefik
-        - name: authentik-forward-auth
-          namespace: authentik

@@ -17,7 +17,8 @@ resources:
 - secret-argocd-oidc-secret.yaml
 - secret-argocd-secret.yaml
 - secret-argocd-notifications-secret.yaml
-- ingressroute.yaml
+- ingress-pomerium.yaml
+- ingressroute-pomerium.yaml
 - serverstransport.yaml
 
 patches:
