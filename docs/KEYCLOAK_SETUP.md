@@ -160,7 +160,7 @@ Keycloak管理コンソールで:
 |------|-----|
 | Name | groups |
 | Token Claim Name | groups |
-| Full group path | OFF |
+| Full group path | ON |
 | Add to ID token | ON |
 | Add to access token | ON |
 | Add to userinfo | ON |
@@ -204,7 +204,7 @@ scopes = openid profile email groups offline_access
 auth_url = https://accounts.harvestasya.org/realms/harvestasya/protocol/openid-connect/auth
 token_url = https://accounts.harvestasya.org/realms/harvestasya/protocol/openid-connect/token
 api_url = https://accounts.harvestasya.org/realms/harvestasya/protocol/openid-connect/userinfo
-role_attribute_path = contains(groups[*], 'grafana.admin') && 'Admin' || contains(groups[*], 'grafana.editor') && 'Editor' || 'Viewer'
+role_attribute_path = contains(groups[*], '/grafana/admin') && 'Admin' || contains(groups[*], '/grafana/editor') && 'Editor' || 'Viewer'
 ```
 
 ### 4. グループ設定
@@ -212,14 +212,16 @@ role_attribute_path = contains(groups[*], 'grafana.admin') && 'Admin' || contain
 1. **Groups** > **Create group**
 2. RBACモデルに基づくグループを作成:
    ```
-   /<app>/<role>  →  <app>.<role>
+   /<app>/<role> 形式でグループを作成
 
    例:
-   /argocd/admin   → argocd.admin
-   /grafana/admin  → grafana.admin
-   /grafana/editor → grafana.editor
-   /grafana/viewer → grafana.viewer
+   /argocd/admin
+   /argocd/viewer
+   /grafana/admin
+   /grafana/editor
+   /grafana/viewer
    ```
+   Full group path: ON により、トークンには `/argocd/admin` 形式で含まれる。
    詳細は `docs/permission-models/BEYONDCORP-PERMISSION-MODEL.md` を参照
 
 3. **Users** > ユーザー選択 > **Groups** タブでグループを割り当て

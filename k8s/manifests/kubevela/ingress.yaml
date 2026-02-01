@@ -4,12 +4,12 @@ metadata:
   name: velaux-pomerium
   namespace: vela-system
   annotations:
-    # RBAC: kubevela.admin
+    # RBAC: /kubevela/admin
     ingress.pomerium.io/policy: |
       - allow:
           or:
             - groups:
-                has: "kubevela.admin"
+                has: "/kubevela/admin"
     ingress.pomerium.io/pass_identity_headers: "true"
     ingress.pomerium.io/set_response_headers: |
       Strict-Transport-Security: max-age=31536000; includeSubDomains; preload

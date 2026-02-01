@@ -3,12 +3,12 @@ kind: Ingress
 metadata:
   name: traefik-dashboard-pomerium
   annotations:
-    # RBAC: traefik.admin
+    # RBAC: /traefik/admin
     ingress.pomerium.io/policy: |
       - allow:
           or:
             - groups:
-                has: "traefik.admin"
+                has: "/traefik/admin"
     ingress.pomerium.io/pass_identity_headers: "true"
     ingress.pomerium.io/set_response_headers: |
       Strict-Transport-Security: max-age=31536000; includeSubDomains; preload

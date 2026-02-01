@@ -3,14 +3,14 @@ kind: Ingress
 metadata:
   name: argocd-pomerium
   annotations:
-    # RBAC: argocd.admin or argocd.viewer
+    # RBAC: /argocd/admin or /argocd/viewer
     ingress.pomerium.io/policy: |
       - allow:
           or:
             - groups:
-                has: "argocd.admin"
+                has: "/argocd/admin"
             - groups:
-                has: "argocd.viewer"
+                has: "/argocd/viewer"
     ingress.pomerium.io/pass_identity_headers: "true"
     ingress.pomerium.io/set_response_headers: |
       Strict-Transport-Security: max-age=31536000; includeSubDomains; preload

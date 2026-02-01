@@ -3,12 +3,12 @@ kind: Ingress
 metadata:
   name: prometheus-pomerium
   annotations:
-    # RBAC: prometheus.viewer
+    # RBAC: /prometheus/viewer
     ingress.pomerium.io/policy: |
       - allow:
           or:
             - groups:
-                has: "prometheus.viewer"
+                has: "/prometheus/viewer"
     ingress.pomerium.io/pass_identity_headers: "true"
     ingress.pomerium.io/set_response_headers: |
       Strict-Transport-Security: max-age=31536000; includeSubDomains; preload

@@ -9,6 +9,11 @@ spec:
     provider: oidc
     url: https://accounts.harvestasya.org/realms/harvestasya
     secret: pomerium/pomerium-keycloak-oidc
+    scopes:
+    - openid
+    - profile
+    - email
+    - groups
   certificates:
   - pomerium/pomerium-wildcard-tls
   secrets: pomerium/bootstrap

@@ -3,14 +3,14 @@ kind: Ingress
 metadata:
   name: navidrome-pomerium
   annotations:
-    # RBAC: navidrome.admin or navidrome.viewer
+    # RBAC: /navidrome/admin or /navidrome/viewer
     ingress.pomerium.io/policy: |
       - allow:
           or:
             - groups:
-                has: "navidrome.admin"
+                has: "/navidrome/admin"
             - groups:
-                has: "navidrome.viewer"
+                has: "/navidrome/viewer"
     ingress.pomerium.io/pass_identity_headers: "true"
     ingress.pomerium.io/set_response_headers: |
       Strict-Transport-Security: max-age=31536000; includeSubDomains; preload

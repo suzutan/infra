@@ -3,14 +3,14 @@ kind: Ingress
 metadata:
   name: influxdb2-pomerium
   annotations:
-    # RBAC: influxdb.admin or influxdb.viewer
+    # RBAC: /influxdb/admin or /influxdb/viewer
     ingress.pomerium.io/policy: |
       - allow:
           or:
             - groups:
-                has: "influxdb.admin"
+                has: "/influxdb/admin"
             - groups:
-                has: "influxdb.viewer"
+                has: "/influxdb/viewer"
     ingress.pomerium.io/pass_identity_headers: "true"
     ingress.pomerium.io/set_response_headers: |
       Strict-Transport-Security: max-age=31536000; includeSubDomains; preload
