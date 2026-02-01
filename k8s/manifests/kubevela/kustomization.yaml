@@ -9,7 +9,6 @@ resources:
 - componentdefinition-helm.yaml
 - application-velaux.yaml
 - ingress-pomerium-velaux.yaml
-- ingressroute-pomerium.yaml
 
 helmCharts:
 - name: vela-core

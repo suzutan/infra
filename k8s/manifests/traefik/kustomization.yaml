@@ -17,7 +17,6 @@ resources:
 - config/tls/tlsstore.yaml
 - traefik-api-service.yaml
 - ingress-pomerium-dashboard.yaml
-- ingressroute-pomerium-dashboard.yaml
 
 configMapGenerator:
 - name: traefik-env

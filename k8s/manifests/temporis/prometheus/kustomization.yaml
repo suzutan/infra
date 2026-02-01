@@ -10,7 +10,6 @@ resources:
 - cr.yaml
 - crb.yaml
 - ingress-pomerium.yaml
-- ingressroute-pomerium.yaml
 - statefulset.yaml
 - service.yaml
 - serviceaccount.yaml

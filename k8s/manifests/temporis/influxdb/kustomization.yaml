@@ -7,4 +7,3 @@ resources:
 - application.yaml
 - secret-influxdb2-auth.yaml
 - ingress-pomerium.yaml
-- ingressroute-pomerium.yaml

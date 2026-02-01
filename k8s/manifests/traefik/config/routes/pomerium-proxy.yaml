@@ -8,13 +8,14 @@ spec:
 apiVersion: traefik.io/v1alpha1
 kind: IngressRoute
 metadata:
-  name: pomerium-iap
+  name: pomerium-protected-apps
 spec:
   entryPoints:
   - websecure
   routes:
   - kind: Rule
-    match: Host(`authenticate.harvestasya.org`)
+    match: >-
+      Host(`authenticate.harvestasya.org`) || Host(`navidrome.harvestasya.org`) || Host(`navidrome-filebrowser.harvestasya.org`) || Host(`asf.harvestasya.org`) || Host(`velaux.harvestasya.org`) || Host(`prometheus.harvestasya.org`) || Host(`traefik.harvestasya.org`) || Host(`argocd.harvestasya.org`) || Host(`grafana.harvestasya.org`) || Host(`reyvateils.harvestasya.org`) || Host(`influxdb2.harvestasya.org`)
     services:
     - name: pomerium-proxy
       namespace: pomerium
