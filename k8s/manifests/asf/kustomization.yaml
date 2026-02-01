@@ -8,7 +8,6 @@ resources:
 - namespace.yaml
 - pvc.yaml
 - ingress-pomerium.yaml
-- ingressroute-pomerium.yaml
 
 # KubeVela Application
 - application.yaml

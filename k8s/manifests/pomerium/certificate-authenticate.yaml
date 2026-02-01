@@ -1,11 +1,11 @@
 apiVersion: cert-manager.io/v1
 kind: Certificate
 metadata:
-  name: pomerium-authenticate-tls
+  name: pomerium-wildcard-tls
 spec:
-  secretName: pomerium-authenticate-tls
+  secretName: pomerium-wildcard-tls
   dnsNames:
-  - 'authenticate.harvestasya.org'
+  - '*.harvestasya.org'
   issuerRef:
     name: step-issuer
     kind: StepClusterIssuer

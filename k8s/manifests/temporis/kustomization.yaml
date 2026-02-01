@@ -10,7 +10,6 @@ resources:
 - prometheus
 # - prometheus-exporter-kube-system
 - remo-exporter
-- ingressroute-pomerium.yaml
 
 
 labels:

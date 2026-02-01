@@ -1,5 +1,6 @@
-# Cloudflare Zero Trust Tunnel for Web traffic (Traefik)
-# ワイルドカード方式: 新規IngressRoute追加時にTerraform変更不要
+# Cloudflare Zero Trust Tunnel for Web traffic
+# - デフォルト: Pomerium Ingress Controller (policy-based access)
+# - Traefik直通: immich, keycloak (policy制御なし)
 
 # Cloudflare Tunnelの作成
 resource "cloudflare_zero_trust_tunnel_cloudflared" "web_tunnel" {
@@ -7,16 +8,39 @@ resource "cloudflare_zero_trust_tunnel_cloudflared" "web_tunnel" {
   name       = "harvestasya k8s"
 }
 
-# Tunnel設定 - すべての *.harvestasya.org をTraefikにルーティング
+# Tunnel設定
 resource "cloudflare_zero_trust_tunnel_cloudflared_config" "web_tunnel_config" {
   account_id = var.cloudflare_account_id
   tunnel_id  = cloudflare_zero_trust_tunnel_cloudflared.web_tunnel.id
 
   config = {
     ingress = [
+      # Policy制御なし - Traefik直通
+      {
+        hostname = "chronicle.${local.zone_name}" # immich
+        service  = "https://traefik.traefik.svc.cluster.local"
+        origin_request = {
+          no_tls_verify = true
+        }
+      },
+      {
+        hostname = "qualia.${local.zone_name}" # keycloak public
+        service  = "https://traefik.traefik.svc.cluster.local"
+        origin_request = {
+          no_tls_verify = true
+        }
+      },
+      {
+        hostname = "qualia-admin.${local.zone_name}" # keycloak admin (Cloudflare Access保護)
+        service  = "https://traefik.traefik.svc.cluster.local"
+        origin_request = {
+          no_tls_verify = true
+        }
+      },
+      # デフォルト - Pomerium Ingress Controller (policy-based access)
       {
         hostname = "*.${local.zone_name}"
-        service  = "https://traefik.traefik.svc.cluster.local"
+        service  = "https://pomerium-proxy.pomerium.svc.cluster.local"
         origin_request = {
           no_tls_verify = true
         }

@@ -10,7 +10,7 @@ spec:
     url: https://qualia.harvestasya.org/realms/harvestasya
     secret: pomerium/pomerium-keycloak-oidc
   certificates:
-  - pomerium/pomerium-authenticate-tls
+  - pomerium/pomerium-wildcard-tls
   secrets: pomerium/bootstrap
   cookie:
     domain: harvestasya.org

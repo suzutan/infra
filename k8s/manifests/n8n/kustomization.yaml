@@ -11,4 +11,3 @@ resources:
 - statefulset.yaml
 - service.yaml
 - ingress-pomerium.yaml
-- ingressroute-pomerium.yaml
