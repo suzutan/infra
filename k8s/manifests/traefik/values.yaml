@@ -31,7 +31,12 @@ providers:
 service:
   type: ClusterIP
 
-globalArguments: []
+# v39.0.0: globalArguments replaced with global section
+global:
+  checkNewVersion: true
+  sendAnonymousUsage: false
+
+additionalArguments: []
 
 ingressRoute:
   dashboard:
@@ -47,18 +52,20 @@ ports:
     forwardedHeaders:
       trustedIPs:
       - 10.0.0.0/16
-    middlewares:
-    - traefik-security-headers@kubernetescrd
-    - traefik-ban-robots@kubernetescrd
-    tls:
-      enabled: true
-      # this is the name of a TLSOption definition
-      options: ""
-      domains:
-      - main: harvestasya.org
-        sans:
-        - "*.harvestasya.org"
-        - "*.suzutan.jp"
+    # v39.0.0: tls and middlewares moved under http section
+    http:
+      middlewares:
+      - traefik-security-headers@kubernetescrd
+      - traefik-ban-robots@kubernetescrd
+      tls:
+        enabled: true
+        # this is the name of a TLSOption definition
+        options: ""
+        domains:
+        - main: harvestasya.org
+          sans:
+          - "*.harvestasya.org"
+          - "*.suzutan.jp"
 
 # https://docs.traefik.io/observability/logs/
 logs:
