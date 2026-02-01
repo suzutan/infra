@@ -204,7 +204,7 @@ scopes = openid profile email groups offline_access
 auth_url = https://qualia.harvestasya.org/realms/harvestasya/protocol/openid-connect/auth
 token_url = https://qualia.harvestasya.org/realms/harvestasya/protocol/openid-connect/token
 api_url = https://qualia.harvestasya.org/realms/harvestasya/protocol/openid-connect/userinfo
-role_attribute_path = (contains(groups[*], 'access.tier.tier-1') || contains(groups[*], 'access.tier.tier-2')) && 'Admin' || contains(groups[*], 'access.tier.tier-3') && 'Editor' || 'Viewer'
+role_attribute_path = (contains(groups[*], 'access.tier.tier-1') || contains(groups[*], 'access.tier.tier-2')) && contains(groups[*], 'access.group.monitoring') && 'Admin' || contains(groups[*], 'access.tier.tier-3') && contains(groups[*], 'access.group.monitoring') && 'Editor' || 'Viewer'
 ```
 
 ### 4. グループ設定

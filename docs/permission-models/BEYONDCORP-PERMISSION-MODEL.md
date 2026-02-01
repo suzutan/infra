@@ -1,7 +1,7 @@
 # BeyondCorp Zero Trust Permission Model
 
 > **Status**: Active
-> **Version**: 1.0.0
+> **Version**: 1.1.0
 > **Date**: 2026-02-02
 
 Google BeyondCorp に基づくゼロトラストアクセス制御モデル。
@@ -155,7 +155,152 @@ tier-1 ⊃ tier-2 ⊃ tier-3 ⊃ tier-4
 
 ---
 
-## 4. サービス別アクセス要件
+## 4. アクセス制御シナリオ
+
+### シナリオ1: インフラ担当者（監視は閲覧のみ）
+
+**要件:** ArgoCD管理者だが、Grafanaは閲覧のみ
+
+```yaml
+user: infra-admin
+tier: tier-2
+groups:
+  - infra        # ArgoCD, Terraform アクセス可
+  # monitoring なし
+```
+
+| サービス | アクセス | 理由 |
+|---------|---------|------|
+| ArgoCD | ✓ 可能 | tier-2 + infra |
+| Grafana | ✗ 不可 | monitoring グループなし |
+
+**Grafanaにも閲覧アクセスを許可する場合:**
+
+```yaml
+user: infra-admin
+tier: tier-2
+groups:
+  - infra
+  - monitoring   # ← 追加
+```
+
+| サービス | アクセス | アプリ内ロール |
+|---------|---------|---------------|
+| ArgoCD | ✓ 管理者 | - |
+| Grafana | ✓ 閲覧者 | Viewer (tier-2だがmonitoring専門ではない) |
+
+→ アプリ内ロールは `tier + group` の組み合わせで判定
+
+---
+
+### シナリオ2: 監視専門担当者
+
+**要件:** Grafana管理者だが、インフラは触れない
+
+```yaml
+user: monitoring-admin
+tier: tier-2           # Grafana Admin に必要
+groups:
+  - monitoring         # 監視系のみ
+  # infra なし
+```
+
+| サービス | アクセス | アプリ内ロール |
+|---------|---------|---------------|
+| Grafana | ✓ 可能 | Admin (tier-2 + monitoring) |
+| Prometheus | ✓ 可能 | - |
+| ArgoCD | ✗ 不可 | infra グループなし |
+| Terraform | ✗ 不可 | infra グループなし |
+
+---
+
+### シナリオ3: 開発者（本番読み取りのみ）
+
+**要件:** n8nでワークフロー作成、Grafanaで監視確認、インフラは閲覧不可
+
+```yaml
+user: developer
+tier: tier-3           # サービス管理レベル
+groups:
+  - automation         # n8n
+  - monitoring         # Grafana 閲覧
+```
+
+| サービス | アクセス | アプリ内ロール |
+|---------|---------|---------------|
+| n8n | ✓ 可能 | 編集可能 (tier-3 + automation) |
+| Grafana | ✓ 可能 | Editor (tier-3 + monitoring) |
+| ArgoCD | ✗ 不可 | tier-2 必要 & infra なし |
+
+---
+
+### シナリオ4: ゲストユーザー（メディアのみ）
+
+**要件:** 写真・音楽の閲覧のみ
+
+```yaml
+user: guest
+tier: tier-4           # 一般利用
+groups:
+  - media              # メディアのみ
+```
+
+| サービス | アクセス |
+|---------|---------|
+| Immich | ✓ 可能 |
+| Navidrome | ✓ 可能 |
+| Grafana | ✗ 不可 |
+| ArgoCD | ✗ 不可 |
+
+---
+
+### シナリオ5: 緊急時フルアクセス
+
+**要件:** 障害対応で全システムにアクセス必要
+
+```yaml
+user: suzutan
+tier: tier-1           # 最高権限
+groups:
+  - infra
+  - monitoring
+  - security           # ← 通常時はなし
+  - automation
+  - media
+```
+
+| サービス | アクセス |
+|---------|---------|
+| Keycloak Admin | ✓ 可能 |
+| ArgoCD | ✓ 可能 |
+| Grafana | ✓ Admin |
+| 全サービス | ✓ 可能 |
+
+---
+
+### アプリ内ロールマッピングの原則
+
+Pomeriumはアクセス可否のみ制御。アプリ内ロールは `tier × group` で判定:
+
+```
+アプリ内ロール = f(tier, group)
+
+例: Grafana
+  tier-1 or tier-2 + monitoring → Admin
+  tier-3 + monitoring           → Editor
+  それ以外                       → Viewer
+```
+
+**JMESPath式:**
+```
+role_attribute_path = (contains(groups[*], 'access.tier.tier-1') || contains(groups[*], 'access.tier.tier-2')) && contains(groups[*], 'access.group.monitoring') && 'Admin' || contains(groups[*], 'access.tier.tier-3') && contains(groups[*], 'access.group.monitoring') && 'Editor' || 'Viewer'
+```
+
+これにより「tier-2だがmonitoringグループなし」→ Viewer となる。
+
+---
+
+## 5. サービス別アクセス要件
 
 | サービス | Required Tier | Required Group |
 |----------|--------------|----------------|
@@ -176,7 +321,7 @@ tier-1 ⊃ tier-2 ⊃ tier-3 ⊃ tier-4
 
 ---
 
-## 5. Keycloak グループ構造
+## 6. Keycloak グループ構造
 
 ```
 /access
@@ -203,7 +348,7 @@ access.group.<group-name>  # ユーザーグループ (複数可)
 
 ---
 
-## 6. デフォルト権限設定
+## 7. デフォルト権限設定
 
 ### suzutan（管理者・通常運用）
 
@@ -256,7 +401,7 @@ groups:
 
 ---
 
-## 7. Pomerium Policy 設定
+## 8. Pomerium Policy 設定
 
 ### 基本形式
 
@@ -327,7 +472,7 @@ ingress.pomerium.io/policy: |
 
 ---
 
-## 8. 実装ガイド
+## 9. 実装ガイド
 
 ### Step 1: Keycloak グループ作成
 
@@ -371,7 +516,7 @@ Pomerium client に groups claim を追加:
 
 ---
 
-## 9. Google BeyondCorp との対応
+## 10. Google BeyondCorp との対応
 
 | Google BeyondCorp | 本モデル | 説明 |
 |-------------------|---------|------|
@@ -383,7 +528,7 @@ Pomerium client に groups claim を追加:
 
 ---
 
-## 10. 実装チェックリスト
+## 11. 実装チェックリスト
 
 - [ ] **Keycloak 設定**
   - [ ] `/access/tier/*` グループ作成 (4個)
