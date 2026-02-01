@@ -8,9 +8,9 @@ metadata:
       - allow:
           or:
             - groups:
-                has: "access.group.n8n.admin"
+                has: "n8n.admin"
             - groups:
-                has: "access.group.n8n.editor"
+                has: "n8n.editor"
     ingress.pomerium.io/pass_identity_headers: "true"
     ingress.pomerium.io/set_response_headers: |
       Strict-Transport-Security: max-age=31536000; includeSubDomains; preload

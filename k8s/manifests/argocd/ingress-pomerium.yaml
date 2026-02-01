@@ -8,9 +8,9 @@ metadata:
       - allow:
           or:
             - groups:
-                has: "access.group.argocd.admin"
+                has: "argocd.admin"
             - groups:
-                has: "access.group.argocd.viewer"
+                has: "argocd.viewer"
     ingress.pomerium.io/pass_identity_headers: "true"
     ingress.pomerium.io/set_response_headers: |
       Strict-Transport-Security: max-age=31536000; includeSubDomains; preload

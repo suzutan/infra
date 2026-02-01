@@ -1,7 +1,7 @@
 # BeyondCorp Zero Trust Permission Model
 
 > **Status**: Active
-> **Version**: 2.0.0
+> **Version**: 2.1.0
 > **Date**: 2026-02-02
 
 Google BeyondCorp に基づくゼロトラストアクセス制御モデル。
@@ -19,20 +19,20 @@ RBAC + 明示的ロールグループ方式。
 │                                                                     │
 │   USER                         ROLE GROUPS                          │
 │   ────                         ───────────                          │
-│   ・Identity                   ・access.group.<app>.<role>          │
+│   ・Identity                   ・<app>.<role>          │
 │   ・Email                                                           │
 │                                例:                                  │
-│                                ・access.group.grafana.admin         │
-│                                ・access.group.argocd.admin          │
-│                                ・access.group.n8n.editor            │
+│                                ・grafana.admin         │
+│                                ・argocd.admin          │
+│                                ・n8n.editor            │
 │                                                                     │
 │                    ↓                                                │
 │   ┌─────────────────────────────────────────────────────────────┐  │
 │   │              ACCESS POLICY (per Resource)                    │  │
 │   │                                                              │  │
-│   │   Required: access.group.grafana.admin                      │  │
-│   │            OR access.group.grafana.editor                   │  │
-│   │            OR access.group.grafana.viewer                   │  │
+│   │   Required: grafana.admin                      │  │
+│   │            OR grafana.editor                   │  │
+│   │            OR grafana.viewer                   │  │
 │   │                         ↓                                    │  │
 │   │                   Allow / Deny                               │  │
 │   └─────────────────────────────────────────────────────────────┘  │
@@ -49,7 +49,7 @@ RBAC + 明示的ロールグループ方式。
 │                                                                 │
 │   ACCESS = User ∈ Required Role Group                          │
 │                                                                 │
-│   グループ形式: access.group.<app>.<role>                       │
+│   グループ形式: <app>.<role>                       │
 │                                                                 │
 └─────────────────────────────────────────────────────────────────┘
 ```
@@ -62,17 +62,17 @@ RBAC + 明示的ロールグループ方式。
 
 | サービス | Admin | Editor | Viewer |
 |----------|-------|--------|--------|
-| **ArgoCD** | `access.group.argocd.admin` | - | `access.group.argocd.viewer` |
-| **Grafana** | `access.group.grafana.admin` | `access.group.grafana.editor` | `access.group.grafana.viewer` |
-| **Prometheus** | - | - | `access.group.prometheus.viewer` |
-| **n8n** | `access.group.n8n.admin` | `access.group.n8n.editor` | - |
-| **Traefik** | `access.group.traefik.admin` | - | - |
-| **Immich** | `access.group.immich.admin` | - | `access.group.immich.viewer` |
-| **Navidrome** | `access.group.navidrome.admin` | - | `access.group.navidrome.viewer` |
-| **ASF** | `access.group.asf.admin` | - | - |
-| **KubeVela** | `access.group.kubevela.admin` | - | - |
-| **InfluxDB** | `access.group.influxdb.admin` | - | `access.group.influxdb.viewer` |
-| **Keycloak** | `access.group.keycloak.admin` | - | - |
+| **ArgoCD** | `argocd.admin` | - | `argocd.viewer` |
+| **Grafana** | `grafana.admin` | `grafana.editor` | `grafana.viewer` |
+| **Prometheus** | - | - | `prometheus.viewer` |
+| **n8n** | `n8n.admin` | `n8n.editor` | - |
+| **Traefik** | `traefik.admin` | - | - |
+| **Immich** | `immich.admin` | - | `immich.viewer` |
+| **Navidrome** | `navidrome.admin` | - | `navidrome.viewer` |
+| **ASF** | `asf.admin` | - | - |
+| **KubeVela** | `kubevela.admin` | - | - |
+| **InfluxDB** | `influxdb.admin` | - | `influxdb.viewer` |
+| **Keycloak** | `keycloak.admin` | - | - |
 
 ### ロールの意味
 
@@ -87,37 +87,37 @@ RBAC + 明示的ロールグループ方式。
 ## 2. Keycloak グループ構造
 
 ```
-/access
-  /group
-    /argocd
-      /admin     → access.group.argocd.admin
-      /viewer    → access.group.argocd.viewer
-    /grafana
-      /admin     → access.group.grafana.admin
-      /editor    → access.group.grafana.editor
-      /viewer    → access.group.grafana.viewer
-    /prometheus
-      /viewer    → access.group.prometheus.viewer
-    /n8n
-      /admin     → access.group.n8n.admin
-      /editor    → access.group.n8n.editor
-    /traefik
-      /admin     → access.group.traefik.admin
-    /immich
-      /admin     → access.group.immich.admin
-      /viewer    → access.group.immich.viewer
-    /navidrome
-      /admin     → access.group.navidrome.admin
-      /viewer    → access.group.navidrome.viewer
-    /asf
-      /admin     → access.group.asf.admin
-    /kubevela
-      /admin     → access.group.kubevela.admin
-    /influxdb
-      /admin     → access.group.influxdb.admin
-      /viewer    → access.group.influxdb.viewer
-    /keycloak
-      /admin     → access.group.keycloak.admin
+/<app>/<role>  →  <app>.<role>
+
+/argocd
+  /admin     → argocd.admin
+  /viewer    → argocd.viewer
+/grafana
+  /admin     → grafana.admin
+  /editor    → grafana.editor
+  /viewer    → grafana.viewer
+/prometheus
+  /viewer    → prometheus.viewer
+/n8n
+  /admin     → n8n.admin
+  /editor    → n8n.editor
+/traefik
+  /admin     → traefik.admin
+/immich
+  /admin     → immich.admin
+  /viewer    → immich.viewer
+/navidrome
+  /admin     → navidrome.admin
+  /viewer    → navidrome.viewer
+/asf
+  /admin     → asf.admin
+/kubevela
+  /admin     → kubevela.admin
+/influxdb
+  /admin     → influxdb.admin
+  /viewer    → influxdb.viewer
+/keycloak
+  /admin     → keycloak.admin
 ```
 
 ---
@@ -130,25 +130,25 @@ RBAC + 明示的ロールグループ方式。
 user: suzutan
 groups:
   # インフラ系 - Admin
-  - access.group.argocd.admin
-  - access.group.traefik.admin
-  - access.group.kubevela.admin
+  - argocd.admin
+  - traefik.admin
+  - kubevela.admin
 
   # 監視系 - Admin
-  - access.group.grafana.admin
-  - access.group.prometheus.viewer
-  - access.group.influxdb.admin
+  - grafana.admin
+  - prometheus.viewer
+  - influxdb.admin
 
   # 自動化系 - Admin
-  - access.group.n8n.admin
-  - access.group.asf.admin
+  - n8n.admin
+  - asf.admin
 
   # メディア系 - Admin
-  - access.group.immich.admin
-  - access.group.navidrome.admin
+  - immich.admin
+  - navidrome.admin
 
   # セキュリティ系 - なし (通常時)
-  # - access.group.keycloak.admin  ← 必要時のみ付与
+  # - keycloak.admin  ← 必要時のみ付与
 ```
 
 ### suzutan（フルアクセス時）
@@ -156,7 +156,7 @@ groups:
 ```yaml
 user: suzutan
 groups:
-  - access.group.keycloak.admin   # ← 追加
+  - keycloak.admin   # ← 追加
   # ... 他は同じ
 ```
 
@@ -165,8 +165,8 @@ groups:
 ```yaml
 user: guest
 groups:
-  - access.group.immich.viewer
-  - access.group.navidrome.viewer
+  - immich.viewer
+  - navidrome.viewer
 ```
 
 ---
@@ -182,7 +182,7 @@ annotations:
     - allow:
         or:
           - groups:
-              has: "access.group.argocd.admin"
+              has: "argocd.admin"
 
 # 複数ロール (いずれかで許可)
 annotations:
@@ -190,11 +190,11 @@ annotations:
     - allow:
         or:
           - groups:
-              has: "access.group.grafana.admin"
+              has: "grafana.admin"
           - groups:
-              has: "access.group.grafana.editor"
+              has: "grafana.editor"
           - groups:
-              has: "access.group.grafana.viewer"
+              has: "grafana.viewer"
 ```
 
 ### 各サービス設定
@@ -205,9 +205,9 @@ ingress.pomerium.io/policy: |
   - allow:
       or:
         - groups:
-            has: "access.group.argocd.admin"
+            has: "argocd.admin"
         - groups:
-            has: "access.group.argocd.viewer"
+            has: "argocd.viewer"
 ```
 
 ```yaml
@@ -216,11 +216,11 @@ ingress.pomerium.io/policy: |
   - allow:
       or:
         - groups:
-            has: "access.group.grafana.admin"
+            has: "grafana.admin"
         - groups:
-            has: "access.group.grafana.editor"
+            has: "grafana.editor"
         - groups:
-            has: "access.group.grafana.viewer"
+            has: "grafana.viewer"
 ```
 
 ```yaml
@@ -229,9 +229,9 @@ ingress.pomerium.io/policy: |
   - allow:
       or:
         - groups:
-            has: "access.group.n8n.admin"
+            has: "n8n.admin"
         - groups:
-            has: "access.group.n8n.editor"
+            has: "n8n.editor"
 ```
 
 ---
@@ -244,14 +244,14 @@ Pomeriumはアクセス可否のみ。Grafana内ロールはグループで判�
 
 ```ini
 # grafana.ini
-role_attribute_path = contains(groups[*], 'access.group.grafana.admin') && 'Admin' || contains(groups[*], 'access.group.grafana.editor') && 'Editor' || 'Viewer'
+role_attribute_path = contains(groups[*], 'grafana.admin') && 'Admin' || contains(groups[*], 'grafana.editor') && 'Editor' || 'Viewer'
 ```
 
 | グループ | Grafana Role |
 |---------|--------------|
-| `access.group.grafana.admin` | Admin |
-| `access.group.grafana.editor` | Editor |
-| `access.group.grafana.viewer` | Viewer |
+| `grafana.admin` | Admin |
+| `grafana.editor` | Editor |
+| `grafana.viewer` | Viewer |
 
 ---
 
@@ -262,10 +262,10 @@ role_attribute_path = contains(groups[*], 'access.group.grafana.admin') && 'Admi
 ```yaml
 user: infra-admin
 groups:
-  - access.group.argocd.admin
-  - access.group.traefik.admin
-  - access.group.grafana.viewer    # Editor/Admin ではない
-  - access.group.prometheus.viewer
+  - argocd.admin
+  - traefik.admin
+  - grafana.viewer    # Editor/Admin ではない
+  - prometheus.viewer
 ```
 
 | サービス | アクセス | ロール |
@@ -278,9 +278,9 @@ groups:
 ```yaml
 user: monitoring-admin
 groups:
-  - access.group.grafana.admin
-  - access.group.prometheus.viewer
-  - access.group.influxdb.admin
+  - grafana.admin
+  - prometheus.viewer
+  - influxdb.admin
   # argocd なし
 ```
 
@@ -294,8 +294,8 @@ groups:
 ```yaml
 user: guest
 groups:
-  - access.group.immich.viewer
-  - access.group.navidrome.viewer
+  - immich.viewer
+  - navidrome.viewer
 ```
 
 | サービス | アクセス |
@@ -313,37 +313,35 @@ groups:
 
 ```
 Groups
-└── access
-    └── group
-        ├── argocd
-        │   ├── admin
-        │   └── viewer
-        ├── grafana
-        │   ├── admin
-        │   ├── editor
-        │   └── viewer
-        ├── prometheus
-        │   └── viewer
-        ├── n8n
-        │   ├── admin
-        │   └── editor
-        ├── traefik
-        │   └── admin
-        ├── immich
-        │   ├── admin
-        │   └── viewer
-        ├── navidrome
-        │   ├── admin
-        │   └── viewer
-        ├── asf
-        │   └── admin
-        ├── kubevela
-        │   └── admin
-        ├── influxdb
-        │   ├── admin
-        │   └── viewer
-        └── keycloak
-            └── admin
+├── argocd
+│   ├── admin
+│   └── viewer
+├── grafana
+│   ├── admin
+│   ├── editor
+│   └── viewer
+├── prometheus
+│   └── viewer
+├── n8n
+│   ├── admin
+│   └── editor
+├── traefik
+│   └── admin
+├── immich
+│   ├── admin
+│   └── viewer
+├── navidrome
+│   ├── admin
+│   └── viewer
+├── asf
+│   └── admin
+├── kubevela
+│   └── admin
+├── influxdb
+│   ├── admin
+│   └── viewer
+└── keycloak
+    └── admin
 ```
 
 ### Step 2: Client Scope 設定
@@ -363,16 +361,16 @@ Pomerium/Grafana client に groups claim を追加:
 
 **suzutan:**
 ```
-/access/group/argocd/admin
-/access/group/grafana/admin
-/access/group/prometheus/viewer
-/access/group/n8n/admin
-/access/group/traefik/admin
-/access/group/immich/admin
-/access/group/navidrome/admin
-/access/group/asf/admin
-/access/group/kubevela/admin
-/access/group/influxdb/admin
+/argocd/admin
+/grafana/admin
+/prometheus/viewer
+/n8n/admin
+/traefik/admin
+/immich/admin
+/navidrome/admin
+/asf/admin
+/kubevela/admin
+/influxdb/admin
 ```
 
 ---
@@ -380,7 +378,7 @@ Pomerium/Grafana client に groups claim を追加:
 ## 8. 実装チェックリスト
 
 - [ ] **Keycloak 設定**
-  - [ ] `/access/group/<app>/<role>` グループ作成
+  - [ ] `/<app>/<role>` グループ作成
   - [ ] Client scope に groups mapper 追加
   - [ ] suzutan にグループ割り当て
 - [ ] **Pomerium 設定**

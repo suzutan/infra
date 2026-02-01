@@ -204,7 +204,7 @@ scopes = openid profile email groups offline_access
 auth_url = https://qualia.harvestasya.org/realms/harvestasya/protocol/openid-connect/auth
 token_url = https://qualia.harvestasya.org/realms/harvestasya/protocol/openid-connect/token
 api_url = https://qualia.harvestasya.org/realms/harvestasya/protocol/openid-connect/userinfo
-role_attribute_path = contains(groups[*], 'access.group.grafana.admin') && 'Admin' || contains(groups[*], 'access.group.grafana.editor') && 'Editor' || 'Viewer'
+role_attribute_path = contains(groups[*], 'grafana.admin') && 'Admin' || contains(groups[*], 'grafana.editor') && 'Editor' || 'Viewer'
 ```
 
 ### 4. グループ設定
@@ -212,13 +212,13 @@ role_attribute_path = contains(groups[*], 'access.group.grafana.admin') && 'Admi
 1. **Groups** > **Create group**
 2. RBACモデルに基づくグループを作成:
    ```
-   /access/group/<app>/<role>
+   /<app>/<role>  →  <app>.<role>
 
    例:
-   /access/group/argocd/admin
-   /access/group/grafana/admin
-   /access/group/grafana/editor
-   /access/group/grafana/viewer
+   /argocd/admin   → argocd.admin
+   /grafana/admin  → grafana.admin
+   /grafana/editor → grafana.editor
+   /grafana/viewer → grafana.viewer
    ```
    詳細は `docs/permission-models/BEYONDCORP-PERMISSION-MODEL.md` を参照
 

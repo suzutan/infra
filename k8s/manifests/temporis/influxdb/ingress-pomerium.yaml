@@ -8,9 +8,9 @@ metadata:
       - allow:
           or:
             - groups:
-                has: "access.group.influxdb.admin"
+                has: "influxdb.admin"
             - groups:
-                has: "access.group.influxdb.viewer"
+                has: "influxdb.viewer"
     ingress.pomerium.io/pass_identity_headers: "true"
     ingress.pomerium.io/set_response_headers: |
       Strict-Transport-Security: max-age=31536000; includeSubDomains; preload
