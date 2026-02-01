@@ -8,3 +8,4 @@ resources:
 - service-navidrome.yaml
 - ingress-pomerium.yaml
 - ingress-pomerium-filebrowser.yaml
+- ingressroute-pomerium.yaml

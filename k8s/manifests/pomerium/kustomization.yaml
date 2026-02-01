@@ -11,3 +11,4 @@ resources:
 - certificate-authenticate.yaml
 - pomerium-crd.yaml
 - serverstransport.yaml
+- ingressroute-authenticate.yaml
