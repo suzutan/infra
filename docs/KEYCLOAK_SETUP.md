@@ -204,16 +204,21 @@ scopes = openid profile email groups offline_access
 auth_url = https://qualia.harvestasya.org/realms/harvestasya/protocol/openid-connect/auth
 token_url = https://qualia.harvestasya.org/realms/harvestasya/protocol/openid-connect/token
 api_url = https://qualia.harvestasya.org/realms/harvestasya/protocol/openid-connect/userinfo
-role_attribute_path = contains(groups[*], 'grafana-admin') && 'Admin' || 'Viewer'
+role_attribute_path = (contains(groups[*], 'access.tier.tier-1') || contains(groups[*], 'access.tier.tier-2')) && 'Admin' || contains(groups[*], 'access.tier.tier-3') && 'Editor' || 'Viewer'
 ```
 
 ### 4. グループ設定
 
 1. **Groups** > **Create group**
-2. 必要なグループを作成:
-   - `grafana-admin`
-   - `grafana-user`
-   - その他アプリ用グループ
+2. BeyondCorpモデルに基づくグループを作成:
+   ```
+   /access
+     /tier
+       /tier-1, /tier-2, /tier-3, /tier-4
+     /group
+       /infra, /monitoring, /security, /automation, /media
+   ```
+   詳細は `docs/permission-models/BEYONDCORP-PERMISSION-MODEL.md` を参照
 
 3. **Users** > ユーザー選択 > **Groups** タブでグループを割り当て
 
