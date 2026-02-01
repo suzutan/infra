@@ -14,6 +14,3 @@ spec:
   secrets: pomerium/bootstrap
   cookie:
     domain: harvestasya.org
-  storage:
-    postgres:
-      secret: pomerium/pomerium-postgres

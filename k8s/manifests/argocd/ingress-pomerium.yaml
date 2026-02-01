@@ -14,7 +14,6 @@ metadata:
       X-Content-Type-Options: nosniff
       X-XSS-Protection: 1; mode=block
       Referrer-Policy: same-origin
-    ingress.pomerium.io/tls_skip_verify: "true"
 spec:
   ingressClassName: pomerium
   rules:
@@ -27,4 +26,4 @@ spec:
           service:
             name: argocd-server
             port:
-              number: 443
+              number: 80

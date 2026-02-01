@@ -11,3 +11,4 @@ data:
   controller.log.level: debug
   reposerver.log.level: debug
   server.log.level: debug
+  server.insecure: "true"
