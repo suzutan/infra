@@ -6,7 +6,9 @@ namespace: keycloak
 resources:
 - namespace.yaml
 - cnpg-cluster.yaml
-- secret-keycloak-admin.yaml
+- external-secret.yaml
+# Migrated to ExternalSecret
+# - secret-keycloak-admin.yaml
 - middleware.yaml
 - ingressroute.yaml
 

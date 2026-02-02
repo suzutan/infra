@@ -6,7 +6,9 @@ namespace: cloudflared
 resources:
 - deployment.yaml
 - namespace.yaml
-- secret.yaml
+- external-secret.yaml
+# Migrated to ExternalSecret
+# - secret.yaml
 
 labels:
 - includeSelectors: true

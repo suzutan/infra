@@ -5,5 +5,7 @@ namespace: temporis
 
 resources:
 - application.yaml
-- secret-influxdb2-auth.yaml
+- external-secret.yaml
+# Migrated to ExternalSecret
+# - secret-influxdb2-auth.yaml
 - ingressroute.yaml
