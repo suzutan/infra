@@ -17,6 +17,9 @@ spec:
     jqPathExpressions:
     - .spec.template.spec.containers[].terminationMessagePath
     - .spec.template.spec.containers[].terminationMessagePolicy
+    - .spec.template.spec.dnsPolicy
+    - .spec.template.spec.restartPolicy
+    - .spec.template.spec.schedulerName
   destination:
     server: "https://kubernetes.default.svc"
   source:
