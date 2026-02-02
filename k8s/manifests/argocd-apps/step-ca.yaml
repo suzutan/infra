@@ -37,6 +37,10 @@ spec:
     - .spec.volumeClaimTemplates[].status
     - .spec.volumeClaimTemplates[].apiVersion
     - .spec.volumeClaimTemplates[].kind
+    - .spec.volumeClaimTemplates[].spec.volumeMode
+    - .spec.template.spec.containers[].volumeMounts[].readOnly
+    - .spec.template.spec.volumes[].secret.defaultMode
+    - .spec.template.spec.terminationGracePeriodSeconds
   destination:
     server: "https://kubernetes.default.svc"
   source:
