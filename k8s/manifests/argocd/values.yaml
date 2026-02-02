@@ -8,8 +8,8 @@ configs:
     # Use 1Password Operator to manage argocd-secret (for webhook.github.secret)
     createSecret: false
   params:
-    # TLS mode (Pomerium uses tls_skip_verify to connect to HTTPS backend)
-    server.insecure: "false"
+    # Run in insecure mode (TLS terminated by Pomerium/Traefik)
+    server.insecure: "true"
 
 server:
   ingress:
