@@ -53,12 +53,6 @@ spec:
         - name: grafana
           containerPort: 3000
           protocol: TCP
-        - name: gossip-tcp
-          containerPort: 9094
-          protocol: TCP
-        - name: gossip-udp
-          containerPort: 9094
-          protocol: UDP
         envFrom:
         - secretRef:
             name: grafana
