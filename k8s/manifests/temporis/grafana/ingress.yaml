@@ -1,18 +1,15 @@
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
-  name: grafana-pomerium
+  name: grafana
   annotations:
-    # RBAC: /grafana/admin, /grafana/editor, or /grafana/viewer
+    # RBAC: /grafana/admin, /grafana/editor, or /grafana/viewer (using claim/groups for OIDC)
     ingress.pomerium.io/policy: |
       - allow:
           or:
-            - groups:
-                has: "/grafana/admin"
-            - groups:
-                has: "/grafana/editor"
-            - groups:
-                has: "/grafana/viewer"
+            - claim/groups: /grafana/admin
+            - claim/groups: /grafana/editor
+            - claim/groups: /grafana/viewer
     ingress.pomerium.io/pass_identity_headers: "true"
     ingress.pomerium.io/set_response_headers: |
       Strict-Transport-Security: max-age=31536000; includeSubDomains; preload

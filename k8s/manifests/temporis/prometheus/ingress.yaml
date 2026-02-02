@@ -1,14 +1,13 @@
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
-  name: prometheus-pomerium
+  name: prometheus
   annotations:
-    # RBAC: /prometheus/viewer
+    # RBAC: /prometheus/viewer (using claim/groups for OIDC)
     ingress.pomerium.io/policy: |
       - allow:
           or:
-            - groups:
-                has: "/prometheus/viewer"
+            - claim/groups: /prometheus/viewer
     ingress.pomerium.io/pass_identity_headers: "true"
     ingress.pomerium.io/set_response_headers: |
       Strict-Transport-Security: max-age=31536000; includeSubDomains; preload

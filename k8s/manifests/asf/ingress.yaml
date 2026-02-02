@@ -1,14 +1,13 @@
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
-  name: asf-pomerium
+  name: asf
   annotations:
-    # RBAC: /asf/admin
+    # RBAC: /asf/admin (using claim/groups for OIDC)
     ingress.pomerium.io/policy: |
       - allow:
           or:
-            - groups:
-                has: "/asf/admin"
+            - claim/groups: /asf/admin
     ingress.pomerium.io/pass_identity_headers: "true"
     ingress.pomerium.io/set_response_headers: |
       Strict-Transport-Security: max-age=31536000; includeSubDomains; preload

@@ -1,7 +1,7 @@
 # BeyondCorp Zero Trust Permission Model
 
 > **Status**: Active
-> **Version**: 2.1.0
+> **Version**: 2.2.0
 > **Date**: 2026-02-02
 
 Google BeyondCorp に基づくゼロトラストアクセス制御モデル。
@@ -19,20 +19,20 @@ RBAC + 明示的ロールグループ方式。
 │                                                                     │
 │   USER                         ROLE GROUPS                          │
 │   ────                         ───────────                          │
-│   ・Identity                   ・<app>.<role>          │
+│   ・Identity                   ・/<app>/<role>                      │
 │   ・Email                                                           │
 │                                例:                                  │
-│                                ・grafana.admin         │
-│                                ・argocd.admin          │
-│                                ・n8n.editor            │
+│                                ・/grafana/admin                     │
+│                                ・/argocd/admin                      │
+│                                ・/n8n/editor                        │
 │                                                                     │
 │                    ↓                                                │
 │   ┌─────────────────────────────────────────────────────────────┐  │
 │   │              ACCESS POLICY (per Resource)                    │  │
 │   │                                                              │  │
-│   │   Required: grafana.admin                      │  │
-│   │            OR grafana.editor                   │  │
-│   │            OR grafana.viewer                   │  │
+│   │   Required: /grafana/admin                                   │  │
+│   │            OR /grafana/editor                                │  │
+│   │            OR /grafana/viewer                                │  │
 │   │                         ↓                                    │  │
 │   │                   Allow / Deny                               │  │
 │   └─────────────────────────────────────────────────────────────┘  │
@@ -49,7 +49,7 @@ RBAC + 明示的ロールグループ方式。
 │                                                                 │
 │   ACCESS = User ∈ Required Role Group                          │
 │                                                                 │
-│   グループ形式: <app>.<role>                       │
+│   グループ形式: /<app>/<role>                                   │
 │                                                                 │
 └─────────────────────────────────────────────────────────────────┘
 ```
@@ -62,17 +62,17 @@ RBAC + 明示的ロールグループ方式。
 
 | サービス | Admin | Editor | Viewer |
 |----------|-------|--------|--------|
-| **ArgoCD** | `argocd.admin` | - | `argocd.viewer` |
-| **Grafana** | `grafana.admin` | `grafana.editor` | `grafana.viewer` |
-| **Prometheus** | - | - | `prometheus.viewer` |
-| **n8n** | `n8n.admin` | `n8n.editor` | - |
-| **Traefik** | `traefik.admin` | - | - |
-| **Immich** | `immich.admin` | - | `immich.viewer` |
-| **Navidrome** | `navidrome.admin` | - | `navidrome.viewer` |
-| **ASF** | `asf.admin` | - | - |
-| **KubeVela** | `kubevela.admin` | - | - |
-| **InfluxDB** | `influxdb.admin` | - | `influxdb.viewer` |
-| **Keycloak** | `keycloak.admin` | - | - |
+| **ArgoCD** | `/argocd/admin` | - | `/argocd/viewer` |
+| **Grafana** | `/grafana/admin` | `/grafana/editor` | `/grafana/viewer` |
+| **Prometheus** | - | - | `/prometheus/viewer` |
+| **n8n** | `/n8n/admin` | `/n8n/editor` | - |
+| **Traefik** | `/traefik/admin` | - | - |
+| **Immich** | `/immich/admin` | - | `/immich/viewer` |
+| **Navidrome** | `/navidrome/admin` | - | `/navidrome/viewer` |
+| **ASF** | `/asf/admin` | - | - |
+| **KubeVela** | `/kubevela/admin` | - | - |
+| **InfluxDB** | `/influxdb/admin` | - | `/influxdb/viewer` |
+| **Keycloak** | `/keycloak/admin` | - | - |
 
 ### ロールの意味
 
@@ -87,37 +87,37 @@ RBAC + 明示的ロールグループ方式。
 ## 2. Keycloak グループ構造
 
 ```
-/<app>/<role>  →  <app>.<role>
+Keycloakグループパス  →  claim/groups値 (Full group path: ON)
 
 /argocd
-  /admin     → argocd.admin
-  /viewer    → argocd.viewer
+  /admin     → /argocd/admin
+  /viewer    → /argocd/viewer
 /grafana
-  /admin     → grafana.admin
-  /editor    → grafana.editor
-  /viewer    → grafana.viewer
+  /admin     → /grafana/admin
+  /editor    → /grafana/editor
+  /viewer    → /grafana/viewer
 /prometheus
-  /viewer    → prometheus.viewer
+  /viewer    → /prometheus/viewer
 /n8n
-  /admin     → n8n.admin
-  /editor    → n8n.editor
+  /admin     → /n8n/admin
+  /editor    → /n8n/editor
 /traefik
-  /admin     → traefik.admin
+  /admin     → /traefik/admin
 /immich
-  /admin     → immich.admin
-  /viewer    → immich.viewer
+  /admin     → /immich/admin
+  /viewer    → /immich/viewer
 /navidrome
-  /admin     → navidrome.admin
-  /viewer    → navidrome.viewer
+  /admin     → /navidrome/admin
+  /viewer    → /navidrome/viewer
 /asf
-  /admin     → asf.admin
+  /admin     → /asf/admin
 /kubevela
-  /admin     → kubevela.admin
+  /admin     → /kubevela/admin
 /influxdb
-  /admin     → influxdb.admin
-  /viewer    → influxdb.viewer
+  /admin     → /influxdb/admin
+  /viewer    → /influxdb/viewer
 /keycloak
-  /admin     → keycloak.admin
+  /admin     → /keycloak/admin
 ```
 
 ---
@@ -130,25 +130,25 @@ RBAC + 明示的ロールグループ方式。
 user: suzutan
 groups:
   # インフラ系 - Admin
-  - argocd.admin
-  - traefik.admin
-  - kubevela.admin
+  - /argocd/admin
+  - /traefik/admin
+  - /kubevela/admin
 
   # 監視系 - Admin
-  - grafana.admin
-  - prometheus.viewer
-  - influxdb.admin
+  - /grafana/admin
+  - /prometheus/viewer
+  - /influxdb/admin
 
   # 自動化系 - Admin
-  - n8n.admin
-  - asf.admin
+  - /n8n/admin
+  - /asf/admin
 
   # メディア系 - Admin
-  - immich.admin
-  - navidrome.admin
+  - /immich/admin
+  - /navidrome/admin
 
   # セキュリティ系 - なし (通常時)
-  # - keycloak.admin  ← 必要時のみ付与
+  # - /keycloak/admin  ← 必要時のみ付与
 ```
 
 ### suzutan（フルアクセス時）
@@ -156,7 +156,7 @@ groups:
 ```yaml
 user: suzutan
 groups:
-  - keycloak.admin   # ← 追加
+  - /keycloak/admin   # ← 追加
   # ... 他は同じ
 ```
 
@@ -165,8 +165,8 @@ groups:
 ```yaml
 user: guest
 groups:
-  - immich.viewer
-  - navidrome.viewer
+  - /immich/viewer
+  - /navidrome/viewer
 ```
 
 ---
@@ -175,26 +175,25 @@ groups:
 
 ### 基本形式
 
+**重要**: Pomerium の `groups` criterion は Directory Sync（Enterprise機能）用。
+OIDC claims を使用する場合は `claim/groups` を使用する。
+
 ```yaml
 # 単一ロール
 annotations:
   ingress.pomerium.io/policy: |
     - allow:
         or:
-          - groups:
-              has: "argocd.admin"
+          - claim/groups: /argocd/admin
 
 # 複数ロール (いずれかで許可)
 annotations:
   ingress.pomerium.io/policy: |
     - allow:
         or:
-          - groups:
-              has: "grafana.admin"
-          - groups:
-              has: "grafana.editor"
-          - groups:
-              has: "grafana.viewer"
+          - claim/groups: /grafana/admin
+          - claim/groups: /grafana/editor
+          - claim/groups: /grafana/viewer
 ```
 
 ### 各サービス設定
@@ -204,10 +203,8 @@ annotations:
 ingress.pomerium.io/policy: |
   - allow:
       or:
-        - groups:
-            has: "argocd.admin"
-        - groups:
-            has: "argocd.viewer"
+        - claim/groups: /argocd/admin
+        - claim/groups: /argocd/viewer
 ```
 
 ```yaml
@@ -215,12 +212,9 @@ ingress.pomerium.io/policy: |
 ingress.pomerium.io/policy: |
   - allow:
       or:
-        - groups:
-            has: "grafana.admin"
-        - groups:
-            has: "grafana.editor"
-        - groups:
-            has: "grafana.viewer"
+        - claim/groups: /grafana/admin
+        - claim/groups: /grafana/editor
+        - claim/groups: /grafana/viewer
 ```
 
 ```yaml
@@ -228,10 +222,8 @@ ingress.pomerium.io/policy: |
 ingress.pomerium.io/policy: |
   - allow:
       or:
-        - groups:
-            has: "n8n.admin"
-        - groups:
-            has: "n8n.editor"
+        - claim/groups: /n8n/admin
+        - claim/groups: /n8n/editor
 ```
 
 ---
@@ -244,14 +236,14 @@ Pomeriumはアクセス可否のみ。Grafana内ロールはグループで判�
 
 ```ini
 # grafana.ini
-role_attribute_path = contains(groups[*], 'grafana.admin') && 'Admin' || contains(groups[*], 'grafana.editor') && 'Editor' || 'Viewer'
+role_attribute_path = contains(groups[*], '/grafana/admin') && 'Admin' || contains(groups[*], '/grafana/editor') && 'Editor' || 'Viewer'
 ```
 
 | グループ | Grafana Role |
 |---------|--------------|
-| `grafana.admin` | Admin |
-| `grafana.editor` | Editor |
-| `grafana.viewer` | Viewer |
+| `/grafana/admin` | Admin |
+| `/grafana/editor` | Editor |
+| `/grafana/viewer` | Viewer |
 
 ---
 
@@ -262,10 +254,10 @@ role_attribute_path = contains(groups[*], 'grafana.admin') && 'Admin' || contain
 ```yaml
 user: infra-admin
 groups:
-  - argocd.admin
-  - traefik.admin
-  - grafana.viewer    # Editor/Admin ではない
-  - prometheus.viewer
+  - /argocd/admin
+  - /traefik/admin
+  - /grafana/viewer    # Editor/Admin ではない
+  - /prometheus/viewer
 ```
 
 | サービス | アクセス | ロール |
@@ -278,9 +270,9 @@ groups:
 ```yaml
 user: monitoring-admin
 groups:
-  - grafana.admin
-  - prometheus.viewer
-  - influxdb.admin
+  - /grafana/admin
+  - /prometheus/viewer
+  - /influxdb/admin
   # argocd なし
 ```
 
@@ -294,8 +286,8 @@ groups:
 ```yaml
 user: guest
 groups:
-  - immich.viewer
-  - navidrome.viewer
+  - /immich/viewer
+  - /navidrome/viewer
 ```
 
 | サービス | アクセス |
@@ -353,7 +345,7 @@ Pomerium/Grafana client に groups claim を追加:
 3. 設定:
    - Mapper type: `Group Membership`
    - Token Claim Name: `groups`
-   - Full group path: `OFF`
+   - Full group path: `ON`  (重要: フルパス形式 `/app/role` を使用)
    - Add to ID token: `ON`
    - Add to access token: `ON`
 
@@ -377,15 +369,15 @@ Pomerium/Grafana client に groups claim を追加:
 
 ## 8. 実装チェックリスト
 
-- [ ] **Keycloak 設定**
-  - [ ] `/<app>/<role>` グループ作成
-  - [ ] Client scope に groups mapper 追加
-  - [ ] suzutan にグループ割り当て
-- [ ] **Pomerium 設定**
-  - [ ] 全 ingress-pomerium.yaml を更新
-- [ ] **Grafana 設定**
-  - [ ] role_attribute_path を更新
+- [x] **Keycloak 設定**
+  - [x] `/<app>/<role>` グループ作成
+  - [x] Client scope に groups mapper 追加 (Full group path: ON)
+  - [x] suzutan にグループ割り当て
+- [x] **Pomerium 設定**
+  - [x] 全 ingress.yaml を `claim/groups` 形式で更新
+- [x] **Grafana 設定**
+  - [x] role_attribute_path を更新
 - [ ] **動作確認**
-  - [ ] suzutan で各サービスにアクセス可能
+  - [x] suzutan で各サービスにアクセス可能
   - [ ] suzutan で Keycloak Admin アクセス不可
   - [ ] guest で Immich/Navidrome のみ可能
