@@ -22,7 +22,7 @@
                               │  └───────────────────────────────┘  │
                               │  ┌───────────────────────────────┐  │
                               │  │  Zero Trust Access            │  │
-                              │  │  - OIDC (Authentik)           │  │
+                              │  │  - OIDC (Keycloak)            │  │
                               │  └───────────────────────────────┘  │
                               └──────────────────┬──────────────────┘
                                                  │
@@ -103,10 +103,11 @@ spec:
           port: 80
       middlewares:
         - name: security-headers
-        - name: authentik-forward-auth  # 認証が必要な場合
   tls:
     secretName: harvestasya-wildcard-tls
 ```
+
+認証が必要な場合はPomerium IAPを経由してアクセスを制御します。
 
 ### Cloudflare Tunnel経路
 
@@ -131,19 +132,19 @@ Cloudflare Tunnelの設定はcloudflaredデプロイメントで管理され、
 
 | ホスト名 | アプリケーション | 認証 |
 |---------|----------------|------|
-| argocd.harvestasya.org | ArgoCD | Authentik OIDC |
+| argocd.harvestasya.org | ArgoCD | Keycloak OIDC |
 | artonelico.harvestasya.org | Proxmox (外部) | Proxmox認証 |
-| asf.harvestasya.org | ArchiSteamFarm | Authentik Forward Auth |
+| asf.harvestasya.org | ArchiSteamFarm | Pomerium IAP |
 | chronicle.harvestasya.org | Immich | アプリ内認証 |
 | echoserver.harvestasya.org | EchoServer | なし |
 | grafana.harvestasya.org | Grafana | アプリ内認証 |
 | grathnode.harvestasya.org | Cloudflare R2 | R2バケット (ストレージ) |
 | influxdb2.harvestasya.org | InfluxDB | アプリ内認証 |
-| navidrome.harvestasya.org | Navidrome | Authentik Forward Auth |
-| navidrome-filebrowser.harvestasya.org | FileBrowser | Authentik Forward Auth |
-| prometheus.harvestasya.org | Prometheus | Authentik Forward Auth |
+| navidrome.harvestasya.org | Navidrome | Pomerium IAP |
+| navidrome-filebrowser.harvestasya.org | FileBrowser | Pomerium IAP |
+| prometheus.harvestasya.org | Prometheus | Pomerium IAP |
 | reyvateils.harvestasya.org | n8n | アプリ内認証 |
-| traefik.harvestasya.org | Traefik Dashboard | Authentik Forward Auth |
+| traefik.harvestasya.org | Traefik Dashboard | Pomerium IAP |
 | ssh.harvestasya.org | SSH Access | Zero Trust (SSH専用) |
 
 ## Traefik Middleware
@@ -164,24 +165,6 @@ spec:
     browserXssFilter: true
     referrerPolicy: "strict-origin-when-cross-origin"
     customFrameOptionsValue: "SAMEORIGIN"
-```
-
-### authentik-forward-auth
-```yaml
-apiVersion: traefik.io/v1alpha1
-kind: Middleware
-metadata:
-  name: authentik-forward-auth
-spec:
-  forwardAuth:
-    address: http://authentik-server.authentik.svc.cluster.local/outpost.goauthentik.io/auth/traefik
-    trustForwardHeader: true
-    authResponseHeaders:
-      - X-authentik-username
-      - X-authentik-groups
-      - X-authentik-email
-      - X-authentik-name
-      - X-authentik-uid
 ```
 
 ### その他のMiddleware
@@ -253,7 +236,8 @@ hubble:
 | サービス | 名前空間 | DNS |
 |---------|---------|-----|
 | Traefik | traefik | traefik.traefik.svc.cluster.local |
-| Authentik Server | authentik | authentik-server.authentik.svc.cluster.local |
+| Pomerium Proxy | pomerium | pomerium-proxy.pomerium.svc.cluster.local |
+| Keycloak | keycloak | keycloak-http.keycloak.svc.cluster.local |
 | Prometheus | temporis | prometheus.temporis.svc.cluster.local |
 | Grafana | temporis | grafana.temporis.svc.cluster.local |
 
@@ -270,7 +254,7 @@ Cloudflare Edge ─────▶ Cloudflare Tunnel ─────▶ CF Tunne
 ### SSH Tunnel設定
 - **ホスト**: ssh.harvestasya.org
 - **ポート**: 22
-- **認証**: Cloudflare Zero Trust (Authentik OIDC必須)
+- **認証**: Cloudflare Zero Trust (Keycloak OIDC)
 - **トークン**: Terraform random生成 (64文字)
 
 ## セキュリティ考慮事項

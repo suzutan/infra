@@ -32,9 +32,9 @@
                     │                               │
                     │  ┌─────────────────────────┐  │
                     │  │   Core Services         │  │
-                    │  │  ArgoCD, Authentik      │  │
-                    │  │  cert-manager, CNPG     │  │
-                    │  │  1Password Operator     │  │
+                    │  │  ArgoCD, Keycloak       │  │
+                    │  │  Pomerium, cert-manager │  │
+                    │  │  CNPG, 1Password Op     │  │
                     │  └─────────────────────────┘  │
                     │                               │
                     │  ┌─────────────────────────┐  │
@@ -67,7 +67,7 @@
 | DNS | harvestasya.org, suzutan.jp のDNS管理 |
 | Tunnel | 外部からクラスタへの安全なアクセス |
 | Zero Trust Access | SSH含む認証・認可 |
-| OIDC Integration | Authentikとの連携 |
+| OIDC Integration | Keycloakとの連携 |
 
 ### 2. Ingress Layer
 
@@ -76,9 +76,10 @@
 - **レプリカ**: 2
 - **機能**:
   - IngressRoute CRD
-  - Forward Auth (Authentik連携)
   - TLS終端
   - Middleware (security headers, compression等)
+
+認証はPomerium IAPで処理されます。
 
 #### Cloudflared Deployment
 - **用途**: Cloudflare Tunnelへの接続
@@ -99,22 +100,23 @@ Internet → Cloudflare → Cloudflare Tunnel (cloudflared)
      ┌────────────┬────────────┬────────────┬────────────┐
      ▼            ▼            ▼            ▼            ▼
    asf      navidrome      immich      grafana     その他
-(Authentik) (Authentik) (アプリ内認証) (アプリ内認証)
+(Pomerium) (Pomerium)  (アプリ内認証) (アプリ内認証)
 ```
 
 | 認証方式 | 対象アプリ |
 |---------|-----------|
-| Authentik Forward Auth | asf, navidrome, prometheus, traefik |
+| Pomerium IAP | asf, navidrome, prometheus, traefik |
 | アプリ内認証 | immich, grafana, influxdb, n8n |
 | 認証なし | echoserver |
-| 外部認証 | artonelico (Proxmox), argocd (OIDC) |
+| 外部認証 | artonelico (Proxmox), argocd (Keycloak OIDC) |
 
 ### 3. Core Services
 
 | サービス | 名前空間 | バージョン | 用途 |
 |---------|---------|-----------|------|
 | ArgoCD | argocd | v9.1.3 | GitOps管理 |
-| Authentik | authentik | 2025.10.2 | 認証・認可 (IdP) |
+| Keycloak | keycloak | 26.x | Identity Provider (IdP) |
+| Pomerium | pomerium | - | Identity-Aware Proxy (IAP) |
 | cert-manager | cert-manager | v1.19.1 | TLS証明書管理 |
 | CNPG Operator | cnpg-system | v0.26.1 | PostgreSQL管理 |
 | 1Password Operator | onepassword | v2.0.5 | シークレット管理 |
@@ -162,8 +164,7 @@ Internet → Cloudflare → Cloudflare Tunnel (cloudflared)
 | PVC | サイズ | 用途 |
 |-----|-------|------|
 | immich-library | 100Gi | 写真・動画ストレージ |
-| authentik-postgresql | 動的 | Authentik DB |
-| authentik-redis | 動的 | Authentik キャッシュ |
+| keycloak-postgresql | 動的 | Keycloak DB |
 | grafana | 動的 | ダッシュボード永続化 |
 | influxdb2 | 50Gi | メトリクス長期保存 |
 
@@ -183,10 +184,10 @@ Internet → Cloudflare → Cloudflare Tunnel (cloudflared)
 ┌─────────────────────────────────────────────────────────────┐
 │                    Cache Layer                               │
 │                                                              │
-│  ┌─────────────────────┐    ┌─────────────────────┐         │
-│  │  Valkey (Immich)    │    │  Redis (Authentik)  │         │
-│  │  v5.0.8             │    │  Bitnami Chart      │         │
-│  └─────────────────────┘    └─────────────────────┘         │
+│  ┌─────────────────────┐                                    │
+│  │  Valkey (Immich)    │                                    │
+│  │  v5.0.8             │                                    │
+│  └─────────────────────┘                                    │
 └─────────────────────────────────────────────────────────────┘
 ```
 
@@ -194,14 +195,14 @@ Internet → Cloudflare → Cloudflare Tunnel (cloudflared)
 
 ```
 ┌──────────┐     ┌──────────────┐     ┌─────────────────┐
-│  User    │────▶│  Cloudflare  │────▶│    Traefik      │
-└──────────┘     │  Zero Trust  │     │  (Ingress)      │
+│  User    │────▶│  Cloudflare  │────▶│    Pomerium     │
+└──────────┘     │  Zero Trust  │     │     (IAP)       │
                  └───────┬──────┘     └────────┬────────┘
                          │                     │
                          ▼                     ▼
                  ┌──────────────┐     ┌─────────────────┐
-                 │  Authentik   │◀────│  Forward Auth   │
-                 │    (IdP)     │     │   Middleware    │
+                 │  Keycloak    │◀────│   OIDC Auth     │
+                 │    (IdP)     │     │                 │
                  └──────────────┘     └─────────────────┘
                          │
                          ▼
@@ -215,10 +216,10 @@ Internet → Cloudflare → Cloudflare Tunnel (cloudflared)
 
 | アプリケーション | 認証方式 |
 |----------------|---------|
-| ArgoCD | Authentik OIDC |
-| Traefik Dashboard | Authentik Forward Auth |
-| Navidrome | Authentik Forward Auth |
-| SSH Access | Cloudflare Zero Trust + Authentik |
+| ArgoCD | Keycloak OIDC |
+| Traefik Dashboard | Pomerium IAP |
+| Navidrome | Pomerium IAP |
+| SSH Access | Cloudflare Zero Trust + Keycloak |
 | Grafana | 1Password統合 |
 
 ## GitOps ワークフロー

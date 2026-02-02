@@ -19,7 +19,7 @@
 | アプリケーション | 名前空間 | バージョン | 用途 | 状態 |
 |----------------|---------|-----------|------|------|
 | Keycloak | keycloak | 26.x (Helm v7.1.5) | Identity Provider (IdP) | Active |
-| Authentik | authentik | 2025.10.2 | Identity Provider (IdP) | 廃止予定 |
+| Pomerium | pomerium | - | Identity-Aware Proxy (IAP) | Active |
 
 **Keycloak 詳細:**
 - **Helm Chart**: codecentric/keycloakx v7.1.5
@@ -28,15 +28,12 @@
 - **管理URL**: keycloak-admin.harvestasya.org
 - **Realm**: harvestasya
 - **SAML連携**: Google Workspace
-- **OIDC連携**: ArgoCD, Grafana
+- **OIDC連携**: ArgoCD, Grafana, Pomerium
 
-**Authentik 詳細:** (廃止予定)
-- **Server**: 2レプリカ
-- **Worker**: 2レプリカ
-- **データベース**: CloudNative PostgreSQL
-- **キャッシュ**: Redis (Bitnami)
-- **OIDC連携**: ArgoCD, Cloudflare Zero Trust
-- **移行先**: Keycloak
+**Pomerium 詳細:**
+- **用途**: Zero-trust認証プロキシ
+- **IdP連携**: Keycloak OIDC
+- **認証対象**: 各アプリケーションへのアクセス制御
 
 ### Applications
 
@@ -101,40 +98,6 @@
 
 **マニフェスト:** `k8s/manifests/immich/`
 
-### Authentik
-
-認証・認可プラットフォーム (Identity Provider)。
-
-```
-┌─────────────────────────────────────────────────────────┐
-│                  Authentik Namespace                     │
-│                                                          │
-│  ┌─────────────┐  ┌─────────────┐                       │
-│  │   Server    │  │   Worker    │                       │
-│  │  (2 pods)   │  │  (2 pods)   │                       │
-│  └──────┬──────┘  └──────┬──────┘                       │
-│         │                │                               │
-│         └────────┬───────┘                               │
-│                  │                                       │
-│    ┌─────────────▼─────────────┐                        │
-│    │       PostgreSQL          │                        │
-│    │    (Bitnami Chart)        │                        │
-│    └───────────────────────────┘                        │
-│                                                          │
-│    ┌───────────────────────────┐                        │
-│    │         Redis             │                        │
-│    │    (Bitnami Chart)        │                        │
-│    └───────────────────────────┘                        │
-└─────────────────────────────────────────────────────────┘
-```
-
-**OIDC設定:**
-- Client: ArgoCD, Cloudflare Access
-- Scopes: openid, profile, email
-- グループクレーム: 有効
-
-**マニフェスト:** `k8s/manifests/authentik/`
-
 ### n8n
 
 ワークフロー自動化プラットフォーム。
@@ -156,7 +119,7 @@
 
 **構成:**
 - レプリカ: 1
-- 認証: Authentik Forward Auth
+- 認証: Pomerium IAP
 - 追加: FileBrowser サイドカー
 
 **マニフェスト:** `k8s/manifests/navidrome/`
@@ -167,7 +130,7 @@ GitOps継続的デリバリーツール。
 
 **構成:**
 - Helm Chart: argo/argo-cd v9.1.3
-- 認証: Authentik OIDC
+- 認証: Keycloak OIDC
 - Kustomize: Helm統合有効
 
 **Projects:**
@@ -187,7 +150,6 @@ Ingress Controller。
 
 **Middleware:**
 - security-headers
-- authentik-forward-auth (廃止予定)
 - compress
 - circuit-breaker
 - redirect-to-account (keycloak)
@@ -201,8 +163,8 @@ Ingress Controller。
 | 名前空間 | 用途 | アプリケーション |
 |---------|------|----------------|
 | argocd | GitOps | ArgoCD |
-| authentik | 認証 | Authentik (廃止予定) |
 | keycloak | 認証 | Keycloak |
+| pomerium | IAP | Pomerium |
 | asf | ゲーム | ArchiSteamFarm |
 | cert-manager | 証明書 | cert-manager |
 | cnpg-system | DB Operator | CNPG Operator |

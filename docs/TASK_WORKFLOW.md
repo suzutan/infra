@@ -331,13 +331,13 @@ Add new application "webhook-relay" with PostgreSQL database
 Deploy webhook-relay application with:
 - Kubernetes deployment
 - PostgreSQL database (CNPG)
-- IngressRoute with Authentik
+- IngressRoute with Pomerium IAP
 - 1Password secrets integration
 
 ## Context
 - Similar to n8n deployment pattern
 - Uses existing CNPG operator
-- Needs authentik-forward-auth middleware
+- Uses Pomerium for authentication
 
 ## Plan
 ### Phase 1: Setup
@@ -390,7 +390,7 @@ Deploy webhook-relay application with:
 ## Next Steps
 1. Create service.yaml
 2. Create CNPG database cluster
-3. Create IngressRoute with authentik
+3. Create IngressRoute with Pomerium
 
 ## Notes
 - Remember to add to argocd-apps after completion

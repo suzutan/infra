@@ -42,9 +42,6 @@ spec:
               {
                 kind: "Rule"
                 match: "Host(`" + parameter.domain + "`)"
-                if parameter.authentikAuth {
-                  priority: 10
-                }
                 services: [{
                   name: context.name
                   port: parameter.port
@@ -56,18 +53,6 @@ spec:
                       namespace: mw.namespace
                     },
                   ]
-                }
-              },
-              if parameter.authentikAuth {
-                {
-                  kind: "Rule"
-                  match: "Host(`" + parameter.domain + "`) && PathPrefix(`/outpost.goauthentik.io/`)"
-                  priority: 15
-                  services: [{
-                    name:      "authentik-server"
-                    namespace: "authentik"
-                    port:      "http"
-                  }]
                 }
               },
             ]
@@ -86,7 +71,4 @@ spec:
             name:      string
             namespace: string
           }]
-
-          // +usage=Enable authentik forward auth (adds outpost route)
-          authentikAuth: *false | bool
         }

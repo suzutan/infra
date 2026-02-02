@@ -51,7 +51,7 @@ spec:
 - **OnePasswordItem名**: アプリケーション名 + 用途
 
 例:
-- `secret-authentik-custom` → Authentik設定
+- `secret-keycloak` → Keycloak設定
 - `secret-immich-env` → Immich環境変数
 - `secret-grafana` → Grafana管理者認証情報
 
@@ -61,10 +61,9 @@ spec:
 
 | OnePasswordItem | 名前空間 | 用途 |
 |-----------------|---------|------|
-| authentik-custom | authentik | Authentik設定 (SECRET_KEY等) |
-| authentik-postgresql-custom | authentik | PostgreSQL認証情報 |
-| authentik-redis-custom | authentik | Redis認証情報 |
-| argocd-custom-secret | argocd | ArgoCD OIDC設定 |
+| keycloak-admin | keycloak | Keycloak管理者認証情報 |
+| argocd-oidc-secret | argocd | ArgoCD OIDC設定 |
+| pomerium-secret | pomerium | Pomerium設定 |
 
 ### アプリケーション
 
