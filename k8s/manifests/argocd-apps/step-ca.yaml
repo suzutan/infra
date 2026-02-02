@@ -17,6 +17,8 @@ spec:
     jqPathExpressions:
     - .spec.template.spec.containers[].terminationMessagePath
     - .spec.template.spec.containers[].terminationMessagePolicy
+    - .spec.template.spec.containers[].imagePullPolicy
+    - .spec.template.spec.containers[].ports[].protocol
     - .spec.template.spec.containers[].livenessProbe.failureThreshold
     - .spec.template.spec.containers[].livenessProbe.successThreshold
     - .spec.template.spec.containers[].livenessProbe.timeoutSeconds
@@ -32,6 +34,9 @@ spec:
     - .spec.revisionHistoryLimit
     - .spec.persistentVolumeClaimRetentionPolicy
     - .spec.updateStrategy
+    - .spec.volumeClaimTemplates[].status
+    - .spec.volumeClaimTemplates[].apiVersion
+    - .spec.volumeClaimTemplates[].kind
   destination:
     server: "https://kubernetes.default.svc"
   source:
