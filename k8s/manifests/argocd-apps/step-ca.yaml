@@ -12,6 +12,11 @@ spec:
     - /spec/dataFrom/0/extract/decodingStrategy
     - /spec/dataFrom/0/extract/metadataPolicy
     - /spec/target/deletionPolicy
+  - group: apps
+    kind: StatefulSet
+    jqPathExpressions:
+    - .spec.template.spec.containers[].terminationMessagePath
+    - .spec.template.spec.containers[].terminationMessagePolicy
   destination:
     server: "https://kubernetes.default.svc"
   source:
