@@ -15,5 +15,5 @@ helmCharts:
   includeCRDs: true
   valuesInline:
     operator:
-      autoRestart: true
-      create: true
+      # Operator disabled - using External Secrets Operator instead
+      create: false
