@@ -17,12 +17,21 @@ spec:
     jqPathExpressions:
     - .spec.template.spec.containers[].terminationMessagePath
     - .spec.template.spec.containers[].terminationMessagePolicy
+    - .spec.template.spec.containers[].livenessProbe.failureThreshold
+    - .spec.template.spec.containers[].livenessProbe.successThreshold
+    - .spec.template.spec.containers[].livenessProbe.timeoutSeconds
+    - .spec.template.spec.containers[].livenessProbe.periodSeconds
+    - .spec.template.spec.containers[].readinessProbe.failureThreshold
+    - .spec.template.spec.containers[].readinessProbe.successThreshold
+    - .spec.template.spec.containers[].readinessProbe.timeoutSeconds
+    - .spec.template.spec.containers[].readinessProbe.periodSeconds
     - .spec.template.spec.dnsPolicy
     - .spec.template.spec.restartPolicy
     - .spec.template.spec.schedulerName
     - .spec.podManagementPolicy
     - .spec.revisionHistoryLimit
     - .spec.persistentVolumeClaimRetentionPolicy
+    - .spec.updateStrategy
   destination:
     server: "https://kubernetes.default.svc"
   source:
