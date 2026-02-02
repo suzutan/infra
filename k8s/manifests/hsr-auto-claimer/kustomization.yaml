@@ -7,4 +7,6 @@ resources:
 - namespace.yaml
 - application.yaml
 - pvc.yaml
-- secret.yaml
+- external-secret.yaml
+# Migrated to ExternalSecret
+# - secret.yaml
