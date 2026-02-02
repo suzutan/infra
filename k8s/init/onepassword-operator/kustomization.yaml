@@ -4,7 +4,6 @@ kind: Kustomization
 namespace: onepassword
 resources:
 - ../../manifests/onepassword-operator
-- install-test-item.yaml
 
 generatorOptions:
   disableNameSuffixHash: true
