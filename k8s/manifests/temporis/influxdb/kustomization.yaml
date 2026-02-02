@@ -6,4 +6,4 @@ namespace: temporis
 resources:
 - application.yaml
 - secret-influxdb2-auth.yaml
-- ingress.yaml
+- ingressroute.yaml
