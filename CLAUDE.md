@@ -238,6 +238,14 @@ spec:
       storage: 1Gi
 ```
 
+### 8. Commit and Push
+
+**修正を行ったら必ずコミット・プッシュすること。**
+
+- ファイル変更後は即座に `git add && git commit && git push` を実行
+- ArgoCD が自動で同期するため、push しないと変更が反映されない
+- 複数の関連変更は1つのコミットにまとめてよい
+
 ## Workflow
 
 ### Applying Changes
