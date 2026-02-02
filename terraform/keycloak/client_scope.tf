@@ -13,7 +13,7 @@ resource "keycloak_openid_group_membership_protocol_mapper" "groups" {
   name            = "groups"
 
   claim_name          = "groups"
-  full_path           = false
+  full_path           = true
   add_to_id_token     = true
   add_to_access_token = true
   add_to_userinfo     = true
