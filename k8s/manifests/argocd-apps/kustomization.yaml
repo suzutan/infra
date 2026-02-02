@@ -10,6 +10,7 @@ resources:
 - ddns.yaml
 - cloudflared.yaml
 - echoserver.yaml
+- external-secrets.yaml
 - fluxcd.yaml
 - hsr-auto-claimer.yaml
 - immich.yaml

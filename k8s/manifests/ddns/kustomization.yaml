@@ -6,4 +6,6 @@ namespace: ddns
 resources:
 - namespace.yaml
 - application.yaml
-- secret-cloudflare-ddns.yaml
+- external-secret.yaml
+# Migrated to ExternalSecret
+# - secret-cloudflare-ddns.yaml
