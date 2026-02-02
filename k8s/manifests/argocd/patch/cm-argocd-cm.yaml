@@ -21,8 +21,8 @@ data:
     # https://argo-cd.readthedocs.io/en/stable/operator-manual/user-management/#existing-oidc-provider
     name: Keycloak
     issuer: https://accounts.harvestasya.org/realms/harvestasya
-    clientID: $argocd-oidc-secret:authentik.client-id
-    clientSecret: $argocd-oidc-secret:authentik.client-secret
+    clientID: $argocd-oidc-secret:oidc.client-id
+    clientSecret: $argocd-oidc-secret:oidc.client-secret
     requestedIDTokenClaims: {"groups": {"essential": true}}
     requestedScopes:
       - openid
