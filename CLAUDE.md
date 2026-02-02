@@ -283,6 +283,19 @@ When adding new applications, refer to these existing implementations:
 
 ## Troubleshooting
 
+### Manual Debugging with ArgoCD Running
+
+**IMPORTANT**: ArgoCD automatically syncs from git, overwriting manual changes.
+When debugging Kubernetes resources manually, **ALWAYS** scale down ArgoCD application-controller first:
+
+```bash
+# Scale down ArgoCD application-controller before manual debugging
+kubectl scale statefulset -n argocd argocd-application-controller --replicas=0
+
+# After debugging, scale back up
+kubectl scale statefulset -n argocd argocd-application-controller --replicas=1
+```
+
 ### ArgoCD Sync Errors
 
 ```bash
