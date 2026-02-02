@@ -10,6 +10,7 @@ metadata:
             - claim/groups: /argocd/admin
             - claim/groups: /argocd/viewer
     ingress.pomerium.io/pass_identity_headers: "true"
+    ingress.pomerium.io/tls_skip_verify: "true"
     ingress.pomerium.io/set_response_headers: |
       Strict-Transport-Security: max-age=31536000; includeSubDomains; preload
       X-Frame-Options: SAMEORIGIN
@@ -28,4 +29,4 @@ spec:
           service:
             name: argocd-server
             port:
-              number: 80
+              number: 443
