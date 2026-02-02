@@ -1,0 +1,27 @@
+version: "3"
+
+tasks:
+  repo-update:
+    cmds:
+    - helm repo add traefik https://traefik.github.io/charts
+    - helm repo update
+    - helm search repo traefik
+  default-values:
+    cmds:
+    - helm show values traefik/traefik > default-values.yaml
+  build:
+    desc: build k8s manifests
+    cmds:
+    - kustomize build --enable-helm .
+  diff:
+    desc: diff k8s manifests
+    cmds:
+    - kustomize build --enable-helm . | kubectl diff -f-
+  apply:
+    desc: apply k8s manifests
+    cmds:
+    - kustomize build --enable-helm . | kubectl apply --server-side -f-
+  delete:
+    desc: delete k8s manifests
+    cmds:
+    - kustomize build --enable-helm . | kubectl delete -f-
