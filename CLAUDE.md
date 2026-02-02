@@ -29,7 +29,7 @@ This repository manages Infrastructure as Code (IaC) for a personal HomeLab envi
 | GitOps | ArgoCD |
 | Secrets Management | 1Password Operator |
 | Ingress | Traefik + Cloudflare Tunnel |
-| Identity Provider | Authentik |
+| Identity Provider | Keycloak + Pomerium IAP |
 | Monitoring | Prometheus + Grafana (temporis namespace) |
 
 ### Directory Structure
@@ -42,7 +42,6 @@ This repository manages Infrastructure as Code (IaC) for a personal HomeLab envi
 │   └── manifests/                # Application manifests
 │       ├── argocd/               # ArgoCD configuration
 │       ├── argocd-apps/          # ArgoCD Application definitions
-│       ├── authentik/            # Identity provider
 │       ├── traefik/              # Ingress Controller
 │       ├── cert-manager/         # TLS certificate management
 │       ├── cnpg-operator/        # PostgreSQL Operator
@@ -69,7 +68,8 @@ This repository manages Infrastructure as Code (IaC) for a personal HomeLab envi
 
 - **ArgoCD**: GitOps management (v9.1.3)
 - **Traefik**: Ingress Controller (v37.4.0, 2 replicas)
-- **Authentik**: Identity Provider (2025.10.2)
+- **Keycloak**: Identity Provider
+- **Pomerium**: Identity-Aware Proxy (IAP)
 - **cert-manager**: TLS certificate management (v1.19.1)
 - **CNPG Operator**: PostgreSQL management (v0.26.1)
 - **1Password Operator**: Secrets management (v2.0.5)
@@ -152,7 +152,7 @@ spec:
 
 ### 5. Ingress Configuration
 
-**Traefik IngressRoute (internal/authentication required):**
+**Traefik IngressRoute (internal):**
 
 ```yaml
 apiVersion: traefik.io/v1alpha1
@@ -172,11 +172,11 @@ spec:
       middlewares:
         - name: security-headers
           namespace: traefik
-        - name: authentik-forward-auth  # If authentication required
-          namespace: traefik
   tls:
     secretName: harvestasya-wildcard-tls
 ```
+
+**Note:** Authentication is handled by Pomerium IAP for protected routes.
 
 **Cloudflare Tunnel Ingress (external exposure):**
 
