@@ -7,5 +7,3 @@ resources:
 - namespace.yaml
 - application.yaml
 - external-secret.yaml
-# Migrated to ExternalSecret
-# - secret-cloudflare-ddns.yaml

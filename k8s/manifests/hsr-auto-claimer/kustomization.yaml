@@ -8,5 +8,3 @@ resources:
 - application.yaml
 - pvc.yaml
 - external-secret.yaml
-# Migrated to ExternalSecret
-# - secret.yaml

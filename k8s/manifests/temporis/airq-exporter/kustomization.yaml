@@ -6,5 +6,3 @@ namespace: temporis
 resources:
 - application.yaml
 - external-secret.yaml
-# Migrated to ExternalSecret
-# - secret-airq-data-url.yaml

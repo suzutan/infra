@@ -7,8 +7,6 @@ resources:
 - namespace.yaml
 - cnpg-cluster.yaml
 - external-secret.yaml
-# Migrated to ExternalSecret
-# - secret-keycloak-admin.yaml
 - middleware.yaml
 - ingressroute.yaml
 

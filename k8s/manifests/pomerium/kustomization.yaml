@@ -8,7 +8,5 @@ resources:
 # https://github.com/pomerium/ingress-controller
 - https://github.com/pomerium/ingress-controller/config/default?ref=v0.32.0
 - external-secret.yaml
-# Migrated to ExternalSecret
-# - onepassworditem-pomerium-idp.yaml
 - certificate-authenticate.yaml
 - pomerium-crd.yaml

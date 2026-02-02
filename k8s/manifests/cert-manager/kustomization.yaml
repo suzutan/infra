@@ -8,8 +8,6 @@ resources:
 - ci-letsencrypt-prod.yaml
 - ci-letsencrypt-staging.yaml
 - external-secret.yaml
-# Migrated to ExternalSecret
-# - secret-cert-manager-cloudflare.yaml
 
 helmCharts:
 # https://cert-manager.io/docs/installation/helm/

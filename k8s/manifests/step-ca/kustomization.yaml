@@ -10,12 +10,6 @@ resources:
 - external-secret-secrets.yaml
 - external-secret-ca-password.yaml
 - external-secret-issuer-provisioner.yaml
-# Migrated to ExternalSecret
-# - secret-ca-config.yaml
-# - secret-step-certificates-certs.yaml
-# - secret-step-certificates-secrets.yaml
-# - secret-step-certificates-ca-password.yaml
-# - secret-step-issuer-provisioner.yaml
 - stepclusterissuer.yaml
 - service-loadbalancer.yaml
 

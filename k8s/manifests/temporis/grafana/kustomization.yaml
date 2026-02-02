@@ -12,8 +12,6 @@ resources:
 - role.yaml
 - rolebinding.yaml
 - external-secret.yaml
-# Migrated to ExternalSecret
-# - secret-grafana.yaml
 - service.yaml
 - serviceaccount.yaml
 

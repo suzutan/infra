@@ -7,8 +7,6 @@ resources:
 - deployment.yaml
 - namespace.yaml
 - external-secret.yaml
-# Migrated to ExternalSecret
-# - secret.yaml
 
 labels:
 - includeSelectors: true

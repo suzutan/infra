@@ -17,10 +17,6 @@ resources:
 - external-secret-argocd-oidc-secret.yaml
 - external-secret-argocd-secret.yaml
 - external-secret-argocd-notifications-secret.yaml
-# Migrated to ExternalSecret
-# - secret-argocd-oidc-secret.yaml
-# - secret-argocd-secret.yaml
-# - secret-argocd-notifications-secret.yaml
 - ingress.yaml
 - serverstransport.yaml
 

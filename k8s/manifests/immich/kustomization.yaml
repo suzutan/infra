@@ -13,8 +13,6 @@ resources:
 - server-pvc.yaml
 - server-service.yaml
 - external-secret.yaml
-# Migrated to ExternalSecret
-# - valkey-secret.yaml
 images:
 - name: ghcr.io/immich-app/immich-server
   newTag: v2.5.2

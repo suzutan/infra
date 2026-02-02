@@ -8,8 +8,6 @@ resources:
 - cnpg-cluster.yaml
 - pvc.yaml
 - external-secret.yaml
-# Migrated to ExternalSecret
-# - secret-n8n.yaml
 - statefulset.yaml
 - service.yaml
 - ingress.yaml
