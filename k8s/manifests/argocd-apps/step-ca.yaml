@@ -20,6 +20,9 @@ spec:
     - .spec.template.spec.dnsPolicy
     - .spec.template.spec.restartPolicy
     - .spec.template.spec.schedulerName
+    - .spec.podManagementPolicy
+    - .spec.revisionHistoryLimit
+    - .spec.persistentVolumeClaimRetentionPolicy
   destination:
     server: "https://kubernetes.default.svc"
   source:
