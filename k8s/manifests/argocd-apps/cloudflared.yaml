@@ -6,6 +6,14 @@ metadata:
   finalizers:
   - resources-finalizer.argocd.argoproj.io
 spec:
+  ignoreDifferences:
+  - group: external-secrets.io
+    kind: ExternalSecret
+    jsonPointers:
+    - /spec/dataFrom/0/extract/conversionStrategy
+    - /spec/dataFrom/0/extract/decodingStrategy
+    - /spec/dataFrom/0/extract/metadataPolicy
+    - /spec/target/deletionPolicy
   project: default
   source:
     repoURL: https://github.com/suzutan/infra
