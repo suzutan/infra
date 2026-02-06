@@ -40,7 +40,25 @@ data:
                 {{if eq .app.status.operationState.phase "Failed"}}"color": 14036256,{{end}}
                 "title": "{{.app.metadata.name}}",
                 "description": "Application state is now **{{.app.status.operationState.phase}}**.",
-                "url": "{{.context.argocdUrl}}/applications/{{.app.metadata.name}}"
+                "url": "{{.context.argocdUrl}}/applications/{{.app.metadata.name}}",
+                "fields": [
+                  {
+                    "name": "Revision",
+                    "value": "[`{{ .app.status.sync.revision | trunc 7 }}`]({{ call .repo.RepoURLToHTTPS .app.spec.source.repoURL | trimSuffix \".git\" }}/commit/{{ .app.status.sync.revision }})",
+                    "inline": true
+                  },
+                  {
+                    "name": "Author",
+                    "value": {{ (call .repo.GetCommitMetadata .app.status.sync.revision).Author | toJson }},
+                    "inline": true
+                  },
+                  {
+                    "name": "Message",
+                    "value": {{ (call .repo.GetCommitMetadata .app.status.sync.revision).Message | toJson }},
+                    "inline": false
+                  }
+                ],
+                "timestamp": "{{ .app.status.operationState.finishedAt }}"
               }
             ]
           }
