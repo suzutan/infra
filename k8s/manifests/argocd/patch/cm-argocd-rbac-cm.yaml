@@ -9,13 +9,6 @@ metadata:
 data:
   policy.default: role:readonly
   policy.csv: |-
-    p, role:admin, applications, *, */*, allow
-    p, role:admin, clusters, get, *, allow
-    p, role:admin, repositories, get, *, allow
-    p, role:admin, repositories, create, *, allow
-    p, role:admin, repositories, update, *, allow
-    p, role:admin, repositories, delete, *, allow
-    p, role:admin, logs, get, *, allow
-    p, role:admin, exec, create, */*, allow
+    p, role:admin, *, *, *, allow
 
-    g, infra-admin, role:admin
+    g, /argocd/admin, role:admin
