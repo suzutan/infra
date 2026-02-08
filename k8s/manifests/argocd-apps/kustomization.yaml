@@ -4,7 +4,6 @@ kind: Kustomization
 resources:
 - argocd-apps.yaml
 - argocd.yaml
-- asf.yaml
 - cert-manager.yaml
 - cnpg-operator.yaml
 - ddns.yaml

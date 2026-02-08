@@ -43,7 +43,6 @@
 | Navidrome | navidrome | カスタム | 音楽ストリーミング | navidrome.harvestasya.org |
 | n8n | n8n | latest | ワークフロー自動化 | reyvateils.harvestasya.org |
 | FreshRSS | freshrss | カスタム | RSSリーダー | - |
-| ASF | asf | v6.3.0.1 | ArchiSteamFarm | asf.harvestasya.org |
 | EchoServer | echoserver | カスタム | テストサーバー | echoserver.harvestasya.org |
 
 ### Monitoring (Temporis)
@@ -165,7 +164,6 @@ Ingress Controller。
 | argocd | GitOps | ArgoCD |
 | keycloak | 認証 | Keycloak |
 | pomerium | IAP | Pomerium |
-| asf | ゲーム | ArchiSteamFarm |
 | cert-manager | 証明書 | cert-manager |
 | cnpg-system | DB Operator | CNPG Operator |
 | ddns | DNS | DDNS CronJob |

@@ -66,7 +66,6 @@
 | reyvateils | CNAME | Tunnel | Yes |
 | navidrome | A | Internal | No |
 | navidrome-filebrowser | CNAME | Tunnel | Yes |
-| asf | CNAME | Tunnel | Yes |
 | traefik | A | Internal | No |
 | prometheus | CNAME | Tunnel | Yes |
 | grafana | CNAME | Tunnel | Yes |
@@ -134,7 +133,6 @@ Cloudflare Tunnelの設定はcloudflaredデプロイメントで管理され、
 |---------|----------------|------|
 | argocd.harvestasya.org | ArgoCD | Keycloak OIDC |
 | artonelico.harvestasya.org | Proxmox (外部) | Proxmox認証 |
-| asf.harvestasya.org | ArchiSteamFarm | Pomerium IAP |
 | chronicle.harvestasya.org | Immich | アプリ内認証 |
 | echoserver.harvestasya.org | EchoServer | なし |
 | grafana.harvestasya.org | Grafana | アプリ内認証 |

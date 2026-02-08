@@ -69,7 +69,6 @@ RBAC + 明示的ロールグループ方式。
 | **Traefik** | `/traefik/admin` | - | - |
 | **Immich** | `/immich/admin` | - | `/immich/viewer` |
 | **Navidrome** | `/navidrome/admin` | - | `/navidrome/viewer` |
-| **ASF** | `/asf/admin` | - | - |
 | **InfluxDB** | `/influxdb/admin` | - | `/influxdb/viewer` |
 | **Keycloak** | `/keycloak/admin` | - | - |
 
@@ -108,8 +107,6 @@ Keycloakグループパス  →  claim/groups値 (Full group path: ON)
 /navidrome
   /admin     → /navidrome/admin
   /viewer    → /navidrome/viewer
-/asf
-  /admin     → /asf/admin
 /influxdb
   /admin     → /influxdb/admin
   /viewer    → /influxdb/viewer
@@ -137,7 +134,6 @@ groups:
 
   # 自動化系 - Admin
   - /n8n/admin
-  - /asf/admin
 
   # メディア系 - Admin
   - /immich/admin
@@ -321,8 +317,6 @@ Groups
 ├── navidrome
 │   ├── admin
 │   └── viewer
-├── asf
-│   └── admin
 ├── influxdb
 │   ├── admin
 │   └── viewer
@@ -354,7 +348,6 @@ Pomerium/Grafana client に groups claim を追加:
 /traefik/admin
 /immich/admin
 /navidrome/admin
-/asf/admin
 /influxdb/admin
 ```
 

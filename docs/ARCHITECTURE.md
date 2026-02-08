@@ -97,15 +97,15 @@ Internet → Cloudflare → Cloudflare Tunnel (cloudflared)
                                     ▼
                             IngressRoute
                                     │
-     ┌────────────┬────────────┬────────────┬────────────┐
-     ▼            ▼            ▼            ▼            ▼
-   asf      navidrome      immich      grafana     その他
-(Pomerium) (Pomerium)  (アプリ内認証) (アプリ内認証)
+     ┌────────────┬────────────┬────────────┐
+     ▼            ▼            ▼            ▼
+  navidrome      immich      grafana     その他
+ (Pomerium)  (アプリ内認証) (アプリ内認証)
 ```
 
 | 認証方式 | 対象アプリ |
 |---------|-----------|
-| Pomerium IAP | asf, navidrome, prometheus, traefik |
+| Pomerium IAP | navidrome, prometheus, traefik |
 | アプリ内認証 | immich, grafana, influxdb, n8n |
 | 認証なし | echoserver |
 | 外部認証 | artonelico (Proxmox), argocd (Keycloak OIDC) |
