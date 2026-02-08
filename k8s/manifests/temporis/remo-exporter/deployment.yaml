@@ -1,0 +1,36 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: remo-exporter
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: remo-exporter
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: remo-exporter
+      annotations:
+        prometheus.io/scrape: "true"
+        prometheus.io/port: "9352"
+        prometheus.io/path: /metrics
+    spec:
+      containers:
+      - name: remo-exporter
+        image: kenfdev/remo-exporter:latest
+        ports:
+        - containerPort: 9352
+        resources:
+          requests:
+            cpu: 100m
+            memory: 50Mi
+          limits:
+            cpu: 100m
+            memory: 50Mi
+        env:
+        - name: OAUTH_TOKEN
+          valueFrom:
+            secretKeyRef:
+              name: nature-remo-token
+              key: OAUTH_TOKEN

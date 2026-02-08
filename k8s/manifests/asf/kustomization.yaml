@@ -4,13 +4,11 @@ kind: Kustomization
 namespace: asf
 
 resources:
-# K8s native resources
 - namespace.yaml
+- deployment.yaml
+- service.yaml
 - pvc.yaml
 - ingress.yaml
-
-# KubeVela Application
-- application.yaml
 
 labels:
 - pairs:

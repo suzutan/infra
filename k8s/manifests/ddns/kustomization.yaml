@@ -5,5 +5,5 @@ namespace: ddns
 
 resources:
 - namespace.yaml
-- application.yaml
+- deployment.yaml
 - external-secret.yaml

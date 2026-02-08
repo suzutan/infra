@@ -4,5 +4,7 @@ kind: Kustomization
 namespace: temporis
 
 resources:
-- application.yaml
+- deployment.yaml
+- service.yaml
+- ingressroute.yaml
 - external-secret.yaml

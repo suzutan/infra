@@ -1,0 +1,29 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: asf
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: asf
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: asf
+    spec:
+      containers:
+      - name: asf
+        image: justarchi/archisteamfarm:6.3.0.2
+        ports:
+        - containerPort: 1242
+        env:
+        - name: TZ
+          value: Asia/Tokyo
+        volumeMounts:
+        - name: config
+          mountPath: /app/config
+      volumes:
+      - name: config
+        persistentVolumeClaim:
+          claimName: archisteamfarm-config

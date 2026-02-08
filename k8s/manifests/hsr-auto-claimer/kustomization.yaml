@@ -5,6 +5,6 @@ namespace: hsr-auto-claimer
 
 resources:
 - namespace.yaml
-- application.yaml
+- cronjob.yaml
 - pvc.yaml
 - external-secret.yaml

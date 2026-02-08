@@ -1,0 +1,49 @@
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  name: hsr-auto-claimer
+spec:
+  schedule: "0 0 * * *"
+  concurrencyPolicy: Forbid
+  jobTemplate:
+    spec:
+      backoffLimit: 0
+      template:
+        metadata:
+          labels:
+            app.kubernetes.io/name: hsr-auto-claimer
+        spec:
+          restartPolicy: Never
+          containers:
+          - name: hsr-auto-claimer
+            image: ghcr.io/slashnephy/auto-claimer:latest
+            env:
+            - name: DATABASE_DSN
+              value: /data/auto-claimer.db
+            - name: DISCORD_WEBHOOK_URL
+              valueFrom:
+                secretKeyRef:
+                  name: hsr-auto-claimer-config
+                  key: DISCORD_WEBHOOK_URL
+            - name: GAMES
+              valueFrom:
+                secretKeyRef:
+                  name: hsr-auto-claimer-config
+                  key: GAMES
+            - name: HOYOVERSE_EMAIL
+              valueFrom:
+                secretKeyRef:
+                  name: hsr-auto-claimer-config
+                  key: HOYOVERSE_EMAIL
+            - name: HOYOVERSE_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: hsr-auto-claimer-config
+                  key: HOYOVERSE_PASSWORD
+            volumeMounts:
+            - name: data
+              mountPath: /data
+          volumes:
+          - name: data
+            persistentVolumeClaim:
+              claimName: hsr-auto-claimer

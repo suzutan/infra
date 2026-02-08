@@ -1,0 +1,11 @@
+adminUser:
+  existingSecret: influxdb2-auth
+persistence:
+  enabled: true
+  storageClass: nfs-client
+  accessMode: ReadWriteOnce
+  size: 50Gi
+  mountPath: /var/lib/influxdb2
+  subPath: ""
+pdb:
+  create: false
