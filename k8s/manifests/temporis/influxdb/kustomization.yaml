@@ -4,13 +4,9 @@ kind: Kustomization
 namespace: temporis
 
 resources:
+- serviceaccount.yaml
+- service.yaml
+- pvc.yaml
+- statefulset.yaml
 - external-secret.yaml
 - ingressroute.yaml
-
-helmCharts:
-- name: influxdb2
-  releaseName: influxdb2
-  namespace: temporis
-  version: 2.1.2
-  repo: https://helm.influxdata.com/
-  valuesFile: values.yaml
