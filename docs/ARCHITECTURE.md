@@ -120,7 +120,6 @@ Internet → Cloudflare → Cloudflare Tunnel (cloudflared)
 | cert-manager | cert-manager | v1.19.1 | TLS証明書管理 |
 | CNPG Operator | cnpg-system | v0.26.1 | PostgreSQL管理 |
 | 1Password Operator | onepassword | v2.0.5 | シークレット管理 |
-| KubeVela | vela-system | v1.10.5 | アプリケーション抽象化 |
 
 ### 4. Application Layer
 

@@ -1,8 +1,0 @@
-version: "3"
-
-tasks:
-  apply:
-    desc: Apply FluxCD manifests
-    cmds:
-    - kustomize build --enable-helm . | kubectl apply --server-side -f-
-    - ls -la .
