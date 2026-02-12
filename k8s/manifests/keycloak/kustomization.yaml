@@ -15,6 +15,6 @@ helmCharts:
 - name: keycloakx
   releaseName: keycloak
   namespace: keycloak
-  version: 7.1.7
+  version: 7.1.8
   repo: https://codecentric.github.io/helm-charts
   valuesFile: values.yaml
