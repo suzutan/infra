@@ -6,7 +6,7 @@ namespace: pomerium
 resources:
 # Pomerium Ingress Controller (official kustomize base)
 # https://github.com/pomerium/ingress-controller
-- https://github.com/pomerium/ingress-controller/config/default?ref=v0.32.0
+- https://github.com/pomerium/ingress-controller/config/default?ref=v0.32.3
 - external-secret.yaml
 - certificate-authenticate.yaml
 - pomerium-crd.yaml
