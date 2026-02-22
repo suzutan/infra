@@ -34,7 +34,7 @@
       "collapsed": false,
       "datasource": {
         "type": "influxdb",
-        "uid": "000000001"
+        "uid": "bdn6s58lflekge"
       },
       "gridPos": {
         "h": 1,
@@ -50,7 +50,7 @@
         {
           "datasource": {
             "type": "influxdb",
-            "uid": "000000001"
+            "uid": "bdn6s58lflekge"
           },
           "refId": "A"
         }
@@ -855,7 +855,7 @@
       "collapsed": false,
       "datasource": {
         "type": "influxdb",
-        "uid": "000000001"
+        "uid": "bdn6s58lflekge"
       },
       "gridPos": {
         "h": 1,
@@ -869,7 +869,7 @@
         {
           "datasource": {
             "type": "influxdb",
-            "uid": "000000001"
+            "uid": "bdn6s58lflekge"
           },
           "refId": "A"
         }

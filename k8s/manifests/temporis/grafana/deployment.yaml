@@ -46,7 +46,7 @@ spec:
           mountPath: "/etc/grafana/dashboards"
         - name: grafana-dashboard-provider
           mountPath: "/etc/grafana/provisioning/dashboards"
-          subPath: provider.yaml
+          subPath: dashboard-provider.yaml
         - name: grafana-datasource
           mountPath: "/etc/grafana/provisioning/datasources"
         ports:
@@ -57,6 +57,11 @@ spec:
         - secretRef:
             name: grafana
         env:
+        - name: INFLUXDB_TOKEN
+          valueFrom:
+            secretKeyRef:
+              name: influxdb2-auth
+              key: admin-token
         - name: POD_IP
           valueFrom:
             fieldRef:

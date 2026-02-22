@@ -9,3 +9,15 @@ datasources:
   jsonData:
     httpMethod: POST
     timeInterval: 30s
+- name: InfluxDB
+  type: influxdb
+  uid: bdn6s58lflekge
+  url: http://influxdb2:80
+  access: proxy
+  jsonData:
+    version: Flux
+    organization: influxdata
+    defaultBucket: default
+    tlsSkipVerify: true
+  secureJsonData:
+    token: $INFLUXDB_TOKEN
