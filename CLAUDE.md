@@ -238,35 +238,39 @@ spec:
       storage: 1Gi
 ```
 
-### 8. Commit and Push
+### 8. 開発サイクル（必須）
 
-**修正を行ったら必ずコミット・プッシュすること。**
+**すべての変更は以下のサイクルに従うこと。master への直接 push は禁止。**
 
-- ファイル変更後は即座に `git add && git commit && git push` を実行
-- ArgoCD が自動で同期するため、push しないと変更が反映されない
-- 複数の関連変更は1つのコミットにまとめてよい
+```
+1. git checkout master && git pull     # 最新の master をベースにする
+2. git checkout -b <branch-name>       # feature/fix ブランチを作成
+3. 変更を実装・コミット・プッシュ
+4. gh pr create                        # PR を起票
+5. CI 結果・レビューコメントを確認      # 要否判断のうえ対応
+6. マージ要件を満たしたらマージ         # gh pr merge --squash
+```
 
-### 9. Pull Request とブランチ運用
+#### PR の CI チェック（GitHub Actions 自動実行）
 
-**Terraform 変更を含む場合は必ずブランチを切って PR を作成すること。**
+| タイミング | チェック内容 |
+|-----------|-------------|
+| PR 作成時 | `terraform plan`（dry-run）、`terraform fmt check`、`k8s api deprecate check` |
+| master マージ後 | `terraform apply`（自動適用） |
 
-- feature ブランチを作成し、PR 経由で master にマージする
-- GitHub Actions が以下を自動実行する:
-  - **PR 作成時**: `terraform plan`（dry-run）、`terraform fmt check`、`k8s api deprecate check`
-  - **master マージ後**: `terraform apply`（自動適用）
-- Terraform 変更がない k8s マニフェストのみの変更でも、PR 運用を推奨
-- PR で CI が通ることを確認してからマージする
+#### レビューとマージの判断基準
 
-## Workflow
+- CI が失敗している場合は原因を確認し対応する
+- レビューコメント（gemini-code-assist 等）は内容を確認し、要否を判断して対応する
+- ユーザーの確認が必要なクリティカルなレビュー以外は、マージ要件を満たしていれば自律的にマージしてよい
 
-### Applying Changes
+#### マージ後の反映
 
-1. Push changes to repository
-2. Renovate auto-updates dependencies (as needed)
-3. ArgoCD auto-syncs (within 2-3 minutes)
-4. Verify status with Prometheus/Grafana
+- **Terraform**: GitHub Actions が `terraform apply` を自動実行
+- **k8s マニフェスト**: ArgoCD が自動で同期（2-3分以内）
+- Renovate が依存関係を自動更新（必要に応じて）
 
-### Testing
+### 9. ローカル検証
 
 ```bash
 # YAML format check
