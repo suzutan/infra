@@ -107,9 +107,9 @@ resource "cloudflare_zero_trust_access_application" "livesync" {
 
   # Cloudflare が CORS preflight (OPTIONS) に応答し、CouchDB の CORS 設定と一致させる
   cors_headers = {
-    allowed_origins = ["app://obsidian.md", "capacitor://localhost", "http://localhost"]
-    allowed_methods = ["GET", "PUT", "POST", "HEAD", "DELETE", "OPTIONS"]
-    allowed_headers = ["accept", "authorization", "content-type", "origin", "referer", "cf-access-client-id", "cf-access-client-secret"]
+    allowed_origins   = ["app://obsidian.md", "capacitor://localhost", "http://localhost"]
+    allowed_methods   = ["GET", "PUT", "POST", "HEAD", "DELETE", "OPTIONS"]
+    allowed_headers   = ["accept", "authorization", "content-type", "origin", "referer", "cf-access-client-id", "cf-access-client-secret"]
     allow_credentials = true
     max_age           = 86400
   }
