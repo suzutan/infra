@@ -21,7 +21,3 @@ variable "github_oauth_client_secret" {
   sensitive   = true
 }
 
-variable "infrastructure_admin_email" {
-  type        = string
-  description = "Email address for infrastructure admin (GitHub account primary email)"
-}
