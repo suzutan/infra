@@ -14,21 +14,6 @@ helmCharts:
   repo: https://1password.github.io/connect-helm-charts
   includeCRDs: true
   valuesInline:
-    connect:
-      api:
-        securityContext:
-          readOnlyRootFilesystem: false
-          allowPrivilegeEscalation: false
-          capabilities:
-            drop:
-              - ALL
-      sync:
-        securityContext:
-          readOnlyRootFilesystem: false
-          allowPrivilegeEscalation: false
-          capabilities:
-            drop:
-              - ALL
     operator:
       # Operator disabled - using External Secrets Operator instead
       create: false
