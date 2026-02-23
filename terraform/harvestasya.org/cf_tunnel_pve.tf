@@ -79,7 +79,19 @@ resource "cloudflare_zero_trust_access_application" "tyria" {
   ]
 }
 
+# Tunnel Token (v5 では data source 経由で取得)
+data "cloudflare_zero_trust_tunnel_cloudflared_token" "harvestasya" {
+  account_id = var.cloudflare_account_id
+  tunnel_id  = cloudflare_zero_trust_tunnel_cloudflared.harvestasya.id
+}
+
 output "vista_tunnel_id" {
   value       = cloudflare_zero_trust_tunnel_cloudflared.harvestasya.id
   description = "Harvestasya Vista Tunnel ID"
+}
+
+output "harvestasya_tunnel_token" {
+  description = "Cloudflare Tunnel token for cloudflared on Harvestasya (PVE)"
+  value       = data.cloudflare_zero_trust_tunnel_cloudflared_token.harvestasya.token
+  sensitive   = true
 }
