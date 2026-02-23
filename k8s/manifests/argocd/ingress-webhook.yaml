@@ -1,0 +1,20 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: argocd-webhook
+  annotations:
+    ingress.pomerium.io/allow_public_unauthenticated_access: "true"
+    ingress.pomerium.io/secure_upstream: "false"
+spec:
+  ingressClassName: pomerium
+  rules:
+  - host: argocd.harvestasya.org
+    http:
+      paths:
+      - path: /api/webhook
+        pathType: Prefix
+        backend:
+          service:
+            name: argocd-server
+            port:
+              number: 80
