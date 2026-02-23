@@ -21,7 +21,9 @@ spec:
         command:
         - sh
         - -c
-        - cp /config-readonly/docker.ini /opt/couchdb/etc/local.d/docker.ini
+        - |
+          cp /config-readonly/*.ini /opt/couchdb/etc/local.d/
+          chown -R 5984:5984 /opt/couchdb/etc/local.d/
         volumeMounts:
         - name: config-readonly
           mountPath: /config-readonly
@@ -55,7 +57,7 @@ spec:
           httpGet:
             path: /_up
             port: 5984
-          initialDelaySeconds: 10
+          initialDelaySeconds: 30
           periodSeconds: 10
         readinessProbe:
           httpGet:
