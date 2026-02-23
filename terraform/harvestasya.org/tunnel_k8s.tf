@@ -1,7 +1,7 @@
 # Cloudflare Zero Trust Tunnel for Web traffic
 # - デフォルト: Pomerium Ingress Controller (policy-based access)
-# - Traefik直通: immich, keycloak (policy制御なし)
-# Updated: 2026-02-02
+# - Traefik直通: immich, keycloak, couchdb/livesync (policy制御なし)
+# Updated: 2026-02-23
 
 # Cloudflare Tunnelの作成
 resource "cloudflare_zero_trust_tunnel_cloudflared" "web_tunnel" {
@@ -33,6 +33,13 @@ resource "cloudflare_zero_trust_tunnel_cloudflared_config" "web_tunnel_config" {
       },
       {
         hostname = "keycloak-admin.${local.zone_name}" # keycloak admin (Cloudflare Access保護)
+        service  = "https://traefik.traefik.svc.cluster.local"
+        origin_request = {
+          no_tls_verify = true
+        }
+      },
+      {
+        hostname = "livesync.${local.zone_name}" # couchdb for obsidian livesync
         service  = "https://traefik.traefik.svc.cluster.local"
         origin_request = {
           no_tls_verify = true

@@ -6,6 +6,7 @@ resources:
 - argocd.yaml
 - cert-manager.yaml
 - cnpg-operator.yaml
+- couchdb.yaml
 - ddns.yaml
 - cloudflared.yaml
 - echoserver.yaml

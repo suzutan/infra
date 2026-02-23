@@ -1,0 +1,30 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: couchdb-config
+  namespace: couchdb
+  labels:
+    app.kubernetes.io/name: couchdb
+data:
+  local.ini: |
+    [couchdb]
+    single_node = true
+    max_document_size = 0
+
+    [chttpd]
+    require_valid_user = true
+    max_http_request_size = 4294967296
+    enable_cors = true
+
+    [chttpd_auth]
+    require_valid_user = true
+
+    [httpd]
+    WWW-Authenticate = Basic realm="couchdb"
+    bind_address = 0.0.0.0
+
+    [cors]
+    origins = *
+    credentials = true
+    methods = GET, PUT, POST, HEAD, DELETE
+    headers = accept, authorization, content-type, origin, referer, x-csrf-token
