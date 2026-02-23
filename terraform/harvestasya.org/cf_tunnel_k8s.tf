@@ -1,7 +1,6 @@
 # Cloudflare Zero Trust Tunnel for Web traffic
 # - デフォルト: Pomerium Ingress Controller (policy-based access)
-# - Traefik直通: immich, keycloak, couchdb/livesync (policy制御なし)
-# Updated: 2026-02-23
+# - Traefik直通: immich, keycloak (policy制御なし), couchdb/livesync (Service Token認証)
 
 # Cloudflare Tunnelの作成
 resource "cloudflare_zero_trust_tunnel_cloudflared" "web_tunnel" {
@@ -95,6 +94,28 @@ output "web_tunnel_id" {
 # Cloudflare Access Applications (infra-core layer)
 # K8s上のインフラ管理系アプリケーションへのGitHub認証
 # =============================================================================
+
+# Obsidian LiveSync (CouchDB) - Service Token認証
+# Obsidian クライアントは couchDB_CustomHeaders で CF-Access-Client-Id/Secret を送信
+resource "cloudflare_zero_trust_access_application" "livesync" {
+  account_id                = var.cloudflare_account_id
+  name                      = "Obsidian LiveSync (CouchDB)"
+  domain                    = "livesync.${local.zone_name}"
+  type                      = "self_hosted"
+  session_duration          = "24h"
+  auto_redirect_to_identity = false # API アクセスのためリダイレクト無効
+
+  policies = [
+    {
+      id         = cloudflare_zero_trust_access_policy.obsidian_livesync_service_token.id
+      precedence = 1
+    },
+    {
+      id         = cloudflare_zero_trust_access_policy.infrastructure_admin.id
+      precedence = 2
+    }
+  ]
+}
 
 # Keycloak Admin Console - GitHub認証必須 + GitHub Actions Service Token
 resource "cloudflare_zero_trust_access_application" "keycloak_admin" {
