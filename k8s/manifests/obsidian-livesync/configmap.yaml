@@ -32,4 +32,4 @@ data:
     origins = app://obsidian.md,capacitor://localhost,http://localhost
     credentials = true
     methods = GET, PUT, POST, HEAD, DELETE
-    headers = accept, authorization, content-type, origin, referer, cf-access-client-id, cf-access-client-secret
+    headers = accept, authorization, content-type, origin, referer
