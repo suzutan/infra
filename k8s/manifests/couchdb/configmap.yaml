@@ -2,7 +2,7 @@ apiVersion: v1
 kind: ConfigMap
 metadata:
   name: couchdb-config
-  namespace: couchdb
+  namespace: obsidian-livesync
   labels:
     app.kubernetes.io/name: couchdb
 data:
