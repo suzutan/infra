@@ -6,10 +6,12 @@ metadata:
   labels:
     app.kubernetes.io/name: couchdb
 data:
-  docker.ini: |-
+  # Named 10-livesync.ini to load before entrypoint's docker.ini (alphabetical order)
+  # See: https://github.com/vrtmrz/obsidian-livesync/blob/main/docs/setup_own_server.md
+  10-livesync.ini: |-
     [couchdb]
     single_node = true
-    max_document_size = 0
+    max_document_size = 50000000
 
     [chttpd]
     require_valid_user = true
@@ -22,9 +24,10 @@ data:
     [httpd]
     WWW-Authenticate = Basic realm="couchdb"
     bind_address = 0.0.0.0
+    enable_cors = true
 
     [cors]
-    origins = *
+    origins = app://obsidian.md,capacitor://localhost,http://localhost
     credentials = true
     methods = GET, PUT, POST, HEAD, DELETE
-    headers = accept, authorization, content-type, origin, referer, x-csrf-token
+    headers = accept, authorization, content-type, origin, referer
