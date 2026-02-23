@@ -18,6 +18,7 @@ resources:
 - n8n.yaml
 - navidrome.yaml
 - nfs-subdir-external-provisioner.yaml
+- obsidian-livesync.yaml
 - onepassword-operator.yaml
 - pomerium.yaml
 - step-ca.yaml

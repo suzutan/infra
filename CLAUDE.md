@@ -246,6 +246,17 @@ spec:
 - ArgoCD が自動で同期するため、push しないと変更が反映されない
 - 複数の関連変更は1つのコミットにまとめてよい
 
+### 9. Pull Request とブランチ運用
+
+**Terraform 変更を含む場合は必ずブランチを切って PR を作成すること。**
+
+- feature ブランチを作成し、PR 経由で master にマージする
+- GitHub Actions が以下を自動実行する:
+  - **PR 作成時**: `terraform plan`（dry-run）、`terraform fmt check`、`k8s api deprecate check`
+  - **master マージ後**: `terraform apply`（自動適用）
+- Terraform 変更がない k8s マニフェストのみの変更でも、PR 運用を推奨
+- PR で CI が通ることを確認してからマージする
+
 ## Workflow
 
 ### Applying Changes
