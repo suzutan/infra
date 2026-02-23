@@ -46,7 +46,19 @@ resource "cloudflare_zero_trust_access_application" "archia" {
   ]
 }
 
+# Tunnel Token (v5 では data source 経由で取得)
+data "cloudflare_zero_trust_tunnel_cloudflared_token" "archia" {
+  account_id = var.cloudflare_account_id
+  tunnel_id  = cloudflare_zero_trust_tunnel_cloudflared.archia.id
+}
+
 # Outputs
 output "archia_tunnel_id" {
   value = cloudflare_zero_trust_tunnel_cloudflared.archia.id
+}
+
+output "archia_tunnel_token" {
+  description = "Cloudflare Tunnel token for cloudflared on Archia"
+  value       = data.cloudflare_zero_trust_tunnel_cloudflared_token.archia.token
+  sensitive   = true
 }

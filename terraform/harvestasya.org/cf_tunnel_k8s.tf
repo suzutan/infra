@@ -72,10 +72,16 @@ resource "cloudflare_dns_record" "web_tunnel_wildcard" {
   comment = "Cloudflare Tunnel wildcard for K8s Traefik"
 }
 
+# Tunnel Token (v5 では data source 経由で取得)
+data "cloudflare_zero_trust_tunnel_cloudflared_token" "web_tunnel" {
+  account_id = var.cloudflare_account_id
+  tunnel_id  = cloudflare_zero_trust_tunnel_cloudflared.web_tunnel.id
+}
+
 # Output: トンネルトークン (Kubernetes cloudflared設定に使用)
 output "web_tunnel_token" {
   description = "Cloudflare Tunnel token for cloudflared in Kubernetes"
-  value       = cloudflare_zero_trust_tunnel_cloudflared.web_tunnel.tunnel_secret
+  value       = data.cloudflare_zero_trust_tunnel_cloudflared_token.web_tunnel.token
   sensitive   = true
 }
 

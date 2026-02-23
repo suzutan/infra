@@ -97,6 +97,15 @@ resource "cloudflare_zero_trust_access_policy" "oracle_doh_bypass" {
 }
 
 # =============================================================================
+# Tunnel Token (v5 では data source 経由で取得)
+# =============================================================================
+
+data "cloudflare_zero_trust_tunnel_cloudflared_token" "oracle" {
+  account_id = var.cloudflare_account_id
+  tunnel_id  = cloudflare_zero_trust_tunnel_cloudflared.oracle.id
+}
+
+# =============================================================================
 # Outputs
 # =============================================================================
 
@@ -107,6 +116,6 @@ output "oracle_tunnel_id" {
 
 output "oracle_tunnel_token" {
   description = "Cloudflare Tunnel token for cloudflared setup on AdGuard Home VM"
-  value       = cloudflare_zero_trust_tunnel_cloudflared.oracle.tunnel_secret
+  value       = data.cloudflare_zero_trust_tunnel_cloudflared_token.oracle.token
   sensitive   = true
 }
