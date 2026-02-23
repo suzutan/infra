@@ -15,6 +15,18 @@ spec:
       labels:
         app.kubernetes.io/name: couchdb
     spec:
+      initContainers:
+      - name: copy-config
+        image: busybox:1
+        command:
+        - sh
+        - -c
+        - cp /config-readonly/docker.ini /opt/couchdb/etc/local.d/docker.ini
+        volumeMounts:
+        - name: config-readonly
+          mountPath: /config-readonly
+        - name: config-writable
+          mountPath: /opt/couchdb/etc/local.d
       containers:
       - name: couchdb
         image: couchdb:3
@@ -54,13 +66,14 @@ spec:
         volumeMounts:
         - name: data
           mountPath: /opt/couchdb/data
-        - name: config
-          mountPath: /opt/couchdb/etc/local.d/docker.ini
-          subPath: docker.ini
+        - name: config-writable
+          mountPath: /opt/couchdb/etc/local.d
       volumes:
       - name: data
         persistentVolumeClaim:
           claimName: couchdb-data
-      - name: config
+      - name: config-readonly
         configMap:
           name: couchdb-config
+      - name: config-writable
+        emptyDir: {}
