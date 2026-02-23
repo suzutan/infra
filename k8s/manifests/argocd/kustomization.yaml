@@ -18,6 +18,7 @@ resources:
 - external-secret-argocd-secret.yaml
 - external-secret-argocd-notifications-secret.yaml
 - ingress.yaml
+- ingress-webhook.yaml
 - serverstransport.yaml
 
 patches:
