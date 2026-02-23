@@ -4,5 +4,5 @@ registries:
 packages:
 - name: kubernetes-sigs/kustomize@kustomize/v5.8.1
 - name: helm/helm@v3.20.0
-- name: hashicorp/terraform@v1.14.4
+- name: hashicorp/terraform@v1.14.5
 - name: cloudflare/cloudflared@2026.2.0
