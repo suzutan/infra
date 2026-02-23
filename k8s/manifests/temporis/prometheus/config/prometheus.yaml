@@ -122,6 +122,12 @@ scrape_configs:
   - source_labels: [__meta_kubernetes_pod_node_name]
     action: replace
     target_label: target_node
+  - source_labels: [__meta_kubernetes_namespace]
+    action: replace
+    target_label: namespace
+  - source_labels: [__meta_kubernetes_endpoint_port_name]
+    action: replace
+    target_label: endpoint
 
   metric_relabel_configs:
   - source_labels: [__name__]
