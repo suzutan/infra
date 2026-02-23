@@ -5,6 +5,10 @@ terraform {
       source  = "cloudflare/cloudflare"
       version = "5.17.0"
     }
+    github = {
+      source  = "integrations/github"
+      version = "6.11.1"
+    }
     random = {
       source  = "hashicorp/random"
       version = "3.8.1"

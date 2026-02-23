@@ -16,7 +16,6 @@ jobs:
         directory:
         - terraform/harvestasya.org
         - terraform/suzutan.jp
-        - terraform/github
     steps:
     - name: Checkout
       uses: actions/checkout@v6

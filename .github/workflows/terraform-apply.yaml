@@ -21,7 +21,6 @@ jobs:
         directory:
         - terraform/harvestasya.org
         - terraform/suzutan.jp
-        - terraform/github
         # - terraform/keycloak  # disabled: keycloak provider credentials not configured
     env:
       # Cloudflare
