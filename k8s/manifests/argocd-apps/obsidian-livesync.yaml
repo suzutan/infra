@@ -1,13 +1,13 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: couchdb
+  name: obsidian-livesync
   namespace: argocd
 spec:
   destination:
     server: https://kubernetes.default.svc
   source:
-    path: k8s/manifests/couchdb
+    path: k8s/manifests/obsidian-livesync
     repoURL: https://github.com/suzutan/infra.git
     targetRevision: HEAD
   project: apps

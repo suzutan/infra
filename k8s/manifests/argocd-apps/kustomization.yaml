@@ -6,7 +6,6 @@ resources:
 - argocd.yaml
 - cert-manager.yaml
 - cnpg-operator.yaml
-- couchdb.yaml
 - ddns.yaml
 - cloudflared.yaml
 - echoserver.yaml
@@ -19,6 +18,7 @@ resources:
 - n8n.yaml
 - navidrome.yaml
 - nfs-subdir-external-provisioner.yaml
+- obsidian-livesync.yaml
 - onepassword-operator.yaml
 - pomerium.yaml
 - step-ca.yaml
