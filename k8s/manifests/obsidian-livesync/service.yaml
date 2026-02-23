@@ -11,5 +11,9 @@ spec:
     targetPort: http
     protocol: TCP
     name: http
+  - port: 9984
+    targetPort: metrics
+    protocol: TCP
+    name: metrics
   selector:
     app.kubernetes.io/name: couchdb
