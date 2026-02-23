@@ -61,7 +61,11 @@
       "targets": [
         {
           "datasource": { "type": "prometheus", "uid": "prometheus" },
+          "editorMode": "code",
           "expr": "couchdb_httpd_up",
+          "instant": true,
+          "range": false,
+          "legendFormat": "__auto",
           "refId": "A"
         }
       ]
@@ -95,7 +99,11 @@
       "targets": [
         {
           "datasource": { "type": "prometheus", "uid": "prometheus" },
+          "editorMode": "code",
           "expr": "couchdb_httpd_open_databases",
+          "instant": true,
+          "range": false,
+          "legendFormat": "__auto",
           "refId": "A"
         }
       ]
@@ -129,7 +137,11 @@
       "targets": [
         {
           "datasource": { "type": "prometheus", "uid": "prometheus" },
+          "editorMode": "code",
           "expr": "couchdb_httpd_open_os_files",
+          "instant": true,
+          "range": false,
+          "legendFormat": "__auto",
           "refId": "A"
         }
       ]
@@ -163,7 +175,11 @@
       "targets": [
         {
           "datasource": { "type": "prometheus", "uid": "prometheus" },
+          "editorMode": "code",
           "expr": "couchdb_httpd_requests",
+          "instant": true,
+          "range": false,
+          "legendFormat": "__auto",
           "refId": "A"
         }
       ]
@@ -197,7 +213,11 @@
       "targets": [
         {
           "datasource": { "type": "prometheus", "uid": "prometheus" },
+          "editorMode": "code",
           "expr": "couchdb_httpd_database_reads",
+          "instant": true,
+          "range": false,
+          "legendFormat": "__auto",
           "refId": "A"
         }
       ]
@@ -231,7 +251,11 @@
       "targets": [
         {
           "datasource": { "type": "prometheus", "uid": "prometheus" },
+          "editorMode": "code",
           "expr": "couchdb_httpd_database_writes",
+          "instant": true,
+          "range": false,
+          "legendFormat": "__auto",
           "refId": "A"
         }
       ]
@@ -273,7 +297,9 @@
       "targets": [
         {
           "datasource": { "type": "prometheus", "uid": "prometheus" },
+          "editorMode": "code",
           "expr": "rate(couchdb_httpd_requests[5m])",
+          "range": true,
           "legendFormat": "requests/s",
           "refId": "A"
         }
@@ -309,7 +335,9 @@
       "targets": [
         {
           "datasource": { "type": "prometheus", "uid": "prometheus" },
-          "expr": "rate(couchdb_httpd_request_methods[5m])",
+          "editorMode": "code",
+          "expr": "rate(couchdb_httpd_request_methods{method=~\"GET|POST|PUT|DELETE\"}[5m])",
+          "range": true,
           "legendFormat": "{{method}}",
           "refId": "A"
         }
@@ -345,7 +373,9 @@
       "targets": [
         {
           "datasource": { "type": "prometheus", "uid": "prometheus" },
-          "expr": "rate(couchdb_httpd_status_codes[5m])",
+          "editorMode": "code",
+          "expr": "rate(couchdb_httpd_status_codes{code=~\"2..|3..|4..|5..\"}[5m]) > 0",
+          "range": true,
           "legendFormat": "{{code}}",
           "refId": "A"
         }
@@ -366,7 +396,7 @@
             "axisPlacement": "auto",
             "lineWidth": 1
           },
-          "unit": "s"
+          "unit": "ms"
         },
         "overrides": []
       },
@@ -376,14 +406,32 @@
         "legend": { "calcs": ["mean", "max"], "displayMode": "table", "placement": "bottom" },
         "tooltip": { "mode": "multi", "sort": "desc" }
       },
-      "title": "Request Processing Time",
+      "title": "Request Processing Time (Percentiles)",
       "type": "timeseries",
       "targets": [
         {
           "datasource": { "type": "prometheus", "uid": "prometheus" },
-          "expr": "couchdb_httpd_request_time",
-          "legendFormat": "request time",
+          "editorMode": "code",
+          "expr": "couchdb_httpd_request_time{metric=\"50\"}",
+          "range": true,
+          "legendFormat": "p50",
           "refId": "A"
+        },
+        {
+          "datasource": { "type": "prometheus", "uid": "prometheus" },
+          "editorMode": "code",
+          "expr": "couchdb_httpd_request_time{metric=\"95\"}",
+          "range": true,
+          "legendFormat": "p95",
+          "refId": "B"
+        },
+        {
+          "datasource": { "type": "prometheus", "uid": "prometheus" },
+          "editorMode": "code",
+          "expr": "couchdb_httpd_request_time{metric=\"99\"}",
+          "range": true,
+          "legendFormat": "p99",
+          "refId": "C"
         }
       ]
     },
@@ -424,13 +472,17 @@
       "targets": [
         {
           "datasource": { "type": "prometheus", "uid": "prometheus" },
+          "editorMode": "code",
           "expr": "rate(couchdb_httpd_database_reads[5m])",
+          "range": true,
           "legendFormat": "reads/s",
           "refId": "A"
         },
         {
           "datasource": { "type": "prometheus", "uid": "prometheus" },
+          "editorMode": "code",
           "expr": "rate(couchdb_httpd_database_writes[5m])",
+          "range": true,
           "legendFormat": "writes/s",
           "refId": "B"
         }
@@ -466,7 +518,9 @@
       "targets": [
         {
           "datasource": { "type": "prometheus", "uid": "prometheus" },
+          "editorMode": "code",
           "expr": "rate(couchdb_httpd_view_reads[5m])",
+          "range": true,
           "legendFormat": "view reads/s",
           "refId": "A"
         }
@@ -509,7 +563,10 @@
       "targets": [
         {
           "datasource": { "type": "prometheus", "uid": "prometheus" },
+          "editorMode": "code",
           "expr": "couchdb_database_doc_count",
+          "instant": true,
+          "range": false,
           "legendFormat": "{{db_name}}",
           "refId": "A"
         }
@@ -545,7 +602,9 @@
       "targets": [
         {
           "datasource": { "type": "prometheus", "uid": "prometheus" },
+          "editorMode": "code",
           "expr": "couchdb_database_disk_size",
+          "range": true,
           "legendFormat": "{{db_name}}",
           "refId": "A"
         }
@@ -581,7 +640,9 @@
       "targets": [
         {
           "datasource": { "type": "prometheus", "uid": "prometheus" },
+          "editorMode": "code",
           "expr": "couchdb_database_data_size",
+          "range": true,
           "legendFormat": "{{db_name}}",
           "refId": "A"
         }
@@ -617,7 +678,9 @@
       "targets": [
         {
           "datasource": { "type": "prometheus", "uid": "prometheus" },
+          "editorMode": "code",
           "expr": "couchdb_database_overhead",
+          "range": true,
           "legendFormat": "{{db_name}}",
           "refId": "A"
         }
