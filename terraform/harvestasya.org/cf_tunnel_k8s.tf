@@ -104,6 +104,7 @@ resource "cloudflare_zero_trust_access_application" "livesync" {
   type                      = "self_hosted"
   session_duration          = "24h"
   auto_redirect_to_identity = false # API アクセスのためリダイレクト無効
+  options_preflight_bypass  = true  # CORS preflight (OPTIONS) を Access バイパスし CouchDB で処理
 
   policies = [
     {
