@@ -14,6 +14,10 @@ spec:
     metadata:
       labels:
         app.kubernetes.io/name: couchdb
+      annotations:
+        prometheus.io/scrape: "true"
+        prometheus.io/port: "9984"
+        prometheus.io/path: /metrics
     spec:
       initContainers:
       - name: copy-config
@@ -70,6 +74,33 @@ spec:
           mountPath: /opt/couchdb/data
         - name: config-writable
           mountPath: /opt/couchdb/etc/local.d
+      - name: couchdb-exporter
+        image: gesellix/couchdb-prometheus-exporter:v30.16.0
+        args:
+        - --couchdb.uri=http://localhost:5984
+        - --databases=_all_dbs
+        - --scrape.localonly=true
+        ports:
+        - containerPort: 9984
+          name: metrics
+        env:
+        - name: COUCHDB_USERNAME
+          valueFrom:
+            secretKeyRef:
+              name: couchdb-secret
+              key: COUCHDB_USER
+        - name: COUCHDB_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: couchdb-secret
+              key: COUCHDB_PASSWORD
+        resources:
+          requests:
+            cpu: 50m
+            memory: 32Mi
+          limits:
+            cpu: 200m
+            memory: 64Mi
       volumes:
       - name: data
         persistentVolumeClaim:

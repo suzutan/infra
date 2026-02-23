@@ -22,6 +22,7 @@ configMapGenerator:
 - name: grafana-dashboards-1
   files:
   - dashboards/airq-exporter.json
+  - dashboards/couchdb.json
   - dashboards/immich.json
   - dashboards/node-exporter.json
   - dashboards/remo-exporter.json
