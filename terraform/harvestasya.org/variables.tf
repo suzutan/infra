@@ -21,7 +21,20 @@ variable "github_oauth_client_secret" {
   sensitive   = true
 }
 
-variable "infrastructure_admin_email" {
+# GitHub App for Organization Management
+variable "github_app_id" {
   type        = string
-  description = "Email address for infrastructure admin (GitHub account primary email)"
+  description = "GitHub App ID"
 }
+
+variable "github_app_installation_id" {
+  type        = string
+  description = "GitHub App Installation ID"
+}
+
+variable "github_app_pem_file" {
+  type        = string
+  description = "GitHub App Private Key (PEM)"
+  sensitive   = true
+}
+

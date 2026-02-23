@@ -28,11 +28,14 @@ jobs:
       TF_VAR_cloudflare_api_token: ${{ secrets.TF_VAR_CLOUDFLARE_API_TOKEN }}
       TF_VAR_github_oauth_client_id: ${{ secrets.TF_VAR_GITHUB_OAUTH_CLIENT_ID }}
       TF_VAR_github_oauth_client_secret: ${{ secrets.TF_VAR_GITHUB_OAUTH_CLIENT_SECRET }}
-      TF_VAR_infrastructure_admin_email: ${{ secrets.TF_VAR_INFRASTRUCTURE_ADMIN_EMAIL }}
       # Keycloak (Service Account Client Credentials)
       TF_VAR_keycloak_client_secret: ${{ secrets.TF_VAR_KEYCLOAK_CLIENT_SECRET }}
       TF_VAR_cf_access_client_id: ${{ secrets.TF_VAR_CF_ACCESS_CLIENT_ID }}
       TF_VAR_cf_access_client_secret: ${{ secrets.TF_VAR_CF_ACCESS_CLIENT_SECRET }}
+      # GitHub Organization Management (GitHub App)
+      TF_VAR_github_app_id: ${{ secrets.TF_VAR_GITHUB_APP_ID }}
+      TF_VAR_github_app_installation_id: ${{ secrets.TF_VAR_GITHUB_APP_INSTALLATION_ID }}
+      TF_VAR_github_app_pem_file: ${{ secrets.TF_VAR_GITHUB_APP_PEM_FILE }}
       GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
     steps:
     - uses: actions/checkout@v6

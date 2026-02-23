@@ -6,7 +6,7 @@ metadata:
   labels:
     app.kubernetes.io/name: couchdb
 data:
-  local.ini: |
+  local.ini: |-
     [couchdb]
     single_node = true
     max_document_size = 0
