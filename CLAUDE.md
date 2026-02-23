@@ -15,6 +15,7 @@ This repository manages Infrastructure as Code (IaC) for a personal HomeLab envi
 - [APPLICATION_CATALOG.md](docs/APPLICATION_CATALOG.md) - Application catalog
 - [DATA_FLOW.md](docs/DATA_FLOW.md) - Data flows
 - [SECRETS_MANAGEMENT.md](docs/SECRETS_MANAGEMENT.md) - Secrets management
+- [NAMING_CONVENTION.md](docs/NAMING_CONVENTION.md) - Subdomain naming convention
 - [AGENT_MANAGEMENT.md](docs/AGENT_MANAGEMENT.md) - Agent team structure and workflow
 - [TASK_WORKFLOW.md](docs/TASK_WORKFLOW.md) - Task management and session continuity
 
