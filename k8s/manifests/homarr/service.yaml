@@ -1,0 +1,15 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: homarr
+  labels:
+    app.kubernetes.io/name: homarr
+spec:
+  type: ClusterIP
+  selector:
+    app.kubernetes.io/name: homarr
+  ports:
+  - name: http
+    port: 7575
+    targetPort: http
+    protocol: TCP
