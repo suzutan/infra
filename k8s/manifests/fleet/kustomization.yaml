@@ -82,8 +82,7 @@ patches:
     - op: add
       path: /metadata/annotations/argocd.argoproj.io~1sync-wave
       value: "-1"
-# Inject secrets into Fleet deployment and override FLEET_MYSQL_ADDRESS
-# Append to end of env list so the last entry wins over chart defaults
+# Inject fleet-server-secret (FLEET_SERVER_PRIVATE_KEY etc.) via envFrom
 - target:
     kind: Deployment
     name: fleet
@@ -93,15 +92,7 @@ patches:
       value:
       - secretRef:
           name: fleet-server-secret
-    - op: add
-      path: /spec/template/spec/containers/0/env/-
-      value:
-        name: FLEET_MYSQL_ADDRESS
-        valueFrom:
-          secretKeyRef:
-            name: fleet-server-secret
-            key: FLEET_MYSQL_ADDRESS
-# Override FLEET_MYSQL_ADDRESS in migration Job
+# Override FLEET_MYSQL_ADDRESS in migration Job (envsFrom only applies to Deployment)
 - target:
     kind: Job
     name: fleet-migration
