@@ -43,6 +43,7 @@
 | Navidrome | navidrome | カスタム | 音楽ストリーミング | navidrome.harvestasya.org |
 | n8n | n8n | latest | ワークフロー自動化 | reyvateils.harvestasya.org |
 | FreshRSS | freshrss | カスタム | RSSリーダー | - |
+| Fleet | fleet | v4.81.0 (Helm) | MDM デバイス管理 | nexus.harvestasya.org |
 | EchoServer | echoserver | カスタム | テストサーバー | echoserver.harvestasya.org |
 
 ### Monitoring (Temporis)
@@ -123,6 +124,37 @@
 
 **マニフェスト:** `k8s/manifests/navidrome/`
 
+### Fleet
+
+MDM (Mobile Device Management) デバイス管理サービス。Apple デバイスの構成プロファイル配布・管理を行う。
+
+```
+┌─────────────────────────────────────────────────────────┐
+│                    Fleet Namespace                        │
+│                                                          │
+│  ┌─────────────┐  ┌─────────────┐  ┌─────────────────┐  │
+│  │   Fleet     │  │    MySQL    │  │     Valkey      │  │
+│  │  (v4.81.0)  │  │  (Bitnami) │  │   (Bitnami)     │  │
+│  │  port:8080  │  │  port:3306  │  │   port:6379     │  │
+│  └──────┬──────┘  └─────────────┘  └─────────────────┘  │
+│         │                                                │
+│  ┌──────┴──────────────────────────────────────────────┐ │
+│  │  Ingress                                            │ │
+│  │  - nexus.harvestasya.org (Pomerium/UI)              │ │
+│  │  - nexus-mdm.harvestasya.org (Traefik/MDM)          │ │
+│  └─────────────────────────────────────────────────────┘ │
+└─────────────────────────────────────────────────────────┘
+```
+
+**構成:**
+- レプリカ: 1
+- データベース: MySQL (Bitnami Helm Chart)
+- キャッシュ: Valkey (Bitnami Helm Chart)
+- UI認証: Pomerium IAP (mdm-admin グループ)
+- MDMエンドポイント: Cloudflare Tunnel 経由で外部公開
+
+**マニフェスト:** `k8s/manifests/fleet/`
+
 ### ArgoCD
 
 GitOps継続的デリバリーツール。
@@ -168,6 +200,7 @@ Ingress Controller。
 | cnpg-system | DB Operator | CNPG Operator |
 | ddns | DNS | DDNS CronJob |
 | echoserver | テスト | EchoServer |
+| fleet | MDM | Fleet |
 | freshrss | RSS | FreshRSS |
 | hsr-auto-claimer | 自動化 | HSR Auto Claimer |
 | immich | フォト | Immich |

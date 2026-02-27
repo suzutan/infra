@@ -1,0 +1,37 @@
+hostName: nexus-mdm.harvestasya.org
+replicas: 1
+
+fleet:
+  autoApplySQLMigrations: true
+  listenPort: 8080
+  tls:
+    enabled: false # TLS terminated by Traefik
+
+database:
+  address: mysql:3306
+  database: fleet
+  username: fleet
+  secretName: fleet-mysql-secret
+  passwordKey: mysql-password
+
+cache:
+  address: valkey-master:6379
+  usePassword: true
+  secretName: fleet-valkey-secret
+  passwordKey: valkey-password
+
+resources:
+  limits:
+    cpu: 1
+    memory: 2Gi
+  requests:
+    cpu: 100m
+    memory: 256Mi
+
+osquery:
+  logging:
+    statusPlugin: filesystem
+    resultPlugin: filesystem
+
+ingress:
+  enabled: false

@@ -1,0 +1,65 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+namespace: fleet
+resources:
+- namespace.yaml
+- external-secret.yaml
+- pomerium-ingress.yaml
+- ingressroute.yaml
+helmCharts:
+- name: fleet
+  releaseName: fleet
+  repo: https://fleetdm.github.io/fleet/charts
+  valuesFile: values.yaml
+- name: mysql
+  releaseName: mysql
+  version: 12.3.2
+  repo: oci://registry-1.docker.io/bitnamicharts
+  valuesInline:
+    auth:
+      database: fleet
+      username: fleet
+      existingSecret: fleet-mysql-secret
+    global:
+      imageRegistry: public.ecr.aws
+      security:
+        allowInsecureImages: true
+    primary:
+      extraEnvVars:
+      - name: TZ
+        value: Asia/Tokyo
+      persistence:
+        enabled: true
+        storageClass: nfs-client
+        size: 10Gi
+      resourcesPreset: small
+- name: valkey
+  releaseName: valkey
+  version: 5.4.3
+  repo: oci://registry-1.docker.io/bitnamicharts
+  valuesInline:
+    architecture: standalone
+    auth:
+      existingSecret: fleet-valkey-secret
+    global:
+      imageRegistry: public.ecr.aws
+      security:
+        allowInsecureImages: true
+    primary:
+      extraEnvVars:
+      - name: TZ
+        value: Asia/Tokyo
+      persistence:
+        enabled: true
+      resourcesPreset: nano
+patches:
+# Inject FLEET_SERVER_PRIVATE_KEY from secret into Fleet deployment
+- target:
+    kind: Deployment
+    name: fleet
+  patch: |-
+    - op: add
+      path: /spec/template/spec/containers/0/envFrom
+      value:
+      - secretRef:
+          name: fleet-server-secret
