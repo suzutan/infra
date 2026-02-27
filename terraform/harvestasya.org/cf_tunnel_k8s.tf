@@ -99,7 +99,7 @@ output "web_tunnel_id" {
 
 # =============================================================================
 # Cloudflare Access Applications (infra-core layer)
-# K8s上のインフラ管理系アプリケーションへのGitHub認証
+# K8s上のインフラ管理系アプリケーションへのGoogle認証
 # =============================================================================
 
 # Obsidian LiveSync (CouchDB) - Service Token認証
@@ -127,7 +127,7 @@ resource "cloudflare_zero_trust_access_application" "livesync" {
   ]
 }
 
-# Keycloak Admin Console - GitHub認証必須 + GitHub Actions Service Token
+# Keycloak Admin Console - Google認証必須 + GitHub Actions Service Token
 resource "cloudflare_zero_trust_access_application" "keycloak_admin" {
   account_id                = var.cloudflare_account_id
   name                      = "Keycloak Admin Console"
@@ -135,7 +135,7 @@ resource "cloudflare_zero_trust_access_application" "keycloak_admin" {
   type                      = "self_hosted"
   session_duration          = "24h"
   auto_redirect_to_identity = true
-  allowed_idps              = [cloudflare_zero_trust_access_identity_provider.github.id]
+  allowed_idps              = [cloudflare_zero_trust_access_identity_provider.google.id]
 
   policies = [
     {

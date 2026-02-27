@@ -54,7 +54,7 @@ resource "cloudflare_zero_trust_access_application" "vista" {
   type                      = "self_hosted"
   session_duration          = "24h"
   auto_redirect_to_identity = true
-  allowed_idps              = [cloudflare_zero_trust_access_identity_provider.github.id]
+  allowed_idps              = [cloudflare_zero_trust_access_identity_provider.google.id]
 
   policies = [
     {
@@ -70,7 +70,7 @@ resource "cloudflare_zero_trust_access_application" "tyria" {
   type                      = "self_hosted"
   session_duration          = "24h"
   auto_redirect_to_identity = true
-  allowed_idps              = [cloudflare_zero_trust_access_identity_provider.github.id]
+  allowed_idps              = [cloudflare_zero_trust_access_identity_provider.google.id]
 
   policies = [
     {
