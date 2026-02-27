@@ -8,7 +8,7 @@ fleet:
     enabled: false # TLS terminated by Traefik
 
 database:
-  address: mysql:3306
+  address: 127.0.0.1:3306 # overridden by FLEET_MYSQL_ADDRESS from secret
   database: fleet
   username: fleet
   secretName: fleet-mysql-secret
@@ -35,3 +35,11 @@ osquery:
 
 ingress:
   enabled: false
+
+# Override FLEET_MYSQL_ADDRESS from secret (keep host out of public repo)
+envsFrom:
+- name: FLEET_MYSQL_ADDRESS
+  valueFrom:
+    secretKeyRef:
+      name: fleet-server-secret
+      key: FLEET_MYSQL_ADDRESS
