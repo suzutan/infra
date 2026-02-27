@@ -53,6 +53,63 @@ helmCharts:
         enabled: true
       resourcesPreset: nano
 patches:
+# Remove Helm hook annotations - autoApplySQLMigrations handles migrations
+- target:
+    kind: Job
+    name: fleet-migration
+  patch: |-
+    - op: remove
+      path: /metadata/annotations/helm.sh~1hook
+    - op: remove
+      path: /metadata/annotations/helm.sh~1hook-delete-policy
+    - op: remove
+      path: /metadata/annotations/helm.sh~1hook-weight
+- target:
+    kind: ServiceAccount
+    name: fleet
+    annotationSelector: helm.sh/hook
+  patch: |-
+    - op: remove
+      path: /metadata/annotations/helm.sh~1hook
+    - op: remove
+      path: /metadata/annotations/helm.sh~1hook-delete-policy
+    - op: remove
+      path: /metadata/annotations/helm.sh~1hook-weight
+- target:
+    kind: Role
+    name: fleet
+    annotationSelector: helm.sh/hook
+  patch: |-
+    - op: remove
+      path: /metadata/annotations/helm.sh~1hook
+    - op: remove
+      path: /metadata/annotations/helm.sh~1hook-delete-policy
+    - op: remove
+      path: /metadata/annotations/helm.sh~1hook-weight
+- target:
+    kind: RoleBinding
+    name: fleet
+    annotationSelector: helm.sh/hook
+  patch: |-
+    - op: remove
+      path: /metadata/annotations/helm.sh~1hook
+    - op: remove
+      path: /metadata/annotations/helm.sh~1hook-delete-policy
+    - op: remove
+      path: /metadata/annotations/helm.sh~1hook-weight
+# Sync waves: ExternalSecrets first, then DB/cache, then Fleet
+- target:
+    kind: ExternalSecret
+  patch: |-
+    - op: add
+      path: /metadata/annotations/argocd.argoproj.io~1sync-wave
+      value: "-2"
+- target:
+    kind: StatefulSet
+  patch: |-
+    - op: add
+      path: /metadata/annotations/argocd.argoproj.io~1sync-wave
+      value: "-1"
 # Inject FLEET_SERVER_PRIVATE_KEY from secret into Fleet deployment
 - target:
     kind: Deployment
