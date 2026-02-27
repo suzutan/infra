@@ -15,7 +15,7 @@ database:
   passwordKey: mysql-password
 
 cache:
-  address: valkey-master:6379
+  address: valkey-primary:6379
   usePassword: true
   secretName: fleet-valkey-secret
   passwordKey: valkey-password
