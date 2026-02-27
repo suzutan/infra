@@ -1,7 +1,8 @@
 # Reusable Access Policies
 # 複数のアプリケーションで共有可能なポリシー定義
 
-# Infrastructure Admin Policy - GitHub認証 + harvestasya org admin team
+# Infrastructure Admin Policy - Google認証 + harvestasya.org ドメイン
+# Keycloak非依存: Google Workspace ネイティブアカウントで認証
 resource "cloudflare_zero_trust_access_policy" "infrastructure_admin" {
   account_id = var.cloudflare_account_id
   name       = "Infrastructure Admin Access"
@@ -10,17 +11,15 @@ resource "cloudflare_zero_trust_access_policy" "infrastructure_admin" {
   include = [
     {
       login_method = {
-        id = cloudflare_zero_trust_access_identity_provider.github.id
+        id = cloudflare_zero_trust_access_identity_provider.google.id
       }
     }
   ]
 
   require = [
     {
-      github_organization = {
-        identity_provider_id = cloudflare_zero_trust_access_identity_provider.github.id
-        name                 = "harvestasya"
-        team                 = "admin"
+      email_domain = {
+        domain = "harvestasya.org"
       }
     }
   ]
