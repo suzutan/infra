@@ -30,9 +30,9 @@ helmCharts:
         innodb_use_native_aio=0
       startupProbe:
         enabled: true
-        initialDelaySeconds: 30
+        initialDelaySeconds: 60
         periodSeconds: 15
-        failureThreshold: 30
+        failureThreshold: 60
       extraEnvVars:
       - name: TZ
         value: Asia/Tokyo
