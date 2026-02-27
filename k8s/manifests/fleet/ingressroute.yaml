@@ -8,5 +8,5 @@ spec:
   - kind: Rule
     match: Host(`nexus-mdm.harvestasya.org`)
     services:
-    - name: fleet
+    - name: fleet-service
       port: 8080
