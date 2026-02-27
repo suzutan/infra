@@ -1,0 +1,25 @@
+# AdGuard Home client definitions for `adg sync`
+#
+# Usage:
+#   adg sync clients.yaml
+#   adg sync clients.yaml --prune  # Remove clients not in this file
+#
+clients:
+  - name: iPhone
+    ids:
+      - iphone-suzutan
+    tags:
+      - device_phone
+      - os_ios
+  - name: MacBook
+    ids:
+      - macbook-suzutan
+    tags:
+      - device_laptop
+      - os_macos
+  - name: Desktop
+    ids:
+      - desktop-suzutan
+    tags:
+      - device_pc
+      - os_windows
