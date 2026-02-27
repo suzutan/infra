@@ -5,6 +5,7 @@ resources:
 - namespace.yaml
 - external-secret.yaml
 - ingressroute.yaml
+- configmap-ca.yaml
 helmCharts:
 - name: fleet
   releaseName: fleet

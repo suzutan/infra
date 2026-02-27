@@ -6,6 +6,10 @@ fleet:
   listenPort: 8080
   tls:
     enabled: false # TLS terminated by Traefik
+  additionalCAs:
+    enabled: true
+    configMaps:
+    - name: harvestasya-root-ca
 
 database:
   address: fleet-db.infra.ssa.suzutan.jp:3306

@@ -1,0 +1,18 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: harvestasya-root-ca
+  namespace: fleet
+data:
+  harvestasya-root-ca.crt: |
+    -----BEGIN CERTIFICATE-----
+    MIIBgDCCASagAwIBAgIRAKRVT+Na1kgtmo/TT8b8OQowCgYIKoZIzj0EAwIwHjEc
+    MBoGA1UEAxMTSGFydmVzdGFzeWEgUm9vdCBDQTAeFw0yNTEyMjQxNzI4MzFaFw0z
+    NTEyMjIxNzI4MzFaMB4xHDAaBgNVBAMTE0hhcnZlc3Rhc3lhIFJvb3QgQ0EwWTAT
+    BgcqhkjOPQIBBggqhkjOPQMBBwNCAASU7JyVNuWoTQDE9f6nzgXiAQFwk1Nh0MSQ
+    nvnLVe04ZYJ93y+vFR8ZauE6YxVUURu45VeDVnOWyvkcnhZfnnQZo0UwQzAOBgNV
+    HQ8BAf8EBAMCAQYwEgYDVR0TAQH/BAgwBgEB/wIBATAdBgNVHQ4EFgQU2GOB6HBK
+    3OGNcYDD2Eh8iJ84kaUwCgYIKoZIzj0EAwIDSAAwRQIgJtRYs6FFulE8bcxCRvTB
+    zZ7bmNNQXUwQYbR053Zeq/YCIQDAGiub5IGjgLppOjcqZAhPFC5cm/4iHiOb12UT
+    4Wsghg==
+    -----END CERTIFICATE-----
