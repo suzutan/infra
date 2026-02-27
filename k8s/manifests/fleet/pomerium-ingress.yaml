@@ -1,8 +1,8 @@
-# Fleet UI - Pomerium IAP (mdm-admin group required)
+# Fleet Admin UI - Pomerium IAP (mdm-admin group required)
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
-  name: fleet-ui
+  name: fleet-admin
   annotations:
     ingress.pomerium.io/policy: |
       - allow:
@@ -18,7 +18,7 @@ metadata:
 spec:
   ingressClassName: pomerium
   rules:
-  - host: nexus.harvestasya.org
+  - host: nexus-admin.harvestasya.org
     http:
       paths:
       - path: /
