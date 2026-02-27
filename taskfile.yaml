@@ -7,3 +7,8 @@ tasks:
     cmds:
     - find ./ -name "*.yaml" | grep -v "charts/" | xargs yamlfmt -lint
     silent: true
+  adg:build:
+    desc: Build adg CLI tool
+    dir: tools/adg
+    cmds:
+    - go build -o adg .

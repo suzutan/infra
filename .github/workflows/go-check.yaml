@@ -1,0 +1,43 @@
+name: Go Check
+
+on:
+  pull_request:
+    branches:
+    - master
+    paths:
+    - tools/**/*.go
+    - tools/**/go.mod
+    - tools/**/go.sum
+
+jobs:
+  go-build:
+    name: Build Go tools
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        directory:
+        - tools/adg
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v6
+
+    - name: Setup Go
+      uses: actions/setup-go@v6
+      with:
+        go-version-file: ${{ matrix.directory }}/go.mod
+
+    - name: Download dependencies
+      working-directory: ${{ matrix.directory }}
+      run: go mod download
+
+    - name: Verify dependencies
+      working-directory: ${{ matrix.directory }}
+      run: go mod verify
+
+    - name: Build
+      working-directory: ${{ matrix.directory }}
+      run: go build ./...
+
+    - name: Vet
+      working-directory: ${{ matrix.directory }}
+      run: go vet ./...
