@@ -1,4 +1,4 @@
-hostName: nexus-mdm.harvestasya.org
+hostName: nexus.harvestasya.org
 replicas: 1
 
 fleet:

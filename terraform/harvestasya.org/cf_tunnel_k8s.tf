@@ -1,6 +1,6 @@
 # Cloudflare Zero Trust Tunnel for Web traffic
 # - デフォルト: Pomerium Ingress Controller (policy-based access)
-# - Traefik直通: immich, keycloak (policy制御なし), couchdb/livesync (Service Token認証), fleet-mdm (MDMエンドポイント)
+# - Traefik直通: immich, keycloak (policy制御なし), couchdb/livesync (Service Token認証), fleet/nexus (MDM/osqueryエンドポイント)
 
 # Cloudflare Tunnelの作成
 resource "cloudflare_zero_trust_tunnel_cloudflared" "web_tunnel" {
@@ -45,7 +45,7 @@ resource "cloudflare_zero_trust_tunnel_cloudflared_config" "web_tunnel_config" {
         }
       },
       {
-        hostname = "nexus-mdm.${local.zone_name}" # fleet mdm endpoint
+        hostname = "nexus.${local.zone_name}" # fleet MDM/osquery endpoint
         service  = "https://traefik.traefik.svc.cluster.local"
         origin_request = {
           no_tls_verify = true
