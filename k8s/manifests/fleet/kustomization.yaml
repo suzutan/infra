@@ -4,7 +4,6 @@ namespace: fleet
 resources:
 - namespace.yaml
 - external-secret.yaml
-- pomerium-ingress.yaml
 - ingressroute.yaml
 helmCharts:
 - name: fleet

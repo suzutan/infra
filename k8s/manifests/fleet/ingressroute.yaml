@@ -1,13 +1,13 @@
-# Fleet endpoint - Traefik direct (externally accessible via Cloudflare Tunnel)
-# Only MDM and osquery paths are exposed; admin UI is via nexus-admin (Pomerium)
+# Fleet - Traefik direct (externally accessible via Cloudflare Tunnel)
+# Fleet handles its own authentication (login/SSO)
 apiVersion: traefik.io/v1alpha1
 kind: IngressRoute
 metadata:
-  name: fleet-mdm
+  name: fleet
 spec:
   routes:
   - kind: Rule
-    match: Host(`nexus.harvestasya.org`) && (PathPrefix(`/api/mdm/`) || PathPrefix(`/api/osquery/`) || PathPrefix(`/enroll`))
+    match: Host(`nexus.harvestasya.org`)
     services:
     - name: fleet-service
       port: 8080
