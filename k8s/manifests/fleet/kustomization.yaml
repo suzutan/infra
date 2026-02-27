@@ -11,9 +11,9 @@ helmCharts:
   releaseName: fleet
   repo: https://fleetdm.github.io/fleet/charts
   valuesFile: values.yaml
-- name: mariadb
-  releaseName: mariadb
-  version: 25.0.1
+- name: mysql
+  releaseName: mysql
+  version: 14.0.3
   repo: oci://registry-1.docker.io/bitnamicharts
   valuesInline:
     auth:
@@ -25,6 +25,7 @@ helmCharts:
       security:
         allowInsecureImages: true
     primary:
+      extraFlags: "--innodb-use-native-aio=0"
       extraEnvVars:
       - name: TZ
         value: Asia/Tokyo
@@ -32,7 +33,12 @@ helmCharts:
         enabled: true
         storageClass: nfs-client
         size: 10Gi
-      resourcesPreset: small
+      resourcesPreset: medium
+      startupProbe:
+        enabled: true
+        initialDelaySeconds: 120
+        periodSeconds: 15
+        failureThreshold: 120
 - name: valkey
   releaseName: valkey
   version: 5.4.3
