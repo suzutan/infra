@@ -30,6 +30,16 @@ envsFrom:
     secretKeyRef:
       name: fleet-server-secret
       key: FLEET_SERVER_PRIVATE_KEY
+- name: FLEET_APPLE_SCEP_CERT_BYTES
+  valueFrom:
+    secretKeyRef:
+      name: fleet-server-secret
+      key: FLEET_APPLE_SCEP_CERT_BYTES
+- name: FLEET_APPLE_SCEP_KEY_BYTES
+  valueFrom:
+    secretKeyRef:
+      name: fleet-server-secret
+      key: FLEET_APPLE_SCEP_KEY_BYTES
 
 resources:
   limits:
