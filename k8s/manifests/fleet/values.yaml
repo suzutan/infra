@@ -19,17 +19,17 @@ cache:
   usePassword: true
   secretName: fleet-valkey-secret
   passwordKey: valkey-password
+
+# デフォルトのFLEET_SERVER_PRIVATE_KEYを削除
+environments: null
+
+# secretから抽出
 envsFrom:
 - name: FLEET_SERVER_PRIVATE_KEY
   valueFrom:
     secretKeyRef:
       name: fleet-server-secret
       key: FLEET_SERVER_PRIVATE_KEY
-- name: FLEET_MYSQL_ADDRESS
-  valueFrom:
-    secretKeyRef:
-      name: fleet-server-secret
-      key: FLEET_MYSQL_ADDRESS
 
 resources:
   limits:
