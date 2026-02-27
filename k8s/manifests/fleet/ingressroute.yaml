@@ -1,0 +1,12 @@
+# MDM endpoint - Traefik direct (externally accessible via Cloudflare Tunnel)
+apiVersion: traefik.io/v1alpha1
+kind: IngressRoute
+metadata:
+  name: fleet-mdm
+spec:
+  routes:
+  - kind: Rule
+    match: Host(`nexus-mdm.harvestasya.org`)
+    services:
+    - name: fleet
+      port: 8080
