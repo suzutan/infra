@@ -1,4 +1,4 @@
-# Fleet Admin UI - Pomerium IAP (mdm-admin group required)
+# Fleet Admin UI - Pomerium IAP (/mdm/admin group required)
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
@@ -7,7 +7,7 @@ metadata:
     ingress.pomerium.io/policy: |
       - allow:
           or:
-            - claim/groups: /mdm-admin
+            - claim/groups: /mdm/admin
     ingress.pomerium.io/pass_identity_headers: "true"
     ingress.pomerium.io/set_response_headers: |
       Strict-Transport-Security: max-age=31536000; includeSubDomains; preload
