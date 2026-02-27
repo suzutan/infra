@@ -4,7 +4,7 @@ metadata:
   name: harvestasya-root-ca
   namespace: fleet
 data:
-  harvestasya-root-ca.crt: |
+  harvestasya-root-ca.crt: |-
     -----BEGIN CERTIFICATE-----
     MIIBgDCCASagAwIBAgIRAKRVT+Na1kgtmo/TT8b8OQowCgYIKoZIzj0EAwIwHjEc
     MBoGA1UEAxMTSGFydmVzdGFzeWEgUm9vdCBDQTAeFw0yNTEyMjQxNzI4MzFaFw0z
