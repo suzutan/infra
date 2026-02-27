@@ -35,7 +35,13 @@ helmCharts:
         enabled: true
         storageClass: nfs-client
         size: 10Gi
-      resourcesPreset: small
+      resources:
+        limits:
+          cpu: "1"
+          memory: 2Gi
+        requests:
+          cpu: 250m
+          memory: 512Mi
 - name: valkey
   releaseName: valkey
   version: 5.4.3
