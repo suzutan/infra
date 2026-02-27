@@ -11,34 +11,6 @@ helmCharts:
   releaseName: fleet
   repo: https://fleetdm.github.io/fleet/charts
   valuesFile: values.yaml
-- name: mysql
-  releaseName: mysql
-  version: 14.0.3
-  repo: oci://registry-1.docker.io/bitnamicharts
-  valuesInline:
-    auth:
-      database: fleet
-      username: fleet
-      existingSecret: fleet-mysql-secret
-    global:
-      imageRegistry: public.ecr.aws
-      security:
-        allowInsecureImages: true
-    primary:
-      extraFlags: "--innodb-use-native-aio=0"
-      extraEnvVars:
-      - name: TZ
-        value: Asia/Tokyo
-      persistence:
-        enabled: true
-        storageClass: nfs-client
-        size: 10Gi
-      resourcesPreset: medium
-      startupProbe:
-        enabled: true
-        initialDelaySeconds: 120
-        periodSeconds: 15
-        failureThreshold: 120
 - name: valkey
   releaseName: valkey
   version: 5.4.3
@@ -110,13 +82,26 @@ patches:
     - op: add
       path: /metadata/annotations/argocd.argoproj.io~1sync-wave
       value: "-1"
-# Inject FLEET_SERVER_PRIVATE_KEY from secret into Fleet deployment
+# Inject secrets into Fleet deployment
 - target:
     kind: Deployment
     name: fleet
   patch: |-
-    - op: add
-      path: /spec/template/spec/containers/0/envFrom
-      value:
-      - secretRef:
-          name: fleet-server-secret
+    apiVersion: apps/v1
+    kind: Deployment
+    metadata:
+      name: fleet
+    spec:
+      template:
+        spec:
+          containers:
+          - name: fleet
+            envFrom:
+            - secretRef:
+                name: fleet-server-secret
+            env:
+            - name: FLEET_MYSQL_ADDRESS
+              valueFrom:
+                secretKeyRef:
+                  name: fleet-server-secret
+                  key: FLEET_MYSQL_ADDRESS
