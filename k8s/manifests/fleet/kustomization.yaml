@@ -82,13 +82,13 @@ patches:
     - op: add
       path: /metadata/annotations/argocd.argoproj.io~1sync-wave
       value: "-1"
-# Inject fleet-server-secret (FLEET_SERVER_PRIVATE_KEY etc.) via envFrom
-- target:
-    kind: Deployment
-    name: fleet
-  patch: |-
-    - op: add
-      path: /spec/template/spec/containers/0/envFrom
-      value:
-      - secretRef:
-          name: fleet-server-secret
+  # # Inject fleet-server-secret (FLEET_SERVER_PRIVATE_KEY etc.) via envFrom
+  # - target:
+  #     kind: Deployment
+  #     name: fleet
+  #   patch: |-
+  #     - op: add
+  #       path: /spec/template/spec/containers/0/envFrom
+  #       value:
+  #       - secretRef:
+  #           name: fleet-server-secret
