@@ -50,6 +50,11 @@ envsFrom:
     secretKeyRef:
       name: fleet-server-secret
       key: FLEET_MDM_APPLE_SCEP_KEY_BYTES
+- name: FLEET_LICENSE_KEY
+  valueFrom:
+    secretKeyRef:
+      name: fleet-server-secret
+      key: FLEET_LICENSE_KEY
 
 resources:
   limits:
