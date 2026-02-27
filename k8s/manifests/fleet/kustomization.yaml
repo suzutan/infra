@@ -92,16 +92,3 @@ patches:
       value:
       - secretRef:
           name: fleet-server-secret
-# Override FLEET_MYSQL_ADDRESS in migration Job (envsFrom only applies to Deployment)
-- target:
-    kind: Job
-    name: fleet-migration
-  patch: |-
-    - op: add
-      path: /spec/template/spec/containers/0/env/-
-      value:
-        name: FLEET_MYSQL_ADDRESS
-        valueFrom:
-          secretKeyRef:
-            name: fleet-server-secret
-            key: FLEET_MYSQL_ADDRESS
