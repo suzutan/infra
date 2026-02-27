@@ -8,11 +8,11 @@ fleet:
     enabled: false # TLS terminated by Traefik
 
 database:
-  address: mariadb:3306
+  address: mysql:3306
   database: fleet
   username: fleet
   secretName: fleet-mysql-secret
-  passwordKey: mariadb-password
+  passwordKey: mysql-password
 
 cache:
   address: valkey-master:6379
