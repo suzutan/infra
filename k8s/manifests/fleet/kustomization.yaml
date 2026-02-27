@@ -82,46 +82,35 @@ patches:
     - op: add
       path: /metadata/annotations/argocd.argoproj.io~1sync-wave
       value: "-1"
-# Inject secrets into Fleet deployment
+# Inject secrets into Fleet deployment and override FLEET_MYSQL_ADDRESS
+# Append to end of env list so the last entry wins over chart defaults
 - target:
     kind: Deployment
     name: fleet
   patch: |-
-    apiVersion: apps/v1
-    kind: Deployment
-    metadata:
-      name: fleet
-    spec:
-      template:
-        spec:
-          containers:
-          - name: fleet
-            envFrom:
-            - secretRef:
-                name: fleet-server-secret
-            env:
-            - name: FLEET_MYSQL_ADDRESS
-              valueFrom:
-                secretKeyRef:
-                  name: fleet-server-secret
-                  key: FLEET_MYSQL_ADDRESS
-# Inject MySQL address into migration Job
+    - op: add
+      path: /spec/template/spec/containers/0/envFrom
+      value:
+      - secretRef:
+          name: fleet-server-secret
+    - op: add
+      path: /spec/template/spec/containers/0/env/-
+      value:
+        name: FLEET_MYSQL_ADDRESS
+        valueFrom:
+          secretKeyRef:
+            name: fleet-server-secret
+            key: FLEET_MYSQL_ADDRESS
+# Override FLEET_MYSQL_ADDRESS in migration Job
 - target:
     kind: Job
     name: fleet-migration
   patch: |-
-    apiVersion: batch/v1
-    kind: Job
-    metadata:
-      name: fleet-migration
-    spec:
-      template:
-        spec:
-          containers:
-          - name: fleet-migration
-            env:
-            - name: FLEET_MYSQL_ADDRESS
-              valueFrom:
-                secretKeyRef:
-                  name: fleet-server-secret
-                  key: FLEET_MYSQL_ADDRESS
+    - op: add
+      path: /spec/template/spec/containers/0/env/-
+      value:
+        name: FLEET_MYSQL_ADDRESS
+        valueFrom:
+          secretKeyRef:
+            name: fleet-server-secret
+            key: FLEET_MYSQL_ADDRESS
