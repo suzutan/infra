@@ -105,3 +105,23 @@ patches:
                 secretKeyRef:
                   name: fleet-server-secret
                   key: FLEET_MYSQL_ADDRESS
+# Inject MySQL address into migration Job
+- target:
+    kind: Job
+    name: fleet-migration
+  patch: |-
+    apiVersion: batch/v1
+    kind: Job
+    metadata:
+      name: fleet-migration
+    spec:
+      template:
+        spec:
+          containers:
+          - name: fleet-migration
+            env:
+            - name: FLEET_MYSQL_ADDRESS
+              valueFrom:
+                secretKeyRef:
+                  name: fleet-server-secret
+                  key: FLEET_MYSQL_ADDRESS
