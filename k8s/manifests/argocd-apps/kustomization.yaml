@@ -23,5 +23,6 @@ resources:
 - onepassword-operator.yaml
 - pomerium.yaml
 - step-ca.yaml
+- step-ca-identity.yaml
 - temporis.yaml
 - traefik.yaml
