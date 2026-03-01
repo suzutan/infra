@@ -8,13 +8,15 @@ spec:
   policyTypes:
   - Ingress
 ---
-# Traefik IngressRoute 経由のトラフィックを許可
+# Traefik IngressRoute 経由のトラフィックを許可 (nanomdm サーバーのみ)
 apiVersion: networking.k8s.io/v1
 kind: NetworkPolicy
 metadata:
   name: allow-from-traefik
 spec:
-  podSelector: {}
+  podSelector:
+    matchLabels:
+      app.kubernetes.io/name: nanomdm
   policyTypes:
   - Ingress
   ingress:
