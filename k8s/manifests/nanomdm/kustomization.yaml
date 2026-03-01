@@ -4,10 +4,10 @@ kind: Kustomization
 namespace: nanomdm
 
 resources:
-  # nanomdm-operator リポジトリから CRD / RBAC / Operator / NanoMDM Server を取得
-  - https://github.com/suzutan/nanomdm-operator//config/default?ref=master
-  # infra 固有のリソース
-  - cnpg-cluster.yaml
-  - external-secret.yaml
-  - ingressroute.yaml
-  - networkpolicy.yaml
+# nanomdm-operator リポジトリから CRD / RBAC / Operator / NanoMDM Server を取得
+- https://github.com/suzutan/nanomdm-operator//config/default?ref=master
+# infra 固有のリソース
+- cnpg-cluster.yaml
+- external-secret.yaml
+- ingressroute.yaml
+- networkpolicy.yaml
