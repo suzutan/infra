@@ -51,6 +51,13 @@ resource "cloudflare_zero_trust_tunnel_cloudflared_config" "web_tunnel_config" {
           no_tls_verify = true
         }
       },
+      {
+        hostname = "nexus-beta.${local.zone_name}" # nanomdm (beta MDM endpoint)
+        service  = "https://traefik.traefik.svc.cluster.local"
+        origin_request = {
+          no_tls_verify = true
+        }
+      },
       # デフォルト - Pomerium Ingress Controller (policy-based access)
       {
         hostname = "*.${local.zone_name}"

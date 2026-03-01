@@ -1,0 +1,37 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: nanomdm
+  namespace: argocd
+spec:
+  destination:
+    server: "https://kubernetes.default.svc"
+  source:
+    path: k8s/manifests/nanomdm
+    repoURL: "https://github.com/suzutan/infra.git"
+    targetRevision: HEAD
+  project: apps
+  ignoreDifferences:
+  - group: mdm.harvestasya.org
+    kind: MDMDevice
+    jsonPointers:
+    - /status
+  - group: mdm.harvestasya.org
+    kind: MDMProfile
+    jsonPointers:
+    - /status
+  - group: mdm.harvestasya.org
+    kind: MDMCommand
+    jsonPointers:
+    - /status
+  - group: mdm.harvestasya.org
+    kind: MDMEnrollmentProfile
+    jsonPointers:
+    - /status
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+    syncOptions:
+    - RespectIgnoreDifferences=true
+    - ServerSideApply=true

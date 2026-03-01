@@ -31,6 +31,7 @@
 | **navidrome** | Navidrome (音楽) | プロダクト名。 | プロダクト名 |
 | **nexus** | Fleet (MDM UI) | Nexus = 結節点。エンドポイントが接続しに来る中心点 | 新規則 |
 | **nexus-mdm** | Fleet (MDM エンドポイント) | MDM デバイス登録用。nexus のサブ名 | 新規則 |
+| **nexus-beta** | NanoMDM (CRD MDM beta) | nexus の次世代版ベータ。CRD ベースの軽量 MDM | 新規則 |
 | **rss** | FreshRSS (フィード) | 機能名。 | 機能名 |
 | **acme** | step-ca (証明書) | プロトコル名。ACME プロトコルそのもの | プロトコル名 |
 | **vista** | Proxmox VE (Web UI) | Vista = 展望/眺望。管理画面を「見渡す」 | 新規則 |

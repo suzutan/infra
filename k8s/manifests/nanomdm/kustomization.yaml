@@ -1,0 +1,19 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+
+namespace: nanomdm
+
+resources:
+- namespace.yaml
+- crds/mdm.harvestasya.org_mdmprofiles.yaml
+- crds/mdm.harvestasya.org_mdmdevices.yaml
+- crds/mdm.harvestasya.org_mdmcommands.yaml
+- crds/mdm.harvestasya.org_mdmenrollmentprofiles.yaml
+- configmap-schema.yaml
+- cnpg-cluster.yaml
+- external-secret.yaml
+- rbac.yaml
+- deployment.yaml
+- service.yaml
+- ingressroute.yaml
+- networkpolicy.yaml

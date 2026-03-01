@@ -1,0 +1,152 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: nanomdm
+  labels:
+    app.kubernetes.io/name: nanomdm
+    app.kubernetes.io/component: server
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: nanomdm
+      app.kubernetes.io/component: server
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: nanomdm
+        app.kubernetes.io/component: server
+    spec:
+      containers:
+      - name: nanomdm
+        image: ghcr.io/micromdm/nanomdm:latest
+        args:
+        - -storage
+        - pgsql
+        - -storage-dsn
+        - $(DATABASE_URI)
+        - -api
+        - $(NANOMDM_API_KEY)
+        - -ca
+        - /certs/ca.pem
+        - -webhook-url
+        - http://nanomdm-operator:8080/webhook
+        - -checkin
+        - -debug
+        ports:
+        - containerPort: 9000
+          name: mdm
+          protocol: TCP
+        env:
+        - name: DATABASE_URI
+          valueFrom:
+            secretKeyRef:
+              name: nanomdm-pg-app
+              key: uri
+        - name: NANOMDM_API_KEY
+          valueFrom:
+            secretKeyRef:
+              name: nanomdm-server-secret
+              key: NANOMDM_API_KEY
+        resources:
+          requests:
+            cpu: 50m
+            memory: 64Mi
+          limits:
+            cpu: 200m
+            memory: 128Mi
+        livenessProbe:
+          httpGet:
+            path: /version
+            port: 9000
+          initialDelaySeconds: 10
+          periodSeconds: 30
+        readinessProbe:
+          httpGet:
+            path: /version
+            port: 9000
+          initialDelaySeconds: 5
+          periodSeconds: 10
+        volumeMounts:
+        - name: apns-cert
+          mountPath: /certs
+          readOnly: true
+      volumes:
+      - name: apns-cert
+        secret:
+          secretName: nanomdm-server-secret
+          items:
+          - key: APNS_CERT_PEM
+            path: apns.pem
+          - key: APNS_KEY_PEM
+            path: apns.key
+          - key: CA_CERT_PEM
+            path: ca.pem
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: nanomdm-operator
+  labels:
+    app.kubernetes.io/name: nanomdm
+    app.kubernetes.io/component: operator
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: nanomdm
+      app.kubernetes.io/component: operator
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: nanomdm
+        app.kubernetes.io/component: operator
+    spec:
+      serviceAccountName: nanomdm-operator
+      containers:
+      - name: operator
+        image: ghcr.io/suzutan/nanomdm-operator:latest
+        env:
+        - name: NANOMDM_URL
+          value: "http://nanomdm:9000"
+        - name: NANOMDM_API_KEY
+          valueFrom:
+            secretKeyRef:
+              name: nanomdm-server-secret
+              key: NANOMDM_API_KEY
+        - name: APNS_CERT_PEM
+          valueFrom:
+            secretKeyRef:
+              name: nanomdm-server-secret
+              key: APNS_CERT_PEM
+        - name: APNS_KEY_PEM
+          valueFrom:
+            secretKeyRef:
+              name: nanomdm-server-secret
+              key: APNS_KEY_PEM
+        ports:
+        - containerPort: 8080
+          name: webhook
+          protocol: TCP
+        - containerPort: 8081
+          name: health
+          protocol: TCP
+        resources:
+          requests:
+            cpu: 50m
+            memory: 64Mi
+          limits:
+            cpu: 200m
+            memory: 128Mi
+        livenessProbe:
+          httpGet:
+            path: /healthz
+            port: 8081
+          initialDelaySeconds: 10
+          periodSeconds: 30
+        readinessProbe:
+          httpGet:
+            path: /healthz
+            port: 8081
+          initialDelaySeconds: 5
+          periodSeconds: 10

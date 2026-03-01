@@ -1,0 +1,132 @@
+apiVersion: apiextensions.k8s.io/v1
+kind: CustomResourceDefinition
+metadata:
+  name: mdmprofiles.mdm.harvestasya.org
+spec:
+  group: mdm.harvestasya.org
+  names:
+    kind: MDMProfile
+    listKind: MDMProfileList
+    plural: mdmprofiles
+    singular: mdmprofile
+    shortNames:
+    - mp
+  scope: Namespaced
+  versions:
+  - name: v1alpha1
+    served: true
+    storage: true
+    schema:
+      openAPIV3Schema:
+        type: object
+        properties:
+          spec:
+            type: object
+            required: ["deviceSelector", "mobileconfig", "profileIdentifier"]
+            properties:
+              deviceSelector:
+                type: object
+                properties:
+                  matchLabels:
+                    type: object
+                    additionalProperties:
+                      type: string
+                  matchExpressions:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        key:
+                          type: string
+                        operator:
+                          type: string
+                        values:
+                          type: array
+                          items:
+                            type: string
+              mobileconfig:
+                type: object
+                properties:
+                  inline:
+                    type: string
+                  configMapRef:
+                    type: object
+                    properties:
+                      name:
+                        type: string
+                      key:
+                        type: string
+                  secretRef:
+                    type: object
+                    properties:
+                      name:
+                        type: string
+                      key:
+                        type: string
+              profileIdentifier:
+                type: string
+              version:
+                type: integer
+              removeOnDelete:
+                type: boolean
+                default: true
+          status:
+            type: object
+            properties:
+              phase:
+                type: string
+                enum: ["Pending", "Distributing", "Distributed", "Error"]
+              targetDevices:
+                type: integer
+              installedDevices:
+                type: integer
+              failedDevices:
+                type: integer
+              lastDistributedAt:
+                type: string
+                format: date-time
+              deviceStatuses:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    deviceRef:
+                      type: string
+                    status:
+                      type: string
+                    installedAt:
+                      type: string
+                      format: date-time
+                    error:
+                      type: string
+              conditions:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    type:
+                      type: string
+                    status:
+                      type: string
+                    lastTransitionTime:
+                      type: string
+                      format: date-time
+                    reason:
+                      type: string
+                    message:
+                      type: string
+    subresources:
+      status: {}
+    additionalPrinterColumns:
+    - name: Phase
+      type: string
+      jsonPath: .status.phase
+    - name: Target
+      type: integer
+      jsonPath: .status.targetDevices
+    - name: Installed
+      type: integer
+      jsonPath: .status.installedDevices
+    - name: Age
+      type: date
+      jsonPath: .metadata.creationTimestamp
