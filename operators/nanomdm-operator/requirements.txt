@@ -1,5 +1,0 @@
-kopf==1.37.2
-kubernetes==31.0.0
-httpx==0.28.1
-pyyaml==6.0.2
-aiohttp==3.11.12
