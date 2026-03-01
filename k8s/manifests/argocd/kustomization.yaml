@@ -20,6 +20,7 @@ resources:
 - ingress.yaml
 - ingress-webhook.yaml
 - serverstransport.yaml
+- networkpolicy.yaml
 
 patches:
 - path: patch/cm-argocd-cm.yaml

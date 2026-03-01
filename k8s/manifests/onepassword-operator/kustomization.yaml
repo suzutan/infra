@@ -4,6 +4,7 @@ kind: Kustomization
 namespace: onepassword
 resources:
 - namespace.yaml
+- networkpolicy.yaml
 
 helmCharts:
 # https://github.com/1Password/connect-helm-charts/tree/main/charts/connect
