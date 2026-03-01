@@ -1,0 +1,10 @@
+# CronJob: 外部 API への outbound 通信のみ
+# 他の Pod からの ingress は不要
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: default-deny-ingress
+spec:
+  podSelector: {}
+  policyTypes:
+  - Ingress

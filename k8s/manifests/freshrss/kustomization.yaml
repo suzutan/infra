@@ -4,6 +4,7 @@ kind: Kustomization
 resources:
 - namespace.yaml
 - manifests
+- networkpolicy.yaml
 
 commonLabels:
   app.kubernetes.io/name: freshrss

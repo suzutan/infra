@@ -9,6 +9,7 @@ resources:
 - external-secret.yaml
 - middleware.yaml
 - ingressroute.yaml
+- networkpolicy.yaml
 
 helmCharts:
 # https://github.com/codecentric/helm-charts/tree/master/charts/keycloakx

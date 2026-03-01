@@ -8,3 +8,4 @@ resources:
 - cronjob.yaml
 - pvc.yaml
 - external-secret.yaml
+- networkpolicy.yaml
