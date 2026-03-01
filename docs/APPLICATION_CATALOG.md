@@ -221,6 +221,7 @@ Ingress Controller。
 k8s/manifests/<app>/
 ├── kustomization.yaml     # Kustomize設定
 ├── namespace.yaml         # 名前空間定義
+├── networkpolicy.yaml     # NetworkPolicy (必須)
 ├── helmrelease.yaml       # Helm値 (values.yaml相当)
 └── patches/               # パッチファイル (オプション)
 ```
@@ -231,11 +232,24 @@ k8s/manifests/<app>/
 k8s/manifests/<app>/
 ├── kustomization.yaml
 ├── namespace.yaml
+├── networkpolicy.yaml     # NetworkPolicy (必須)
 ├── deployment.yaml
 ├── service.yaml
 ├── ingress.yaml           # または ingressroute.yaml
 └── onepassworditem.yaml   # シークレット参照
 ```
+
+### NetworkPolicy パターン
+
+すべての namespace に `default-deny-ingress` を設定し、必要な通信のみ許可する。
+
+| パターン | 許可内容 | 適用例 |
+|---------|---------|-------|
+| Traefik のみ | traefik ns からの ingress | echoserver, obsidian-livesync |
+| Pomerium のみ | pomerium ns からの ingress | argocd, n8n |
+| Traefik + Pomerium | 両方からの ingress | keycloak, temporis |
+| Intra-namespace | 同一 ns 内の Pod 間通信 | DB/Cache を持つアプリ |
+| Deny-only | ingress 全拒否 | cloudflared, ddns (outbound-only) |
 
 ---
 

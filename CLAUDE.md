@@ -32,6 +32,7 @@ This repository manages Infrastructure as Code (IaC) for a personal HomeLab envi
 | Ingress | Traefik + Cloudflare Tunnel |
 | Identity Provider | Keycloak + Pomerium IAP |
 | Monitoring | Prometheus + Grafana (temporis namespace) |
+| Network Policy | default-deny-ingress (Cilium CNI) |
 
 ### Directory Structure
 
@@ -108,6 +109,7 @@ Use Conventional Commits format:
 2. Required files:
    - `namespace.yaml` - Namespace definition
    - `kustomization.yaml` - Kustomize configuration
+   - `networkpolicy.yaml` - NetworkPolicy definition (**必須**)
 3. Add ArgoCD Application to `k8s/manifests/argocd-apps/`
 4. Use `OnePasswordItem` for secrets
 
@@ -130,6 +132,124 @@ resources:
   - namespace.yaml
   - deployment.yaml
   - service.yaml
+  - networkpolicy.yaml
+```
+
+### 3a. NetworkPolicy（必須）
+
+**すべての namespace に default-deny-ingress NetworkPolicy を設定すること。**
+Ingress の許可元は、アプリの公開方式に応じて選択する。
+
+| 公開方式 | 許可元 namespace | 対象アプリ例 |
+|---------|----------------|-------------|
+| Traefik IngressRoute | `traefik` | echoserver, immich, keycloak, fleet |
+| Pomerium Ingress (OIDC 認証付き) | `pomerium` | argocd, n8n, navidrome |
+| 両方 | `traefik` + `pomerium` | keycloak (公開 + OIDC プロバイダ) |
+| 受信不要 (CronJob/outbound-only) | なし (deny-only) | cloudflared, ddns |
+
+**注意: kustomization.yaml に `namespace:` フィールドがない場合は、NetworkPolicy の metadata に `namespace:` を明示的に指定すること。**
+
+**テンプレート: Traefik IngressRoute 経由のアプリ（DB あり）**
+
+```yaml
+# networkpolicy.yaml
+# 全 ingress をデフォルトで拒否
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: default-deny-ingress
+spec:
+  podSelector: {}
+  policyTypes:
+  - Ingress
+---
+# Traefik IngressRoute 経由のトラフィックを許可
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: allow-from-traefik
+spec:
+  podSelector: {}
+  policyTypes:
+  - Ingress
+  ingress:
+  - from:
+    - namespaceSelector:
+        matchLabels:
+          kubernetes.io/metadata.name: traefik
+    ports:
+    - protocol: TCP
+      port: <app-port>
+---
+# namespace 内の Pod 間通信を許可 (app → DB/Cache)
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: allow-intra-namespace
+spec:
+  podSelector: {}
+  policyTypes:
+  - Ingress
+  ingress:
+  - from:
+    - podSelector: {}
+```
+
+**テンプレート: Pomerium Ingress 経由のアプリ（DB あり）**
+
+```yaml
+# networkpolicy.yaml
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: default-deny-ingress
+spec:
+  podSelector: {}
+  policyTypes:
+  - Ingress
+---
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: allow-from-pomerium
+spec:
+  podSelector: {}
+  policyTypes:
+  - Ingress
+  ingress:
+  - from:
+    - namespaceSelector:
+        matchLabels:
+          kubernetes.io/metadata.name: pomerium
+    ports:
+    - protocol: TCP
+      port: <app-port>
+---
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: allow-intra-namespace
+spec:
+  podSelector: {}
+  policyTypes:
+  - Ingress
+  ingress:
+  - from:
+    - podSelector: {}
+```
+
+**テンプレート: 受信不要 (CronJob/outbound-only)**
+
+```yaml
+# networkpolicy.yaml
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: default-deny-ingress
+spec:
+  podSelector: {}
+  policyTypes:
+  - Ingress
 ```
 
 ### 4. Secrets Management
@@ -305,6 +425,9 @@ When adding new applications, refer to these existing implementations:
 | Authenticated Ingress | `k8s/manifests/navidrome/` |
 | Monitoring stack | `k8s/manifests/temporis/` |
 | CronJob | `k8s/manifests/ddns/` |
+| NetworkPolicy (Traefik) | `k8s/manifests/echoserver/` |
+| NetworkPolicy (Pomerium + DB) | `k8s/manifests/n8n/` |
+| NetworkPolicy (deny-only) | `k8s/manifests/cloudflared/` |
 
 ## Troubleshooting
 

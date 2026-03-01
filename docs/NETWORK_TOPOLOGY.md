@@ -262,9 +262,31 @@ Cloudflare Edge ─────▶ Cloudflare Tunnel ─────▶ CF Tunne
 2. Zero Trust Accessによる認証
 3. HTTPS強制 (HSTS有効)
 
-### 内部通信
-1. Pod間通信は平文許可 (クラスタ内)
-2. 機密データはService Mesh検討予定
+### 内部通信 (NetworkPolicy)
+
+各 namespace に `default-deny-ingress` NetworkPolicy を適用し、許可された通信のみを通す。
+
+```
+┌─────────────────────────────────────────────────────────────────┐
+│  Ingress 許可フロー                                              │
+│                                                                  │
+│  traefik ns ──────▶ echoserver, immich, keycloak, fleet,        │
+│                     obsidian-livesync, freshrss, temporis       │
+│                                                                  │
+│  pomerium ns ─────▶ argocd, n8n, keycloak, temporis             │
+│                                                                  │
+│  external-secrets ▶ onepassword                                  │
+│                                                                  │
+│  同一 ns 内 ──────▶ DB/Cache を持つアプリ (intra-namespace)      │
+│                                                                  │
+│  deny-only ───────▶ cloudflared, ddns, hsr-auto-claimer         │
+└─────────────────────────────────────────────────────────────────┘
+```
+
+**対象外 namespace** (Operator/CNI のため除外):
+kube-system, cilium, cnpg-system, external-secrets, cert-manager, traefik, pomerium, step-ca, step-ca-identity
+
+**新規アプリ追加時**: `networkpolicy.yaml` の作成が必須。テンプレートは [CLAUDE.md](../CLAUDE.md) のセクション 3a を参照。
 
 ### ファイアウォール
 - Cloudflare IPのみ信頼
