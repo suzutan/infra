@@ -17,6 +17,7 @@ resources:
 - kube-state-metrics.yaml
 - kube-vip.yaml
 - n8n.yaml
+- nanomdm.yaml
 - navidrome.yaml
 - nfs-subdir-external-provisioner.yaml
 - obsidian-livesync.yaml

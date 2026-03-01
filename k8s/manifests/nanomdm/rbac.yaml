@@ -1,0 +1,62 @@
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: nanomdm-operator
+  namespace: nanomdm
+---
+# ClusterRole: CRD リソースとステータス更新 (クラスタースコープ)
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata:
+  name: nanomdm-operator
+rules:
+- apiGroups: ["mdm.harvestasya.org"]
+  resources: ["mdmprofiles", "mdmdevices", "mdmcommands", "mdmenrollmentprofiles"]
+  verbs: ["get", "list", "watch", "create", "update", "patch", "delete"]
+- apiGroups: ["mdm.harvestasya.org"]
+  resources: ["mdmprofiles/status", "mdmdevices/status", "mdmcommands/status", "mdmenrollmentprofiles/status"]
+  verbs: ["get", "update", "patch"]
+- apiGroups: ["mdm.harvestasya.org"]
+  resources: ["mdmprofiles/finalizers", "mdmdevices/finalizers", "mdmcommands/finalizers", "mdmenrollmentprofiles/finalizers"]
+  verbs: ["update"]
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRoleBinding
+metadata:
+  name: nanomdm-operator
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: nanomdm-operator
+subjects:
+- kind: ServiceAccount
+  name: nanomdm-operator
+  namespace: nanomdm
+---
+# Role: namespace 内の ConfigMap/Secret/Event のみ (最小権限)
+apiVersion: rbac.authorization.k8s.io/v1
+kind: Role
+metadata:
+  name: nanomdm-operator
+  namespace: nanomdm
+rules:
+- apiGroups: [""]
+  resources: ["configmaps", "secrets"]
+  verbs: ["get", "list", "watch", "create", "update", "patch"]
+- apiGroups: [""]
+  resources: ["events"]
+  verbs: ["create", "patch"]
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: nanomdm-operator
+  namespace: nanomdm
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: Role
+  name: nanomdm-operator
+subjects:
+- kind: ServiceAccount
+  name: nanomdm-operator
+  namespace: nanomdm
