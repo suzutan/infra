@@ -4,16 +4,10 @@ kind: Kustomization
 namespace: nanomdm
 
 resources:
-- namespace.yaml
-- crds/mdm.harvestasya.org_mdmprofiles.yaml
-- crds/mdm.harvestasya.org_mdmdevices.yaml
-- crds/mdm.harvestasya.org_mdmcommands.yaml
-- crds/mdm.harvestasya.org_mdmenrollmentprofiles.yaml
-- configmap-schema.yaml
+# nanomdm-operator リポジトリから CRD / RBAC / Operator / NanoMDM Server を取得
+- https://github.com/suzutan/nanomdm-operator//config/default?ref=master
+# infra 固有のリソース
 - cnpg-cluster.yaml
 - external-secret.yaml
-- rbac.yaml
-- deployment.yaml
-- service.yaml
 - ingressroute.yaml
 - networkpolicy.yaml
