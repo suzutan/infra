@@ -9,6 +9,13 @@ resource "cloudflare_dns_record" "tikkle" {
   comment = "tikkle Cloudflare Pages"
 }
 
+# Cloudflare Pages custom domain for tikkle
+resource "cloudflare_pages_domain" "tikkle" {
+  account_id   = var.cloudflare_account_id
+  project_name = "tikkle"
+  domain       = "tikkle.harvestasya.org"
+}
+
 # DNS A Record for step-ca ACME (LAN-only access)
 resource "cloudflare_dns_record" "acme" {
   zone_id = local.zone_id
