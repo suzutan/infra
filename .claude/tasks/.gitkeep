@@ -1,3 +1,0 @@
-# This directory stores task state files for Claude Code session continuity.
-# - CURRENT_TASK.md: Active task state (if any)
-# - archive/: Completed tasks for reference
