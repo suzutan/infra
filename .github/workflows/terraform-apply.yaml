@@ -12,16 +12,38 @@ on:
     - master
     paths:
     - terraform/**
+  workflow_dispatch:
+    inputs:
+      directory:
+        description: "Target directory (leave empty to run all)"
+        required: false
+        default: ""
+        type: choice
+        options:
+        - ""
+        - terraform/harvestasya.org
+        - terraform/suzutan.jp
 jobs:
+  setup:
+    runs-on: ubuntu-latest
+    outputs:
+      directories: ${{ steps.set-matrix.outputs.directories }}
+    steps:
+    - id: set-matrix
+      run: |
+        if [ -n "${{ github.event.inputs.directory }}" ]; then
+          echo "directories=[\"${{ github.event.inputs.directory }}\"]" >> $GITHUB_OUTPUT
+        else
+          echo 'directories=["terraform/harvestasya.org","terraform/suzutan.jp"]' >> $GITHUB_OUTPUT
+        fi
+
   apply:
     name: terraform apply
+    needs: setup
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        directory:
-        - terraform/harvestasya.org
-        - terraform/suzutan.jp
-        # - terraform/keycloak  # disabled: keycloak provider credentials not configured
+        directory: ${{ fromJson(needs.setup.outputs.directories) }}
     env:
       # Cloudflare
       TF_VAR_cloudflare_account_id: ${{ secrets.TF_VAR_CLOUDFLARE_ACCOUNT_ID }}
