@@ -13,7 +13,7 @@ resource "cloudflare_dns_record" "tikkle" {
 resource "cloudflare_pages_domain" "tikkle" {
   account_id   = var.cloudflare_account_id
   project_name = "tikkle"
-  domain       = "tikkle.harvestasya.org"
+  name         = "tikkle.harvestasya.org"
 }
 
 # DNS A Record for step-ca ACME (LAN-only access)
