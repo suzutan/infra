@@ -1,3 +1,14 @@
+# DNS CNAME Record for tikkle (Cloudflare Pages)
+resource "cloudflare_dns_record" "tikkle" {
+  zone_id = local.zone_id
+  name    = "tikkle"
+  content = "tikkle-3n7.pages.dev"
+  ttl     = 1
+  type    = "CNAME"
+  proxied = true # Cloudflare proxy enabled
+  comment = "tikkle Cloudflare Pages"
+}
+
 # DNS A Record for step-ca ACME (LAN-only access)
 resource "cloudflare_dns_record" "acme" {
   zone_id = local.zone_id
