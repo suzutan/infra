@@ -36,7 +36,7 @@ configMapGenerator:
 
 images:
 - name: docker.io/grafana/grafana
-  newTag: 12.4.0
+  newTag: 12.4.1
 
 labels:
 - pairs:
