@@ -15,4 +15,4 @@ labels:
     app.kubernetes.io/name: cloudflared
 images:
 - name: cloudflare/cloudflared
-  newTag: 2026.2.0
+  newTag: 2026.3.0
